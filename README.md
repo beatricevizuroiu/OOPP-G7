@@ -15,6 +15,7 @@ Add your own name (do not add the names for others!) to the section below.
 | 📸 | Name | Email |
 |---|---|---|
 | ![](https://kallestruik.nl/images/logo.png) | Kalle Struik | K.H.Struik@student.tudelft.nl |
+| ![](https://cdn.discordapp.com/attachments/479231854193672212/813004391971291146/pf_128x128.jpg) | Cody Boon | C.M.Boon-1@student.tudelft.nl |
 
 <!-- Instructions (remove once assignment has been completed -->
 <!-- - Add (only!) your own name to the table above (use Markdown formatting) -->
