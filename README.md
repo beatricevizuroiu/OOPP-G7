@@ -17,6 +17,7 @@ Add your own name (do not add the names for others!) to the section below.
 | ![](https://kallestruik.nl/images/logo.png) | Kalle Struik | K.H.Struik@student.tudelft.nl |
 | ![](https://cdn.discordapp.com/attachments/479231854193672212/813004391971291146/pf_128x128.jpg) | Cody Boon | C.M.Boon-1@student.tudelft.nl |
 | ![](https://media.discordapp.net/attachments/813111618551939074/813112292198842448/Eu_res.png) | Beatrice-Andreea Vizuroiu | B.Vizuroiu@student.tudelft.nl |
+| ![](https://cdn.discordapp.com/attachments/402133604379000838/813470529418821702/IMG_3489_1.JPG) | Elena Martellucci | E.Martellucci@student.tudelft.nl |
 
 <!-- Instructions (remove once assignment has been completed -->
 <!-- - Add (only!) your own name to the table above (use Markdown formatting) -->
