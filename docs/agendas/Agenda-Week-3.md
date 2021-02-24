@@ -17,7 +17,7 @@ Note taker:     Kalle Struik
  - Elena Martellucci
  - Kalle Struik
  - Cody Boon
- - Mehmet Alp Sozuduzall
+ - Mehmet Alp Sozuduz
  - Beatrice Vizuroiu 
 
 
