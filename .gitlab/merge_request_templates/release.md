@@ -6,3 +6,4 @@
 - [ ] I set the required approvals to 5.
 
 /label type::release
+/label status::review-needed
