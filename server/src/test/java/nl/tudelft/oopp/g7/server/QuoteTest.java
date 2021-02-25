@@ -1,9 +1,9 @@
-package nl.tudelft.oopp.demo;
+package nl.tudelft.oopp.g7.server;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import nl.tudelft.oopp.demo.entities.Quote;
-import nl.tudelft.oopp.demo.repositories.QuoteRepository;
+import nl.tudelft.oopp.g7.server.entities.Quote;
+import nl.tudelft.oopp.g7.server.repositories.QuoteRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

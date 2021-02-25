@@ -1,7 +1,7 @@
-package nl.tudelft.oopp.demo.controllers;
+package nl.tudelft.oopp.g7.client.controllers;
 
 import javafx.scene.control.Alert;
-import nl.tudelft.oopp.demo.communication.ServerCommunication;
+import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 
 public class MainSceneController {
 

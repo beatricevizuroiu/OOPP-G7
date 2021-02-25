@@ -1,4 +1,4 @@
-package nl.tudelft.oopp.demo.config;
+package nl.tudelft.oopp.g7.server.config;
 
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
