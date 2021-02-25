@@ -1,6 +1,6 @@
-package nl.tudelft.oopp.demo;
+package nl.tudelft.oopp.g7.client;
 
-import nl.tudelft.oopp.demo.views.QuoteDisplay;
+import nl.tudelft.oopp.g7.client.views.QuoteDisplay;
 
 public class MainApp {
     public static void main(String[] args) {
