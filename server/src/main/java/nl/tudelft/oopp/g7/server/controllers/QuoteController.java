@@ -1,9 +1,9 @@
-package nl.tudelft.oopp.demo.controllers;
+package nl.tudelft.oopp.g7.server.controllers;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import nl.tudelft.oopp.demo.entities.Quote;
+import nl.tudelft.oopp.g7.server.entities.Quote;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
