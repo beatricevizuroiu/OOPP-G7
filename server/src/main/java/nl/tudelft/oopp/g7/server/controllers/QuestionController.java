@@ -28,6 +28,11 @@ public class QuestionController {
             + "answered boolean DEFAULT FALSE not NUll,"
             + "edited boolean DEFAULT FALSE not NULL);";
 
+    private static final String QUERY_SELECT_QUESTION_BY_ID = "SELECT * FROM questions WHERE id=?;";
+    private static final String QUERY_SELECT_ALL_QUESTIONS = "SELECT * FROM questions";
+    private static final String QUERY_CREATE_QUESTION = "INSERT INTO questions (text) VALUES (?)";
+    private static final String QUERY_ANSWER_QUESTION = "UPDATE questions SET answer=?, answered=true WHERE id=?";
+
     private final JdbcTemplate jdbcTemplate;
 
     public QuestionController(JdbcTemplate jdbcTemplate) {
@@ -44,11 +49,22 @@ public class QuestionController {
     @GetMapping("/{id}")
     @ResponseBody
     public ResponseEntity<Question> getQuestion(@PathVariable("id") int id) {
-        Question question = jdbcTemplate.query("SELECT * FROM questions WHERE id=" + id, (rs) -> {
-            return Question.fromResultSet(rs, false);
-        });
-        if (question == null)
+        // Get the question with the id from the database.
+        Question question = jdbcTemplate.query(QUERY_SELECT_QUESTION_BY_ID,
+            // Set the first variable in the PreparedStatement to the id of the question being requested.
+            (ps) -> ps.setInt(1, id),
+            // Send the ResultSet to the Question class to create a Question instance from it.
+            (rs) -> {
+                return Question.fromResultSet(rs, false);
+            });
+
+        // Check if there was no question found.
+        if (question == null) {
+            // If there was not return http status code 404 (NOT_FOUND).
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        // Otherwise return the question with http status code 200 (OK).
         return new ResponseEntity<>(question, HttpStatus.OK);
     }
 
@@ -59,7 +75,7 @@ public class QuestionController {
     @GetMapping("/all")
     @ResponseBody
     public List<Question> getAllQuestions() {
-        return jdbcTemplate.query("SELECT * FROM questions", (rs) -> {
+        return jdbcTemplate.query(QUERY_SELECT_ALL_QUESTIONS, (rs) -> {
             List<Question> questionList = new ArrayList<>();
             while (rs.next()) {
                 questionList.add(Question.fromResultSet(rs, true));
@@ -75,7 +91,11 @@ public class QuestionController {
     @PostMapping("/new")
     @ResponseBody
     public void newQuestion(@RequestBody NewQuestion newQuestion) {
-        jdbcTemplate.update(String.format("INSERT INTO questions (text) VALUES ('%s')", newQuestion.getText()));
+        // Create a new question in the database.
+        jdbcTemplate.update(QUERY_CREATE_QUESTION,
+                // Set the first variable in the PreparedStatement to the text of the new question.
+                (ps) -> ps.setString(1, newQuestion.getText())
+        );
     }
 
     /**
@@ -87,10 +107,21 @@ public class QuestionController {
     @PostMapping("/{id}/answer")
     @ResponseBody
     public ResponseEntity<Void> answerQuestion(@PathVariable String id, @RequestBody Answer answer) {
-        int rowsChanged = jdbcTemplate.update(String.format("UPDATE questions SET answer='%s', answered=true WHERE id=%s", answer.getAnswer(), id));
-        if (rowsChanged == 0)
+        // Update the question with the answer and store the amount of rows changed in a variable.
+        int rowsChanged = jdbcTemplate.update(QUERY_ANSWER_QUESTION,
+            (ps) -> {
+                // Set the first variable in the PreparedStatement to the answer to the question.
+                ps.setString(1, answer.getAnswer());
+                // Set the second variable in the PreparedStatement to the id of the question to update.
+                ps.setString(2, id);
+            });
+        // Check if there where no rows updated.
+        if (rowsChanged == 0) {
+            // If that is the case respond with http status code 404 (NOT_FOUND).
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
 
+        // Otherwise respond with http status code 200 (OK).
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 }
