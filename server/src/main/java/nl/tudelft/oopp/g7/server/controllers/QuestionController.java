@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.g7.server.controllers;
 
+import nl.tudelft.oopp.g7.common.Answer;
 import nl.tudelft.oopp.g7.common.NewQuestion;
 import nl.tudelft.oopp.g7.common.Question;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class QuestionController {
     private static final String QUERY_CREATE_TABLE = "CREATE TABLE QUESTIONS("
             + "id int PRIMARY KEY AUTO_INCREMENT not NULL,"
             + "text text not NULL,"
-            + "answer text DEFAULT '',"
+            + "answer text DEFAULT '' not NULL,"
             + "postedAt date," // DEFAULT GETDATE()
             + "upvotes int not NULL DEFAULT 0,"
             + "answered boolean DEFAULT FALSE not NUll,"
@@ -37,7 +38,8 @@ public class QuestionController {
     /**
      * Endpoint for retrieving a question by ID.
      * @param id The ID of the question that should be retrieved.
-     * @return A {@link Question} object representing the question.
+     * @return A {@link ResponseEntity} containing a {@link Question} and a http status of 200 (OK)
+     *         if there is no question found it will return an empty {@link ResponseEntity} with http status 404 (NOT_FOUND).
      */
     @GetMapping("/{id}")
     @ResponseBody
@@ -52,7 +54,7 @@ public class QuestionController {
 
     /**
      * Endpoint for retrieving all questions.
-     * @return A {@link List} of {@link Question}s containing every question in the databae.
+     * @return A {@link List} of {@link Question}s containing every question in the database.
      */
     @GetMapping("/all")
     @ResponseBody
@@ -74,5 +76,21 @@ public class QuestionController {
     @ResponseBody
     public void newQuestion(@RequestBody NewQuestion newQuestion) {
         jdbcTemplate.update(String.format("INSERT INTO questions (text) VALUES ('%s')", newQuestion.getText()));
+    }
+
+    /**
+     * Endpoint to answer a question.
+     * @param id The id of the question being answered.
+     * @param answer The {@link Answer} to the question.
+     * @return A {@link ResponseEntity} containing NULL and a http status of 200 (OK) if a row is changed and 404 (NOT_FOUND) if no rows changed.
+     */
+    @PostMapping("/{id}/answer")
+    @ResponseBody
+    public ResponseEntity<Void> answerQuestion(@PathVariable String id, @RequestBody Answer answer) {
+        int rowsChanged = jdbcTemplate.update(String.format("UPDATE questions SET answer='%s', answered=true WHERE id=%s", answer.getAnswer(), id));
+        if (rowsChanged == 0)
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 }
