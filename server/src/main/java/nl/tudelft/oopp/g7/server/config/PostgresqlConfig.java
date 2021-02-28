@@ -10,16 +10,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
-
 @Configuration
 @EnableJpaRepositories
 @PropertySource("application-dev.properties")
 @EnableTransactionManagement
-public class H2Config {
+public class PostgresqlConfig {
 
     private final Environment environment;
 
-    public H2Config(Environment environment) {
+    public PostgresqlConfig(Environment environment) {
         this.environment = environment;
     }
 
@@ -29,10 +28,10 @@ public class H2Config {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(environment.getProperty("jdbc.driverClassName"));
-        dataSource.setUrl(environment.getProperty("jdbc.url"));
-        dataSource.setUsername(environment.getProperty("jdbc.user"));
-        dataSource.setPassword(environment.getProperty("jdbc.pass"));
+        dataSource.setDriverClassName(environment.getProperty("spring.datasource.driver-class-name"));
+        dataSource.setUrl(environment.getProperty("spring.datasource.jdbc-url"));
+        dataSource.setUsername(environment.getProperty("spring.datasource.username"));
+        dataSource.setPassword(environment.getProperty("spring.datasource.password"));
 
         return dataSource;
     }

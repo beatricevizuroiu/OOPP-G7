@@ -32,7 +32,7 @@ public class Question {
                     rs.getInt("id"),
                     rs.getString("text"),
                     rs.getString("answer"),
-                    rs.getDate("postedAt"),
+                    new Date(rs.getTimestamp("postedAt").getTime()),
                     rs.getInt("upvotes"),
                     rs.getBoolean("answered"),
                     rs.getBoolean("edited")

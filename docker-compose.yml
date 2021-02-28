@@ -1,0 +1,31 @@
+version: "2.3"
+services:
+  oopp-container-db:
+    image: postgres:12
+    mem_limit: 1536MB
+    mem_reservation: 1G
+    environment:
+      POSTGRES_USER: oopp-g7
+      POSTGRES_PASSWORD: SuperSecretPassword
+    ports:
+    - "5442:5432"
+    networks:
+    - oopp_network
+    volumes:
+    - oopp-db-data:/var/lib/postgresql/data
+  oopp-pgadmin4:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: g7@oo.pp
+      PGADMIN_DEFAULT_PASSWORD: SuperSecretPassword
+    ports:
+    - "8081:80"
+    networks:
+    - oopp_network
+
+networks:
+  oopp_network:
+    driver: bridge
+ 
+volumes:
+  oopp-db-data:

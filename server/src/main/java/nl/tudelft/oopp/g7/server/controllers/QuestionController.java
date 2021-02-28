@@ -19,11 +19,11 @@ public class QuestionController {
 
     //TODO: Probably want to move the database table creation somewhere else.
     //TODO: Once switched to postgresql make postedAt default to the current date.
-    private static final String QUERY_CREATE_TABLE = "CREATE TABLE QUESTIONS("
-            + "id int PRIMARY KEY AUTO_INCREMENT not NULL,"
+    private static final String QUERY_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS QUESTIONS("
+            + "id serial PRIMARY KEY not NULL,"
             + "text text not NULL,"
             + "answer text DEFAULT '' not NULL,"
-            + "postedAt date," // DEFAULT GETDATE()
+            + "postedAt timestamp with time zone DEFAULT NOW(),"
             + "upvotes int not NULL DEFAULT 0,"
             + "answered boolean DEFAULT FALSE not NUll,"
             + "edited boolean DEFAULT FALSE not NULL);";
@@ -93,8 +93,8 @@ public class QuestionController {
     public void newQuestion(@RequestBody NewQuestion newQuestion) {
         // Create a new question in the database.
         jdbcTemplate.update(QUERY_CREATE_QUESTION,
-                // Set the first variable in the PreparedStatement to the text of the new question.
-                (ps) -> ps.setString(1, newQuestion.getText())
+            // Set the first variable in the PreparedStatement to the text of the new question.
+            (ps) -> ps.setString(1, newQuestion.getText())
         );
     }
 
@@ -106,14 +106,14 @@ public class QuestionController {
      */
     @PostMapping("/{id}/answer")
     @ResponseBody
-    public ResponseEntity<Void> answerQuestion(@PathVariable String id, @RequestBody Answer answer) {
+    public ResponseEntity<Void> answerQuestion(@PathVariable int id, @RequestBody Answer answer) {
         // Update the question with the answer and store the amount of rows changed in a variable.
         int rowsChanged = jdbcTemplate.update(QUERY_ANSWER_QUESTION,
             (ps) -> {
                 // Set the first variable in the PreparedStatement to the answer to the question.
                 ps.setString(1, answer.getAnswer());
                 // Set the second variable in the PreparedStatement to the id of the question to update.
-                ps.setString(2, id);
+                ps.setInt(2, id);
             });
         // Check if there where no rows updated.
         if (rowsChanged == 0) {
@@ -121,7 +121,7 @@ public class QuestionController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
-        // Otherwise respond with http status code 200 (OK).
+        // Otgherwise respond with http status code 200 (OK).
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 }
