@@ -45,4 +45,5 @@ Reporting any conduct of other workplace participants which is in breach of any 
 - Dont use overly complex oneliners.
 - Use descriptive comments.
 - Use descriptive variable names.
+- Adequetly test your code.
 - Try to keep method length down.
