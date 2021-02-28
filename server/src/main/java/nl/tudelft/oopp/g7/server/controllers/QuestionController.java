@@ -75,11 +75,16 @@ public class QuestionController {
     @GetMapping("/all")
     @ResponseBody
     public List<Question> getAllQuestions() {
+        // Return every question in the database.
         return jdbcTemplate.query(QUERY_SELECT_ALL_QUESTIONS, (rs) -> {
+            // Create a list to hold all questions.
             List<Question> questionList = new ArrayList<>();
+            // Loop while the result set has entries.
             while (rs.next()) {
+                // Create a new question from the result set and add it to the list of questions.
                 questionList.add(Question.fromResultSet(rs, true));
             }
+            // Return the list of questions.
             return questionList;
         });
     }
