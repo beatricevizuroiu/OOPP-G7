@@ -84,6 +84,15 @@ Get information about every question known to the system.
 ]
 ```
 
+## DELETE `/questions/{id}`
+Delete the question with {id}.
+
+**Examples:**
+```http request
+DELETE /api/v1/question/1
+```
+`No response`
+
 ### POST `/question/new`
 Create a new question on the server with the text provided.
 
