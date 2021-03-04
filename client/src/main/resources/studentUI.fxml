@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<?import javafx.scene.control.Button?>
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
+<VBox xmlns="http://javafx.com/javafx/11.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="nl.tudelft.oopp.g7.client.controllers.StudentController">
-    <Label text="answerBox"/>
-    <TextArea fx:id="answerBox"/>
-    <Button text="Send" onAction="#sendQuestion"/>
+    <Label text="answerBox" />
+    <TextArea fx:id="answerBox" />
+    <Button onAction="#sendQuestion" text="Send" />
 </VBox>
