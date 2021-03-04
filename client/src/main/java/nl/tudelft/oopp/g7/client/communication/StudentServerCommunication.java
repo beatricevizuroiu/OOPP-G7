@@ -1,34 +1,32 @@
 package nl.tudelft.oopp.g7.client.communication;
 
-import java.io.IOException;
+import com.google.gson.Gson;
+import nl.tudelft.oopp.g7.common.NewQuestion;
+
 import java.net.URI;
-import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 
 public class StudentServerCommunication {
-
+    // TODO: decide on how to handle rooms
     // opted for static for now, should be changed when multiple lectures are added
-    private static HttpClient httpClient = HttpClient.newBuilder().build();
+    private static final Gson gson = new Gson();
+    // again opted for static final since end-point is fixed
+    private static final String endBody = "http://localhost:8080/api/v1/question";
 
-    public static void askQuestion(String questionText) {
-        String body = "{\"text\": \"" + questionText + "\"}";
+    /**
+     * Sends a post request with appropriate NewQuestion body
+     * @param question NewQuestion object asked by student
+     */
+    public static void askQuestion(NewQuestion question) {
+        // convert the body to JSON
+        String body = gson.toJson(question);
+        URI uri = URI.create(endBody + "/new");
 
-        HttpRequest request = HttpRequest.newBuilder()
-                                         .POST(HttpRequest.BodyPublishers.ofString(body))
-                                         .uri(URI.create("http://localhost:8080/api/v1/question/new"))
-                                         .header("Content-Type", "application/json")
-                                         .build();
+        // create a request object
+        HttpRequest request = HttpMethods.post(uri, body);
 
-        HttpResponse<String> response = null;
-
-        try {
-            response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (Exception e) {
-            System.out.println("Communication with server failed.");
-        }
-
-        System.out.println("Status Code = " + response.statusCode());
+        // send the request
+        HttpMethods.send(request);
     }
 
 }
