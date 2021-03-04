@@ -31,9 +31,9 @@ public class HttpMethods {
     /**
      * Creates and sends a generic GET (RETRIEVE resource) request object to the specified end-point.
      * @param uri specified end-point
-     * @return Response body containing resource
+     * @return Response object
      */
-    public static String get(URI uri) {
+    public static HttpResponse<String> get(URI uri) {
         // create the GET request
         HttpRequest request =  HttpRequest.newBuilder().GET().uri(uri).build();
         // send the request through the http client and store the response
@@ -42,21 +42,18 @@ public class HttpMethods {
         // if the status is anything other than 200 (OK), a problem should've occurred
         if (response.statusCode() != 200) {
             System.out.println("A problem occurred.");
-            // don't return body if there was a problem
-            return "Status: " + response.statusCode();
         }
 
-        System.out.println("Status: " + response.statusCode());
-
-        return response.body();
+        return response;
     }
 
     /**
      * Creates and sends a generic POST (CREATE resource) request object to the specified end-point.
      * @param uri specified end-point
      * @param body should be a JSON formatted String
+     * @return Response object
      */
-    public static void post(URI uri, String body) {
+    public static HttpResponse<String> post(URI uri, String body) {
         // create a POST request object with a body of JSON
         HttpRequest request = HttpRequest.newBuilder().POST(HttpRequest.BodyPublishers.ofString(body))
                                          .uri(uri).header("Content-Type", "application/json")
@@ -68,15 +65,16 @@ public class HttpMethods {
             System.out.println("A problem occurred.");
         }
 
-        System.out.println("Status: " + response.statusCode());
+        return response;
     }
 
     /**
      * Creates and sends a generic put (UPDATE resource) request object to the specified end-point.
      * @param uri specified end-point
      * @param body should be a JSON formatted String
+     * @return Response object
      */
-    public static void put(URI uri, String body) {
+    public static HttpResponse<String> put(URI uri, String body) {
         // create a PUT request object with a body of JSON
         HttpRequest request = HttpRequest.newBuilder().PUT(HttpRequest.BodyPublishers.ofString(body))
                                          .uri(uri).header("Content-Type", "application/json")
@@ -88,14 +86,15 @@ public class HttpMethods {
             System.out.println("A problem occurred.");
         }
 
-        System.out.println("Status: " + response.statusCode());
+        return response;
     }
 
     /**
      * Creates and sends generic delete (DELETE resource) request object to the specified end-point.
      * @param uri specified end-point
+     * @return Response object
      */
-    public static void delete(URI uri) {
+    public static HttpResponse<String> delete(URI uri) {
         // create a DELETE request object, the deleted resource will have a JSON body
         HttpRequest request = HttpRequest.newBuilder().DELETE()
                                          .uri(uri).header("Content-Type", "application/json")
@@ -109,6 +108,6 @@ public class HttpMethods {
             System.out.println("A problem occurred.");
         }
 
-        System.out.println("Status: " + response.statusCode());
+        return response;
     }
 }

@@ -7,6 +7,7 @@ import nl.tudelft.oopp.g7.common.Question;
 
 import java.lang.reflect.Type;
 import java.net.URI;
+import java.net.http.HttpResponse;
 import java.util.List;
 
 public class StudentServerCommunication {
@@ -19,16 +20,17 @@ public class StudentServerCommunication {
     /**
      * Sends a post request with appropriate NewQuestion body.
      * @param question NewQuestion object asked by student
+     * @return response body of the post request
      */
-    public static void askQuestion(NewQuestion question) {
+    public static HttpResponse<String> askQuestion(NewQuestion question) {
         // convert the body to JSON
         String body = gson.toJson(question);
 
         // add the appropriate end-point
         URI uri = URI.create(endBody + "/new");
 
-        // send the POST request
-        HttpMethods.post(uri, body);
+        // send the POST request and return the response
+        return HttpMethods.post(uri, body);
     }
 
     /**
@@ -40,8 +42,11 @@ public class StudentServerCommunication {
         // add the appropriate end-point
         URI uri = URI.create(endBody + "/" + id);
 
-        // retrieve the specified question
-        String question = HttpMethods.get(uri);
+        // retrieve the specified question's response
+        HttpResponse<String> response = HttpMethods.get(uri);
+
+        // extract the questions
+        String question = response.body();
 
         // parse the JSON into Question
         return gson.fromJson(question, Question.class);
@@ -56,7 +61,10 @@ public class StudentServerCommunication {
         URI uri = URI.create(endBody + "/all");
 
         // retrieve all of the questions
-        String questions = HttpMethods.get(uri);
+        HttpResponse<String> response = HttpMethods.get(uri);
+
+        // extract the questions
+        String questions = response.body();
 
         // create correct generic type for GSON parsing
         Type questionListType = new TypeToken<List<Question>>() {}.getType();
