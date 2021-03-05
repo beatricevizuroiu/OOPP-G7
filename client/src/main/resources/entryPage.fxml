@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="800.0" styleClass="background" stylesheets="@Entry.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EntryPage">
+   <children>
+      <Button layoutX="96.0" layoutY="250.0" mnemonicParsing="false" prefHeight="124.0" prefWidth="203.0" styleClass="rectangles" text="Create Room" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="27.0" />
+         </font></Button>
+      <Button layoutX="484.0" layoutY="250.0" mnemonicParsing="false" prefHeight="124.0" prefWidth="203.0" styleClass="rectangles" text="Join Room" textFill="#faf6f6">
+         <font>
+            <Font name="System Bold" size="27.0" />
+         </font></Button>
+      <TitledPane animated="false" prefHeight="59.0" prefWidth="800.0" styleClass="rectangles" text="Course Name" textFill="#15041a">
+         <font>
+            <Font name="System Bold" size="27.0" />
+         </font>
+      </TitledPane>
+      <Text layoutX="62.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lecturer:" wrappingWidth="348.2">
+         <font>
+            <Font size="27.0" />
+         </font></Text>
+   </children>
+</AnchorPane>
