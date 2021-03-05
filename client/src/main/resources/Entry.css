@@ -1,11 +1,19 @@
 .parent{
     -fx-background-color: transparent;
 }
-.background{
-    -fx-background-color: #701188;
+.backgroundTitlePnale{
+    -fx-background-color: #8D1BAA;
 }
 
-.rectangles{
-    -fx-background-color: #15041A;
+.buttonEntry{
+    -fx-background-color: #360A41;
+}
+
+.background{
+    -fx-background-color: #FFFFFF;
+}
+
+.buttons{
+    -fx-background-color: #8D1BAA;
 }
 

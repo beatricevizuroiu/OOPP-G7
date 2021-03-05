@@ -4,21 +4,21 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #701188;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CreateRoom">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" styleClass="background" stylesheets="@Entry.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CreateRoom">
    <children>
-      <Text fill="#15041a" layoutX="288.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Room" wrappingWidth="220.13671875">
+      <Text fill="#15041a" layoutX="296.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Room" wrappingWidth="220.13671875">
          <font>
             <Font name="System Bold" size="35.0" />
          </font></Text>
-      <TextField alignment="CENTER" layoutX="284.0" layoutY="200.0" prefHeight="64.0" prefWidth="231.0" style="-fx-font-style: #403D3D;" text="Enter name of Course">
+      <TextField alignment="CENTER" layoutX="277.0" layoutY="194.0" prefHeight="70.0" prefWidth="253.0" styleClass="buttons" text="Enter name of Course">
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font></TextField>
-      <TextField alignment="CENTER" layoutX="284.0" layoutY="280.0" prefHeight="64.0" prefWidth="231.0" text="Enter name of Lecturer">
+      <TextField alignment="CENTER" layoutX="277.0" layoutY="280.0" prefHeight="70.0" prefWidth="254.0" styleClass="buttons" text="Enter name of Lecturer">
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font></TextField>
-      <Button layoutX="762.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #00000;" text="X" textFill="#15041a">
+      <Button layoutX="762.0" layoutY="14.0" mnemonicParsing="false" styleClass="buttons" text="X" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
