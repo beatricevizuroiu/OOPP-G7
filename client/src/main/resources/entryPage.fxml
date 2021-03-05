@@ -4,9 +4,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="800.0" styleClass="background" stylesheets="@Entry.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EntryPage">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" styleClass="background" stylesheets="@Entry.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EntryPage">
    <children>
-      <Button layoutX="109.0" layoutY="205.0" mnemonicParsing="false" prefHeight="124.0" prefWidth="203.0" styleClass="rectangles" text="Create Room" textFill="WHITE">
+      <Button layoutX="109.0" layoutY="205.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="124.0" prefWidth="203.0" styleClass="rectangles" text="Create Room" textFill="WHITE">
          <font>
             <Font name="System Bold" size="27.0" />
          </font></Button>
@@ -14,7 +14,7 @@
          <font>
             <Font name="System Bold" size="27.0" />
          </font></Button>
-      <TitledPane animated="false" prefHeight="59.0" prefWidth="800.0" styleClass="rectangles" text="Application Name" textFill="#15041a">
+      <TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="59.0" prefWidth="800.0" styleClass="rectangles" text="Application Name" textFill="#15041a">
          <font>
             <Font name="System Bold" size="27.0" />
          </font>
