@@ -6,11 +6,11 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" styleClass="background" stylesheets="@Entry.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EntryPage">
    <children>
-      <Button layoutX="112.0" layoutY="205.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="124.0" prefWidth="203.0" styleClass="buttonEntry" stylesheets="@Entry.css" text="Create Room" textFill="WHITE">
+      <Button fx:id="createRoomButton" layoutX="112.0" layoutY="205.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="124.0" prefWidth="203.0" styleClass="buttonEntry" stylesheets="@Entry.css" text="Create Room" textFill="WHITE">
          <font>
             <Font name="System Bold" size="27.0" />
          </font></Button>
-      <Button layoutX="492.0" layoutY="205.0" mnemonicParsing="false" prefHeight="124.0" prefWidth="203.0" styleClass="buttonEntry" stylesheets="@Entry.css" text="Join Room" textFill="#faf6f6">
+      <Button fx:id="joinRoomButton" layoutX="492.0" layoutY="205.0" mnemonicParsing="false" prefHeight="124.0" prefWidth="203.0" styleClass="buttonEntry" stylesheets="@Entry.css" text="Join Room" textFill="#faf6f6">
          <font>
             <Font name="System Bold" size="27.0" />
          </font></Button>
@@ -21,7 +21,7 @@
                   <Font name="System Bold" size="35.0" />
                </font>
             </Text>
-            <Button layoutX="762.0" layoutY="7.0" mnemonicParsing="false" styleClass="buttonEntry" text="X" textFill="WHITE">
+            <Button fx:id="closeButton" layoutX="762.0" layoutY="7.0" mnemonicParsing="false" styleClass="buttonEntry" text="X" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>

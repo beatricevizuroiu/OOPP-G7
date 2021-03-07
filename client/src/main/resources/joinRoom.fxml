@@ -11,20 +11,20 @@
             <Font name="System Bold" size="35.0" />
          </font>
       </Text>
-      <TextField alignment="CENTER" layoutX="287.0" layoutY="175.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="64.0" prefWidth="231.0" styleClass="buttons" stylesheets="@Entry.css" text="Enter nickname">
+      <TextField fx:id="nickname" alignment="CENTER" layoutX="287.0" layoutY="175.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="64.0" prefWidth="231.0" styleClass="buttons" stylesheets="@Entry.css" text="Enter nickname">
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font></TextField>
-      <TextField alignment="CENTER" layoutX="287.0" layoutY="264.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="64.0" prefWidth="231.0" styleClass="buttons" text="Enter Room ID">
+      <TextField fx:id="roomId" alignment="CENTER" layoutX="287.0" layoutY="264.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="64.0" prefWidth="231.0" styleClass="buttons" text="Enter Room ID">
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font></TextField>
-      <TextField alignment="CENTER" layoutX="286.0" layoutY="350.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="64.0" prefWidth="231.0" styleClass="buttons" text="Enter Room Password">
+      <TextField fx:id="roomPasswprd" alignment="CENTER" layoutX="286.0" layoutY="350.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="64.0" prefWidth="231.0" styleClass="buttons" text="Enter Room Password">
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font>
       </TextField>
-      <Button layoutX="762.0" layoutY="8.0" mnemonicParsing="false" styleClass="buttons" text="X" textFill="WHITE">
+      <Button fx:id="closeButton" layoutX="762.0" layoutY="8.0" mnemonicParsing="false" styleClass="buttons" text="X" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Button>
