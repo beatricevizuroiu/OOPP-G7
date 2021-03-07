@@ -13,10 +13,13 @@
          </padding>
          <children>
             <ListView layoutX="153.0" layoutY="83.0" prefHeight="579.0" prefWidth="1258.0" />
-            <TextField fx:id="studentView" layoutX="153.0" layoutY="669.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="114.0" prefWidth="1258.0" />
+            <TextField fx:id="studentView" alignment="TOP_LEFT" layoutX="153.0" layoutY="669.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="114.0" prefWidth="1258.0" text="Type your question here">
+               <font>
+                  <Font name="Roboto Light" size="24.0" />
+               </font></TextField>
             <SplitPane prefHeight="810.0" prefWidth="120.0">
               <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="808.0" prefWidth="129.0" styleClass="side-pannel" />
+                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="810.0" prefWidth="120.0" styleClass="side-pannel" />
               </items>
             </SplitPane>
             <SplitPane prefHeight="75.0" prefWidth="1440.0" styleClass="course-panel">
@@ -32,11 +35,6 @@
                   </AnchorPane>
               </items>
             </SplitPane>
-            <Text layoutX="-4.0" layoutY="17.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type your question here" wrappingWidth="277.21875" x="166.0" y="687.0">
-               <font>
-                  <Font name="Roboto Light" size="24.0" />
-               </font>
-            </Text>
          </children></AnchorPane>
    </children>
 </VBox>
