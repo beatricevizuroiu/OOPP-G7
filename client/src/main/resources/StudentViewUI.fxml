@@ -13,7 +13,7 @@
          </padding>
          <children>
             <ListView layoutX="153.0" layoutY="83.0" prefHeight="579.0" prefWidth="1258.0" />
-            <TextField fx:id="studentView" alignment="TOP_LEFT" layoutX="153.0" layoutY="669.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="114.0" prefWidth="1258.0" text="Type your question here">
+            <TextField fx:id="studentView" alignment="TOP_LEFT" layoutX="153.0" layoutY="669.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="114.0" prefWidth="1123.0" text="Type your question here">
                <font>
                   <Font name="Roboto Light" size="24.0" />
                </font></TextField>
@@ -35,6 +35,10 @@
                   </AnchorPane>
               </items>
             </SplitPane>
+            <Button fx:id="postQuestionButton" layoutX="1281.0" layoutY="677.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="120.0" styleClass="buttons" stylesheets="@Entry.css" text="Post Question" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Button>
          </children></AnchorPane>
    </children>
 </VBox>
