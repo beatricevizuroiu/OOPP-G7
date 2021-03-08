@@ -6,6 +6,6 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor @NoArgsConstructor
 @Data
-public class NewQuestion {
+public class QuestionText {
     private String text;
 }

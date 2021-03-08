@@ -1,7 +1,7 @@
 package nl.tudelft.oopp.g7.client.communication;
 
 import com.google.gson.Gson;
-import nl.tudelft.oopp.g7.common.NewQuestion;
+import nl.tudelft.oopp.g7.common.QuestionText;
 import nl.tudelft.oopp.g7.common.Question;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -18,8 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
  * The server must be online for the tests to pass
  */
 public class StudentSeverCommunicationTest {
-    private static NewQuestion newQuestion;
-    private static NewQuestion anotherNewQuestion;
+    private static QuestionText questionText;
+    private static QuestionText anotherQuestionText;
     private static String endBody = "http://localhost:8080/api/v1/question";
     private static Gson gson = new Gson();
 
@@ -51,12 +51,12 @@ public class StudentSeverCommunicationTest {
         URI uri = URI.create(endBody + "/new");
 
         // if connection is alive create the questions with timestamps
-        newQuestion = new NewQuestion("Current time: " + (new Date()).getTime());
-        anotherNewQuestion = new NewQuestion("Current time: " + (new Date()).getTime());
+        questionText = new QuestionText("Current time: " + (new Date()).getTime());
+        anotherQuestionText = new QuestionText("Current time: " + (new Date()).getTime());
 
         // convert to json and send / store the response
-        HttpMethods.post(uri, gson.toJson(newQuestion));
-        HttpMethods.post(uri, gson.toJson(anotherNewQuestion));
+        HttpMethods.post(uri, gson.toJson(questionText));
+        HttpMethods.post(uri, gson.toJson(anotherQuestionText));
     }
 
     @Test
@@ -68,8 +68,8 @@ public class StudentSeverCommunicationTest {
 
         List<Question> questions = StudentServerCommunication.retrieveAllQuestions();
 
-        assertEquals(newQuestion.getText(), questions.get(questions.size() - 2).getText());
-        assertEquals(anotherNewQuestion.getText(), questions.get(questions.size() - 1).getText());
+        assertEquals(questionText.getText(), questions.get(questions.size() - 2).getText());
+        assertEquals(anotherQuestionText.getText(), questions.get(questions.size() - 1).getText());
     }
 
     @Test
@@ -79,7 +79,7 @@ public class StudentSeverCommunicationTest {
             return;
         }
 
-        // extract newQuestion and anotherNewQuestion
+        // extract questionText and anotherQuestionText
         List<Question> questions = StudentServerCommunication.retrieveAllQuestions();
         Question question = questions.get(questions.size() - 2);
         Question anotherQuestion = questions.get(questions.size() - 1);
@@ -102,20 +102,20 @@ public class StudentSeverCommunicationTest {
         }
 
 
-        // create a unique NewQuestion instance and send it
-        NewQuestion yetAnotherNewQuestion = new NewQuestion("Current time: " + (new Date()).getTime());
-        HttpResponse<String> response = StudentServerCommunication.askQuestion(yetAnotherNewQuestion);
-        System.out.println(yetAnotherNewQuestion.getText());
+        // create a unique QuestionText instance and send it
+        QuestionText yetAnotherQuestionText = new QuestionText("Current time: " + (new Date()).getTime());
+        HttpResponse<String> response = StudentServerCommunication.askQuestion(yetAnotherQuestionText);
+        System.out.println(yetAnotherQuestionText.getText());
 
-        // extract the yetAnotherNewQuestion
+        // extract the yetAnotherQuestionText
         List<Question> questions = StudentServerCommunication.retrieveAllQuestions();
         Question yetAnotherQuestion = questions.get(questions.size() - 1);
         System.out.println(yetAnotherQuestion.getText());
 
         // test whether the questions are the same
         assertEquals(200, response.statusCode());
-        assertEquals(yetAnotherNewQuestion.getText(), yetAnotherQuestion.getText());
-        assertNotEquals(newQuestion.getText(), yetAnotherQuestion.getText());
+        assertEquals(yetAnotherQuestionText.getText(), yetAnotherQuestion.getText());
+        assertNotEquals(questionText.getText(), yetAnotherQuestion.getText());
 
          */
     }

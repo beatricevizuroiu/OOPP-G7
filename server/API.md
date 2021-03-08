@@ -84,6 +84,17 @@ Get information about every question known to the system.
 ]
 ```
 
+## PUT `/questions/{id}`
+Edit the question with {id}.
+
+**Examples:**
+```http request
+PUT /api/v1/question/1
+{
+    "text": "This is updated question body."
+}
+```
+`No response`
 ## DELETE `/questions/{id}`
 Delete the question with {id}.
 

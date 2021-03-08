@@ -1,8 +1,7 @@
 package nl.tudelft.oopp.g7.server.controllers;
 
-import nl.tudelft.oopp.g7.common.Answer;
-import nl.tudelft.oopp.g7.common.NewQuestion;
 import nl.tudelft.oopp.g7.common.Question;
+import nl.tudelft.oopp.g7.common.QuestionText;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -70,6 +69,24 @@ class QuestionControllerTest {
     }
 
     @Test
+    void editQuestion() {
+        // Create the list of questions we expect to have.
+        List<Question> expected = new ArrayList<>();
+        expected.add(new Question(1, "This is a question", "", new Date(0), 0, false, false));
+        expected.add(new Question(2, "This is a question", "This is an answer to the question", new Date(1614511580000L), 0, true, false));
+        expected.add(new Question(3, "This is updated question body.", "", new Date(0), 20, true, true));
+
+        // Edit the question with id 3.
+        questionController.editQuestion(3, new QuestionText("This is updated question body."));
+
+        // Get the list of questions left.
+        List<Question> actual = questionController.getAllQuestions();
+
+        // Check if that list is the same as what we expect to see.
+        assertEquals(expected, actual);
+    }
+
+    @Test
     void deleteQuestion() {
         // Create the list of questions we expect to have.
         List<Question> expected = new ArrayList<>();
@@ -89,7 +106,7 @@ class QuestionControllerTest {
     @Test
     void newQuestion() {
         // Create a new question.
-        questionController.newQuestion(new NewQuestion("This is a new question"));
+        questionController.newQuestion(new QuestionText("This is a new question"));
 
         String expected = "This is a new question";
 
@@ -103,7 +120,7 @@ class QuestionControllerTest {
     @Test
     void answerQuestion() {
         // Answer question 1.
-        questionController.answerQuestion(1, new Answer("This an answer"));
+        questionController.answerQuestion(1, new QuestionText("This an answer"));
 
         // Get the question with id 1.
         Question actual = questionController.getQuestion(1).getBody();
