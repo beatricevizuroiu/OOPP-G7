@@ -71,7 +71,7 @@ public class QuestionController {
         // Check if there was no question found.
         if (question == null) {
             // If there was not log a warning and return http status code 404 (NOT_FOUND).
-            logger.warn("Question " + id + " was requested but does not exist!");
+            logger.debug("Question " + id + " was requested but does not exist!");
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
@@ -122,7 +122,7 @@ public class QuestionController {
             return new ResponseEntity<>(null, HttpStatus.OK);
         } else {
             // Otherwise log a warning and return http status code 404 (NOT_FOUND)
-            logger.warn("Question " + id + " was requested to be deleted but does not exist!");
+            logger.debug("Question " + id + " was requested to be deleted but does not exist!");
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
@@ -136,10 +136,16 @@ public class QuestionController {
         // Log the creation of a question
         logger.debug("A new question is being made.");
         // Create a new question in the database.
-        jdbcTemplate.update(QUERY_CREATE_QUESTION,
+        int rowsChanged = jdbcTemplate.update(QUERY_CREATE_QUESTION,
             // Set the first variable in the PreparedStatement to the text of the new question.
             (ps) -> ps.setString(1, newQuestion.getText())
         );
+        // Check whether the question was successfully created and log the result
+        if (rowsChanged == 0) {
+            logger.debug("A question was attempted to be made but it failed!");
+        } else {
+            logger.info("A question was successfully made.");
+        }
     }
 
     /**
@@ -163,7 +169,7 @@ public class QuestionController {
         // Check if there where no rows updated.
         if (rowsChanged == 0) {
             // If that is the case log a warning and respond with http status code 404 (NOT_FOUND).
-            logger.warn("Question " + id + " was requested to be answered but could not be edited!");
+            logger.debug("Question " + id + " was requested to be answered but could not be edited!");
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
