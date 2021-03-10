@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,8 @@ import java.util.List;
 @RestController()
 @RequestMapping("/api/v1/question")
 public class QuestionController {
+
+    Logger logger = LoggerFactory.getLogger(QuestionController.class);
 
     //TODO: Probably want to move the database table creation somewhere else.
     private static final String QUERY_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS questions("
@@ -34,9 +38,15 @@ public class QuestionController {
 
     private final JdbcTemplate jdbcTemplate;
 
+    /**
+     * Construct the database table if not yet present.
+     * @param jdbcTemplate The SQL query for creating the table(s) that should be made.
+     */
     public QuestionController(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         jdbcTemplate.execute(QUERY_CREATE_TABLE);
+        // Log QuestionController construction
+        logger.trace("Constructed QuestionController");
     }
 
     /**
@@ -47,6 +57,8 @@ public class QuestionController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Question> getQuestion(@PathVariable("id") int id) {
+        // Log question request
+        logger.debug("Question with id " + id + " requested");
         // Get the question with the id from the database.
         Question question = jdbcTemplate.query(QUERY_SELECT_QUESTION_BY_ID,
             // Set the first variable in the PreparedStatement to the id of the question being requested.
@@ -58,11 +70,13 @@ public class QuestionController {
 
         // Check if there was no question found.
         if (question == null) {
-            // If there was not return http status code 404 (NOT_FOUND).
+            // If there was not log a warning and return http status code 404 (NOT_FOUND).
+            logger.debug("Question " + id + " was requested but does not exist!");
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
-        // Otherwise return the question with http status code 200 (OK).
+        // Otherwise log a success and return the question with http status code 200 (OK).
+        logger.debug("Question " + id + " successfully returned.");
         return new ResponseEntity<>(question, HttpStatus.OK);
     }
 
@@ -72,6 +86,8 @@ public class QuestionController {
      */
     @GetMapping("/all")
     public List<Question> getAllQuestions() {
+        // Log questions request
+        logger.debug("All questions requested.");
         // Return every question in the database.
         return jdbcTemplate.query(QUERY_SELECT_ALL_QUESTIONS, (rs) -> {
             // Create a list to hold all questions.
@@ -94,15 +110,19 @@ public class QuestionController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteQuestion(@PathVariable("id") int id) {
+        // Log the deletion request
+        logger.debug("Question " + id + " is being deleted.");
         // Try to delete the question with id and store the amount of rows changed.
         int rowsChanged = jdbcTemplate.update(QUERY_DELETE_QUESTION, (ps) -> ps.setInt(1, id));
 
         // Check if there was a question deleted.
         if (rowsChanged == 1) {
-            // If there was return http status code 200 (OK)
+            // If there was log the deletion and return http status code 200 (OK)
+            logger.info("Question " + id + " has successfully been deleted.");
             return new ResponseEntity<>(null, HttpStatus.OK);
         } else {
-            // Otherwise return http status code 404 (NOT_FOUND)
+            // Otherwise log a warning and return http status code 404 (NOT_FOUND)
+            logger.debug("Question " + id + " was requested to be deleted but does not exist!");
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
@@ -113,11 +133,19 @@ public class QuestionController {
      */
     @PostMapping("/new")
     public void newQuestion(@RequestBody NewQuestion newQuestion) {
+        // Log the creation of a question
+        logger.debug("A new question is being made.");
         // Create a new question in the database.
-        jdbcTemplate.update(QUERY_CREATE_QUESTION,
+        int rowsChanged = jdbcTemplate.update(QUERY_CREATE_QUESTION,
             // Set the first variable in the PreparedStatement to the text of the new question.
             (ps) -> ps.setString(1, newQuestion.getText())
         );
+        // Check whether the question was successfully created and log the result
+        if (rowsChanged == 0) {
+            logger.debug("A question was attempted to be made but it failed!");
+        } else {
+            logger.info("A question was successfully made.");
+        }
     }
 
     /**
@@ -128,6 +156,8 @@ public class QuestionController {
      */
     @PostMapping("/{id}/answer")
     public ResponseEntity<Void> answerQuestion(@PathVariable int id, @RequestBody Answer answer) {
+        // Log the answering of a question
+        logger.debug("Question " + id + " is being answered");
         // Update the question with the answer and store the amount of rows changed in a variable.
         int rowsChanged = jdbcTemplate.update(QUERY_ANSWER_QUESTION,
             (ps) -> {
@@ -138,11 +168,13 @@ public class QuestionController {
             });
         // Check if there where no rows updated.
         if (rowsChanged == 0) {
-            // If that is the case respond with http status code 404 (NOT_FOUND).
+            // If that is the case log a warning and respond with http status code 404 (NOT_FOUND).
+            logger.debug("Question " + id + " was requested to be answered but could not be edited!");
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
-        // Otherwise respond with http status code 200 (OK).
+        // Otherwise log a success and respond with http status code 200 (OK).
+        logger.debug("Question " + id + " answered successfully.");
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 }
