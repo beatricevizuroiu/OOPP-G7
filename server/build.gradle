@@ -13,12 +13,19 @@ configurations {
 	}
 }
 
+configurations.all {
+	exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+}
+
+
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-	// Local test database (in-memory)
+	runtimeOnly 'org.postgresql:postgresql'
+
 	implementation 'com.h2database:h2'
 	developmentOnly 'org.hibernate:hibernate-entitymanager'
 
@@ -29,6 +36,10 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 
 	compile project(':common')
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 asciidoctor {
