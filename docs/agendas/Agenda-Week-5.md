@@ -14,7 +14,11 @@ Note taker:     Elena Martellucci
 
 # Approval of the agenda
 ## Approval List
+ - Beatrice Vizuroiu
  - Cody Boon
+ - Elena Martellucci
+ - Kalle Struik
+ - Mehmet Alp Sozuduz
 
 
 # Points of action
