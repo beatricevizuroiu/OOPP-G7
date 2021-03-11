@@ -1,7 +1,7 @@
 package nl.tudelft.oopp.g7.client.communication;
 
 import com.google.gson.Gson;
-import nl.tudelft.oopp.g7.common.NewQuestion;
+import nl.tudelft.oopp.g7.common.QuestionText;
 import org.junit.jupiter.api.Test;
 
 import java.net.URI;
@@ -45,7 +45,7 @@ public class HttpMethodsTest {
         URI uri = URI.create(endBody + "/post");
 
         // create a dummy body for easy JSON conversion
-        NewQuestion newQuestion = new NewQuestion("Test");
+        QuestionText newQuestion = new QuestionText("Test");
 
         // convert to json and send / store the response
         HttpResponse<String> response = HttpMethods.post(uri, gson.toJson(newQuestion));
@@ -59,7 +59,7 @@ public class HttpMethodsTest {
         URI uri = URI.create(endBody + "/dummy");
 
         // create a dummy body for easy JSON conversion
-        NewQuestion newQuestion = new NewQuestion("Test");
+        QuestionText newQuestion = new QuestionText("Test");
 
         // convert to json and send / store the response
         HttpResponse<String> response = HttpMethods.post(uri, gson.toJson(newQuestion));
@@ -75,7 +75,7 @@ public class HttpMethodsTest {
         URI uri = URI.create(endBody + "/put");
 
         // create a dummy body for easy JSON conversion
-        NewQuestion newQuestion = new NewQuestion("Test");
+        QuestionText newQuestion = new QuestionText("Test");
 
         // convert to json and send / store the response
         HttpResponse<String> response = HttpMethods.put(uri, gson.toJson(newQuestion));
@@ -90,7 +90,7 @@ public class HttpMethodsTest {
         URI uri = URI.create(endBody + "/dummy");
 
         // create a dummy body for easy JSON conversion
-        NewQuestion newQuestion = new NewQuestion("Test");
+        QuestionText newQuestion = new QuestionText("Test");
 
         // convert to json and send / store the response
         HttpResponse<String> response = HttpMethods.put(uri, gson.toJson(newQuestion));

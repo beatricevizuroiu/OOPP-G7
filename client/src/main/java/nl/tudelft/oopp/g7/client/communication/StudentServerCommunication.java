@@ -2,7 +2,7 @@ package nl.tudelft.oopp.g7.client.communication;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import nl.tudelft.oopp.g7.common.NewQuestion;
+import nl.tudelft.oopp.g7.common.QuestionText;
 import nl.tudelft.oopp.g7.common.Question;
 
 import java.lang.reflect.Type;
@@ -15,19 +15,19 @@ public class StudentServerCommunication {
     // opted for static for now, should be changed when multiple lectures are added
     private static final Gson gson = new Gson();
     // again opted for static final since end-point is fixed
-    private static final String endBody = "http://localhost:8080/api/v1/question";
+    private static final String endBody = "http://localhost:8080/api/v1";
 
     /**
      * Sends a post request with appropriate NewQuestion body.
-     * @param question NewQuestion object asked by student
+     * @param question QuestionText asked by student
      * @return response body of the post request
      */
-    public static HttpResponse<String> askQuestion(NewQuestion question) {
+    public static HttpResponse<String> askQuestion(QuestionText question) {
         // convert the body to JSON
         String body = gson.toJson(question);
 
         // add the appropriate end-point
-        URI uri = URI.create(endBody + "/new");
+        URI uri = URI.create(endBody + "/question/new");
 
         // send the POST request and return the response
         return HttpMethods.post(uri, body);
@@ -40,7 +40,7 @@ public class StudentServerCommunication {
      */
     public static Question retrieveQuestionById(int id) {
         // add the appropriate end-point
-        URI uri = URI.create(endBody + "/" + id);
+        URI uri = URI.create(endBody + "/question/" + id);
 
         // retrieve the specified question's response
         HttpResponse<String> response = HttpMethods.get(uri);
@@ -58,7 +58,7 @@ public class StudentServerCommunication {
      */
     public static List<Question> retrieveAllQuestions() {
         // add the appropriate end-point
-        URI uri = URI.create(endBody + "/all");
+        URI uri = URI.create(endBody + "/question/all");
 
         // retrieve all of the questions
         HttpResponse<String> response = HttpMethods.get(uri);

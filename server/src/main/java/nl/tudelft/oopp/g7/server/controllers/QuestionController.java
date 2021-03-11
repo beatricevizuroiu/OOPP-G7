@@ -1,8 +1,7 @@
 package nl.tudelft.oopp.g7.server.controllers;
 
-import nl.tudelft.oopp.g7.common.Answer;
-import nl.tudelft.oopp.g7.common.NewQuestion;
 import nl.tudelft.oopp.g7.common.Question;
+import nl.tudelft.oopp.g7.common.QuestionText;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -34,6 +33,7 @@ public class QuestionController {
     private static final String QUERY_SELECT_ALL_QUESTIONS = "SELECT * FROM questions";
     private static final String QUERY_CREATE_QUESTION = "INSERT INTO questions (text) VALUES (?)";
     private static final String QUERY_ANSWER_QUESTION = "UPDATE questions SET answer=?, answered=true WHERE id=?";
+    private static final String QUERY_EDIT_QUESTION = "UPDATE questions SET text=?, edited=true WHERE id=?";
     private static final String QUERY_DELETE_QUESTION = "DELETE FROM questions WHERE id=?";
 
     private final JdbcTemplate jdbcTemplate;
@@ -103,6 +103,33 @@ public class QuestionController {
     }
 
     /**
+     * Endpoint to edit questions.
+     * @param id The id of the question to edit.
+     * @param question The {@link QuestionText} that will replace the old one.
+     * @return A {@link ResponseEntity} containing NULL and a status code of 200 (OK) if a question was edited and 404
+     *       (NOT_FOUND) if no question was edited.
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> editQuestion(@PathVariable("id") int id, @RequestBody QuestionText question) {
+        // Try to edit the question body and store the number of effected rows.
+        int rowsChanged = jdbcTemplate.update(QUERY_EDIT_QUESTION,
+                (ps) -> {
+                    // Set the first variable in the PreparedStatement to the new text body of the question.
+                    ps.setString(1, question.getText());
+                    // Set the second variable in the PreparedStatement to the id of the question to update.
+                    ps.setInt(2, id);
+                });
+
+        if (rowsChanged == 1) {
+            // If there was return http status code 200 (OK)
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        } else {
+            // Otherwise return http status code 404 (NOT_FOUND)
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
      * Endpoint to delete questions.
      * @param id The id of the question to delete.
      * @return A {@link ResponseEntity} containing NULL and a status code of 200 (OK) if a question was delete and 404
@@ -129,12 +156,13 @@ public class QuestionController {
 
     /**
      * Endpoint to create a new question.
-     * @param newQuestion The {@link NewQuestion} object representing the new question.
+     * @param newQuestion The {@link QuestionText} object representing the new question.
      */
     @PostMapping("/new")
-    public void newQuestion(@RequestBody NewQuestion newQuestion) {
+    public void newQuestion(@RequestBody QuestionText newQuestion) {
         // Log the creation of a question
         logger.debug("A new question is being made.");
+
         // Create a new question in the database.
         int rowsChanged = jdbcTemplate.update(QUERY_CREATE_QUESTION,
             // Set the first variable in the PreparedStatement to the text of the new question.
@@ -151,18 +179,19 @@ public class QuestionController {
     /**
      * Endpoint to answer a question.
      * @param id The id of the question being answered.
-     * @param answer The {@link Answer} to the question.
+     * @param answer The {@link QuestionText} to the question.
      * @return A {@link ResponseEntity} containing NULL and a http status of 200 (OK) if a row is changed and 404 (NOT_FOUND) if no rows changed.
      */
     @PostMapping("/{id}/answer")
-    public ResponseEntity<Void> answerQuestion(@PathVariable int id, @RequestBody Answer answer) {
+    public ResponseEntity<Void> answerQuestion(@PathVariable int id, @RequestBody QuestionText answer) {
         // Log the answering of a question
         logger.debug("Question " + id + " is being answered");
+        
         // Update the question with the answer and store the amount of rows changed in a variable.
         int rowsChanged = jdbcTemplate.update(QUERY_ANSWER_QUESTION,
             (ps) -> {
                 // Set the first variable in the PreparedStatement to the answer to the question.
-                ps.setString(1, answer.getAnswer());
+                ps.setString(1, answer.getText());
                 // Set the second variable in the PreparedStatement to the id of the question to update.
                 ps.setInt(2, id);
             });
