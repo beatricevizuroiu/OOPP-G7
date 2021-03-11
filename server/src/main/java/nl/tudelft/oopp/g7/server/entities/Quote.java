@@ -1,7 +1,6 @@
 package nl.tudelft.oopp.g7.server.entities;
 
 import nl.tudelft.oopp.g7.common.Question;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;

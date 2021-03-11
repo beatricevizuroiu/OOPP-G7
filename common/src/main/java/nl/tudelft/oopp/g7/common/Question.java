@@ -2,7 +2,6 @@ package nl.tudelft.oopp.g7.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
 import java.util.Date;
 
 @AllArgsConstructor @Data
