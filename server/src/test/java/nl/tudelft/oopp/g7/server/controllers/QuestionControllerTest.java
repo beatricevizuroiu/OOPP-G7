@@ -69,6 +69,24 @@ class QuestionControllerTest {
     }
 
     @Test
+    void upvoteQuestion() {
+        // Create the list of question we expect to have.
+        List<Question> expected = new ArrayList<>();
+        expected.add(new Question(1, "This is a question", "", new Date(0), 0, false, false));
+        expected.add(new Question(2, "This is a question", "This is an answer to the question", new Date(1614511580000L), 0, true, false));
+        expected.add(new Question(3, "This is a question", "", new Date(0), 21, true, false));
+
+        // Upvote the question with id 3.
+        questionController.upvoteQuestion(3);
+
+        // Get all questions from the controller.
+        List<Question> actual = questionController.getAllQuestions();
+
+        // Check if they are the same.
+        assertEquals(expected, actual);
+    }
+
+    @Test
     void editQuestion() {
         // Create the list of questions we expect to have.
         List<Question> expected = new ArrayList<>();
