@@ -103,6 +103,12 @@ public class QuestionController {
         });
     }
 
+    /**
+     * Endpoint for upvoting a question.
+     * @param id The id of the question that will be upvoted.
+     * @return A {@link ResponseEntity} containing NULL and a status code of 200 (OK) if a question was upvoted and 404
+     *       (NOT_FOUND) if no question was upvoted.
+     */
     @PutMapping("/{id}/upvote")
     public ResponseEntity<Void> upvoteQuestion(@PathVariable("id") int id) {
         // Try to increase the upvote number by 1 and store the number of effected rows.
