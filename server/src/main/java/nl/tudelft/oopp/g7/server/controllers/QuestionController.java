@@ -34,6 +34,7 @@ public class QuestionController {
     private static final String QUERY_CREATE_QUESTION = "INSERT INTO questions (text) VALUES (?)";
     private static final String QUERY_ANSWER_QUESTION = "UPDATE questions SET answer=?, answered=true WHERE id=?";
     private static final String QUERY_EDIT_QUESTION = "UPDATE questions SET text=?, edited=true WHERE id=?";
+    private static final String QUERY_UPVOTE_QUESTION = "UPDATE questions SET upvotes = upvotes + 1 WHERE id=?";
     private static final String QUERY_DELETE_QUESTION = "DELETE FROM questions WHERE id=?";
 
     private final JdbcTemplate jdbcTemplate;
@@ -102,6 +103,20 @@ public class QuestionController {
         });
     }
 
+    @PutMapping("/{id}/upvote")
+    public ResponseEntity<Void> upvoteQuestion(@PathVariable("id") int id) {
+        // Try to increase the upvote number by 1 and store the number of effected rows.
+        int rowsChanged = jdbcTemplate.update(QUERY_UPVOTE_QUESTION, (ps) -> ps.setInt(1, id));
+
+        if (rowsChanged == 1) {
+            // If there was return http status code 200 (OK)
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        } else {
+            // Otherwise return http status code 404 (NOT_FOUND)
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
     /**
      * Endpoint to edit questions.
      * @param id The id of the question to edit.
@@ -113,12 +128,12 @@ public class QuestionController {
     public ResponseEntity<Void> editQuestion(@PathVariable("id") int id, @RequestBody QuestionText question) {
         // Try to edit the question body and store the number of effected rows.
         int rowsChanged = jdbcTemplate.update(QUERY_EDIT_QUESTION,
-                (ps) -> {
-                    // Set the first variable in the PreparedStatement to the new text body of the question.
-                    ps.setString(1, question.getText());
-                    // Set the second variable in the PreparedStatement to the id of the question to update.
-                    ps.setInt(2, id);
-                });
+            (ps) -> {
+                // Set the first variable in the PreparedStatement to the new text body of the question.
+                ps.setString(1, question.getText());
+                // Set the second variable in the PreparedStatement to the id of the question to update.
+                ps.setInt(2, id);
+            });
 
         if (rowsChanged == 1) {
             // If there was return http status code 200 (OK)
