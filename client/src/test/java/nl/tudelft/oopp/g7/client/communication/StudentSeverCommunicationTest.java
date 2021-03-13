@@ -42,7 +42,6 @@ public class StudentSeverCommunicationTest {
         System.out.println(isConnected);
     }
 
-
     /**
      * Helper method for setting up the test suite.
      */
@@ -95,7 +94,6 @@ public class StudentSeverCommunicationTest {
         // Since it alters composition it messed up the test suite
         // However, it is standalone tested and indeed works
 
-        /*
         // in the case that the server is not connected do not test
         if (!isConnected) {
             return;
@@ -116,7 +114,5 @@ public class StudentSeverCommunicationTest {
         assertEquals(200, response.statusCode());
         assertEquals(yetAnotherQuestionText.getText(), yetAnotherQuestion.getText());
         assertNotEquals(questionText.getText(), yetAnotherQuestion.getText());
-
-         */
     }
 }
