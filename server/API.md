@@ -84,10 +84,19 @@ Get information about every question known to the system.
 ]
 ```
 
+## PUT `/questions/{id}/upvote`
+Upvote the question with {id}.
+
+**Example:**
+```http request
+PUT /api/v1/question/1/upvote
+```
+`No response`
+
 ## PUT `/questions/{id}`
 Edit the question with {id}.
 
-**Examples:**
+**Example:**
 ```http request
 PUT /api/v1/question/1
 {
@@ -95,6 +104,7 @@ PUT /api/v1/question/1
 }
 ```
 `No response`
+
 ## DELETE `/questions/{id}`
 Delete the question with {id}.
 
