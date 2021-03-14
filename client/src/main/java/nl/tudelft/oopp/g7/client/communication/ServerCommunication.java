@@ -3,6 +3,7 @@ package nl.tudelft.oopp.g7.client.communication;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import nl.tudelft.oopp.g7.common.Question;
+import nl.tudelft.oopp.g7.common.QuestionText;
 
 import java.lang.reflect.Type;
 import java.net.URI;
@@ -18,7 +19,7 @@ public class ServerCommunication {
      * Retrieve a question specified by ID.
      * @param roomID ID of the room student belongs
      * @param questionID ID of the question
-     * @return Question that was specified
+     * @return {@link Question} that was specified
      */
     public static Question retrieveQuestionById(int roomID, int questionID) {
         // add the appropriate end-point
@@ -37,7 +38,7 @@ public class ServerCommunication {
     /**
      * Retrieves all questions from the server.
      * @param roomID ID of the room student belongs
-     * @return a list of Questions that include all questions on server
+     * @return a {@link List} of Questions that include all questions on server
      */
     public static List<Question> retrieveAllQuestions(int roomID) {
         // add the appropriate end-point
@@ -56,6 +57,11 @@ public class ServerCommunication {
         return gson.fromJson(questions, questionListType);
     }
 
+    /**
+     * Retrieves all questions and filters them to only answered questions.
+     * @param roomID ID of the room student belongs
+     * @return a {@link List} of Questions that includes only answered questions on the server
+     */
     public static List<Question> retrieveAllAnsweredQuestions(int roomID) {
         // get a list of all questions
         List<Question> questionList = retrieveAllQuestions(roomID);
@@ -67,12 +73,29 @@ public class ServerCommunication {
         return questionList;
     }
 
-
     /**
-     * Deletes the question with the specified ID.
+     * Edit the question with the specified ID.
      * @param roomID ID of the room student belongs
      * @param questionID ID of the question
-     * @return A {@link HttpResponse<String>} containing the response received from server.
+     * @param questionText new text body of the question
+     * @return A {@link HttpResponse} containing the response received from server.
+     */
+    public static HttpResponse<String> editQuestion(int roomID, int questionID, QuestionText questionText) {
+        // convert the body to JSON
+        String body = gson.toJson(questionText);
+
+        // add the appropriate end-point
+        URI uri = URI.create(endBody + roomID + "/question/" + questionID);
+
+        // send the PUT request and return the response
+        return HttpMethods.put(uri, body);
+    }
+
+    /**
+     * Delete the question with the specified ID.
+     * @param roomID ID of the room student belongs
+     * @param questionID ID of the question
+     * @return A {@link HttpResponse} containing the response received from server.
      */
     public static HttpResponse<String> deleteQuestion(int roomID, int questionID) {
         // add the appropriate end-point

@@ -18,7 +18,7 @@ public class StudentServerCommunication {
      * Sends a post request with appropriate NewQuestion body.
      * @param roomID ID of the room students belongs
      * @param question QuestionText asked by student
-     * @return response body of the post request
+     * @return A {@link HttpResponse} containing the response received from server.
      */
     public static HttpResponse<String> askQuestion(int roomID, QuestionText question) {
         // convert the body to JSON
@@ -34,7 +34,7 @@ public class StudentServerCommunication {
     /**
      * Retrieve all questions from the server and sort them based on most recent.
      * @param roomID ID of the room students belongs
-     * @return A {@link List<Question>} containing all questions in sorted order.
+     * @return A {@link List} of question containing all questions in sorted order.
      */
     public static List<Question> retrieveAllQuestions(int roomID) {
         // retrieve the question list from server
@@ -46,24 +46,52 @@ public class StudentServerCommunication {
     }
 
     /**
+     * Edit a question if it is owned by the student.
+     * @param roomID ID of the room students belongs
+     * @param questionID ID of the question
+     * @param ownedQuestions a List containing questions owned (asked) by the student
+     * @return A {@link HttpResponse} containing the response received from server.
+     */
+    public static HttpResponse<String> editQuestion(int roomID, int questionID, QuestionText questionText,
+                                                                                List<Question> ownedQuestions) {
+        // check if the question is sent by the student
+        // FIXME: ideally handle it elsewhere
+        if (!isOwned(questionID, ownedQuestions)) {
+            System.out.println("The question does not belong to student.");
+            return null;
+        }
+
+        // edit the question and return the response
+        return ServerCommunication.editQuestion(roomID, questionID, questionText);
+    }
+
+    /**
      * Delete a question if it is owned by the student.
      * @param roomID ID of the room students belongs
      * @param questionID ID of the question
      * @param ownedQuestions a List containing questions owned (asked) by the student
-     * @return A {@link HttpResponse<String>} containing the response received from server.
+     * @return A {@link HttpResponse} containing the response received from server.
      */
     public static HttpResponse<String> deleteQuestion(int roomID, int questionID, List<Question> ownedQuestions) {
         // check if the question is sent by the student
-        boolean isOwned = ownedQuestions.stream().map(Question::getId)
-                                        .collect(Collectors.toList()).contains(questionID);
-
         // FIXME: ideally handle it elsewhere
-        if (!isOwned) {
+        if (!isOwned(questionID, ownedQuestions)) {
             System.out.println("The question does not belong to student.");
             return null;
         }
 
         // delete the question and return the response
         return ServerCommunication.deleteQuestion(roomID, questionID);
+    }
+
+    /**
+     * Checks whether the question is sent by the student
+     * @param questionID ID of the question
+     * @param ownedQuestions a List containing questions owned (asked) by the student
+     * @return a boolean that tells whether the question with specified ID is asked by the student
+     */
+    public static boolean isOwned(int questionID, List<Question> ownedQuestions) {
+        return ownedQuestions.stream().map(Question::getId)
+                             .collect(Collectors.toList()).contains(questionID);
     }
 }
