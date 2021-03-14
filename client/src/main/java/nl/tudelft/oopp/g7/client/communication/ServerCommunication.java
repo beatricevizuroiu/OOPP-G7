@@ -56,6 +56,18 @@ public class ServerCommunication {
         return gson.fromJson(questions, questionListType);
     }
 
+    public static List<Question> retrieveAllAnsweredQuestions(int roomID) {
+        // get a list of all questions
+        List<Question> questionList = retrieveAllQuestions(roomID);
+
+        // remove all of the unanswered questions
+        questionList.removeIf(q -> !q.isAnswered());
+
+        // return the new question list
+        return questionList;
+    }
+
+
     /**
      * Deletes the question with the specified ID.
      * @param roomID ID of the room student belongs

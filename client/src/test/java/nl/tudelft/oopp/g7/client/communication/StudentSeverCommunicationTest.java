@@ -25,6 +25,7 @@ public class StudentSeverCommunicationTest {
 
     private static boolean isConnected;
 
+    /*
     @BeforeAll
     static void testConnection() {
         try {
@@ -45,6 +46,8 @@ public class StudentSeverCommunicationTest {
     /**
      * Helper method for setting up the test suite.
      */
+
+    /*
     private static void setUp() {
         // create the URI
         URI uri = URI.create(endBody + "/new");
@@ -71,6 +74,7 @@ public class StudentSeverCommunicationTest {
         assertEquals(anotherQuestionText.getText(), questions.get(questions.size() - 1).getText());
     }
 
+    /*
     @Test
     void testRetrieveQuestionByID() {
         // in the case that the server is not connected do not test
@@ -115,4 +119,5 @@ public class StudentSeverCommunicationTest {
         assertEquals(yetAnotherQuestionText.getText(), yetAnotherQuestion.getText());
         assertNotEquals(questionText.getText(), yetAnotherQuestion.getText());
     }
+    */
 }
