@@ -42,7 +42,7 @@ public class ServerCommunication {
      */
     public static List<Question> retrieveAllQuestions(int roomID) {
         // add the appropriate end-point
-        URI uri = URI.create(endBody + roomID +"/question/all");
+        URI uri = URI.create(endBody + roomID + "/question/all");
 
         // retrieve all of the questions
         HttpResponse<String> response = HttpMethods.get(uri);

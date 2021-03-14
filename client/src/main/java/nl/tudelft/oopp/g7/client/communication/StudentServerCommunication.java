@@ -85,7 +85,7 @@ public class StudentServerCommunication {
     }
 
     /**
-     * Checks whether the question is sent by the student
+     * Checks whether the question is sent by the student.
      * @param questionID ID of the question
      * @param ownedQuestions a List containing questions owned (asked) by the student
      * @return a boolean that tells whether the question with specified ID is asked by the student
