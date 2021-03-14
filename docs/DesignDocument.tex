@@ -1,0 +1,140 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, width=160mm, top=20mm, bottom 20mm]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{ulem}
+\usepackage{forest}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+
+
+
+\setlength{\textheight}{25.7cm}
+\setlength{\textwidth}{16cm}
+\setlength{\unitlength}{1mm}
+\setlength{\topskip}{2.5truecm}
+\topmargin 260mm \advance \topmargin -\textheight 
+\divide \topmargin by 2 \advance \topmargin -1in 
+\headheight 0pt \headsep 0pt \leftmargin 210mm \advance
+\leftmargin -\textwidth 
+\divide \leftmargin by 2 \advance \leftmargin -1in 
+\oddsidemargin \leftmargin \evensidemargin \leftmargin
+\parindent=0pt
+
+\frenchspacing
+
+\usepackage{microtype}
+\usepackage[english]{babel}
+\usepackage{listings}
+\newcommand{\mylanguage}{english}
+
+
+\title{Design Document}
+\author{Beatrice-Andreea Vizuroiu, Cody Boon, Elena Martellucci, Kalle Struik, Mehmet Alp Sozuduz }
+\date{March 2021}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+
+\begin{document}
+
+\maketitle
+
+\section{Responsible CS}
+"In what way would our design process and final product change if we also had to design our product for one additional value of a ‘non-obvious’ stakeholder?" That is the question that we have to ask ourselves when creating a product.\\
+\\We start by defining eight stakeholders\\
+\begin{center}
+    \begin{tabular}{ | l | l | l | l | l |}
+    \hline
+    Direct    & Indirect \\ \hline \hline
+    Client  & Anyone else on the same bandwidth/with the same API  \\ \hline
+    Lecturer  &??  \\ \hline
+    TA  &??  \\ \hline
+    Students  &   \\ \hline
+    Tu Delft  &   \\ \hline
+    \end{tabular}
+\end{center}
+
+\\ The chosen stakeholder in which we will focus on is the \textbf{TU Delft} institution. This is because all the users and systems have to follow its rules and regulation. \\
+
+\\A list of three ethical values that we presume important to TU Delft, in the context of an online system that students can ask questions on, are listed below. 
+\begin{itemize}
+    \item Privacy:  As stated in the Student charter 2020-2021 "Your personal data can only be accessed by TU Delft staff who are directly or indirectly involved with student administration."\citep{TUDelftMan} TU Delft also outlines a number of legal rights, such as: right of inspection, right to rectification and supplementation, right to object, right to data portability, right to be forgotten, right to restriction of processing and right to file a complaint. Therefore as a product designed to be used within the TU Delft ecosystem we need to assure that it follows the whole protocol.
+    \item House rules and disciplinary measures: Specifically regarding the use of Educational ICT Facilities, there are some rules that students have to follow when using it. Such as using a falsified identity, use for educational purposes and  the violation of copyright and intellectual property rights. This is important because a large number of students may be using these facilities when using the program, therefore the program has to these regulations.  \citep{TUDelftICT} (maybe change this one because it is not related to anything we will be doing, i.e. in person stuff) 
+    \item Code of Ethics: All members of the TU Delft have to follow a Code of Ethics, which includes but is not limited to what to do if you see behaviour that you consider to be inappropriate or (in more serious cases) what to do if you see someone breaking any of the rules stated above. \citep{TUDelftMan}
+\end{itemize}
+
+\\ To find a definition of privacy in the context of a forum in which students can ask questions, it is first important to understand the difference between \textbf{the right of privacy} and \textbf{private information}. The right of privacy is a legal definition that requires the ability to keep personal life secret if they so wish, this encompasses  personal information/activities/spaces. Therefore the information privacy is a subsection of the right of privacy, which in the context of a forum means that users have personal information that they don't want to be shared outside the approved community. \citep{PrivacyComputing}\\
+
+\\A good example that closely relates to what we are doing are online forums. More specifically a online tool which is very similar to our product is Pigeonhole Live (add source)  (ADD: Based on your experiences in the previous steps, an indication of what you would integrate in your design process to learn more about the chosen value and/or stakeholder, e.g., which academic literature, artworks, experts in domain different than yours etc. you would have to consult/include in your project; give some general indication: e.g. “I would discuss with social scientists who have study the phenomenon X, I would check documentaries on discrimination of the group Y, I would study legal/philosophical literature on the right to Z, political studies on the meaning of democracy etc.))\\
+
+\\The following figure is the Values Hierarchy of the chosen ethical value (i.e. Privacy) \\
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Responsible CS_tree.pdf}
+    \caption{Values Hierarchy showing from left to right the value (i.e. privacy), norms and design requirements..}
+    \label{fig:tree}
+\end{figure}
+
+
+\\(ADD: The design changes that are required in order to design for the additional value/stakeholder will create issues, specifically regarding \textbf{authentication}. This is because the client (stakeholder 1) and the TU Delft (stakeholder 4) want two different things. The client specified that authentication is a "won't have" due to the difficulty working with bureaucracy and not having enough resources to implement it. But the biggest problem is with time, there is simply not enough of it to work on something as important as authentication. On the other hand TU Delft prioritises privacy, therefore not having authentication will cause problems in the long run. Specifically if we want to implement the program within the TU Delft ecosystem.  This will be resolved if we are tasked to continue working on it. But in the current time frame authentication will not be possible to implement \\
+
+
+\section{HCI}
+\begin{itemize}
+\item Introduction
+    \begin{itemize}
+        \item Briefly describe the objective of your evaluation, and the current state of your application.
+    \end{itemize}
+\item Methods
+    \begin{itemize}
+        \item Experts
+        \begin{itemize}
+            \item How many experts did you recruit? What is their level of expertise?
+        \end{itemize}
+    \end{itemize}
+    \begin{itemize}
+        \item Procedure
+        \begin{itemize}
+            \item Describe, in detail, what experts needed to do. Someone reading this section should be able to replicate what they did.
+            \item This should include:
+                \begin{itemize}
+                    \item How are you instructing experts on what to do?
+                    \item What are the experts seeing? A prototype, application, design?
+                    \item What do they need to do step by step?
+                    \item What heuristics are they using?
+                \end{itemize}
+        \end{itemize}
+        \item Measures (data collection)
+            \begin{itemize}
+                \item What are you measuring? Describe what the experts need to report, and how you record this. Someone reading this section should know the format of your raw results.
+            \end{itemize}
+    \end{itemize}
+\item Results
+    \begin{itemize}
+        \item What are your results? Report on your findings.
+        \begin{itemize}
+            \item If you make any adjustments (averages, etc.) report what you have done! You will probably not be able to just show all your raw results, so let the reader know how you got from the raw results to what you are reporting.
+            \item If you prioritize the list of problems (for instance with the matrix used in the lecture), show how you have prioritized your problems.
+        \end{itemize}
+    \end{itemize}
+\item Conclusions and Improvements
+    \begin{itemize}
+        \item What are your main conclusions from these results?
+        \begin{itemize}
+            \item This section should lead from the Results into the Improvements.
+        \end{itemize}
+        \item Describe how you would improve our application based on your results. What changes would you make, and why? What would it look like before and after? Why is the improved version better? Motivate your choices using the heuristics and your results.
+        \item The conclusion of this section should show your final GUI design.
+        \begin{itemize}
+            \item Note that this report is only about the design, so it is not necessary to always also implement all the improvements in your real application. Do note down explicitly what you have only designed, and what you have also implemented.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+
+\bibliographystyle{plain}
+\bibliography{references}
+\end{document}
