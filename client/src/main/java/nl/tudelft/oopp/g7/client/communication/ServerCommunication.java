@@ -73,6 +73,21 @@ public class ServerCommunication {
         return questionList;
     }
 
+
+    /**
+     * Upvote the question with the specified ID.
+     * @param roomID ID of the room student belongs
+     * @param questionID ID of the question
+     * @return A {@link HttpResponse} containing the response received from server.
+     */
+    public static HttpResponse<String> upvoteQuestion(int roomID, int questionID) {
+        // add the appropriate end-point
+        URI uri = URI.create(endBody + roomID + "/question/" + questionID + "/upvote");
+
+        // send the upvote request and return the response
+        return HttpMethods.put(uri, "");
+    }
+
     /**
      * Edit the question with the specified ID.
      * @param roomID ID of the room student belongs
