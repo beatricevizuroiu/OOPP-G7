@@ -2,6 +2,7 @@ package nl.tudelft.oopp.g7.server.controllers;
 
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
+import nl.tudelft.oopp.g7.server.repositories.QuestionRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,41 +12,24 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 @RestController()
-@RequestMapping("/api/v1/question")
+@RequestMapping("/api/v1/room/{room_id}/question")
 public class QuestionController {
 
     Logger logger = LoggerFactory.getLogger(QuestionController.class);
 
-    //TODO: Probably want to move the database table creation somewhere else.
-    private static final String QUERY_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS questions("
-            + "id serial PRIMARY KEY not NULL,"
-            + "text text not NULL,"
-            + "answer text DEFAULT '' not NULL,"
-            + "postedAt timestamp with time zone DEFAULT NOW(),"
-            + "upvotes int not NULL DEFAULT 0,"
-            + "answered boolean DEFAULT FALSE not NUll,"
-            + "edited boolean DEFAULT FALSE not NULL);";
-
-    private static final String QUERY_SELECT_QUESTION_BY_ID = "SELECT * FROM questions WHERE id=?;";
-    private static final String QUERY_SELECT_ALL_QUESTIONS = "SELECT * FROM questions";
-    private static final String QUERY_CREATE_QUESTION = "INSERT INTO questions (text) VALUES (?)";
-    private static final String QUERY_ANSWER_QUESTION = "UPDATE questions SET answer=?, answered=true WHERE id=?";
-    private static final String QUERY_EDIT_QUESTION = "UPDATE questions SET text=?, edited=true WHERE id=?";
-    private static final String QUERY_UPVOTE_QUESTION = "UPDATE questions SET upvotes = upvotes + 1 WHERE id=?";
-    private static final String QUERY_DELETE_QUESTION = "DELETE FROM questions WHERE id=?";
-
-    private final JdbcTemplate jdbcTemplate;
+    private final QuestionRepository questionRepository;
 
     /**
      * Construct the database table if not yet present.
      * @param jdbcTemplate The SQL query for creating the table(s) that should be made.
      */
     public QuestionController(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-        jdbcTemplate.execute(QUERY_CREATE_TABLE);
+        this.questionRepository = new QuestionRepository(jdbcTemplate);
+
         // Log QuestionController construction
         logger.trace("Constructed QuestionController");
     }
@@ -57,17 +41,11 @@ public class QuestionController {
      *         if there is no question found it will return an empty {@link ResponseEntity} with http status 404 (NOT_FOUND).
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Question> getQuestion(@PathVariable("id") int id) {
+    public ResponseEntity<Question> getQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id) {
         // Log question request
         logger.debug("Question with id " + id + " requested");
         // Get the question with the id from the database.
-        Question question = jdbcTemplate.query(QUERY_SELECT_QUESTION_BY_ID,
-            // Set the first variable in the PreparedStatement to the id of the question being requested.
-            (ps) -> ps.setInt(1, id),
-            // Send the ResultSet to the Question class to create a Question instance from it.
-            (rs) -> {
-                return Question.fromResultSet(rs, false);
-            });
+        Question question = questionRepository.getQuestionById(roomId, id);
 
         // Check if there was no question found.
         if (question == null) {
@@ -86,21 +64,11 @@ public class QuestionController {
      * @return A {@link List} of {@link Question}s containing every question in the database.
      */
     @GetMapping("/all")
-    public List<Question> getAllQuestions() {
+    public List<Question> getAllQuestions(@PathVariable("room_id") String roomId) {
         // Log questions request
         logger.debug("All questions requested.");
         // Return every question in the database.
-        return jdbcTemplate.query(QUERY_SELECT_ALL_QUESTIONS, (rs) -> {
-            // Create a list to hold all questions.
-            List<Question> questionList = new ArrayList<>();
-            // Loop while the result set has entries.
-            while (rs.next()) {
-                // Create a new question from the result set and add it to the list of questions.
-                questionList.add(Question.fromResultSet(rs, true));
-            }
-            // Return the list of questions.
-            return questionList;
-        });
+        return questionRepository.getAllQuestionsInRoom(roomId);
     }
 
     /**
@@ -110,9 +78,9 @@ public class QuestionController {
      *       (NOT_FOUND) if no question was upvoted.
      */
     @PutMapping("/{id}/upvote")
-    public ResponseEntity<Void> upvoteQuestion(@PathVariable("id") int id) {
+    public ResponseEntity<Void> upvoteQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id) {
         // Try to increase the upvote number by 1 and store the number of effected rows.
-        int rowsChanged = jdbcTemplate.update(QUERY_UPVOTE_QUESTION, (ps) -> ps.setInt(1, id));
+        int rowsChanged = questionRepository.upvoteQuestionWithId(roomId, id);
 
         if (rowsChanged == 1) {
             // If there was return http status code 200 (OK)
@@ -131,15 +99,9 @@ public class QuestionController {
      *       (NOT_FOUND) if no question was edited.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Void> editQuestion(@PathVariable("id") int id, @RequestBody QuestionText question) {
+    public ResponseEntity<Void> editQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestBody QuestionText question) {
         // Try to edit the question body and store the number of effected rows.
-        int rowsChanged = jdbcTemplate.update(QUERY_EDIT_QUESTION,
-            (ps) -> {
-                // Set the first variable in the PreparedStatement to the new text body of the question.
-                ps.setString(1, question.getText());
-                // Set the second variable in the PreparedStatement to the id of the question to update.
-                ps.setInt(2, id);
-            });
+        int rowsChanged = questionRepository.editQuestionWithId(roomId, id, question);
 
         if (rowsChanged == 1) {
             // If there was return http status code 200 (OK)
@@ -157,11 +119,11 @@ public class QuestionController {
      *      (NOT_FOUND) if no question was deleted.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteQuestion(@PathVariable("id") int id) {
+    public ResponseEntity<Void> deleteQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id) {
         // Log the deletion request
         logger.debug("Question " + id + " is being deleted.");
         // Try to delete the question with id and store the amount of rows changed.
-        int rowsChanged = jdbcTemplate.update(QUERY_DELETE_QUESTION, (ps) -> ps.setInt(1, id));
+        int rowsChanged = questionRepository.deleteQuestionWithId(roomId, id);
 
         // Check if there was a question deleted.
         if (rowsChanged == 1) {
@@ -180,15 +142,13 @@ public class QuestionController {
      * @param newQuestion The {@link QuestionText} object representing the new question.
      */
     @PostMapping("/new")
-    public void newQuestion(@RequestBody QuestionText newQuestion) {
+    public void newQuestion(@PathVariable("room_id") String roomId, @RequestBody QuestionText newQuestion) {
         // Log the creation of a question
         logger.debug("A new question is being made.");
 
         // Create a new question in the database.
-        int rowsChanged = jdbcTemplate.update(QUERY_CREATE_QUESTION,
-            // Set the first variable in the PreparedStatement to the text of the new question.
-            (ps) -> ps.setString(1, newQuestion.getText())
-        );
+        int rowsChanged = questionRepository.createQuestion(roomId, newQuestion);
+
         // Check whether the question was successfully created and log the result
         if (rowsChanged == 0) {
             logger.debug("A question was attempted to be made but it failed!");
@@ -204,18 +164,13 @@ public class QuestionController {
      * @return A {@link ResponseEntity} containing NULL and a http status of 200 (OK) if a row is changed and 404 (NOT_FOUND) if no rows changed.
      */
     @PostMapping("/{id}/answer")
-    public ResponseEntity<Void> answerQuestion(@PathVariable int id, @RequestBody QuestionText answer) {
+    public ResponseEntity<Void> answerQuestion(@PathVariable("room_id") String roomId, @PathVariable int id, @RequestBody QuestionText answer) {
         // Log the answering of a question
         logger.debug("Question " + id + " is being answered");
         
         // Update the question with the answer and store the amount of rows changed in a variable.
-        int rowsChanged = jdbcTemplate.update(QUERY_ANSWER_QUESTION,
-            (ps) -> {
-                // Set the first variable in the PreparedStatement to the answer to the question.
-                ps.setString(1, answer.getText());
-                // Set the second variable in the PreparedStatement to the id of the question to update.
-                ps.setInt(2, id);
-            });
+        int rowsChanged = questionRepository.answerQuestionWithId(roomId, id, answer);
+
         // Check if there where no rows updated.
         if (rowsChanged == 0) {
             // If that is the case log a warning and respond with http status code 404 (NOT_FOUND).

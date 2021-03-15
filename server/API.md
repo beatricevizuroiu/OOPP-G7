@@ -5,15 +5,18 @@ This document contains a description of every API endpoint that exists and what 
 Each API endpoint has to be prefixed with a version. The following versions exist.
 - /api/v1/ [The original and current version of the API]
 
-## The `/question/` endpoints
+
+## The `/room/` endpoints
+
+## The `/room/{room_id}/question/` endpoints
 The following endpoints are related to creating, getting, and answering questions.
 
-### GET `/question/{id}`
+### GET `/room/{room_id}/question/{id}`
 Get information about the question with {id}. If such a question does not exist the server will respond with
 http status code 404 (NOT_FOUND).
 
 **Examples:**  
-`GET /api/v1/question/1`
+`GET /api/v1/room/{room_id}/question/1`
 ```json
 {
     "answer": "",
@@ -26,7 +29,7 @@ http status code 404 (NOT_FOUND).
 }
 ```
 
-`GET /api/v1/question/4`
+`GET /api/v1/room/{room_id}/question/4`
 ```json
 {
     "answer": "",
@@ -38,11 +41,11 @@ http status code 404 (NOT_FOUND).
     "upvotes": 0
 }
 ```
-### GET `/question/all`
+### GET `/room/{room_id}/question/all`
 Get information about every question known to the system.
 
 **Examples:**  
-`GET /api/v1/question/all`
+`GET /api/v1/room/{room_id}/question/all`
 ```json
 [
     {
@@ -84,12 +87,12 @@ Get information about every question known to the system.
 ]
 ```
 
-## PUT `/questions/{id}/upvote`
+## PUT `/room/{room_id}/questions/{id}/upvote`
 Upvote the question with {id}.
 
 **Example:**
 ```http request
-PUT /api/v1/question/1/upvote
+PUT /api/v1/room/{room_id}/question/1/upvote
 ```
 `No response`
 
@@ -105,44 +108,44 @@ PUT /api/v1/question/1
 ```
 `No response`
 
-## DELETE `/questions/{id}`
+## DELETE `/room/{room_id}/questions/{id}`
 Delete the question with {id}.
 
 **Examples:**
 ```http request
-DELETE /api/v1/question/1
+DELETE /api/v1/room/{room_id}/question/1
 ```
 `No response`
 
-### POST `/question/new`
+### POST `/room/{room_id}/question/new`
 Create a new question on the server with the text provided.
 
 **Examples:**  
 ```http request
-POST /api/v1/question/new
+POST /api/v1/room/{room_id}/question/new
 {
     "text": "This is a new question"
 }
 ```
 `No response`
 
-### POST `/question/{id}/answer`
+### POST `/room/{room_id}/question/{id}/answer`
 Answer the question with {id}. If there exists no question with {id} the server will respond with
 http status code 404 (NOT_FOUND).
 
 **Examples:**  
 ```http request
-POST /api/v1/question/1/answer
+POST /api/v1/room/{room_id}/question/1/answer
 {
-    "answer": ""
+    "text": ""
 }
 ```
 `No response`
 
 ```http request
-POST /api/v1/question/3/answer
+POST /api/v1/room/{room_id}/question/3/answer
 {
-    "answer": "This is an answer to question 3"
+    "text": "This is an answer to question 3"
 }
 ```
 `No response`
