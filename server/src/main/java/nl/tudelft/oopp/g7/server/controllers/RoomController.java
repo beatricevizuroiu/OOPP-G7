@@ -1,7 +1,6 @@
 package nl.tudelft.oopp.g7.server.controllers;
 
-import nl.tudelft.oopp.g7.common.NewRoom;
-import nl.tudelft.oopp.g7.common.Room;
+import nl.tudelft.oopp.g7.common.*;
 import nl.tudelft.oopp.g7.server.repositories.RoomRepository;
 import nl.tudelft.oopp.g7.server.utility.RandomString;
 import org.slf4j.Logger;
@@ -9,10 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController()
 @RequestMapping("/api/v1/room")
@@ -48,27 +44,22 @@ public class RoomController {
             newRoom.setStudentPassword("");
         }
 
+        String studentPassword = parseStudentPassword(newRoom.getStudentPassword());
+        String moderatorPassword = parseModeratorPassword(newRoom.getModeratorPassword());
+
+        if (studentPassword.equals(moderatorPassword)) {
+            // Client provided the same password for students and moderators.
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+
         // Create a new room with the information provided.
         Room room = new Room(
                 // Create a new room id that does not yet exist.
                 roomRepository.createNewId(),
                 // Use the student password supplied by the user and use only the first 32 characters.
-                newRoom.getStudentPassword()
-                        .substring(
-                                0,
-                                Math.min(
-                                        newRoom.getStudentPassword().length(),
-                                        32
-                                )),
+                studentPassword,
                 // Use the moderator password supplied or create our own if it is not provided and limit it to 32 characters.
-                createOrUsePassword(
-                        newRoom.getModeratorPassword()
-                                .substring(
-                                        0,
-                                        Math.min(
-                                                newRoom.getModeratorPassword().length(),
-                                                32
-                                        ))),
+                moderatorPassword,
                 // Use the user supplied name for the room.
                 newRoom.getName(),
                 // Make the room closed by default.
@@ -91,6 +82,62 @@ public class RoomController {
 
         // Inform the client that the room has been created and send them the room information.
         return new ResponseEntity<>(room, HttpStatus.OK);
+    }
+
+    @PostMapping("/{room_id}/join")
+    public ResponseEntity<RoomJoinInfo> joinRoom(@PathVariable("room_id") String roomId, @RequestBody RoomJoinRequest roomJoinRequest) {
+        // Check if the room id field is set.
+        if (roomId == null || roomId.equals("")) {
+            // Inform that client that they did something wrong.
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+
+        Room room = roomRepository.getRoomById(roomId);
+
+        // If there are no rooms with the id.
+        if (room == null) {
+            // Inform the client that the room does not exist.
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        if (room.getModeratorPassword().equals(roomJoinRequest.getPassword())) {
+            return new ResponseEntity<>(
+                    new RoomJoinInfo(
+                            room.getId(),
+                            room.getName(),
+                            // TODO: User authorization.
+                            "",
+                            UserRole.MODERATOR),
+                    HttpStatus.OK);
+        }
+
+        if (room.getStudentPassword().equals(roomJoinRequest.getPassword())){
+            return new ResponseEntity<>(
+                    new RoomJoinInfo(
+                            room.getId(),
+                            room.getName(),
+                            // TODO: User authorization.
+                            "",
+                            UserRole.STUDENT),
+                    HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+    }
+
+    private String parseStudentPassword(String studentPassword) {
+        return studentPassword.substring(0, Math.min(
+                studentPassword.length(),
+                32
+        ));
+    }
+
+    private String parseModeratorPassword(String moderatorPassword) {
+        return createOrUsePassword(
+                moderatorPassword.substring(0, Math.min(
+                        moderatorPassword.length(),
+                        32
+                )));
     }
 
     private String createOrUsePassword(String password) {

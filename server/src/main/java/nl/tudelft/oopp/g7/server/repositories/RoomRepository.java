@@ -25,6 +25,7 @@ public class RoomRepository {
 
     private static final String QUERY_COUNT_ROOMS_WITH_ID = "SELECT count(id) FROM rooms WHERE id=?";
     private static final String QUERY_CREATE_ROOM = "INSERT INTO rooms (id, studentPassword, moderatorPassword, name, open, over, startDate) VALUES (?, ?, ?, ?, ?, ?, ?);";
+    private static final String QUERY_GET_ROOM_WITH_ID = "SELECT * FROM rooms WHERE id=?";
 
     public RoomRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -37,26 +38,30 @@ public class RoomRepository {
     }
 
     public String createNewId() {
-        // Dirty hack to get around the requirement of variables used in lambda expressions to be final
-        String[] id = new String[1];
+        String id;
 
         // Create a new random string generator with length 36.
         RandomString randomString = new RandomString(36);
 
-        // Stop intellij from complaining about the query statement.
-        //noinspection ConstantConditions
         do {
             // Create a new random id.
-            id[0] = randomString.nextString();
+            id = randomString.nextString();
             // Check if the id is already in the database. If it is create a new one and try again.
-        } while (jdbcTemplate.query(QUERY_COUNT_ROOMS_WITH_ID,
-                (ps) -> ps.setString(1, id[0]),
+        } while (countRoomsWithId(id) >= 1);
+
+        return id;
+    }
+
+
+    public int countRoomsWithId(String roomId) {
+        // Stop intellij from complaining about the query statement.
+        //noinspection ConstantConditions
+        return jdbcTemplate.query(QUERY_COUNT_ROOMS_WITH_ID,
+                (ps) -> ps.setString(1, roomId),
                 (rs) -> {
                     rs.next();
                     return rs.getInt(1);
-                }) >= 1);
-
-        return id[0];
+                });
     }
 
     public int createRoom(Room room) {
@@ -77,5 +82,10 @@ public class RoomRepository {
                     // Set the start date of the room in the PreparedStatement.
                     ps.setDate(7, new Date(room.getStartDate().getTime()));
                 });
+    }
+
+    public Room getRoomById(String roomId) {
+        return jdbcTemplate.query(QUERY_GET_ROOM_WITH_ID,
+                (ps) -> ps.setString(1, roomId), Room::fromResultSet);
     }
 }
