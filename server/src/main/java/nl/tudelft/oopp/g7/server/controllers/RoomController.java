@@ -111,7 +111,7 @@ public class RoomController {
                     HttpStatus.OK);
         }
 
-        if (room.getStudentPassword().equals(roomJoinRequest.getPassword())){
+        if (room.getStudentPassword().equals(roomJoinRequest.getPassword())) {
             return new ResponseEntity<>(
                     new RoomJoinInfo(
                             room.getId(),

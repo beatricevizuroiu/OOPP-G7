@@ -1,76 +1,97 @@
 package nl.tudelft.oopp.g7.client.communication;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import nl.tudelft.oopp.g7.common.QuestionText;
 import nl.tudelft.oopp.g7.common.Question;
+import nl.tudelft.oopp.g7.common.QuestionText;
 
-import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.http.HttpResponse;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class StudentServerCommunication {
-    // TODO: decide on how to handle rooms
-    // opted for static for now, should be changed when multiple lectures are added
     private static final Gson gson = new Gson();
-    // again opted for static final since end-point is fixed
-    private static final String endBody = "http://localhost:8080/api/v1";
+    private static final String endBody = "http://localhost:8080/api/v1/room";
 
     /**
      * Sends a post request with appropriate NewQuestion body.
+     * @param roomID ID of the room students belongs
      * @param question QuestionText asked by student
-     * @return response body of the post request
+     * @return A {@link HttpResponse} containing the response received from server.
      */
-    public static HttpResponse<String> askQuestion(QuestionText question) {
+    public static HttpResponse<String> askQuestion(String roomID, QuestionText question) {
         // convert the body to JSON
         String body = gson.toJson(question);
 
         // add the appropriate end-point
-        URI uri = URI.create(endBody + "/question/new");
+        URI uri = URI.create(endBody + roomID + "/question/new");
 
         // send the POST request and return the response
         return HttpMethods.post(uri, body);
     }
 
     /**
-     * Retrieve a question specified by ID.
-     * @param id ID of the question you
-     * @return Question that was specified
+     * Retrieve all questions from the server and sort them based on most recent.
+     * @param roomID ID of the room students belongs
+     * @return A {@link List} of question containing all questions in sorted order.
      */
-    public static Question retrieveQuestionById(int id) {
-        // add the appropriate end-point
-        URI uri = URI.create(endBody + "/question/" + id);
+    public static List<Question> retrieveAllQuestions(String roomID) {
+        // retrieve the question list from server
+        List<Question> questions = ServerCommunication.retrieveAllQuestions(roomID);
 
-        // retrieve the specified question's response
-        HttpResponse<String> response = HttpMethods.get(uri);
-
-        // extract the questions
-        String question = response.body();
-
-        // parse the JSON into Question
-        return gson.fromJson(question, Question.class);
+        // sort the questions based on most recent and return the list
+        return questions.stream().sorted(Comparator.comparing(Question::getPostedAt))
+                        .collect(Collectors.toList());
     }
 
     /**
-     * Retrieves all questions from the server.
-     * @return a list of Questions that include all questions on server
+     * Edit a question if it is owned by the student.
+     * @param roomID ID of the room students belongs
+     * @param questionID ID of the question
+     * @param ownedQuestions a List containing questions owned (asked) by the student
+     * @return A {@link HttpResponse} containing the response received from server.
      */
-    public static List<Question> retrieveAllQuestions() {
-        // add the appropriate end-point
-        URI uri = URI.create(endBody + "/question/all");
+    public static HttpResponse<String> editQuestion(String roomID, int questionID, QuestionText questionText,
+                                                                                List<Question> ownedQuestions) {
+        // check if the question is sent by the student
+        // FIXME: ideally handle it elsewhere
+        if (!isOwned(questionID, ownedQuestions)) {
+            System.out.println("The question does not belong to student.");
+            return null;
+        }
 
-        // retrieve all of the questions
-        HttpResponse<String> response = HttpMethods.get(uri);
-
-        // extract the questions
-        String questions = response.body();
-
-        // create correct generic type for GSON parsing
-        Type questionListType = new TypeToken<List<Question>>() {}.getType();
-
-        // parse JSON array into Question List
-        return gson.fromJson(questions, questionListType);
+        // edit the question and return the response
+        return ServerCommunication.editQuestion(roomID, questionID, questionText);
     }
 
+    /**
+     * Delete a question if it is owned by the student.
+     * @param roomID ID of the room students belongs
+     * @param questionID ID of the question
+     * @param ownedQuestions a List containing questions owned (asked) by the student
+     * @return A {@link HttpResponse} containing the response received from server.
+     */
+    public static HttpResponse<String> deleteQuestion(String roomID, int questionID, List<Question> ownedQuestions) {
+        // check if the question is sent by the student
+        // FIXME: ideally handle it elsewhere
+        if (!isOwned(questionID, ownedQuestions)) {
+            System.out.println("The question does not belong to student.");
+            return null;
+        }
+
+        // delete the question and return the response
+        return ServerCommunication.deleteQuestion(roomID, questionID);
+    }
+
+    /**
+     * Checks whether the question is sent by the student.
+     * @param questionID ID of the question
+     * @param ownedQuestions a List containing questions owned (asked) by the student
+     * @return a boolean that tells whether the question with specified ID is asked by the student
+     */
+    public static boolean isOwned(int questionID, List<Question> ownedQuestions) {
+        return ownedQuestions.stream().map(Question::getId)
+                             .collect(Collectors.toList()).contains(questionID);
+    }
 }

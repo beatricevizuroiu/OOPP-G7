@@ -11,8 +11,10 @@ public class StudentController {
 
     // TODO: ListView
 
+
     public void sendQuestion() {
-        StudentServerCommunication.askQuestion(new QuestionText(answerBox.getText()));
+        //StudentServerCommunication.askQuestion(roomId, new QuestionText(answerBox.getText()));
         answerBox.setText("");
     }
+
 }
