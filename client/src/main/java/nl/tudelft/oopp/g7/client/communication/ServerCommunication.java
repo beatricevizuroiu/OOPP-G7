@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.g7.client.communication;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
@@ -12,8 +13,8 @@ import java.util.List;
 
 // Class for generalizing methods.
 public class ServerCommunication {
-    private static final Gson gson = new Gson();
-    private static final String endBody = "http://localhost:8080/api/v1/room";
+    private static Gson gson = new GsonBuilder().setDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz").create();
+    private static final String uriBody = "http://localhost:8080/api/v1/room/";
 
     /**
      * Retrieve a question specified by ID.
@@ -21,9 +22,9 @@ public class ServerCommunication {
      * @param questionID ID of the question
      * @return {@link Question} that was specified
      */
-    public static Question retrieveQuestionById(int roomID, int questionID) {
+    public static Question retrieveQuestionById(String roomID, int questionID) {
         // add the appropriate end-point
-        URI uri = URI.create(endBody + roomID + "/question/" + questionID);
+        URI uri = URI.create(uriBody + roomID + "/question/" + questionID);
 
         // retrieve the specified question's response
         HttpResponse<String> response = HttpMethods.get(uri);
@@ -40,9 +41,9 @@ public class ServerCommunication {
      * @param roomID ID of the room student belongs
      * @return a {@link List} of Questions that include all questions on server
      */
-    public static List<Question> retrieveAllQuestions(int roomID) {
+    public static List<Question> retrieveAllQuestions(String roomID) {
         // add the appropriate end-point
-        URI uri = URI.create(endBody + roomID + "/question/all");
+        URI uri = URI.create(uriBody + roomID + "/question/all");
 
         // retrieve all of the questions
         HttpResponse<String> response = HttpMethods.get(uri);
@@ -62,7 +63,7 @@ public class ServerCommunication {
      * @param roomID ID of the room student belongs
      * @return a {@link List} of Questions that includes only answered questions on the server
      */
-    public static List<Question> retrieveAllAnsweredQuestions(int roomID) {
+    public static List<Question> retrieveAllAnsweredQuestions(String roomID) {
         // get a list of all questions
         List<Question> questionList = retrieveAllQuestions(roomID);
 
@@ -80,9 +81,9 @@ public class ServerCommunication {
      * @param questionID ID of the question
      * @return A {@link HttpResponse} containing the response received from server.
      */
-    public static HttpResponse<String> upvoteQuestion(int roomID, int questionID) {
+    public static HttpResponse<String> upvoteQuestion(String roomID, int questionID) {
         // add the appropriate end-point
-        URI uri = URI.create(endBody + roomID + "/question/" + questionID + "/upvote");
+        URI uri = URI.create(uriBody + roomID + "/question/" + questionID + "/upvote");
 
         // send the upvote request and return the response
         return HttpMethods.put(uri, "");
@@ -95,12 +96,12 @@ public class ServerCommunication {
      * @param questionText new text body of the question
      * @return A {@link HttpResponse} containing the response received from server.
      */
-    public static HttpResponse<String> editQuestion(int roomID, int questionID, QuestionText questionText) {
+    public static HttpResponse<String> editQuestion(String roomID, int questionID, QuestionText questionText) {
         // convert the body to JSON
         String body = gson.toJson(questionText);
 
         // add the appropriate end-point
-        URI uri = URI.create(endBody + roomID + "/question/" + questionID);
+        URI uri = URI.create(uriBody + roomID + "/question/" + questionID);
 
         // send the PUT request and return the response
         return HttpMethods.put(uri, body);
@@ -112,9 +113,9 @@ public class ServerCommunication {
      * @param questionID ID of the question
      * @return A {@link HttpResponse} containing the response received from server.
      */
-    public static HttpResponse<String> deleteQuestion(int roomID, int questionID) {
+    public static HttpResponse<String> deleteQuestion(String roomID, int questionID) {
         // add the appropriate end-point
-        URI uri = URI.create(endBody + roomID + "/question/" + questionID);
+        URI uri = URI.create(uriBody + roomID + "/question/" + questionID);
 
         // delete the question and store the response
         // appropriate code handling is done within the method
