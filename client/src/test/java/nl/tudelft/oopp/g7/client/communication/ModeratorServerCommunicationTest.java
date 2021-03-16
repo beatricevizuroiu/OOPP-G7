@@ -124,8 +124,10 @@ public class ModeratorServerCommunicationTest {
             return;
         }
 
-        ModeratorServerCommunication.answerQuestion(roomID, question.getId(), new QuestionText("Test Answer"));
+        HttpResponse<String> response = ModeratorServerCommunication.answerQuestion(roomID,
+                                                            question.getId(), new QuestionText("Test Answer"));
 
+        assertEquals(200, response.statusCode());
         assertTrue(ServerCommunication.retrieveQuestionById(roomID, question.getId()).isAnswered());
         assertEquals("Test Answer",
                      ServerCommunication.retrieveQuestionById(roomID, question.getId()).getAnswer());

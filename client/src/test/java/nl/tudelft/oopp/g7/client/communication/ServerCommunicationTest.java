@@ -156,9 +156,10 @@ public class ServerCommunicationTest {
         Question question = questions.get(questions.size() - 2);
 
         // upvote a question
-        ServerCommunication.upvoteQuestion(roomID, question.getId());
+        HttpResponse<String> response = ServerCommunication.upvoteQuestion(roomID, question.getId());
 
         // test whether upvote is registered
+        assertEquals(200, response.statusCode());
         assertEquals(1, ServerCommunication.retrieveQuestionById(roomID, question.getId()).getUpvotes());
     }
 
@@ -170,9 +171,11 @@ public class ServerCommunicationTest {
         }
 
         // edit the question body
-        ServerCommunication.editQuestion(roomID, anotherQuestion.getId(), new QuestionText("Edited body"));
+        HttpResponse<String> response = ServerCommunication.editQuestion(roomID,
+                                            anotherQuestion.getId(), new QuestionText("Edited body"));
 
         Question editedQuestion = ServerCommunication.retrieveQuestionById(roomID, anotherQuestion.getId());
+        assertEquals(200, response.statusCode());
         assertNotEquals(anotherQuestion, editedQuestion);
         assertEquals("Edited body", editedQuestion.getText());
     }
@@ -185,10 +188,11 @@ public class ServerCommunicationTest {
         }
 
         // delete the last question
-        ServerCommunication.deleteQuestion(roomID, anotherQuestion.getId());
+        HttpResponse<String> response = ServerCommunication.deleteQuestion(roomID, anotherQuestion.getId());
 
         // retrieve all questions and check whether the last question is still there
         List<Question> questionList = ServerCommunication.retrieveAllQuestions(roomID);
+        assertEquals(200, response.statusCode());
         assertFalse(questionList.contains(anotherQuestion));
     }
 }
