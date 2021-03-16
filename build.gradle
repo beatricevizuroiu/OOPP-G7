@@ -24,10 +24,10 @@ subprojects {
         set('snippetsDir', file("build/generated-snippets"))
     }
 
-    sourceCompatibility = 13
+    sourceCompatibility = 15
 
     jacoco {
-        toolVersion = "0.8.5"
+        toolVersion = "0.8.6"
     }
 
     jacocoTestReport {

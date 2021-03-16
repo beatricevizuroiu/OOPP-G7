@@ -23,6 +23,8 @@ class QuestionControllerTest {
     private JdbcTemplate jdbcTemplate;
     private QuestionController questionController;
 
+    private final String TEST_ROOM_ID = "SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH";
+
     @BeforeEach
     void setUp() throws IOException {
         // Setup an in memory database with H2.
@@ -44,10 +46,10 @@ class QuestionControllerTest {
     @Test
     void getQuestion() {
         // Create the question we expect to see.
-        Question expected = new Question(1, "This is a question", "", new Date(0), 0, false, false);
+        Question expected = new Question(1, 1, "This is a question", "", new Date(0), 0, false, false);
 
         // Get the question from the controller.
-        Question actual = questionController.getQuestion(1).getBody();
+        Question actual = questionController.getQuestion(TEST_ROOM_ID,1).getBody();
 
         // Check to see if they are the same.
         assertEquals(expected, actual);
@@ -57,12 +59,12 @@ class QuestionControllerTest {
     void getAllQuestions() {
         // Create the list of question we expect to have.
         List<Question> expected = new ArrayList<>();
-        expected.add(new Question(1, "This is a question", "", new Date(0), 0, false, false));
-        expected.add(new Question(2, "This is a question", "This is an answer to the question", new Date(1614511580000L), 0, true, false));
-        expected.add(new Question(3, "This is a question", "", new Date(0), 20, true, false));
+        expected.add(new Question(1, 1, "This is a question", "", new Date(0), 0, false, false));
+        expected.add(new Question(2, 1, "This is a question", "This is an answer to the question", new Date(1614511580000L), 0, true, false));
+        expected.add(new Question(3, 1, "This is a question", "", new Date(0), 20, true, false));
 
         // Get all questions from the controller.
-        List<Question> actual = questionController.getAllQuestions();
+        List<Question> actual = questionController.getAllQuestions(TEST_ROOM_ID);
 
         // Check if they are the same.
         assertEquals(expected, actual);
@@ -72,15 +74,15 @@ class QuestionControllerTest {
     void upvoteQuestion() {
         // Create the list of question we expect to have.
         List<Question> expected = new ArrayList<>();
-        expected.add(new Question(1, "This is a question", "", new Date(0), 0, false, false));
-        expected.add(new Question(2, "This is a question", "This is an answer to the question", new Date(1614511580000L), 0, true, false));
-        expected.add(new Question(3, "This is a question", "", new Date(0), 21, true, false));
+        expected.add(new Question(1, 1, "This is a question", "", new Date(0), 0, false, false));
+        expected.add(new Question(2, 1, "This is a question", "This is an answer to the question", new Date(1614511580000L), 0, true, false));
+        expected.add(new Question(3, 1, "This is a question", "", new Date(0), 21, true, false));
 
         // Upvote the question with id 3.
-        questionController.upvoteQuestion(3);
+        questionController.upvoteQuestion(TEST_ROOM_ID, 3);
 
         // Get all questions from the controller.
-        List<Question> actual = questionController.getAllQuestions();
+        List<Question> actual = questionController.getAllQuestions(TEST_ROOM_ID);
 
         // Check if they are the same.
         assertEquals(expected, actual);
@@ -90,15 +92,15 @@ class QuestionControllerTest {
     void editQuestion() {
         // Create the list of questions we expect to have.
         List<Question> expected = new ArrayList<>();
-        expected.add(new Question(1, "This is a question", "", new Date(0), 0, false, false));
-        expected.add(new Question(2, "This is a question", "This is an answer to the question", new Date(1614511580000L), 0, true, false));
-        expected.add(new Question(3, "This is updated question body.", "", new Date(0), 20, true, true));
+        expected.add(new Question(1, 1, "This is a question", "", new Date(0), 0, false, false));
+        expected.add(new Question(2, 1, "This is a question", "This is an answer to the question", new Date(1614511580000L), 0, true, false));
+        expected.add(new Question(3, 1, "This is updated question body.", "", new Date(0), 20, true, true));
 
         // Edit the question with id 3.
-        questionController.editQuestion(3, new QuestionText("This is updated question body."));
+        questionController.editQuestion(TEST_ROOM_ID, 3, new QuestionText("This is updated question body."));
 
         // Get the list of questions left.
-        List<Question> actual = questionController.getAllQuestions();
+        List<Question> actual = questionController.getAllQuestions(TEST_ROOM_ID);
 
         // Check if that list is the same as what we expect to see.
         assertEquals(expected, actual);
@@ -108,14 +110,14 @@ class QuestionControllerTest {
     void deleteQuestion() {
         // Create the list of questions we expect to have.
         List<Question> expected = new ArrayList<>();
-        expected.add(new Question(1, "This is a question", "", new Date(0), 0, false, false));
-        expected.add(new Question(3, "This is a question", "", new Date(0), 20, true, false));
+        expected.add(new Question(1, 1, "This is a question", "", new Date(0), 0, false, false));
+        expected.add(new Question(3, 1, "This is a question", "", new Date(0), 20, true, false));
 
         // Delete question with id 2.
-        questionController.deleteQuestion(2);
+        questionController.deleteQuestion(TEST_ROOM_ID, 2);
 
         // Get the list of question left.
-        List<Question> actual = questionController.getAllQuestions();
+        List<Question> actual = questionController.getAllQuestions(TEST_ROOM_ID);
 
         // Check if that list is the same as what we expect to see.
         assertEquals(expected, actual);
@@ -124,12 +126,12 @@ class QuestionControllerTest {
     @Test
     void newQuestion() {
         // Create a new question.
-        questionController.newQuestion(new QuestionText("This is a new question"));
+        questionController.newQuestion(TEST_ROOM_ID, new QuestionText("This is a new question"));
 
         String expected = "This is a new question";
 
         // Get the text of the new question from the controller.
-        String actual = questionController.getQuestion(4).getBody().getText();
+        String actual = questionController.getQuestion(TEST_ROOM_ID, 4).getBody().getText();
 
         // Check if the question has te expected text.
         assertEquals(expected, actual);
@@ -138,10 +140,10 @@ class QuestionControllerTest {
     @Test
     void answerQuestion() {
         // Answer question 1.
-        questionController.answerQuestion(1, new QuestionText("This an answer"));
+        questionController.answerQuestion(TEST_ROOM_ID, 1, new QuestionText("This an answer"));
 
         // Get the question with id 1.
-        Question actual = questionController.getQuestion(1).getBody();
+        Question actual = questionController.getQuestion(TEST_ROOM_ID, 1).getBody();
 
         // Store the expected and actual answers.
         String expectedAnswer = "This an answer";
