@@ -19,6 +19,12 @@ public class Room {
     private boolean isOver;
     private Date startDate;
 
+    /**
+     * Create a {@link Room} object from a {@link ResultSet}.
+     * @param rs The result to create the {@link Room} from.
+     * @return A new {@link Room} if the result set contained the needed information. Null otherwise.
+     * @throws SQLException Thrown if something goes wrong getting the information out of the {@link ResultSet}.
+     */
     public static Room fromResultSet(ResultSet rs) throws SQLException {
         if (rs.next())
             return new Room(
