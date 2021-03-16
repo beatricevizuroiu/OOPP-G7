@@ -49,6 +49,11 @@ public class ModeratorServerCommunicationTest {
      */
     @BeforeEach
     void setUp() {
+        // in the case that the server is not connected do not test
+        if (!isConnected) {
+            return;
+        }
+
         // create the room uri
         URI uriRoom = URI.create(uriBody + "create");
 
@@ -78,10 +83,15 @@ public class ModeratorServerCommunicationTest {
     }
 
     /**
-     * Helper method for cleaning up questions
+     * Helper method for cleaning up questions.
      */
     @AfterEach
     void cleanUp() {
+        // in the case that the server is not connected do not test
+        if (!isConnected) {
+            return;
+        }
+
         // extract questionText and anotherQuestionText
         List<Question> questions = ServerCommunication.retrieveAllQuestions(roomID);
         HttpMethods.delete(URI.create(uriBody + roomID + "/question/" + question.getId()));
