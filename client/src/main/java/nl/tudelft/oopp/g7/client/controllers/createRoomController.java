@@ -15,11 +15,11 @@ public class createRoomController {
      * Handles clicking the button.
      */
     public void buttonClicked() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Room created");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Create Room");
         alert.setHeaderText(null);
         alert.setContentText("You are creating the room for Course: " + roomName.getText() +
-                " held by lecturer: " + lecturerName.getText() + ".\nDo you want to continue?");
+                " held by lecturer: " + lecturerName.getText() + ".");
         alert.showAndWait();
     }
 }
