@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.g7.client.communication;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
 
@@ -11,8 +12,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class StudentServerCommunication {
-    private static final Gson gson = new Gson();
-    private static final String endBody = "http://localhost:8080/api/v1/room";
+    private static Gson gson = new GsonBuilder().setDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz").create();
+    private static final String uriBody = "http://localhost:8080/api/v1/room/";
 
     /**
      * Sends a post request with appropriate NewQuestion body.
@@ -25,7 +26,7 @@ public class StudentServerCommunication {
         String body = gson.toJson(question);
 
         // add the appropriate end-point
-        URI uri = URI.create(endBody + roomID + "/question/new");
+        URI uri = URI.create(uriBody + roomID + "/question/new");
 
         // send the POST request and return the response
         return HttpMethods.post(uri, body);
@@ -41,57 +42,7 @@ public class StudentServerCommunication {
         List<Question> questions = ServerCommunication.retrieveAllQuestions(roomID);
 
         // sort the questions based on most recent and return the list
-        return questions.stream().sorted(Comparator.comparing(Question::getPostedAt))
+        return questions.stream().sorted(Comparator.comparing(Question::getPostedAt).reversed())
                         .collect(Collectors.toList());
-    }
-
-    /**
-     * Edit a question if it is owned by the student.
-     * @param roomID ID of the room students belongs
-     * @param questionID ID of the question
-     * @param ownedQuestions a List containing questions owned (asked) by the student
-     * @return A {@link HttpResponse} containing the response received from server.
-     */
-    public static HttpResponse<String> editQuestion(String roomID, int questionID, QuestionText questionText,
-                                                                                List<Question> ownedQuestions) {
-        // check if the question is sent by the student
-        // FIXME: ideally handle it elsewhere
-        if (!isOwned(questionID, ownedQuestions)) {
-            System.out.println("The question does not belong to student.");
-            return null;
-        }
-
-        // edit the question and return the response
-        return ServerCommunication.editQuestion(roomID, questionID, questionText);
-    }
-
-    /**
-     * Delete a question if it is owned by the student.
-     * @param roomID ID of the room students belongs
-     * @param questionID ID of the question
-     * @param ownedQuestions a List containing questions owned (asked) by the student
-     * @return A {@link HttpResponse} containing the response received from server.
-     */
-    public static HttpResponse<String> deleteQuestion(String roomID, int questionID, List<Question> ownedQuestions) {
-        // check if the question is sent by the student
-        // FIXME: ideally handle it elsewhere
-        if (!isOwned(questionID, ownedQuestions)) {
-            System.out.println("The question does not belong to student.");
-            return null;
-        }
-
-        // delete the question and return the response
-        return ServerCommunication.deleteQuestion(roomID, questionID);
-    }
-
-    /**
-     * Checks whether the question is sent by the student.
-     * @param questionID ID of the question
-     * @param ownedQuestions a List containing questions owned (asked) by the student
-     * @return a boolean that tells whether the question with specified ID is asked by the student
-     */
-    public static boolean isOwned(int questionID, List<Question> ownedQuestions) {
-        return ownedQuestions.stream().map(Question::getId)
-                             .collect(Collectors.toList()).contains(questionID);
     }
 }

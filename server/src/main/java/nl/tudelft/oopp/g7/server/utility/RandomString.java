@@ -7,7 +7,6 @@ import java.util.Random;
 
 /**
  * A class to generate random strings.
- *
  * Original credit to: https://stackoverflow.com/a/41156/14195045
  */
 public class RandomString {

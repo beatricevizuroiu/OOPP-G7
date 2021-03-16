@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.g7.client.communication;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import nl.tudelft.oopp.g7.common.*;
 
@@ -12,8 +13,8 @@ import java.util.List;
 
 // Class for generalizing methods.
 public class ServerCommunication {
-    private static final Gson gson = new Gson();
-    private static final String endBody = "http://localhost:8080/api/v1/room";
+    private static Gson gson = new GsonBuilder().setDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz").create();
+    private static final String uriBody = "http://localhost:8080/api/v1/room/";
 
     /**
      * Create a Room and retrieve its information
@@ -67,7 +68,7 @@ public class ServerCommunication {
      */
     public static Question retrieveQuestionById(String roomID, int questionID) {
         // add the appropriate end-point
-        URI uri = URI.create(endBody + roomID + "/question/" + questionID);
+        URI uri = URI.create(uriBody + roomID + "/question/" + questionID);
 
         // retrieve the specified question's response
         HttpResponse<String> response = HttpMethods.get(uri);
@@ -86,7 +87,7 @@ public class ServerCommunication {
      */
     public static List<Question> retrieveAllQuestions(String roomID) {
         // add the appropriate end-point
-        URI uri = URI.create(endBody + roomID + "/question/all");
+        URI uri = URI.create(uriBody + roomID + "/question/all");
 
         // retrieve all of the questions
         HttpResponse<String> response = HttpMethods.get(uri);
@@ -126,7 +127,7 @@ public class ServerCommunication {
      */
     public static HttpResponse<String> upvoteQuestion(String roomID, int questionID) {
         // add the appropriate end-point
-        URI uri = URI.create(endBody + roomID + "/question/" + questionID + "/upvote");
+        URI uri = URI.create(uriBody + roomID + "/question/" + questionID + "/upvote");
 
         // send the upvote request and return the response
         return HttpMethods.put(uri, "");
@@ -144,7 +145,7 @@ public class ServerCommunication {
         String body = gson.toJson(questionText);
 
         // add the appropriate end-point
-        URI uri = URI.create(endBody + roomID + "/question/" + questionID);
+        URI uri = URI.create(uriBody + roomID + "/question/" + questionID);
 
         // send the PUT request and return the response
         return HttpMethods.put(uri, body);
@@ -158,7 +159,7 @@ public class ServerCommunication {
      */
     public static HttpResponse<String> deleteQuestion(String roomID, int questionID) {
         // add the appropriate end-point
-        URI uri = URI.create(endBody + roomID + "/question/" + questionID);
+        URI uri = URI.create(uriBody + roomID + "/question/" + questionID);
 
         // delete the question and store the response
         // appropriate code handling is done within the method

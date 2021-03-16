@@ -17,13 +17,9 @@ Contains main methods that could be used by a student.
 
 - askQuestion
 - retrieveAllQuestions (sorts by date)
-- editQuestion (wraps for authorization) 
-- deleteQuestion (wraps)
 
 **P.S.** you might want to use edit/delete in ServerCommunication since 
 we'll change the authorization to server at some point.
-## Helper
-- isOwned
 
 # ModeratorServerCommunication Methods
 Contains main methods that could be used by a TA.

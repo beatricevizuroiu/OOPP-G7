@@ -24,6 +24,12 @@ public class RoomController {
         this.roomRepository = new RoomRepository(jdbcTemplate);
     }
 
+    /**
+     * Endpoint to create a new room.
+     * @param newRoom The {@link NewRoom} object containing the information about the new room.
+     * @return A {@link ResponseEntity} containing the {@link Room} or null and a {@link HttpStatus} that is one of
+     *      OK (200), BAD_REQUEST (400), or INTERNAL_SERVER_ERROR (500).
+     */
     @PostMapping("/create")
     public ResponseEntity<Room> createRoom(@RequestBody NewRoom newRoom) {
         logger.debug("A new room with name \"{}\" is being made.", newRoom.getName());
@@ -84,6 +90,13 @@ public class RoomController {
         return new ResponseEntity<>(room, HttpStatus.OK);
     }
 
+    /**
+     * Endpoint to join a room.
+     * @param roomId The id of the room to join.
+     * @param roomJoinRequest A {@link RoomJoinRequest} containing the information required to join the room.
+     * @return A {@link ResponseEntity} containing a {@link RoomJoinInfo} or null and a {@link HttpStatus} that is one
+     *      of BAD_REQUEST (400), UNAUTHORIZED (401), NOT_FOUND (404), or OK (200).
+     */
     @PostMapping("/{room_id}/join")
     public ResponseEntity<RoomJoinInfo> joinRoom(@PathVariable("room_id") String roomId, @RequestBody RoomJoinRequest roomJoinRequest) {
         // Check if the room id field is set.
@@ -125,6 +138,11 @@ public class RoomController {
         return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
     }
 
+    /**
+     * A helper method to parse the student password.
+     * @param studentPassword The student password to parse.
+     * @return The parsed student password.
+     */
     private String parseStudentPassword(String studentPassword) {
         return studentPassword.substring(0, Math.min(
                 studentPassword.length(),
@@ -132,6 +150,11 @@ public class RoomController {
         ));
     }
 
+    /**
+     * A helper method to parse the moderator password.
+     * @param moderatorPassword The moderator password to parse.
+     * @return The parsed moderator password.
+     */
     private String parseModeratorPassword(String moderatorPassword) {
         return createOrUsePassword(
                 moderatorPassword.substring(0, Math.min(
@@ -140,6 +163,11 @@ public class RoomController {
                 )));
     }
 
+    /**
+     * A helper method to generate a random password if none is given.
+     * @param password The optional password.
+     * @return Either password if it is set or a random string with length GENERATED_PASSWORD_LENGTH.
+     */
     private String createOrUsePassword(String password) {
         if (password != null && !password.equals(""))
             return password;

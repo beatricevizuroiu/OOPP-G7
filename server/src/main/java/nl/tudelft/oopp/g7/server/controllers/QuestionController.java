@@ -3,16 +3,14 @@ package nl.tudelft.oopp.g7.server.controllers;
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
 import nl.tudelft.oopp.g7.server.repositories.QuestionRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 
 @RestController()
@@ -24,8 +22,8 @@ public class QuestionController {
     private final QuestionRepository questionRepository;
 
     /**
-     * Construct the database table if not yet present.
-     * @param jdbcTemplate The SQL query for creating the table(s) that should be made.
+     * Primary constructor for the question controller.
+     * @param jdbcTemplate The {@link JdbcTemplate} that should handle the database queries.
      */
     public QuestionController(JdbcTemplate jdbcTemplate) {
         this.questionRepository = new QuestionRepository(jdbcTemplate);
@@ -101,7 +99,7 @@ public class QuestionController {
     @PutMapping("/{id}")
     public ResponseEntity<Void> editQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestBody QuestionText question) {
         // Try to edit the question body and store the number of effected rows.
-        int rowsChanged = questionRepository.editQuestionWithId(roomId, id, question);
+        int rowsChanged = questionRepository.editQuestionWithId(roomId, id, question.getText());
 
         if (rowsChanged == 1) {
             // If there was return http status code 200 (OK)
@@ -147,7 +145,7 @@ public class QuestionController {
         logger.debug("A new question is being made.");
 
         // Create a new question in the database.
-        int rowsChanged = questionRepository.createQuestion(roomId, newQuestion);
+        int rowsChanged = questionRepository.createQuestion(roomId, newQuestion.getText());
 
         // Check whether the question was successfully created and log the result
         if (rowsChanged == 0) {
@@ -169,7 +167,7 @@ public class QuestionController {
         logger.debug("Question " + id + " is being answered");
         
         // Update the question with the answer and store the amount of rows changed in a variable.
-        int rowsChanged = questionRepository.answerQuestionWithId(roomId, id, answer);
+        int rowsChanged = questionRepository.answerQuestionWithId(roomId, id, answer.getText());
 
         // Check if there where no rows updated.
         if (rowsChanged == 0) {

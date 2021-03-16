@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.g7.client.communication;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
 
@@ -11,8 +12,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ModeratorServerCommunication {
-    private static final Gson gson = new Gson();
-    private static final String endBody = "http://localhost:8080/api/v1/room";
+    private static Gson gson = new GsonBuilder().setDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz").create();
+    private static final String endBody = "http://localhost:8080/api/v1/room/";
 
     /**
      * Retrieve all questions from the server and sort them based on upvotes.
@@ -24,7 +25,7 @@ public class ModeratorServerCommunication {
         List<Question> questions = ServerCommunication.retrieveAllQuestions(roomID);
 
         // sort the questions based on number of upvotes and return the list
-        return questions.stream().sorted(Comparator.comparing(Question::getUpvotes))
+        return questions.stream().sorted(Comparator.comparing(Question::getUpvotes).reversed())
                 .collect(Collectors.toList());
     }
 
