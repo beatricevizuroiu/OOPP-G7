@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" styleClass="background" stylesheets="@Entry.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CreateRoom">
+   <children>
+      <Text fill="#15041a" layoutX="296.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Room" wrappingWidth="220.13671875">
+         <font>
+            <Font name="System Bold" size="35.0" />
+         </font></Text>
+      <TextField fx:id="roomName" alignment="CENTER" layoutX="277.0" layoutY="194.0" prefHeight="70.0" prefWidth="253.0" styleClass="buttons" text="Enter name of Course">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font></TextField>
+      <TextField fx:id="lecturerName" alignment="CENTER" layoutX="277.0" layoutY="280.0" prefHeight="70.0" prefWidth="254.0" styleClass="buttons" text="Enter name of Lecturer">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font></TextField>
+      <Button fx:id="closeButton" layoutX="762.0" layoutY="14.0" mnemonicParsing="false" styleClass="buttons" text="X" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

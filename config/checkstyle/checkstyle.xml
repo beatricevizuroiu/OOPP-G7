@@ -116,15 +116,15 @@
             <message key="name.invalidPattern"
                      value="Package name ''{0}'' must match pattern ''{1}''."/>
         </module>
-        <module name="TypeName">
-            <message key="name.invalidPattern"
-                     value="Type name ''{0}'' must match pattern ''{1}''."/>
-        </module>
-        <module name="MemberName">
-            <property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9]*$"/>
-            <message key="name.invalidPattern"
-                     value="Member name ''{0}'' must match pattern ''{1}''."/>
-		</module>
+<!--        <module name="TypeName">-->
+<!--            <message key="name.invalidPattern"-->
+<!--                     value="Type name ''{0}'' must match pattern ''{1}''."/>-->
+<!--        </module>-->
+<!--        <module name="MemberName">-->
+<!--            <property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9]*$"/>-->
+<!--            <message key="name.invalidPattern"-->
+<!--                     value="Member name ''{0}'' must match pattern ''{1}''."/>-->
+<!--		</module>-->
         <module name="MethodName">
             <property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9_]*$"/>
             <message key="name.invalidPattern"
@@ -185,10 +185,10 @@
             <property name="lineWrappingIndentation" value="4"/>
             <property name="arrayInitIndent" value="4"/>
         </module>
-        <module name="AbbreviationAsWordInName">
-            <property name="ignoreFinal" value="true"/>
-            <property name="allowedAbbreviationLength" value="1"/>
-        </module>
+<!--        <module name="AbbreviationAsWordInName">-->
+<!--            <property name="ignoreFinal" value="true"/>-->
+<!--            <property name="allowedAbbreviationLength" value="1"/>-->
+<!--        </module>-->
         <module name="OverloadMethodsDeclarationOrder"/>
         <module name="MethodParamPad"/>
         <module name="NoWhitespaceBefore">
