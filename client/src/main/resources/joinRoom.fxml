@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="800.0" styleClass="background" stylesheets="@Entry.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="JoinRoom">
+<AnchorPane prefHeight="500.0" prefWidth="800.0" styleClass="background" stylesheets="@Entry.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.joinRoomController">
    <children>
       <Text fill="#15041a" layoutX="318.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Join Room">
          <font>
