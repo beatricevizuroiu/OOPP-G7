@@ -23,7 +23,7 @@ public class ServerCommunication {
      */
     public static Room createRoom(NewRoom newRoom) {
         // add the appropriate end-point
-        URI uri = URI.create(endBody + "/create");
+        URI uri = URI.create(uriBody + "/create");
 
         // prepare the body of the request
         String body = gson.toJson(newRoom);
@@ -46,7 +46,7 @@ public class ServerCommunication {
      */
     public static UserRole joinRoom(String roomID, String password) {
         // add the appropriate end-point
-        URI uri = URI.create(endBody + roomID + "/join");
+        URI uri = URI.create(uriBody + roomID + "/join");
 
         // put the password into a RoomJoinRequest and prepare a request body
         String body = gson.toJson(new RoomJoinRequest(password));
