@@ -12,4 +12,5 @@
     <TextArea fx:id="answerBox" />
     <Button onAction="#sendQuestion" text="Send" />
    <Button alignment="TOP_RIGHT" mnemonicParsing="false" onAction="#updateQuestion" text="Refresh" />
+    <Button alignment="TOP_RIGHT" mnemonicParsing="false" onAction="#testCreateRoom" text="Create temporary room" />
 </VBox>

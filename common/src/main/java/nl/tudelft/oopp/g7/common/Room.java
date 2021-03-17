@@ -19,6 +19,12 @@ public class Room {
     private boolean isOver;
     private Date startDate;
 
+    /**
+     * Temporary conflict.
+     * @param rs This will not stay
+     * @return Please remove this upon merge
+     * @throws SQLException Thank you.
+     */
     public static Room fromResultSet(ResultSet rs) throws SQLException {
         if (rs.next())
             return new Room(

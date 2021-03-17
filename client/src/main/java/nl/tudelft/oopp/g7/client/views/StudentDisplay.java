@@ -40,6 +40,7 @@ public class StudentDisplay extends Application {
                     try {
                         Thread.sleep(2500);
                     } catch (InterruptedException ex) {
+                        System.err.println("Sleeping thread was interrupted, this should never occur");
                     }
 
                     // UI update is run on the Application thread
