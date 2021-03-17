@@ -17,7 +17,7 @@ public class ServerCommunication {
     private static final String uriBody = "http://localhost:8080/api/v1/room/";
 
     /**
-     * Create a Room and retrieve its information
+     * Create a Room and retrieve its information.
      * @param newRoom a newRoom object that contains the necessary information to create a new room
      * @return a Room object containing all relevant data of the created room
      */
@@ -39,7 +39,7 @@ public class ServerCommunication {
     }
 
     /**
-     * Logs a user into a room to determine whether they are a moderator or a student
+     * Logs a user into a room to determine whether they are a moderator or a student.
      * @param roomID the ID of the room the user wants to log into
      * @param password the password the user has received from the lecturer
      * @return a UserRole object

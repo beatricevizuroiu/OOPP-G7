@@ -21,7 +21,6 @@ public class StudentController {
 
     // TODO: ListView
 
-
     public void sendQuestion() {
         //StudentServerCommunication.askQuestion(roomId, new QuestionText(answerBox.getText()));
         items.add(answerBox.getText());
@@ -29,9 +28,9 @@ public class StudentController {
     }
 
     public void updateQuestion() {
-         List<Question> newQuestions = StudentServerCommunication.retrieveAllQuestions(roomID);
-         items.removeAll();
-        for(int i = 0; i < newQuestions.size(); i++) {
+        List<Question> newQuestions = StudentServerCommunication.retrieveAllQuestions(roomID);
+        items.removeAll();
+        for (int i = 0; i < newQuestions.size(); i++) {
             items.add(newQuestions.get(i).getText());
         }
     }
