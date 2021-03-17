@@ -28,8 +28,10 @@ public class createRoomController {
         alert.setHeaderText(null);
 
         // body of pop-up with what the user entered
-        alert.setContentText("You are creating the room for Course: " + roomName.getText() +
-                " held by lecturer: " + lecturerName.getText() + ".");
+        alert.setContentText("You are creating the room for Course: " + roomName.getText()
+                + " held by lecturer: "
+                + lecturerName.getText()
+                + ".");
 
         // set types of buttons for the pop-up
         ButtonType okButton = new ButtonType ("OK");
