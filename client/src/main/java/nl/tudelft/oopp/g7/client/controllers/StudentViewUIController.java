@@ -18,20 +18,20 @@ public class StudentViewUIController {
 //    /**
 //     * Retrieve all questions to listView.
 //     */
-
+//
 //    // put onAction="#retrieveQuestions" on Button fx:id="reloadQuestionsButton" in the fxml file
 //    public void retrieveQuestions() {
 //        StudentServerCommunication.retrieveAllQuestions();
 //        listView.getItems();
 //    }
 
-    /**
-     * Send question.
-     */
-    public void sendQuestion() {
-        StudentServerCommunication.askQuestion(new QuestionText(answerBox.getText()));
-        answerBox.setText("Type your question here");
-    }
+//    /**
+//     * Send question.
+//     */
+//    public void sendQuestion() {
+//        StudentServerCommunication.askQuestion(new QuestionText(answerBox.getText()));
+//        answerBox.setText("Type your question here");
+//    }
 
 
 }
