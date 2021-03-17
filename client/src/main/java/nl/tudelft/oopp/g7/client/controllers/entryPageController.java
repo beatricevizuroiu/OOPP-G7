@@ -18,17 +18,29 @@ import java.util.ResourceBundle;
 
 public class entryPageController {
 
+    /**
+     * Handle button action for button Create.
+     *
+     * @param event the event
+     */
     public void handleButtonAction(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
+        // if Create is clicked, change Scene to Create Room
         EntryRoomDisplay.setCurrentScene("/createRoom.fxml");
     }
 
+    /**
+     * Handle button action for button Join.
+     *
+     * @param event the event
+     */
     public void handleButtonAction2(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
+        // if Join is clicked, change Scene to Join Room
         EntryRoomDisplay.setCurrentScene("/joinRoom.fxml");
     }
 }
