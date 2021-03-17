@@ -30,7 +30,7 @@ public class joinRoomController {
         alert.setHeaderText(null);
 
         // body of pop-up with what the user entered
-        if(nickname.getText() == "Enter nickname"){
+        if(nickname.getText().equals("Enter nickname")){
             alert.setContentText("You are joining room: " + roomId.getText());
         }else {
             alert.setContentText("You are joining room: " + roomId.getText() + " as: " + nickname.getText());
