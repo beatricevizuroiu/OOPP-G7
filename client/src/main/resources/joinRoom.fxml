@@ -24,9 +24,5 @@
             <Font name="System Bold Italic" size="15.0" />
          </font>
       </TextField>
-      <Button fx:id="closeButton" layoutX="762.0" layoutY="8.0" mnemonicParsing="false" styleClass="buttons" text="X" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font></Button>
    </children>
 </AnchorPane>
