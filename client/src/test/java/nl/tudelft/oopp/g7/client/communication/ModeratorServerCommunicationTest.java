@@ -3,8 +3,8 @@ package nl.tudelft.oopp.g7.client.communication;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import nl.tudelft.oopp.g7.common.NewRoom;
-import nl.tudelft.oopp.g7.common.QuestionText;
 import nl.tudelft.oopp.g7.common.Question;
+import nl.tudelft.oopp.g7.common.QuestionText;
 import nl.tudelft.oopp.g7.common.Room;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -17,13 +17,9 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * Testing suite for the server-client communication channel.
- * The server must be online for the tests to pass
- */
-public class StudentSeverCommunicationTest {
+public class ModeratorServerCommunicationTest {
     private static Question question;
     private static Question anotherQuestion;
     private static String roomID;
@@ -109,34 +105,31 @@ public class StudentSeverCommunicationTest {
             return;
         }
 
+        // upvote a question for testing
+        URI upvoteBody = URI.create(uriBody + roomID + "/question/" + anotherQuestion.getId() + "/upvote");
+        HttpMethods.put(upvoteBody, "");
+
+        // retrieve all questions
         List<Question> questions = StudentServerCommunication.retrieveAllQuestions(roomID);
 
-        // check whether the order is correct (most recent should be earlier in list)
-        assertEquals(anotherQuestion, questions.get(questions.size() - 2));
-        assertEquals(question, questions.get(questions.size() - 1));
+        // check whether the order is correct (high upvote should be earlier in the list)
+        assertEquals(anotherQuestion.getId(), questions.get(questions.size() - 2).getId());
+        assertEquals(question.getId(), questions.get(questions.size() - 1).getId());
     }
 
     @Test
-    void testAskQuestion() throws InterruptedException {
+    void testAnswerQuestion() {
         // in the case that the server is not connected do not test
         if (!isConnected) {
             return;
         }
 
-        // create a unique QuestionText instance and send it
-        QuestionText yetAnotherQuestionText = new QuestionText("Current time: " + (new Date()).getTime());
-        HttpResponse<String> response = StudentServerCommunication.askQuestion(roomID, yetAnotherQuestionText);
+        HttpResponse<String> response = ModeratorServerCommunication.answerQuestion(roomID,
+                                                            question.getId(), new QuestionText("Test Answer"));
 
-        // extract the yetAnotherQuestionText (we want it to be last so don't use Student here)
-        List<Question> questions = ServerCommunication.retrieveAllQuestions(roomID);
-        Question yetAnotherQuestion = questions.get(questions.size() - 1);
-
-        // test whether the questions are the same
         assertEquals(200, response.statusCode());
-        assertEquals(yetAnotherQuestionText.getText(), yetAnotherQuestion.getText());
-        assertNotEquals(question.getText(), yetAnotherQuestion.getText());
-
-        // clean-up
-        ServerCommunication.deleteQuestion(roomID, yetAnotherQuestion.getId());
+        assertTrue(ServerCommunication.retrieveQuestionById(roomID, question.getId()).isAnswered());
+        assertEquals("Test Answer",
+                     ServerCommunication.retrieveQuestionById(roomID, question.getId()).getAnswer());
     }
 }
