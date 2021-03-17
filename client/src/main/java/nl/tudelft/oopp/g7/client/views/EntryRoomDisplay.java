@@ -29,7 +29,6 @@ public class EntryRoomDisplay extends Application {
         currentStage.show();
     }
 
-
     /**
      * Get current scene scene.
      *
