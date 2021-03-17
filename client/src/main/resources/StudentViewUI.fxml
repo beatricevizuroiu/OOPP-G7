@@ -12,7 +12,7 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
          <children>
-            <ListView layoutX="147.0" layoutY="98.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="476.0" prefWidth="1043.0" />
+            <ListView fx:id="listView" layoutX="147.0" layoutY="98.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="476.0" prefWidth="1043.0" />
             <SplitPane prefHeight="730.0" prefWidth="120.0">
               <items>
                 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="731.0" prefWidth="118.0" styleClass="side-pannel" />
@@ -31,7 +31,7 @@
                   </AnchorPane>
               </items>
             </SplitPane>
-            <Button fx:id="postQuestionButton" layoutX="1070.0" layoutY="583.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="120.0" styleClass="buttons" stylesheets="@Entry.css" text="Post Question" textFill="WHITE" onAction="#sendQuestion">
+            <Button fx:id="postQuestionButton" layoutX="1070.0" layoutY="583.0" mnemonicParsing="false" onAction="#sendQuestion" prefHeight="58.0" prefWidth="120.0" styleClass="buttons" stylesheets="@Entry.css" text="Post Question" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></Button>
@@ -40,6 +40,11 @@
                   <Font size="20.0" />
                </font>
             </TextArea>
+            <Button fx:id="reloadQuestionsButton" layoutX="1071.0" layoutY="657.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="118.0" styleClass="buttons" stylesheets="@Entry.css" text="Reload Questions" textFill="WHITE" onAction="#retrieveQuestions">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
          </children></AnchorPane>
    </children>
 </VBox>
