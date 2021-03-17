@@ -1,9 +1,11 @@
 package nl.tudelft.oopp.g7.client.controllers;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 
+import javafx.scene.control.TextField;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.common.QuestionText;
 
@@ -14,14 +16,12 @@ public class StudentViewUIController {
     public ListView<String> listView = new ListView<>();
     public TextArea answerBox;
 
-
 //    /**
 //     * Retrieve all questions to listView.
 //     */
 //
-//    // put onAction="#retrieveQuestions" on Button fx:id="reloadQuestionsButton" in the fxml file
 //    public void retrieveQuestions() {
-//        StudentServerCommunication.retrieveAllQuestions();
+//        StudentServerCommunication.retrieveAllQuestions("123");
 //        listView.getItems();
 //    }
 
@@ -29,7 +29,7 @@ public class StudentViewUIController {
 //     * Send question.
 //     */
 //    public void sendQuestion() {
-//        StudentServerCommunication.askQuestion(new QuestionText(answerBox.getText()));
+//        StudentServerCommunication.askQuestion("123", new QuestionText(answerBox.getText()));
 //        answerBox.setText("Type your question here");
 //    }
 
