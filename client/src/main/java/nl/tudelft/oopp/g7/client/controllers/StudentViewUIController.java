@@ -18,6 +18,8 @@ public class StudentViewUIController {
 //    /**
 //     * Retrieve all questions to listView.
 //     */
+
+//    // put onAction="#retrieveQuestions" on Button fx:id="reloadQuestionsButton" in the fxml file
 //    public void retrieveQuestions() {
 //        StudentServerCommunication.retrieveAllQuestions();
 //        listView.getItems();

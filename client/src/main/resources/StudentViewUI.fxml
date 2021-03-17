@@ -40,7 +40,8 @@
                   <Font size="20.0" />
                </font>
             </TextArea>
-            <Button fx:id="reloadQuestionsButton" layoutX="1071.0" layoutY="657.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="118.0" styleClass="buttons" stylesheets="@Entry.css" text="Reload Questions" textFill="WHITE" onAction="#retrieveQuestions">
+             <!-- put onAction="#retrieveQuestions" -->
+            <Button fx:id="reloadQuestionsButton" layoutX="1071.0" layoutY="657.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="118.0" styleClass="buttons" stylesheets="@Entry.css" text="Reload Questions" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
