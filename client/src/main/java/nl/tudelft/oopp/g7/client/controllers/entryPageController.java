@@ -17,12 +17,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class entryPageController {
-    @FXML
-    private Button createRoomButton;
-    @FXML
-    private Label label;
-//    @FXML
-//    private Button joinRoomButton;
 
     public void handleButtonAction(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();
