@@ -15,16 +15,16 @@
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font></TextField>
-      <TextField id="roomId" fx:id="roomId" alignment="CENTER" layoutX="284.0" layoutY="238.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="64.0" prefWidth="231.0" styleClass="buttons" text="Enter Room ID">
+      <TextField id="roomId" fx:id="roomId" alignment="CENTER" layoutX="284.0" layoutY="231.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="64.0" prefWidth="231.0" styleClass="buttons" text="Enter Room ID">
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font></TextField>
-      <TextField id="roomPassword" fx:id="roomPassword" alignment="CENTER" layoutX="284.0" layoutY="312.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="64.0" prefWidth="231.0" styleClass="buttons" text="Enter Room Password">
+      <TextField id="roomPassword" fx:id="roomPassword" alignment="CENTER" layoutX="284.0" layoutY="304.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="64.0" prefWidth="231.0" styleClass="buttons" text="Enter Room Password">
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font>
       </TextField>
-      <Button fx:id="button" layoutX="356.0" layoutY="393.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="88.0" styleClass="buttons" text="Join" onAction="#buttonClicked">
+      <Button fx:id="button" layoutX="356.0" layoutY="393.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="33.0" prefWidth="88.0" styleClass="buttons" text="Join">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
