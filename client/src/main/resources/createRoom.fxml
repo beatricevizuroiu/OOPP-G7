@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -10,10 +11,14 @@
          <font>
             <Font name="System Bold" size="35.0" />
          </font></Text>
-      <TextField fx:id="roomName" alignment="CENTER" layoutX="277.0" layoutY="194.0" prefHeight="70.0" prefWidth="253.0" styleClass="buttons" text="Enter name of Course">
+      <TextField fx:id="roomName" alignment="CENTER" layoutX="277.0" layoutY="194.0" prefHeight="70.0" prefWidth="253.0" text="Enter name of Course">
          <font>
             <Font name="System Bold Italic" size="15.0" />
-         </font></TextField>
+         </font>
+         <styleClass>
+            <String fx:value="buttons" />
+            <String fx:value="textColor" />
+         </styleClass></TextField>
       <TextField fx:id="lecturerName" alignment="CENTER" layoutX="277.0" layoutY="280.0" prefHeight="70.0" prefWidth="254.0" styleClass="buttons" text="Enter name of Lecturer">
          <font>
             <Font name="System Bold Italic" size="15.0" />
