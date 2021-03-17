@@ -22,9 +22,9 @@
                 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="810.0" prefWidth="120.0" styleClass="side-pannel" />
               </items>
             </SplitPane>
-            <SplitPane prefHeight="75.0" prefWidth="1440.0" styleClass="course-panel">
+            <SplitPane prefHeight="75.0" prefWidth="1440.0" styleClass="course-panel" stylesheets="@UIstyle(DARKMODE).css">
               <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="course-panel" stylesheets="@UIstyle(DARKMODE).css">
                      <children>
                         <Text fill="WHITE" layoutX="-9.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Course Name" wrappingWidth="347.9892578125" x="23.0" y="13.0">
                            <font>
