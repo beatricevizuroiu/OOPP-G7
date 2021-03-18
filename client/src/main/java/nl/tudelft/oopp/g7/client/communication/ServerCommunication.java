@@ -54,7 +54,7 @@ public class ServerCommunication {
         // send a request to the server to create the room and store the response
         HttpResponse<String> response = HttpMethods.post(uri, body);
 
-        String userRole = response.body();
+        String roomJoinInfo = response.body();
 
         // parse the JSON into a UserRole object
         return gson.fromJson(roomJoinInfo, RoomJoinInfo.class);
