@@ -6,14 +6,25 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import nl.tudelft.oopp.g7.client.communication.RoomServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
+import nl.tudelft.oopp.g7.client.communication.localData;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
+import nl.tudelft.oopp.g7.common.NewRoom;
+import nl.tudelft.oopp.g7.common.Room;
+import org.w3c.dom.Text;
+
+import java.util.Date;
 
 public class createRoomController {
     @FXML
     TextField roomName;
     @FXML
     TextField lecturerName;
+    @FXML
+    TextField studentPassword;
+    @FXML
+    TextField moderatorPassword;
 
     /**
      * Handles clicking the button Create.
@@ -44,6 +55,18 @@ public class createRoomController {
 
         // if the user presses OK, the go to Lecturer View
         if (alert.getResult() == okButton){
+
+            // Put all information for a new room in a NewRoom object and send it to the server to have it create the room
+            NewRoom newRoom = new NewRoom(roomName.getText(), studentPassword.getText(), moderatorPassword.getText(), new Date());
+            Room room = RoomServerCommunication.createRoom(newRoom);
+
+            // Store all relevant room information for future reference
+            localData.setNickname(lecturerName.getText());
+            localData.setRoomID(room.getId());
+            localData.setStudentPassword(room.getStudentPassword());
+            localData.setModeratorPassword(room.getModeratorPassword());
+
+            // Proceed to Lecturer View
             Scene scene = EntryRoomDisplay.getCurrentScene();
             Stage stage = EntryRoomDisplay.getCurrentStage();
 
