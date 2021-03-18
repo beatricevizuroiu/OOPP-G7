@@ -8,6 +8,66 @@ Each API endpoint has to be prefixed with a version. The following versions exis
 
 ## The `/room/` endpoints
 
+### POST `/room/create`
+Create new room with the information provided. If the action succeeds it will respond with the room.
+
+**Examples:**
+```http request
+POST /api/v1/room/create
+{
+    "name": "Example room name",
+    "studentPassword": "",
+    "moderatorPassword": "M0d3r4t0rP4ssw0rd",
+    "startDate": "1970-01-01 00:00:00+00:00"
+}
+```
+```json
+{
+    "id": "YWieMMQQqjGNoLAwTsSUlatHzr43Z3Gt1Wvs",
+    "studentPassword": "",
+    "moderatorPassword": "M0d3r4t0rP4ssw0rd",
+    "name": "Example room name",
+    "startDate": "1970-01-01 00:00:00+00:00",
+    "open": false,
+    "over": false
+}
+```
+
+### POST `/room/{room_id}/join`
+This endpoint can be used to join a room. You provide a password and based on if that password matches the moderator or
+student password are given an authentication token and a role in the response.
+
+**Examples:**
+```http request
+POST /api/v1/room/YWieMMQQqjGNoLAwTsSUlatHzr43Z3Gt1Wvs/join
+{
+    "password": "M0d3r4t0rP4ssw0rd",
+}
+```
+```json
+{
+    "roomId": "YWieMMQQqjGNoLAwTsSUlatHzr43Z3Gt1Wvs",
+    "roomName": "Example room name",
+    "authorization": "",
+    "role": "MODERATOR"
+}
+```
+
+```http request
+POST /api/v1/room/YWieMMQQqjGNoLAwTsSUlatHzr43Z3Gt1Wvs/join
+{
+    "password": "",
+}
+```
+```json
+{
+    "roomId": "YWieMMQQqjGNoLAwTsSUlatHzr43Z3Gt1Wvs",
+    "roomName": "Example room name",
+    "authorization": "",
+    "role": "STUDENT"
+}
+```
+
 ## The `/room/{room_id}/question/` endpoints
 The following endpoints are related to creating, getting, and answering questions.
 

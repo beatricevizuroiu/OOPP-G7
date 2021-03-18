@@ -5,7 +5,7 @@ plugins {
 	id 'application'
 }
 
-mainClassName = 'nl.tudelft.oopp.g7.DemoApplication'
+mainClassName = 'nl.tudelft.oopp.g7.server.DemoApplication'
 
 configurations {
 	developmentOnly
