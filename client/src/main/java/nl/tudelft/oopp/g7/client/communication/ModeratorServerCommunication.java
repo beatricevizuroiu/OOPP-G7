@@ -46,4 +46,8 @@ public class ModeratorServerCommunication {
         // answer the question and return the response
         return HttpMethods.post(uri, body);
     }
+
+    public static HttpResponse<String> markAsAnswered(String roomID, int questionID) {
+        return answerQuestion(roomID, questionID, new QuestionText(""));
+    }
 }
