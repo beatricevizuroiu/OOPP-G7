@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
+import nl.tudelft.oopp.g7.client.communication.localData;
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
 import java.io.IOException;
@@ -35,13 +36,20 @@ public class StudentViewUIController {
     @FXML
     public TextArea answerBox;
 
-    private final String roomID = "OIsS2tYommm4y1t9kx5LWxA8TwDGSrpdHyJM";
+    private final String roomID;
+    private final String nickname;
+    private final String password;
 
 
     /**
      * Constructor for StudentViewUIController.
      */
     public StudentViewUIController() {
+        roomID = localData.getRoomID();
+        nickname = localData.getNickname();
+        password = localData.getPassword();
+
+        // Start a timer and create a separate thread on it to automatically call retrieveQuestions()
         Timer timer = new Timer();
 
         StudentViewUIController reference = this;
@@ -53,14 +61,14 @@ public class StudentViewUIController {
         }, 0L, 2500L);
     }
 
-
     /**
-     * Retrieve all questions to List.
+     * Retrieve all questions to List sorted by new.
      */
     public void retrieveQuestions() {
 
+        // Store the current position of the user in the scroll list
         double scrollHeight = questionList.getVvalue();
-        System.out.println(scrollHeight);
+
         // list of questions containing the questions received from the server
         List<Question> questions = StudentServerCommunication.retrieveAllQuestions(roomID);
         List<Node> questionNodes = questionContainer.getChildren();
@@ -82,8 +90,11 @@ public class StudentViewUIController {
 
                 questionNodes.add(questionNode);
             }
-        } catch (IOException ignored) {}
-        System.out.println(scrollHeight + "t");
+        } catch (IOException ignored) {
+            System.err.println("A problem occurred.");
+        }
+
+        // Return the user to their original position in the scroll list
         questionList.setVvalue(scrollHeight + 0);
     }
 

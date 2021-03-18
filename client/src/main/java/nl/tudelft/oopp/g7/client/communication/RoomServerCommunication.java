@@ -39,14 +39,14 @@ public class RoomServerCommunication {
      * @param roomJoinRequest contains necessary student/moderator password
      * @return a {@link RoomJoinInfo}
      */
-    public static RoomJoinInfo joinRoom(int roomID, RoomJoinRequest roomJoinRequest) {
+    public static RoomJoinInfo joinRoom(String roomID, RoomJoinRequest roomJoinRequest) {
         // create the uri
         URI uri = URI.create(uriBody + roomID + "/join");
 
         // convert roomJoinRequest to JSON
         String jsonRoomJoinRequest = gson.toJson(roomJoinRequest);
 
-        // send the request and store the resposne
+        // send the request and store the response
         HttpResponse<String> response = HttpMethods.post(uri, jsonRoomJoinRequest);
 
         //return the RoomJoinInfo object
