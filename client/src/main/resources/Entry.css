@@ -17,3 +17,8 @@
     -fx-background-color: #8D1BAA;
 }
 
+.textColor{
+    -fx-text-inner-color: #FFFFFF;
+
+}
+
