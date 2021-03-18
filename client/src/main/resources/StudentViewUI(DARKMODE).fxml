@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.MainSceneController">
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.StudentViewUIController">
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1440.0" styleClass="parent" stylesheets="@UIstyle(DARKMODE).css">
          <padding>
@@ -13,13 +13,13 @@
          </padding>
          <children>
             <ListView layoutX="153.0" layoutY="83.0" prefHeight="579.0" prefWidth="1258.0" />
-            <TextField fx:id="studentView" alignment="TOP_LEFT" layoutX="153.0" layoutY="669.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="114.0" prefWidth="1123.0" text="Type your question here">
+            <TextField fx:id="studentView" alignment="TOP_LEFT" layoutX="153.0" layoutY="669.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="114.0" prefWidth="1123.0" promptText="Type your question here" >
                <font>
                   <Font name="Roboto Light" size="24.0" />
                </font></TextField>
             <SplitPane prefHeight="810.0" prefWidth="120.0">
               <items>
-                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="810.0" prefWidth="120.0" styleClass="side-pannel" />
+                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="810.0" prefWidth="120.0" styleClass="side-panel" />
               </items>
             </SplitPane>
             <SplitPane prefHeight="75.0" prefWidth="1440.0" styleClass="course-panel" stylesheets="@UIstyle(DARKMODE).css">

@@ -11,7 +11,7 @@
                 <ListView layoutX="153.0" layoutY="83.0" prefHeight="710.0" prefWidth="1258.0" />
                 <SplitPane prefHeight="810.0" prefWidth="120.0">
                     <items>
-                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="810.0" prefWidth="120.0" styleClass="side-pannel" />
+                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="810.0" prefWidth="120.0" styleClass="side-panel" />
                     </items>
                 </SplitPane>
                 <SplitPane prefHeight="75.0" prefWidth="1440.0" styleClass="course-panel">

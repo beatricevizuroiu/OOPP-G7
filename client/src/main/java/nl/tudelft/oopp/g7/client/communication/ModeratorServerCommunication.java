@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class ModeratorServerCommunication {
     private static Gson gson = new GsonBuilder().setDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz").create();
-    private static final String endBody = "http://localhost:8080/api/v1/room/";
+    private static final String uriBody = "http://localhost:8080/api/v1/room/";
 
     /**
      * Retrieve all questions from the server and sort them based on upvotes.
@@ -41,7 +41,7 @@ public class ModeratorServerCommunication {
         String body = gson.toJson(questionText);
 
         // add the appropriate end-point
-        URI uri = URI.create(endBody + roomID + "/question/" + questionID + "/answer");
+        URI uri = URI.create(uriBody + roomID + "/question/" + questionID + "/answer");
 
         // answer the question and return the response
         return HttpMethods.post(uri, body);

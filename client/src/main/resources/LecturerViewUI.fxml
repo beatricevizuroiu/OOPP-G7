@@ -19,7 +19,7 @@
                     </font></TextField>
                 <SplitPane prefHeight="730.0" prefWidth="120.0">
                     <items>
-                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="731.0" prefWidth="118.0" styleClass="side-pannel" />
+                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="731.0" prefWidth="118.0" styleClass="side-panel" />
                     </items>
                 </SplitPane>
                 <SplitPane prefHeight="75.0" prefWidth="1220.0" styleClass="course-panel">
