@@ -57,7 +57,7 @@ public class ServerCommunication {
         String userRole = response.body();
 
         // parse the JSON into a UserRole object
-        return gson.fromJson(RoomJoinInfo, RoomJoinInfo.class);
+        return gson.fromJson(roomJoinInfo, RoomJoinInfo.class);
     }
 
     /**
