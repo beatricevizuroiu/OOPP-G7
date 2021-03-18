@@ -44,7 +44,7 @@ public class ServerCommunication {
      * @param password the password the user has received from the lecturer
      * @return a UserRole object
      */
-    public static UserRole joinRoom(String roomID, String password) {
+    public static RoomJoinInfo joinRoom(String roomID, String password) {
         // add the appropriate end-point
         URI uri = URI.create(uriBody + roomID + "/join");
 
@@ -57,7 +57,7 @@ public class ServerCommunication {
         String userRole = response.body();
 
         // parse the JSON into a UserRole object
-        return gson.fromJson(userRole, UserRole.class);
+        return gson.fromJson(RoomJoinInfo, RoomJoinInfo.class);
     }
 
     /**
