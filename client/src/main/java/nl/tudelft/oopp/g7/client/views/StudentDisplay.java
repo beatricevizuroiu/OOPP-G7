@@ -6,7 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import nl.tudelft.oopp.g7.client.controllers.StudentController;
+//import nl.tudelft.oopp.g7.client.controllers.StudentController;
 
 import java.io.IOException;
 import java.net.URL;
