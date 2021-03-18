@@ -1,0 +1,8 @@
+.toggle-button {
+  -fx-graphic: url('https://www.figma.com/file/R9RleWAfVsX4u11uETYV6U/Untitled?node-id=47%3A26');
+}
+
+.toggle-button:selected {
+  -fx-graphic: url('https://www.figma.com/file/R9RleWAfVsX4u11uETYV6U/Untitled?node-id=47%3A26');
+}
+
