@@ -65,17 +65,17 @@
                       value="CLASS_DEF, METHOD_DEF, CTOR_DEF, LITERAL_FOR, LITERAL_WHILE, STATIC_INIT,
                     INSTANCE_INIT"/>
         </module>
-        <module name="WhitespaceAround">
-            <property name="allowEmptyConstructors" value="true"/>
-            <property name="allowEmptyLambdas" value="true"/>
-            <property name="allowEmptyMethods" value="true"/>
-            <property name="allowEmptyTypes" value="true"/>
-            <property name="allowEmptyLoops" value="true"/>
-            <message key="ws.notFollowed"
-                     value="WhitespaceAround: ''{0}'' is not followed by whitespace. Empty blocks may only be represented as '{}' when not part of a multi-block statement (4.1.3)"/>
-            <message key="ws.notPreceded"
-                     value="WhitespaceAround: ''{0}'' is not preceded with whitespace."/>
-        </module>
+<!--        <module name="WhitespaceAround">-->
+<!--            <property name="allowEmptyConstructors" value="true"/>-->
+<!--            <property name="allowEmptyLambdas" value="true"/>-->
+<!--            <property name="allowEmptyMethods" value="true"/>-->
+<!--            <property name="allowEmptyTypes" value="true"/>-->
+<!--            <property name="allowEmptyLoops" value="true"/>-->
+<!--            <message key="ws.notFollowed"-->
+<!--                     value="WhitespaceAround: ''{0}'' is not followed by whitespace. Empty blocks may only be represented as '{}' when not part of a multi-block statement (4.1.3)"/>-->
+<!--            <message key="ws.notPreceded"-->
+<!--                     value="WhitespaceAround: ''{0}'' is not preceded with whitespace."/>-->
+<!--        </module>-->
         <module name="OneStatementPerLine"/>
         <module name="MultipleVariableDeclarations"/>
         <module name="ArrayTypeStyle"/>
@@ -116,15 +116,15 @@
             <message key="name.invalidPattern"
                      value="Package name ''{0}'' must match pattern ''{1}''."/>
         </module>
-        <module name="TypeName">
-            <message key="name.invalidPattern"
-                     value="Type name ''{0}'' must match pattern ''{1}''."/>
-        </module>
-        <module name="MemberName">
-            <property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9]*$"/>
-            <message key="name.invalidPattern"
-                     value="Member name ''{0}'' must match pattern ''{1}''."/>
-		</module>
+<!--        <module name="TypeName">-->
+<!--            <message key="name.invalidPattern"-->
+<!--                     value="Type name ''{0}'' must match pattern ''{1}''."/>-->
+<!--        </module>-->
+<!--        <module name="MemberName">-->
+<!--            <property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9]*$"/>-->
+<!--            <message key="name.invalidPattern"-->
+<!--                     value="Member name ''{0}'' must match pattern ''{1}''."/>-->
+<!--		</module>-->
         <module name="MethodName">
             <property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9_]*$"/>
             <message key="name.invalidPattern"
@@ -185,12 +185,12 @@
             <property name="lineWrappingIndentation" value="4"/>
             <property name="arrayInitIndent" value="4"/>
         </module>
-        <module name="AbbreviationAsWordInName">
-            <property name="ignoreFinal" value="true"/>
-            <property name="allowedAbbreviationLength" value="1"/>
-        </module>
+<!--        <module name="AbbreviationAsWordInName">-->
+<!--            <property name="ignoreFinal" value="true"/>-->
+<!--            <property name="allowedAbbreviationLength" value="1"/>-->
+<!--        </module>-->
         <module name="OverloadMethodsDeclarationOrder"/>
-        <module name="MethodParamPad"/>
+<!--        <module name="MethodParamPad"/>-->
         <module name="NoWhitespaceBefore">
             <property name="tokens"
                       value="COMMA, SEMI, POST_INC, POST_DEC, DOT, ELLIPSIS, METHOD_REF"/>
@@ -244,6 +244,6 @@
         <module name="EmptyCatchBlock">
             <property name="exceptionVariableName" value="expected|ignored|ignore"/>
         </module>
-        <module name="CommentsIndentation"/>
+<!--        <module name="CommentsIndentation"/>-->
     </module>
 </module>

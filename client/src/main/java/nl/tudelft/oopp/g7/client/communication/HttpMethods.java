@@ -82,7 +82,9 @@ public class HttpMethods {
         // send the request through the http client and store the response
         HttpResponse<String> response = send(request);
 
-        if (response.statusCode() != 200) {
+        if (response.statusCode() == 404) { // in the case of (NOT FOUND)
+            System.out.println("Resource doesn't exist.");
+        } else if (response.statusCode() != 200) {
             System.out.println("A problem occurred.");
         }
 
@@ -103,7 +105,7 @@ public class HttpMethods {
         HttpResponse<String> response = send(request);
 
         if (response.statusCode() == 404) { // in the case of (NOT FOUND)
-            System.out.println("Question doesn't exist.");
+            System.out.println("Resource doesn't exist.");
         } else if (response.statusCode() != 200) {
             System.out.println("A problem occurred.");
         }

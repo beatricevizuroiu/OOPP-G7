@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="800.0" styleClass="background" stylesheets="@Entry.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.joinRoomController">
+   <children>
+      <Text fill="#15041a" layoutX="312.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Join Room">
+         <font>
+            <Font name="Book Antiqua Bold" size="35.0" />
+         </font>
+      </Text>
+      <TextField id="nickname" fx:id="nickname" alignment="CENTER" layoutX="284.0" layoutY="157.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="64.0" prefWidth="231.0" styleClass="buttons" stylesheets="@Entry.css" text="Enter nickname">
+         <font>
+            <Font name="Book Antiqua Bold Italic" size="17.0" />
+         </font></TextField>
+      <TextField id="roomId" fx:id="roomId" alignment="CENTER" layoutX="284.0" layoutY="231.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="64.0" prefWidth="231.0" styleClass="buttons" text="Enter Room ID">
+         <font>
+            <Font name="Book Antiqua Bold Italic" size="17.0" />
+         </font></TextField>
+      <TextField id="roomPassword" fx:id="roomPassword" alignment="CENTER" layoutX="284.0" layoutY="304.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="64.0" prefWidth="231.0" styleClass="buttons" text="Enter Room Password">
+         <font>
+            <Font name="Book Antiqua Bold Italic" size="17.0" />
+         </font>
+      </TextField>
+      <Button fx:id="button" layoutX="356.0" layoutY="393.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="33.0" prefWidth="88.0" styleClass="buttons" text="Join">
+         <font>
+            <Font name="Book Antiqua Bold" size="13.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

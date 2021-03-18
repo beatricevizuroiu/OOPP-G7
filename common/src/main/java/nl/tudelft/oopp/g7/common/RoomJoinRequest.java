@@ -6,6 +6,6 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor @NoArgsConstructor
 @Data
-public class Answer {
-    private String answer;
+public class RoomJoinRequest {
+    private String password;
 }

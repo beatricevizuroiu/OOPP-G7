@@ -1,0 +1,24 @@
+.parent{
+    -fx-background-color: transparent;
+}
+.backgroundTitlePnale{
+    -fx-background-color: #8D1BAA;
+}
+
+.buttonEntry{
+    -fx-background-color: #360A41;
+}
+
+.background{
+    -fx-background-color: #FFFFFF;
+}
+
+.buttons{
+    -fx-background-color: #8D1BAA;
+}
+
+.textColor{
+    -fx-text-inner-color: #FFFFFF;
+
+}
+
