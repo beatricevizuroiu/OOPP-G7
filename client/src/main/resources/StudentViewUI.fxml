@@ -24,7 +24,7 @@
                             <children>
                                 <Text fill="WHITE" layoutX="-9.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Course Name" wrappingWidth="347.9892578125" x="23.0" y="13.0">
                                     <font>
-                                        <Font name="Roboto Light" size="36.0" />
+                                        <Font name="Book Antiqua" size="36.0" />
                                     </font>
                                 </Text>
                             </children>
@@ -33,17 +33,17 @@
                 </SplitPane>
                 <Button fx:id="postQuestionButton" layoutX="1070.0" layoutY="583.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="120.0" styleClass="buttons" stylesheets="@Entry.css" text="Post Question" textFill="WHITE">
                     <font>
-                        <Font name="System Bold" size="15.0" />
+                        <Font name="Book Antiqua Bold" size="15.0" />
                     </font></Button>
                 <TextArea fx:id="answerBox" layoutX="147.0" layoutY="583.0" prefHeight="122.0" prefWidth="911.0" text="Type your question here">
                     <font>
-                        <Font size="20.0" />
+                        <Font name="Book Antiqua" size="21.0" />
                     </font>
                 </TextArea>
                 <!-- put onAction="#retrieveQuestions" -->
                 <Button fx:id="reloadQuestionsButton" layoutX="1071.0" layoutY="657.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="118.0" styleClass="buttons" stylesheets="@Entry.css" text="Reload Questions" textFill="WHITE">
                     <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font name="Book Antiqua Bold" size="12.0" />
                     </font>
                 </Button>
             </children></AnchorPane>
