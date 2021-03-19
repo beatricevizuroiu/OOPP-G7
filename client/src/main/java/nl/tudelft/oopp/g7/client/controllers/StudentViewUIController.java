@@ -130,7 +130,7 @@ public class StudentViewUIController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Mode is clicked, change Scene to Join Room
-        EntryRoomDisplay.setCurrentScene("/studentViewUI(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/StudentViewUI(DARKMODE).fxml");
     }
 
     /**
@@ -143,6 +143,6 @@ public class StudentViewUIController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Mode is clicked, change Scene to Join Room
-        EntryRoomDisplay.setCurrentScene("/entryPage.fxml");
+        EntryRoomDisplay.setCurrentScene("/StudentViewUI.fxml");
     }
 }

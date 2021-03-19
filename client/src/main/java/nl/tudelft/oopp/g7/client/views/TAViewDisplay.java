@@ -9,16 +9,16 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 
-public class StudentViewDisplay extends Application {
+public class TAViewDisplay extends Application {
     private static Stage currentStage;
     private static Scene currentScene;
 
     @Override
-    public void start(Stage primaryStage) throws IOException{
+    public void start(Stage primaryStage) throws IOException {
         currentStage = primaryStage;
         FXMLLoader loader = new FXMLLoader();
 
-        URL xmlUrl = getClass().getResource("/StudentViewUI.fxml");
+        URL xmlUrl = getClass().getResource("/TAViewUI.fxml");
         loader.setLocation(xmlUrl);
         Parent root = loader.load();
 
@@ -44,11 +44,11 @@ public class StudentViewDisplay extends Application {
      */
     public static void setCurrentScene(String newSceneName){
         try{
-            Parent parent = FXMLLoader.load(StudentViewDisplay.class.getResource(newSceneName));
+            Parent parent = FXMLLoader.load(TAViewDisplay.class.getResource(newSceneName));
             Scene newScene = new Scene(parent);
 
             currentStage.setScene((newScene));
-            StudentViewDisplay.currentScene = newScene;
+            TAViewDisplay.currentScene = newScene;
 
             currentStage.show();
         } catch (IOException e) {
