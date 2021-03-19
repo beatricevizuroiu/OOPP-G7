@@ -116,4 +116,11 @@ public class StudentViewUIController {
         retrieveQuestions();
     }
 
+    // This is for the help button I am not actually asking for help
+    public void help(){
+        //TODO
+    }
+
+
+
 }
