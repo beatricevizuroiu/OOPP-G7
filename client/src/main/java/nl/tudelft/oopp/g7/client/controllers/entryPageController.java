@@ -43,4 +43,30 @@ public class entryPageController {
         // if Join is clicked, change Scene to Join Room
         EntryRoomDisplay.setCurrentScene("/joinRoom.fxml");
     }
+
+    /**
+     * Handle button action for button Mode from Light.
+     *
+     * @param event the event
+     */
+    public void handleButtonMode(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Join is clicked, change Scene to Join Room
+        EntryRoomDisplay.setCurrentScene("/entryPage(DARKMODE).fxml");
+    }
+
+    /**
+     * Handle button action for button Mode from Dark.
+     *
+     * @param event the event
+     */
+    public void handleButtonMode2(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Join is clicked, change Scene to Join Room
+        EntryRoomDisplay.setCurrentScene("/entryPage.fxml");
+    }
 }
