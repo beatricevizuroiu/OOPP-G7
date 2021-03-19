@@ -10,15 +10,61 @@ import java.io.IOException;
 import java.net.URL;
 
 public class JoinRoomDisplay extends Application {
+    private static Stage currentStage;
+    private static Scene currentScene;
+
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage) throws IOException{
+        currentStage = primaryStage;
         FXMLLoader loader = new FXMLLoader();
+
         URL xmlUrl = getClass().getResource("/joinRoom.fxml");
         loader.setLocation(xmlUrl);
         Parent root = loader.load();
 
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
+        currentScene = new Scene(root);
+
+        currentStage.setScene(currentScene);
+        currentStage.show();
+    }
+
+    /**
+     * Get current scene scene.
+     *
+     * @return the scene
+     */
+    public static Scene getCurrentScene(){
+
+        return currentScene;
+    }
+
+    /**
+     * Set current scene.
+     *
+     * @param newSceneName the new scene name
+     */
+    public static void setCurrentScene(String newSceneName){
+        try{
+            Parent parent = FXMLLoader.load(JoinRoomDisplay.class.getResource(newSceneName));
+            Scene newScene = new Scene(parent);
+
+            currentStage.setScene((newScene));
+            JoinRoomDisplay.currentScene = newScene;
+
+            currentStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Get current stage stage.
+     *
+     * @return the stage
+     */
+    public static Stage getCurrentStage(){
+
+        return currentStage;
     }
 
     public static void main(String[] args) {
