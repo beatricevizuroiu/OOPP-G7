@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
@@ -30,6 +31,15 @@
          <font>
             <Font name="Book Antiqua Bold" size="17.0" />
          </font>
+      </Button>
+      <Button layoutX="14.0" layoutY="23.0" mnemonicParsing="false" onAction="#handleButtonMode" styleClass="parent" text="Mode">
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@sun (1).png" />
+               </image>
+            </ImageView>
+         </graphic>
       </Button>
    </children>
 </AnchorPane>

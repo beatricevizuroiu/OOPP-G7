@@ -45,6 +45,32 @@ public class entryPageController {
     }
 
     /**
+     * Handle button action for button Create.
+     *
+     * @param event the event
+     */
+    public void handleButtonActionDark(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Create is clicked, change Scene to Create Room
+        EntryRoomDisplay.setCurrentScene("/createRoom(DARKMODE).fxml");
+    }
+
+    /**
+     * Handle button action for button Join.
+     *
+     * @param event the event
+     */
+    public void handleButtonAction2Dark(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Join is clicked, change Scene to Join Room
+        EntryRoomDisplay.setCurrentScene("/joinRoom(DARKMODE).fxml");
+    }
+
+    /**
      * Handle button action for button Mode from Light.
      *
      * @param event the event
@@ -53,7 +79,7 @@ public class entryPageController {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
-        // if Join is clicked, change Scene to Join Room
+        // if Mode is clicked, change Scene to Join Room
         EntryRoomDisplay.setCurrentScene("/entryPage(DARKMODE).fxml");
     }
 
@@ -66,7 +92,7 @@ public class entryPageController {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
-        // if Join is clicked, change Scene to Join Room
+        // if Mode is clicked, change Scene to Join Room
         EntryRoomDisplay.setCurrentScene("/entryPage.fxml");
     }
 }
