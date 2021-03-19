@@ -1,18 +1,22 @@
 package nl.tudelft.oopp.g7.client.controllers;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.localData;
+import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
 import java.io.IOException;
@@ -116,4 +120,29 @@ public class StudentViewUIController {
         retrieveQuestions();
     }
 
+    /**
+     * Handle button action for button Mode from Light.
+     *
+     * @param event the event
+     */
+    public void handleButtonMode(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Mode is clicked, change Scene to Join Room
+        EntryRoomDisplay.setCurrentScene("/studentViewUI(DARKMODE).fxml");
+    }
+
+    /**
+     * Handle button action for button Mode from Dark.
+     *
+     * @param event the event
+     */
+    public void handleButtonMode2(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Mode is clicked, change Scene to Join Room
+        EntryRoomDisplay.setCurrentScene("/entryPage.fxml");
+    }
 }

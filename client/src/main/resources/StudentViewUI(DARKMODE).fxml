@@ -4,6 +4,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <GridPane minHeight="500" minWidth="750" stylesheets="@UIstyle(DARKMODE).css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.StudentViewUIController">
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" minWidth="128.0" />
@@ -25,7 +27,18 @@
         </Text>
     </HBox>
 
-    <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+    <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2">
+        <items>
+            <Button layoutX="14.0" layoutY="72.0" mnemonicParsing="false" onAction="#handleButtonMode2" text="Mode" textFill="WHITE">
+                <graphic>
+                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@sun (1).png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+        </items></SplitPane>
 
     <ScrollPane fx:id="questionList" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
         <VBox fx:id="questionContainer" />
