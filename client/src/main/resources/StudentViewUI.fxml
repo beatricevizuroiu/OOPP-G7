@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane minHeight="500" minWidth="750" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.StudentViewUIController">
+<GridPane minHeight="500" minWidth="750" stylesheets="@UIstyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.StudentViewUIController">
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" minWidth="128.0" />
         <ColumnConstraints hgrow="SOMETIMES" />
@@ -44,14 +43,9 @@
         </font>
     </Button>
 
-    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#help" styleClass="help-button1" text="Post Question" textFill="WHITE" GridPane.columnIndex="0" GridPane.rowIndex="2">
-        <font>
-            <Font name="Book Antiqua Bold" size="15.0" />
-        </font>
-    </Button>
-   <stylesheets>
-      <URL value="@UIstyle.css" />
-      <URL value="@buttons.css" />
-   </stylesheets>
+    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#help"  styleClass="help-button" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+
+    <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionList"  styleClass="answered-question-button" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+
 
 </GridPane>
