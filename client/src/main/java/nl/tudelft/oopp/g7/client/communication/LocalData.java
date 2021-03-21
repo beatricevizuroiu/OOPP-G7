@@ -1,6 +1,6 @@
 package nl.tudelft.oopp.g7.client.communication;
 
-public class localData {
+public class LocalData {
     private static String myNickname = "";
     private static String myRoomID = null;
     private static String myPassword = "";

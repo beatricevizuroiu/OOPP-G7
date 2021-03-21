@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
-import nl.tudelft.oopp.g7.client.communication.localData;
+import nl.tudelft.oopp.g7.client.communication.LocalData;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.Question;
 
@@ -37,10 +37,10 @@ public class TAViewController {
      * The constructor for TAViewController.
      */
     public TAViewController() {
-        roomID = localData.getRoomID();
-        nickname = localData.getNickname();
-        moderatorPassword = localData.getModeratorPassword();
-        studentPassword = localData.getStudentPassword();
+        roomID = LocalData.getRoomID();
+        nickname = LocalData.getNickname();
+        moderatorPassword = LocalData.getModeratorPassword();
+        studentPassword = LocalData.getStudentPassword();
 
         System.out.println(roomID);
 

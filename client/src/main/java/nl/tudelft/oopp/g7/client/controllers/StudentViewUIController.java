@@ -15,7 +15,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
-import nl.tudelft.oopp.g7.client.communication.localData;
+import nl.tudelft.oopp.g7.client.communication.LocalData;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
@@ -49,9 +49,9 @@ public class StudentViewUIController {
      * Constructor for StudentViewUIController.
      */
     public StudentViewUIController() {
-        roomID = localData.getRoomID();
-        nickname = localData.getNickname();
-        password = localData.getPassword();
+        roomID = LocalData.getRoomID();
+        nickname = LocalData.getNickname();
+        password = LocalData.getPassword();
 
         // Start a timer and create a separate thread on it to automatically call retrieveQuestions()
         Timer timer = new Timer();

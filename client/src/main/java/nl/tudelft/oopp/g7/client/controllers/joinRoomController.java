@@ -2,20 +2,16 @@ package nl.tudelft.oopp.g7.client.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.communication.RoomServerCommunication;
-import nl.tudelft.oopp.g7.client.communication.localData;
+import nl.tudelft.oopp.g7.client.communication.LocalData;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.RoomJoinRequest;
 import nl.tudelft.oopp.g7.common.UserRole;
-
-import java.io.IOException;
 
 public class joinRoomController {
     @FXML
@@ -83,9 +79,9 @@ public class joinRoomController {
         if (alert.getResult() == okButton) {
 
             // Store all the entered information
-            localData.setNickname(nickname.getText());
-            localData.setRoomID(roomId.getText());
-            localData.setPassword(roomPassword.getText());
+            LocalData.setNickname(nickname.getText());
+            LocalData.setRoomID(roomId.getText());
+            LocalData.setPassword(roomPassword.getText());
 
             Scene scene = EntryRoomDisplay.getCurrentScene();
             Stage stage = EntryRoomDisplay.getCurrentStage();
@@ -131,9 +127,9 @@ public class joinRoomController {
         if (alert.getResult() == okButton) {
 
             // Store all the entered information
-            localData.setNickname(nickname.getText());
-            localData.setRoomID(roomId.getText());
-            localData.setPassword(roomPassword.getText());
+            LocalData.setNickname(nickname.getText());
+            LocalData.setRoomID(roomId.getText());
+            LocalData.setPassword(roomPassword.getText());
 
             Scene scene = EntryRoomDisplay.getCurrentScene();
             Stage stage = EntryRoomDisplay.getCurrentStage();

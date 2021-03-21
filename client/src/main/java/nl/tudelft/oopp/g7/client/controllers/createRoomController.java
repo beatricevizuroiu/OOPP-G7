@@ -8,12 +8,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.communication.RoomServerCommunication;
-import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
-import nl.tudelft.oopp.g7.client.communication.localData;
+import nl.tudelft.oopp.g7.client.communication.LocalData;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.NewRoom;
 import nl.tudelft.oopp.g7.common.Room;
-import org.w3c.dom.Text;
 
 import java.util.Date;
 
@@ -88,10 +86,10 @@ public class createRoomController {
             Room room = RoomServerCommunication.createRoom(newRoom);
 
             // Store all relevant room information for future reference
-            localData.setNickname(lecturerName.getText());
-            localData.setRoomID(room.getId());
-            localData.setStudentPassword(room.getStudentPassword());
-            localData.setModeratorPassword(room.getModeratorPassword());
+            LocalData.setNickname(lecturerName.getText());
+            LocalData.setRoomID(room.getId());
+            LocalData.setStudentPassword(room.getStudentPassword());
+            LocalData.setModeratorPassword(room.getModeratorPassword());
 
             // Proceed to Lecturer View
             Scene scene = EntryRoomDisplay.getCurrentScene();
@@ -136,10 +134,10 @@ public class createRoomController {
             Room room = RoomServerCommunication.createRoom(newRoom);
 
             // Store all relevant room information for future reference
-            localData.setNickname(lecturerName.getText());
-            localData.setRoomID(room.getId());
-            localData.setStudentPassword(room.getStudentPassword());
-            localData.setModeratorPassword(room.getModeratorPassword());
+            LocalData.setNickname(lecturerName.getText());
+            LocalData.setRoomID(room.getId());
+            LocalData.setStudentPassword(room.getStudentPassword());
+            LocalData.setModeratorPassword(room.getModeratorPassword());
 
             // Proceed to Lecturer View
             Scene scene = EntryRoomDisplay.getCurrentScene();
