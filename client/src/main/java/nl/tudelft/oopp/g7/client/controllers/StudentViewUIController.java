@@ -169,13 +169,6 @@ public class StudentViewUIController {
         //TODO
     }
 
-    public void modeToDark () {
-        //TODO (go to dark mode)
-    }
-
-    public void modetoLight () {
-        //TODO (go to light mode)
-    }
 
     public void deleteQuestion () {
         //TODO
