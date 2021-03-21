@@ -79,7 +79,10 @@ root {
 .link-button {
 }
 
-/*Indicators for speed of lecturer for the lecturer UI*/
+/*
+Indicators for speed of lecturer for the lecturer UI
+(Circles are indicated from top to bottom (top=1 and bottom=5)
+*/
 .circle-1 {
 
 }
