@@ -85,4 +85,21 @@ public class TAViewController {
         // Return the user to their original position in the scroll list
         questionList.setVvalue(scrollHeight + 0);
     }
+
+    // This is for the help button I am not actually asking for help
+    public void help(){
+        //TODO
+    }
+
+    public void answeredQuestionList(){
+        //TODO
+    }
+
+    public void listofUsers () {
+        //TODO
+    }
+
+    public void mode () {
+        //TODO (go to dark mode)
+    }
 }

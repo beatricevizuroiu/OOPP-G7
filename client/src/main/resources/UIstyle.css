@@ -58,8 +58,27 @@ root {
     /*Find better image */
 }
 
+.too-fast-button{
+    /*Only for student*/
+}
 
-Only
+.too-slow-button{
+    /*Only for student*/
+}
+
+/*Buttons only for TA's and Lecturers*/
+.poll-button{
+
+}
+
+.export-questions-button {
+}
+
+/*Buttons only for Lecturers*/
+.link-button {
+}
+
+/*Indicators for speed of lecturer for the lecturer UI*/
 .circle-1 {
 
 }

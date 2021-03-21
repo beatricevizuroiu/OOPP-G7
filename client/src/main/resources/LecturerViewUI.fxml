@@ -43,4 +43,12 @@
         </font>
     </Button>
 
+    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#help"  styleClass="help-button" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+
+    <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionList"  styleClass="answered-question-button" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+
+    <Button fx:id="userList" mnemonicParsing="false" onAction="#listofUsers"  styleClass="user-list-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+    <Button fx:id="mode" mnemonicParsing="false" onAction="#mode"  styleClass="mode-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
 </GridPane>
