@@ -1,11 +1,33 @@
-.parent{
-    -fx-background-color: #3C3C3C;
+root {
+    display: block;
 }
-.course-panel{
+
+.button {
     -fx-background-color: #360A41;
 }
 
-.side-pannel{
+.upvoteBtn {
+    -fx-background-color: transparent;
+}
+
+.upvoteBtnSVG {
+    -fx-fill: #360A41;
+    -fx-stroke: #360A41;
+}
+
+.parent{
+    -fx-background-color: transparent;
+}
+.course-panel{
+    -fx-background-color: #360A41;
+    -fx-pref-height: 75;
+}
+
+.side-panel{
+    -fx-pref-width: 128;
     -fx-background-color: #15041A;
 }
+
+
+
 

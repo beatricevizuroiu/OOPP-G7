@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<AnchorPane prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #15041A;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.joinRoomController">
+    <children>
+        <Text fill="WHITE" layoutX="315.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Join Room">
+            <font>
+                <Font name="Book Antiqua Bold" size="35.0" />
+            </font>
+        </Text>
+        <TextField id="nickname" fx:id="nickname" alignment="CENTER" layoutX="284.0" layoutY="157.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="64.0" prefWidth="231.0" promptText="Enter nickname" style="-fx-background-color: #360A41;" stylesheets="@Entry(DARKMODE).css">
+            <font>
+                <Font name="Book Antiqua Bold Italic" size="17.0" />
+            </font></TextField>
+        <TextField id="roomId" fx:id="roomId" alignment="CENTER" layoutX="284.0" layoutY="231.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="64.0" prefWidth="231.0" promptText="Enter Room ID" style="-fx-background-color: #360A41;" styleClass="buttons">
+            <font>
+                <Font name="Book Antiqua Bold Italic" size="17.0" />
+            </font></TextField>
+        <TextField id="roomPassword" fx:id="roomPassword" alignment="CENTER" layoutX="284.0" layoutY="304.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="64.0" prefWidth="231.0" promptText="Enter Room Password" style="-fx-background-color: #360A41;" styleClass="buttons">
+            <font>
+                <Font name="Book Antiqua Bold Italic" size="17.0" />
+            </font>
+        </TextField>
+        <Button fx:id="button" layoutX="356.0" layoutY="393.0" mnemonicParsing="false" onAction="#buttonClickedDark" prefHeight="33.0" prefWidth="88.0" style="-fx-background-color: #360A41;" styleClass="buttons" text="Join" textFill="WHITE">
+            <font>
+                <Font name="Book Antiqua Bold" size="13.0" />
+            </font>
+        </Button>
+        <Button layoutX="14.0" layoutY="23.0" mnemonicParsing="false" onAction="#handleButtonMode2" style="-fx-background-color: #360A41;" text="Mode" textFill="WHITE">
+            <graphic>
+                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@sun (1).png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+    </children>
+</AnchorPane>
