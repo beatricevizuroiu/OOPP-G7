@@ -101,7 +101,19 @@ public class LecturerViewController {
         //TODO
     }
 
-    public void mode () {
+    public void modetoDark () {
         //TODO (go to dark mode)
+    }
+
+    public void modetoLight () {
+        //TODO (go to light mode)
+    }
+
+    public void createPoll(){
+        //TODO
+    }
+
+    public void exportQuestions(){
+        //TODO
     }
 }

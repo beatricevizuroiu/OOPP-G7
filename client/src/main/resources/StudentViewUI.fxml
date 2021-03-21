@@ -49,7 +49,7 @@
 
     <Button fx:id="userList" mnemonicParsing="false" onAction="#listofUsers"  styleClass="user-list-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-    <Button fx:id="mode" mnemonicParsing="false" onAction="#mode"  styleClass="mode-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+    <Button fx:id="mode" mnemonicParsing="false" onAction="#modeToDark"  styleClass="mode-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
 
 
