@@ -1,15 +1,19 @@
 package nl.tudelft.oopp.g7.client.controllers;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
-import nl.tudelft.oopp.g7.client.communication.localData;
+import nl.tudelft.oopp.g7.client.communication.LocalData;
+import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.Question;
 
 import java.io.IOException;
@@ -33,10 +37,10 @@ public class TAViewController {
      * The constructor for TAViewController.
      */
     public TAViewController() {
-        roomID = localData.getRoomID();
-        nickname = localData.getNickname();
-        moderatorPassword = localData.getModeratorPassword();
-        studentPassword = localData.getStudentPassword();
+        roomID = LocalData.getRoomID();
+        nickname = LocalData.getNickname();
+        moderatorPassword = LocalData.getModeratorPassword();
+        studentPassword = LocalData.getStudentPassword();
 
         System.out.println(roomID);
 
@@ -84,6 +88,32 @@ public class TAViewController {
 
         // Return the user to their original position in the scroll list
         questionList.setVvalue(scrollHeight + 0);
+    }
+
+    /**
+     * Handle button action for button Mode from Light.
+     *
+     * @param event the event
+     */
+    public void handleButtonMode(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Mode is clicked, change Scene to Join Room
+        EntryRoomDisplay.setCurrentScene("/TAViewUI(DARKMODE).fxml");
+    }
+
+    /**
+     * Handle button action for button Mode from Dark.
+     *
+     * @param event the event
+     */
+    public void handleButtonMode2(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Mode is clicked, change Scene to Join Room
+        EntryRoomDisplay.setCurrentScene("/TAViewUI.fxml");
     }
 
     // This is for the help button I am not actually asking for help

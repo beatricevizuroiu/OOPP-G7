@@ -4,6 +4,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <AnchorPane prefHeight="500.0" prefWidth="800.0" styleClass="background" stylesheets="@Entry.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.joinRoomController">
    <children>
       <Text fill="#15041a" layoutX="315.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Join Room">
@@ -28,6 +30,15 @@
          <font>
             <Font name="Book Antiqua Bold" size="13.0" />
          </font>
+      </Button>
+      <Button layoutX="14.0" layoutY="23.0" mnemonicParsing="false" onAction="#handleButtonMode" styleClass="parent" text="Mode">
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@sun (1).png" />
+               </image>
+            </ImageView>
+         </graphic>
       </Button>
    </children>
 </AnchorPane>
