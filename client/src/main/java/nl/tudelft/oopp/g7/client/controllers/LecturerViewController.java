@@ -116,4 +116,12 @@ public class LecturerViewController {
     public void exportQuestions(){
         //TODO
     }
+
+    public void createLink(){
+        //TODO
+    }
+
+    public void speedindicator(){
+
+    }
 }

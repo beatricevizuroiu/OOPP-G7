@@ -55,4 +55,8 @@
 
     <Button fx:id="export" mnemonicParsing="false" onAction="#exportQuestions"  styleClass="export-questions-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
+    <Button fx:id="link" mnemonicParsing="false" onAction="#createLink"  styleClass="link-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+<!--TODO: speed indicator -->
+
 </GridPane>
