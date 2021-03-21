@@ -56,7 +56,7 @@
         </font>
     </Button>
 
-    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#help"  styleClass="help-button" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonDark"  styleClass="help-button" GridPane.columnIndex="0" GridPane.rowIndex="2" />
 
     <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionList"  styleClass="answered-question-button" GridPane.columnIndex="2" GridPane.rowIndex="0" />
 

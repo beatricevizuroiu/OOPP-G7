@@ -145,9 +145,20 @@ public class StudentViewUIController {
         // if Mode is clicked, change Scene to Join Room
         EntryRoomDisplay.setCurrentScene("/StudentViewUI.fxml");
     }
-    // This is for the help button I am not actually asking for help
-    public void help(){
-        //TODO
+    public void handleHelpButtonLight(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Help is clicked, change to Help scene
+        EntryRoomDisplay.setCurrentScene("/HelpFileStudent.fxml");
+    }
+
+    public void handleHelpButtonDark(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Help is clicked, change to Help scene
+        EntryRoomDisplay.setCurrentScene("/HelpFileStudent(DARKMODE).fxml");
     }
 
     public void answeredQuestionList(){
