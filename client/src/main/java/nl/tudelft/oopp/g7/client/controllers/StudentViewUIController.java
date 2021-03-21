@@ -125,6 +125,14 @@ public class StudentViewUIController {
         //TODO
     }
 
+    public void listofUsers () {
+        //TODO
+    }
+
+    public void mode () {
+        //TODO (go to dark mode)
+    }
+
 
 
 }
