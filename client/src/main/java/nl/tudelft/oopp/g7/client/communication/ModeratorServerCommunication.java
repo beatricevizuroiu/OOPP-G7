@@ -50,4 +50,8 @@ public class ModeratorServerCommunication {
     public static HttpResponse<String> editQuestion(String roomID, int questionID, QuestionText questionText) {
         return ServerCommunication.editQuestion(roomID, questionID, questionText);
     }
+
+    public static HttpResponse<String> markAsAnswered(String roomID, int questionID) {
+        return answerQuestion(roomID, questionID, new QuestionText(""));
+    }
 }

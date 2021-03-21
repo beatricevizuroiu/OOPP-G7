@@ -2,14 +2,15 @@
 Contains helper methods as well as some methods that should apply for all roles.
 
 ## Helper
+- createRoom
 - retrieveAllQuestions
 
 ## Applies for all roles
 - retrieveQuestionById
 - retrieveAllAnsweredQuestions
 - upvoteQuestion
-- editQuestion 
-- deleteQuestion 
+- editQuestion (student class has wrapper)
+- deleteQuestion (student class has wrapper)
 
 # StudentServerCommunication Methods
 Contains main methods that could be used by a student.
@@ -25,6 +26,7 @@ Contains main methods that could be used by a TA.
 
 - retrieveAllQuestions (sorts by upvotes)
 - answerQuestion 
+- markAsAnswered (sends an empty answer body)
 
 # HttpMethods 
 Contains helper HTTP methods.
