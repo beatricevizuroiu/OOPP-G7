@@ -132,20 +132,20 @@ public class TAViewController {
         EntryRoomDisplay.setCurrentScene("/HelpFileModerator(DARKMODE).fxml");
     }
 
-    public void answeredQuestionList(){
-        //TODO
-    }
-
-    public void listofUsers () {
-        //TODO
-    }
-
-
-    public void createPoll(){
-        //TODO
-    }
-
-    public void exportQuestions(){
-        //TODO
-    }
+//    public void answeredQuestionList(){
+//        //TODO
+//    }
+//
+//    public void listofUsers () {
+//        //TODO
+//    }
+//
+//
+//    public void createPoll(){
+//        //TODO
+//    }
+//
+//    public void exportQuestions(){
+//        //TODO
+//    }
 }
