@@ -129,13 +129,6 @@ public class TAViewController {
         //TODO
     }
 
-    public void modetoDark () {
-        //TODO (go to dark mode)
-    }
-
-    public void modetoLight () {
-        //TODO (go to light mode)
-    }
 
     public void createPoll(){
         //TODO
