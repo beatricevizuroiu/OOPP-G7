@@ -137,6 +137,14 @@ public class StudentViewUIController {
         //TODO (go to light mode)
     }
 
+    public void deleteQuestion () {
+        //TODO
+    }
+
+    public void editQuestion (){
+
+    }
+
 
 
 }
