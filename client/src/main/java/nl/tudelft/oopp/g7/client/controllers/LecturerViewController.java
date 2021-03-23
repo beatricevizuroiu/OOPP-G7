@@ -132,28 +132,28 @@ public class LecturerViewController {
         EntryRoomDisplay.setCurrentScene("/HelpFileModerator(DARKMODE).fxml");
     }
 
-//    public void answeredQuestionList(){
-//        //TODO
-//    }
-//
-//    public void listOfUsers () {
-//        //TODO
-//    }
-//
-//
-//    public void createPoll(){
-//        //TODO
-//    }
-//
-//    public void exportQuestions(){
-//        //TODO
-//    }
-//
-//    public void createLink(){
-//        //TODO
-//    }
-//
-//    public void speedIndicator(){
-//
-//    }
+    public void answeredQuestionList(){
+        //TODO
+    }
+
+    public void listOfUsers () {
+        //TODO
+    }
+
+
+    public void createPoll(){
+        //TODO
+    }
+
+    public void exportQuestions(){
+        //TODO
+    }
+
+    public void createLink(){
+        //TODO
+    }
+
+    public void speedIndicator(){
+
+    }
 }
