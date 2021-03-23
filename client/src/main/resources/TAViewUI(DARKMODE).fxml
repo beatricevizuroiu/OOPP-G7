@@ -9,7 +9,7 @@
 <GridPane xmlns="http://javafx.com/javafx/11.0.1"
           xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="nl.tudelft.oopp.g7.client.controllers.TAViewController"
-          stylesheets="@UIstyle.css"
+          stylesheets="@UIstyle(DARKMODE).css"
           minHeight="500" minWidth="750">
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" minWidth="128.0" />
@@ -36,7 +36,7 @@
                GridPane.columnIndex="0" GridPane.rowIndex="1"
                GridPane.rowSpan="2">
         <items>
-            <Button layoutX="14.0" layoutY="72.0" mnemonicParsing="false" onAction="#handleButtonMode" text="Mode" textFill="WHITE">
+            <Button layoutX="14.0" layoutY="72.0" mnemonicParsing="false" onAction="#handleButtonMode2" text="Mode" textFill="WHITE">
                 <graphic>
                     <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                         <image>

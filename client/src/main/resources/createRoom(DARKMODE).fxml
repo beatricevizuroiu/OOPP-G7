@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #15041A;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.createRoomController">
+    <children>
+        <Text fill="WHITE" layoutX="303.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Room" wrappingWidth="220.13671875">
+            <font>
+                <Font name="Book Antiqua Bold" size="35.0" />
+            </font></Text>
+        <TextField id="roomName" fx:id="roomName" alignment="CENTER" layoutX="254.0" layoutY="115.0" prefHeight="60.0" prefWidth="300.0" promptText="Enter name of Course" style="-fx-background-color: #360A41;">
+            <font>
+                <Font name="Book Antiqua Bold Italic" size="17.0" />
+            </font></TextField>
+        <TextField id="moderatorPassword" fx:id="moderatorPassword" alignment="CENTER" layoutX="254.0" layoutY="190.0" prefHeight="60.0" prefWidth="300.0" promptText="Enter moderator password (required)" style="-fx-background-color: #360A41;">
+            <font>
+                <Font name="Book Antiqua Bold Italic" size="17.0" />
+            </font></TextField>
+        <TextField id="studentPassword" fx:id="studentPassword" alignment="CENTER" layoutX="254.0" layoutY="265.0" prefHeight="60.0" prefWidth="300.0" promptText="Enter student password (optional)" style="-fx-background-color: #360A41;">
+            <font>
+                <Font name="Book Antiqua Bold Italic" size="17.0" />
+            </font></TextField>
+        <TextField id="lecturerName" fx:id="lecturerName" alignment="CENTER" layoutX="254.0" layoutY="340.0" prefHeight="60.0" prefWidth="300.0" promptText="Enter name of Lecturer" style="-fx-background-color: #360A41;">
+            <font>
+                <Font name="Book Antiqua Bold Italic" size="17.0" />
+            </font></TextField>
+        <Button fx:id="button" layoutX="349.0" layoutY="417.0" mnemonicParsing="false" onAction="#buttonClicked2" prefHeight="26.0" prefWidth="102.0" style="-fx-background-color: #360A41;" text="Create" textFill="WHITE">
+            <font>
+                <Font name="Book Antiqua Bold" size="17.0" />
+            </font>
+        </Button>
+        <Button layoutX="14.0" layoutY="23.0" mnemonicParsing="false" onAction="#handleButtonMode2" style="-fx-background-color: #360A41;" text="Mode" textFill="WHITE">
+            <graphic>
+                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@sun (1).png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+    </children>
+</AnchorPane>
