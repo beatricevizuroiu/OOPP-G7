@@ -29,6 +29,7 @@ public class RoomRepository {
     private static final String QUERY_CREATE_ROOM = "INSERT INTO rooms (id, studentPassword, moderatorPassword, name, open, over, startDate) VALUES (?, ?, ?, ?, ?, ?, ?);";
     private static final String QUERY_GET_ROOM_WITH_ID = "SELECT * FROM rooms WHERE id=?";
     private static final String QUERY_EDIT_SPEED = "UPDATE rooms SET speed = speed + ? WHERE id=?;";
+    private static final String QUERY_GET_SPEED_WITH_ID = "SELECT speed FROM rooms WHERE id=?";
 
     /**
      * Primary constructor for the room repository.
@@ -147,5 +148,23 @@ public class RoomRepository {
             default:
                 return 0;
         }
+    }
+
+    /**
+     * Get the speed of a {@link Room} in the database.
+     * @param roomId The id of the room to get the speed of.
+     * @return The speed of the room.
+     */
+    public SpeedAlterRequest getSpeedById(String roomId) {
+        logger.debug("Getting the current speed of room with id: {}", roomId);
+
+        int result = jdbcTemplate.query(QUERY_GET_SPEED_WITH_ID,
+                (ps) -> ps.setString(1, roomId),
+                (rs) -> {
+                    rs.next();
+                    return rs.getInt(1);
+                });
+
+        return new SpeedAlterRequest(result);
     }
 }

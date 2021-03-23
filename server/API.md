@@ -80,10 +80,22 @@ http status code 400 (BAD_REQUEST).
 ```http request
 POST /api/v1/room/YWieMMQQqjGNoLAwTsSUlatHzr43Z3Gt1Wvs/speed
 {
-    "speed": "1",
+    "speed": 1,
 }
 ```
 `No response`
+
+### GET `/room/{room_id}/speed`
+Get the speed value of the room with {room_id}. If such a room does not exist the server will respond with 
+http status code 404 (NOT_FOUND).
+
+**Examples:**
+`GET /api/v1/room/{room_id}/speed`
+```json
+{
+  "speed": 5
+}
+```
 
 ## The `/room/{room_id}/question/` endpoints
 The following endpoints are related to creating, getting, and answering questions.

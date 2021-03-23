@@ -165,6 +165,19 @@ public class RoomController {
     }
 
     /**
+     * Endpoint to get the speed of a room.
+     * @param roomId The id of the room to edit the speed of.
+     * @return A {@link ResponseEntity} containing a {@link SpeedAlterRequest} and a {@link HttpStatus} that is one of
+     *      TODO: INTERNAL_SERVER_ERROR (500), NOT_FOUND (404)
+     *      or OK (200)
+     */
+    @GetMapping("/{room_id}/speed")
+    public ResponseEntity<SpeedAlterRequest> getRoomSpeed(@PathVariable("room_id") String roomId) {
+        SpeedAlterRequest response = roomRepository.getSpeedById(roomId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    /**
      * A helper method to parse the student password.
      * @param studentPassword The student password to parse.
      * @return The parsed student password.

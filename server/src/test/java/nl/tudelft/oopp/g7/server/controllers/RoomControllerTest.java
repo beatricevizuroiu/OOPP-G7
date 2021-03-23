@@ -123,4 +123,23 @@ public class RoomControllerTest {
         // Check if the request failed successfully.
         assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
     }
+
+    @Test
+    void getSpeedTest() {
+        ResponseEntity<SpeedAlterRequest> response = roomController.getRoomSpeed(TEST_ROOM_ID);
+
+        assertEquals(response.getBody().getSpeed(), 0);
+
+        roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(1));
+        response = roomController.getRoomSpeed(TEST_ROOM_ID);
+
+        assertEquals(response.getBody().getSpeed(), 1);
+
+        roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(-1));
+        roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(-1));
+        roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(-1));
+        response = roomController.getRoomSpeed((TEST_ROOM_ID));
+
+        assertEquals(response.getBody().getSpeed(), -2);
+    }
 }
