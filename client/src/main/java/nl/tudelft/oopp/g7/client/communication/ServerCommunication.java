@@ -142,9 +142,10 @@ public class ServerCommunication {
         // add the appropriate end-point
         URI uri = URI.create(uriBody + roomID + "/speed");
 
-        // send the speed request and return the response
+        // send the speed request and save the response
         HttpResponse<String> response = HttpMethods.get(uri);
 
+        // get the speed value from the response body and return it
         return gson.fromJson(response.body(), SpeedAlterRequest.class).getSpeed();
     }
 
