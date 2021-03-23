@@ -1,14 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="nl.tudelft.oopp.g7.client.controllers.AnsweredQuestionsController"
-            prefHeight="400.0" prefWidth="600.0">
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<GridPane xmlns="http://javafx.com/javafx/11.0.1"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="nl.tudelft.oopp.g7.client.controllers.AnsweredQuestionsController"
+          stylesheets="@UIstyle.css"
+          minHeight="500" minWidth="750">
+    <columnConstraints>
+        <ColumnConstraints hgrow="NEVER" minWidth="128.0" />
+        <ColumnConstraints hgrow="SOMETIMES" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints vgrow="NEVER" minHeight="75.0" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" maxHeight="95.0" />
+    </rowConstraints>
 
-</AnchorPane>
+    <HBox styleClass="course-panel"
+          GridPane.columnIndex="0" GridPane.rowIndex="0"
+          GridPane.columnSpan="4">
+        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" Course Name">
+            <font>
+                <Font name="Book Antiqua Bold" size="36.0"/>
+            </font>
+        </Text>
+    </HBox>
+
+    <SplitPane styleClass="side-panel"
+               GridPane.columnIndex="0" GridPane.rowIndex="1"
+               GridPane.rowSpan="2">
+        <items>
+            <Button layoutX="14.0" layoutY="72.0" mnemonicParsing="false" onAction="#handleButtonMode" text="Mode" textFill="WHITE">
+                <graphic>
+                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@sun (1).png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+        </items></SplitPane>
+
+    <ScrollPane
+            GridPane.columnIndex="1" GridPane.rowIndex="1"
+            GridPane.columnSpan="3"
+            fx:id="questionList">
+        <VBox fx:id="questionContainer" />
+    </ScrollPane>
+
+    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonLight"  styleClass="help-button" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+
+    <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionList"  styleClass="answered-question-button" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+
+    <Button fx:id="userList" mnemonicParsing="false" onAction="#listofUsers"  styleClass="user-list-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+    <Button fx:id="poll" mnemonicParsing="false" onAction="#createPoll"  styleClass="poll-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+    <Button fx:id="export" mnemonicParsing="false" onAction="#exportQuestions"  styleClass="export-questions-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+
+
+    <!--    <TextArea fx:id="answerBox"-->
+    <!--              GridPane.columnIndex="1" GridPane.rowIndex="2"-->
+    <!--              promptText="Type your question here">-->
+    <!--        <font>-->
+    <!--            <Font name="Book Antiqua" size="21.0"/>-->
+    <!--        </font>-->
+    <!--    </TextArea>-->
+
+    <!--    <Button fx:id="postQuestionButton" styleClass="button"-->
+    <!--            GridPane.columnIndex="2" GridPane.rowIndex="2"-->
+    <!--            onAction="#sendQuestion"-->
+    <!--            mnemonicParsing="false"-->
+    <!--            text="Post Question" textFill="WHITE">-->
+    <!--        <font>-->
+    <!--            <Font name="Book Antiqua Bold" size="15.0"/>-->
+    <!--        </font>-->
+    <!--    </Button>-->
+
+</GridPane>
