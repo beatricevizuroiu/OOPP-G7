@@ -127,24 +127,24 @@ public class RoomRepository {
             case -1:
                 logger.debug("Lowering the speed of room with id: {}", roomId);
                 return jdbcTemplate.update(QUERY_EDIT_SPEED,
-                        (ps) -> {
-                            // Set the first variable in the PreparedStatement to the question id.
-                            ps.setInt(1, speedAlterRequest.getSpeed());
+                    (ps) -> {
+                        // Set the first variable in the PreparedStatement to the question id.
+                        ps.setInt(1, speedAlterRequest.getSpeed());
 
-                            // Set the second variable in the PreparedStatement to the room id.
-                            ps.setString(2, roomId);
-                        });
+                        // Set the second variable in the PreparedStatement to the room id.
+                        ps.setString(2, roomId);
+                    });
 
             case 1:
                 logger.debug("Raising the speed of room with id: {}", roomId);
                 return jdbcTemplate.update(QUERY_EDIT_SPEED,
-                        (ps) -> {
-                            // Set the first variable in the PreparedStatement to the question id.
-                            ps.setInt(1, speedAlterRequest.getSpeed());
+                    (ps) -> {
+                        // Set the first variable in the PreparedStatement to the question id.
+                        ps.setInt(1, speedAlterRequest.getSpeed());
 
-                            // Set the second variable in the PreparedStatement to the room id.
-                            ps.setString(2, roomId);
-                        });
+                        // Set the second variable in the PreparedStatement to the room id.
+                        ps.setString(2, roomId);
+                    });
             default:
                 return 0;
         }
@@ -159,11 +159,11 @@ public class RoomRepository {
         logger.debug("Getting the current speed of room with id: {}", roomId);
 
         int result = jdbcTemplate.query(QUERY_GET_SPEED_WITH_ID,
-                (ps) -> ps.setString(1, roomId),
-                (rs) -> {
-                    rs.next();
-                    return rs.getInt(1);
-                });
+            (ps) -> ps.setString(1, roomId),
+            (rs) -> {
+                rs.next();
+                return rs.getInt(1);
+            });
 
         return new SpeedAlterRequest(result);
     }
