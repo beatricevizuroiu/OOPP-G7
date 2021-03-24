@@ -14,8 +14,8 @@ root {
     -fx-background-color: transparent;
 }
 .upvoteBtnSVG {
-    -fx-fill: #8D1BAA;
-    -fx-stroke: #8D1BAA;
+    -fx-fill: #FFFFFF;
+    -fx-stroke: #FFFFFF;
 }
 
 .parent {
@@ -77,10 +77,16 @@ root {
 }
 
 .export-questions-button {
+    -fx-fill: #FFFFFF;
+    -fx-stroke: #FFFFFF;
+
 }
 
 /*Buttons only for Lecturers*/
 .link-button {
+    -fx-fill: #FFFFFF;
+    -fx-stroke: #FFFFFF;
+
 }
 
 /*Indicators for speed of lecturer for the lecturer UI*/
