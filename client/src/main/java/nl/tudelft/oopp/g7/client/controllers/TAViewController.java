@@ -213,6 +213,15 @@ public class TAViewController {
     }
 
     /**
+     * Handle button action for answering a question.
+     *
+     * @param event the event
+     */
+    public void answerQuestion (){
+        //TODO
+    }
+
+    /**
      * Handle button action for creating a poll.
      *
      * @param event the event

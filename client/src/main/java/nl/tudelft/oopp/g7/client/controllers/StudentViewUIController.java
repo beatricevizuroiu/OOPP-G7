@@ -182,9 +182,6 @@ public class StudentViewUIController {
         //TODO
     }
 
-    public void editQuestion (){
-        //TODO
-    }
 
 
 
