@@ -57,7 +57,7 @@
         </font>
     </Button>
 
-    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonLight"  styleClass="help-button" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonLight"  styleClass="help-button" GridPane.columnIndex="0" GridPane.rowIndex="2" >
 
     <Button id="QuestionUpvoteBtn" styleClass="upvoteBtn">
         <graphic>
@@ -71,6 +71,7 @@
     </Text>
 
     <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionList"  styleClass="answered-question-button" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+
 
     <Button fx:id="userList" mnemonicParsing="false" onAction="#listofUsers"  styleClass="done" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 

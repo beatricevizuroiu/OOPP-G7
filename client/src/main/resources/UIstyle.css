@@ -14,8 +14,8 @@ root {
     -fx-background-color: transparent;
 }
 .upvoteBtnSVG {
-    -fx-fill: #8D1BAA;
-    -fx-stroke: #8D1BAA;
+    -fx-fill: white;
+    -fx-stroke: white;
 }
 
 .parent {
