@@ -137,7 +137,7 @@ public class LecturerViewController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/AnsweredQuestions.fxml")
+        EntryRoomDisplay.setCurrentScene("/AnsweredQuestions.fxml");
     }
 
     public void listOfUsers () {
@@ -145,7 +145,7 @@ public class LecturerViewController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/ListUsers.fxml")
+        EntryRoomDisplay.setCurrentScene("/ListUsers.fxml");
     }
 
 
