@@ -133,13 +133,28 @@ public class TAViewController {
     }
 
     public void answeredQuestionList(){
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Help is clicked, change to Help scene
+        EntryRoomDisplay.setCurrentScene("/AnsweredQuestions.fxml");
+    }
+
+    public void listOfUsers () {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Help is clicked, change to Help scene
+        EntryRoomDisplay.setCurrentScene("/ListUsers.fxml");
+    }
+
+    public void deleteQuestion () {
         //TODO
     }
 
-    public void listofUsers () {
+    public void editQuestion (){
         //TODO
     }
-
 
     public void createPoll(){
         //TODO

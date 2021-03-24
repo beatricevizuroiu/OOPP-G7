@@ -148,6 +148,13 @@ public class LecturerViewController {
         EntryRoomDisplay.setCurrentScene("/ListUsers.fxml");
     }
 
+    public void deleteQuestion () {
+        //TODO
+    }
+
+    public void editQuestion (){
+        //TODO
+    }
 
     public void createPoll(){
         //TODO

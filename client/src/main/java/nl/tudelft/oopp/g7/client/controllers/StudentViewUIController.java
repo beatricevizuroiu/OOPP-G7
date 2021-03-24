@@ -162,11 +162,19 @@ public class StudentViewUIController {
     }
 
     public void answeredQuestionList(){
-        //TODO
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Help is clicked, change to Help scene
+        EntryRoomDisplay.setCurrentScene("/AnsweredQuestions.fxml");
     }
 
-    public void listofUsers () {
-        //TODO
+    public void listOfUsers () {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Help is clicked, change to Help scene
+        EntryRoomDisplay.setCurrentScene("/ListUsers.fxml");
     }
 
 
@@ -175,7 +183,7 @@ public class StudentViewUIController {
     }
 
     public void editQuestion (){
-
+        //TODO
     }
 
 
