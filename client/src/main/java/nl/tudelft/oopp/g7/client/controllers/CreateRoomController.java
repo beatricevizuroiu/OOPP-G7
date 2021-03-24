@@ -15,7 +15,7 @@ import nl.tudelft.oopp.g7.common.Room;
 
 import java.util.Date;
 
-public class createRoomController {
+public class CreateRoomController {
     @FXML
     TextField roomName;
     @FXML
