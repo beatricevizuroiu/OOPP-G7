@@ -4,6 +4,8 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.shape.SVGPath?>
+
 
 <GridPane minHeight="500" minWidth="750" stylesheets="@UIstyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.StudentViewUIController">
     <columnConstraints>
@@ -56,6 +58,17 @@
     </Button>
 
     <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonLight"  styleClass="help-button" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+
+    <Button id="QuestionUpvoteBtn" styleClass="upvoteBtn">
+        <graphic>
+            <SVGPath content="M 1, 31 H 31 L 16.25,1 Z" styleClass="upvoteBtnSVG" />
+        </graphic>
+    </Button>
+    <Text id="QuestionUpvoteCount" >
+        <font>
+            <Font name="Book Antiqua" size="21.0"/>
+        </font>
+    </Text>
 
     <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionList"  styleClass="answered-question-button" GridPane.columnIndex="2" GridPane.rowIndex="0" />
 
