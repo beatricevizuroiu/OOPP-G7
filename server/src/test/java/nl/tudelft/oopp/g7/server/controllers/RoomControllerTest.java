@@ -129,17 +129,24 @@ public class RoomControllerTest {
         ResponseEntity<SpeedAlterRequest> response = roomController.getRoomSpeed(TEST_ROOM_ID);
 
         assertEquals(response.getBody().getSpeed(), 0);
+    }
+
+    @Test
+    void getSpeedTestPos() {
 
         roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(1));
-        response = roomController.getRoomSpeed(TEST_ROOM_ID);
+        ResponseEntity<SpeedAlterRequest> response = roomController.getRoomSpeed(TEST_ROOM_ID);
 
         assertEquals(response.getBody().getSpeed(), 1);
+    }
 
+    @Test
+    void getSpeedTestNeg() {
         roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(-1));
         roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(-1));
         roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(-1));
-        response = roomController.getRoomSpeed((TEST_ROOM_ID));
+        ResponseEntity<SpeedAlterRequest> response = roomController.getRoomSpeed((TEST_ROOM_ID));
 
-        assertEquals(response.getBody().getSpeed(), -2);
+        assertEquals(response.getBody().getSpeed(), -3);
     }
 }
