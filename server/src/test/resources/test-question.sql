@@ -11,7 +11,8 @@ CREATE TABLE rooms
     name              text                      not NULL,
     open              boolean     DEFAULT FALSE not NULL,
     over              boolean     DEFAULT FALSE not NULL,
-    startDate         timestamp with time zone  not NUlL
+    startDate         timestamp with time zone  not NUlL,
+    speed             int         DEFAULT 0     not NULL
 );
 
 CREATE TABLE questions

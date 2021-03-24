@@ -99,4 +99,54 @@ public class RoomControllerTest {
         assertEquals(TEST_ROOM_NAME, actual.getRoomName());
         assertEquals(UserRole.MODERATOR, actual.getRole());
     }
+
+    @Test
+    void speedUpTest() {
+        ResponseEntity<Void> response = roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(1));
+
+        // Check if the request completed successfully.
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+    }
+
+    @Test
+    void speedDownTest() {
+        ResponseEntity<Void> response = roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(-1));
+
+        // Check if the request completed successfully.
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+    }
+
+    @Test
+    void badSpeedRequest() {
+        ResponseEntity<Void> response = roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(2));
+
+        // Check if the request failed successfully.
+        assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    void getSpeedTest() {
+        ResponseEntity<SpeedAlterRequest> response = roomController.getRoomSpeed(TEST_ROOM_ID);
+
+        assertEquals(response.getBody().getSpeed(), 0);
+    }
+
+    @Test
+    void getSpeedTestPos() {
+
+        roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(1));
+        ResponseEntity<SpeedAlterRequest> response = roomController.getRoomSpeed(TEST_ROOM_ID);
+
+        assertEquals(response.getBody().getSpeed(), 1);
+    }
+
+    @Test
+    void getSpeedTestNeg() {
+        roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(-1));
+        roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(-1));
+        roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(-1));
+        ResponseEntity<SpeedAlterRequest> response = roomController.getRoomSpeed((TEST_ROOM_ID));
+
+        assertEquals(response.getBody().getSpeed(), -3);
+    }
 }
