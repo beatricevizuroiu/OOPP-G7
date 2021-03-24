@@ -16,7 +16,7 @@ import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class entryPageController {
+public class EntryPageController {
 
     /**
      * Handle button action for button Create.

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane minHeight="500" minWidth="750" stylesheets="@UIstyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.StudentViewUIController">
+<GridPane minHeight="500" minWidth="750" stylesheets="@UIstyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.AnsweredQuestionsController">
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" minWidth="128.0" />
         <ColumnConstraints hgrow="SOMETIMES" />
@@ -30,21 +29,10 @@
 
     <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2" />
 
-    <ScrollPane fx:id="questionList" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
-        <VBox fx:id="questionContainer" />
+    <ScrollPane fx:id="answeredQuestionList" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+        <VBox fx:id="answeredQuestionContainer" />
     </ScrollPane>
 
-    <TextArea fx:id="answerBox" prefHeight="95.0" prefWidth="885.0" promptText="Type your question here" GridPane.columnIndex="1" GridPane.rowIndex="2">
-        <font>
-            <Font name="Book Antiqua" size="21.0" />
-        </font>
-    </TextArea>
-
-    <Button fx:id="postQuestionButton" mnemonicParsing="false" onAction="#sendQuestion" styleClass="post-button" text="Post Question" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2">
-        <font>
-            <Font name="Book Antiqua Bold" size="15.0" />
-        </font>
-    </Button>
 
     <!--    Main Buttons    -->
     <Button mnemonicParsing="false" onAction="#handleButtonMode" text="Mode" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
@@ -59,22 +47,32 @@
 
     <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonLight" styleClass="help-button" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
 
-    <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionList" styleClass="answered-question-button" GridPane.columnIndex="2" GridPane.rowIndex="0">
-      <GridPane.margin>
-         <Insets left="50.0" />
-      </GridPane.margin></Button>
-
-    <Button fx:id="userList" mnemonicParsing="false" onAction="#listofUsers" styleClass="upvoteBtn" GridPane.columnIndex="2" GridPane.rowIndex="0">
+    <Button fx:id="goBack" mnemonicParsing="false" onAction="#goBackButtonLight" styleClass="upvoteBtn" GridPane.columnIndex="2" GridPane.rowIndex="0">
         <graphic>
             <SVGPath content="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" styleClass="link-button" />
         </graphic>
-        <GridPane.margin>
-            <Insets />
-        </GridPane.margin>
     </Button>
+
 
     <!--    <Button fx:id="mode" mnemonicParsing="false" onAction="#handleButtonMode" styleClass="mode-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />-->
 
 
+    <!--    <TextArea fx:id="answerBox"-->
+    <!--              GridPane.columnIndex="1" GridPane.rowIndex="2"-->
+    <!--              promptText="Type your question here">-->
+    <!--        <font>-->
+    <!--            <Font name="Book Antiqua" size="21.0"/>-->
+    <!--        </font>-->
+    <!--    </TextArea>-->
+
+    <!--    <Button fx:id="postQuestionButton" styleClass="button"-->
+    <!--            GridPane.columnIndex="2" GridPane.rowIndex="2"-->
+    <!--            onAction="#sendQuestion"-->
+    <!--            mnemonicParsing="false"-->
+    <!--            text="Post Question" textFill="WHITE">-->
+    <!--        <font>-->
+    <!--            <Font name="Book Antiqua Bold" size="15.0"/>-->
+    <!--        </font>-->
+    <!--    </Button>-->
 
 </GridPane>

@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -90,7 +91,33 @@ public class LecturerViewController {
     }
 
     /**
-     * Handle button action for button Mode from Light.
+     * Handle button action for going back to lecturer view (light).
+     *
+     * @param event the event
+     */
+    public void goBackButtonLight(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if goBack is clicked, change Scene to LecturerViewUI
+        EntryRoomDisplay.setCurrentScene("/LecturerViewUI.fxml");
+    }
+
+    /**
+     * Handle button action for going back to lecturer view (dark).
+     *
+     * @param event the event
+     */
+    public void goBackButtonDark(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if goBack is clicked, change Scene to LecturerViewUI
+        EntryRoomDisplay.setCurrentScene("/LecturerViewUI(DARKMODE).fxml");
+    }
+
+    /**
+     * Handle button action for button Mode from Light to Dark.
      *
      * @param event the event
      */
@@ -103,7 +130,7 @@ public class LecturerViewController {
     }
 
     /**
-     * Handle button action for button Mode from Dark.
+     * Handle button action for button Mode from Dark to Light.
      *
      * @param event the event
      */
@@ -114,4 +141,125 @@ public class LecturerViewController {
         // if Mode is clicked, change Scene to Join Room
         EntryRoomDisplay.setCurrentScene("/LecturerViewUI.fxml");
     }
+
+    /**
+     * Handle button action for Help Button Light Mode.
+     *
+     * @param event the event
+     */
+    public void handleHelpButtonLight(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Help is clicked, change to Help scene
+        EntryRoomDisplay.setCurrentScene("/HelpFileModerator.fxml");
+    }
+
+    /**
+     * Handle button action for Help Button Dark Mode.
+     *
+     * @param event the event
+     */
+    public void handleHelpButtonDark(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Help is clicked, change to Help scene
+        EntryRoomDisplay.setCurrentScene("/HelpFileModerator(DARKMODE).fxml");
+    }
+
+    /**
+     * Handle button action for Answered Questions Button light Mode.
+     *
+     */
+    public void answeredQuestionList(){
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Answered questions is clicked, change to Answered Questions (lightmode) scene
+        EntryRoomDisplay.setCurrentScene("/AnsweredQuestions.fxml");
+    }
+
+    /**
+     * Handle button action for Answered Questions Button Dark Mode.
+     *
+     */
+    public void answeredQuestionListDark(){
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Answered questions is clicked, change to Answered Questions (darkmode) scene
+        EntryRoomDisplay.setCurrentScene("/AnsweredQuestions(DARKMODE).fxml");
+    }
+
+    /**
+     * Handle button action for List Users Button light Mode.
+     *
+     */
+    public void listofUsers () {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if list of Users is clicked, change to List of Users scene
+        EntryRoomDisplay.setCurrentScene("/ListUsers.fxml");
+    }
+
+    /**
+     * Handle button action for List Users Button dark Mode.
+     *
+     */
+    public void listofUsersDark () {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if list of Users is clicked, change to List of Users scene
+        EntryRoomDisplay.setCurrentScene("/ListUsers(DARKMODE).fxml");
+    }
+
+    /**
+     * Handle button action for deleting a question.
+     *
+     */
+    public void deleteQuestion () {
+        //TODO
+    }
+
+    /**
+     * Handle button action for editing a question.
+     */
+    public void editQuestion (){
+        //TODO
+    }
+
+    /**
+     * Handle button action for answering a question.
+     */
+    public void answerQuestion (){
+        //TODO
+    }
+
+    /**
+     * Handle button action for creating a poll.
+     */
+    public void createPoll(){
+        //TODO
+    }
+
+    /**
+     * Handle button action for exporting questions.
+     */
+    public void exportQuestions(){
+        //TODO
+    }
+
+    /**
+     * Handle button action for creating a  link.
+     */
+    public void createLink(){
+        //TODO
+    }
+
+//    public void speedIndicator(){
+//        //TODO
+//    }
 }
