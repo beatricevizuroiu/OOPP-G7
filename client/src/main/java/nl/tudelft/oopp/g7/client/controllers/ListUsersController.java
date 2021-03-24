@@ -5,7 +5,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 
-public class listUsersController {
+public class ListUsersController {
 
     /**
      * Handle button action for going back to lecturer view (light).
