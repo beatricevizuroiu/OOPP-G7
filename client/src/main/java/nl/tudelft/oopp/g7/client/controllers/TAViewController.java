@@ -140,7 +140,7 @@ public class TAViewController {
         EntryRoomDisplay.setCurrentScene("/AnsweredQuestions.fxml");
     }
 
-    public void listOfUsers () {
+    public void listofUsers () {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
