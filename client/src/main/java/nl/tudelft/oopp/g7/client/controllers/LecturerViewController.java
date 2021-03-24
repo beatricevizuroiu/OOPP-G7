@@ -133,11 +133,19 @@ public class LecturerViewController {
     }
 
     public void answeredQuestionList(){
-        //TODO
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Help is clicked, change to Help scene
+        EntryRoomDisplay.setCurrentScene("/AnsweredQuestions.fxml")
     }
 
     public void listOfUsers () {
-        //TODO
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Help is clicked, change to Help scene
+        EntryRoomDisplay.setCurrentScene("/ListUsers.fxml")
     }
 
 

@@ -58,11 +58,11 @@
 
     <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionList"  styleClass="answered-question-button" GridPane.columnIndex="2" GridPane.rowIndex="0" />
 
-    <Button fx:id="userList" mnemonicParsing="false" onAction="#listofUsers"  styleClass="user-list-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+    <Button fx:id="userList" mnemonicParsing="false" onAction="#listofUsers"  styleClass="done" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-    <Button fx:id="poll" mnemonicParsing="false" onAction="#createPoll"  styleClass="poll-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+    <Button fx:id="poll" mnemonicParsing="false" onAction="#createPoll"  styleClass="done" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-    <Button fx:id="export" mnemonicParsing="false" onAction="#exportQuestions"  styleClass="export-questions-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+    <Button fx:id="export" mnemonicParsing="false" onAction="#exportQuestions"  styleClass="done" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
 
 

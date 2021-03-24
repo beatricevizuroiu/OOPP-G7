@@ -49,7 +49,7 @@
         </font>
     </TextArea>
 
-    <Button fx:id="postQuestionButton" mnemonicParsing="false" onAction="#sendQuestion" styleClass="button" text="Post Question" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2">
+    <Button fx:id="postQuestionButton" mnemonicParsing="false" onAction="#sendQuestion" styleClass="post-button" text="Post Question" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2">
         <font>
             <Font name="Book Antiqua Bold" size="15.0" />
         </font>
@@ -59,7 +59,7 @@
 
     <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionList"  styleClass="answered-question-button" GridPane.columnIndex="2" GridPane.rowIndex="0" />
 
-    <Button fx:id="userList" mnemonicParsing="false" onAction="#listofUsers"  styleClass="user-list-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+    <Button fx:id="userList" mnemonicParsing="false" onAction="#listofUsers"  styleClass="done" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
 
 </GridPane>
