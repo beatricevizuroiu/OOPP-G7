@@ -50,19 +50,19 @@
     <ScrollPane
             GridPane.columnIndex="1" GridPane.rowIndex="1"
             GridPane.columnSpan="3"
-            fx:id="questionList">
-        <VBox fx:id="questionContainer" />
+            fx:id="answeredQuestionList">
+        <VBox fx:id="answeredQuestionContainer" />
     </ScrollPane>
 
     <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonLight"  styleClass="help-button" GridPane.columnIndex="0" GridPane.rowIndex="2" />
 
-    <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionList"  styleClass="answered-question-button" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+<!--    <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionList"  styleClass="answered-question-button" GridPane.columnIndex="2" GridPane.rowIndex="0" />-->
 
-    <Button fx:id="userList" mnemonicParsing="false" onAction="#listofUsers"  styleClass="user-list-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+<!--    <Button fx:id="userList" mnemonicParsing="false" onAction="#listofUsers"  styleClass="user-list-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />-->
 
-    <Button fx:id="poll" mnemonicParsing="false" onAction="#createPoll"  styleClass="poll-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+<!--    <Button fx:id="poll" mnemonicParsing="false" onAction="#createPoll"  styleClass="poll-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />-->
 
-    <Button fx:id="export" mnemonicParsing="false" onAction="#exportQuestions"  styleClass="export-questions-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+<!--    <Button fx:id="export" mnemonicParsing="false" onAction="#exportQuestions"  styleClass="export-questions-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />-->
 
 
 
