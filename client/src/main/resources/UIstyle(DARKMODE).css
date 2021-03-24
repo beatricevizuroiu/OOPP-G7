@@ -2,19 +2,19 @@ root {
     display: block;
 }
 
-.button {
+.button{
     -fx-background-color: #FFFFFF;
 }
 
-.post-button {
+.post-button{
     -fx-background-color: #360A41;
 }
 
-.upvoteBtn {
+.upvoteBtn{
     -fx-background-color: transparent;
 }
 
-.upvoteBtnSVG {
+.upvoteBtnSVG{
     -fx-fill: #FFFFFF;
     -fx-stroke: #FFFFFF;
 }
