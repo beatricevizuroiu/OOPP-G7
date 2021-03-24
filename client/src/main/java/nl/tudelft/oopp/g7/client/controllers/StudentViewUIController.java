@@ -121,7 +121,7 @@ public class StudentViewUIController {
     }
 
     /**
-     * Handle button action for button Mode from Light.
+     * Handle button action for button Mode from Light to Dark.
      *
      * @param event the event
      */
@@ -130,11 +130,11 @@ public class StudentViewUIController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Mode is clicked, change Scene to Join Room
-        EntryRoomDisplay.setCurrentScene("/StudentViewUI(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/LecturerViewUI(DARKMODE).fxml");
     }
 
     /**
-     * Handle button action for button Mode from Dark.
+     * Handle button action for button Mode from Dark to Light.
      *
      * @param event the event
      */
@@ -143,46 +143,95 @@ public class StudentViewUIController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Mode is clicked, change Scene to Join Room
-        EntryRoomDisplay.setCurrentScene("/StudentViewUI.fxml");
+        EntryRoomDisplay.setCurrentScene("/LecturerViewUI.fxml");
     }
+
+    /**
+     * Handle button action for Help Button Light Mode.
+     *
+     * @param event the event
+     */
     public void handleHelpButtonLight(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/HelpFileStudent.fxml");
+        EntryRoomDisplay.setCurrentScene("/HelpFileModerator.fxml");
     }
 
+    /**
+     * Handle button action for Help Button Dark Mode.
+     *
+     * @param event the event
+     */
     public void handleHelpButtonDark(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/HelpFileStudent(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/HelpFileModerator(DARKMODE).fxml");
     }
 
+    /**
+     * Handle button action for Answered Questions Button light Mode.
+     *
+     * @param event the event
+     */
     public void answeredQuestionList(){
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
-        // if Help is clicked, change to Help scene
+        // if Answered questions is clicked, change to Answered Questions (lightmode) scene
         EntryRoomDisplay.setCurrentScene("/AnsweredQuestions.fxml");
     }
 
+    /**
+     * Handle button action for Answered Questions Button Dark Mode.
+     *
+     * @param event the event
+     */
+    public void answeredQuestionListDark(){
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Answered questions is clicked, change to Answered Questions (darkmode) scene
+        EntryRoomDisplay.setCurrentScene("/AnsweredQuestions(DARKMODE).fxml");
+    }
+
+    /**
+     * Handle button action for List Users Button light Mode.
+     *
+     * @param event the event
+     */
     public void listofUsers () {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
-        // if Help is clicked, change to Help scene
+        // if list of Users is clicked, change to List of Users scene
         EntryRoomDisplay.setCurrentScene("/ListUsers.fxml");
     }
 
+    /**
+     * Handle button action for List Users Button dark Mode.
+     *
+     * @param event the event
+     */
+    public void listofUsersDark () {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
 
+        // if list of Users is clicked, change to List of Users scene
+        EntryRoomDisplay.setCurrentScene("/ListUsers(DARKMODE).fxml");
+    }
+
+    /**
+     * Handle button action for deleting a question.
+     *
+     * @param event the event
+     */
     public void deleteQuestion () {
         //TODO
     }
-
-
 
 
 }
