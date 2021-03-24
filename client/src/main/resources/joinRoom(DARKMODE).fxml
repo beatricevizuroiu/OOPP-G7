@@ -6,7 +6,7 @@
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<AnchorPane prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #15041A;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.joinRoomController">
+<AnchorPane prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #15041A;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.JoinRoomController">
     <children>
         <Text fill="WHITE" layoutX="315.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Join Room">
             <font>

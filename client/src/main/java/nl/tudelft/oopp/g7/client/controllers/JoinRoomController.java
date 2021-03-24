@@ -13,7 +13,7 @@ import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.RoomJoinRequest;
 import nl.tudelft.oopp.g7.common.UserRole;
 
-public class joinRoomController {
+public class JoinRoomController {
     @FXML
     TextField nickname;
     @FXML
