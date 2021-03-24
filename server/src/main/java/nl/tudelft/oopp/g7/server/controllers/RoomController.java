@@ -149,7 +149,7 @@ public class RoomController {
     public ResponseEntity<Void> setRoomSpeed(@PathVariable("room_id") String roomId, @RequestBody SpeedAlterRequest speedAlterRequest) {
 
         if (speedAlterRequest.getSpeed() != -1 && speedAlterRequest.getSpeed() != 1) {
-            logger.error("Invalid speed request received with value \"{}\" for room \"{}\"", speedAlterRequest.getSpeed(), roomId);
+            logger.debug("Invalid speed request received with value \"{}\" for room \"{}\"", speedAlterRequest.getSpeed(), roomId);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -158,7 +158,7 @@ public class RoomController {
         // Check if there was any other amount of rows changed then the expected 1.
         if (rowsChanged != 1) {
             // If that is the case log an error and inform the client about the error.
-            logger.error("The speed of the room with id \"{}\" could not be edited", roomId);
+            logger.debug("The speed of the room with id \"{}\" could not be edited", roomId);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.OK);
