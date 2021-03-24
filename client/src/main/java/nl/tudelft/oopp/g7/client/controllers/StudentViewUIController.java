@@ -200,8 +200,6 @@ public class StudentViewUIController {
 
     /**
      * Handle button action for Answered Questions Button light Mode.
-     *
-     * @param event the event
      */
     public void answeredQuestionList(){
         Scene scene = EntryRoomDisplay.getCurrentScene();
@@ -214,7 +212,6 @@ public class StudentViewUIController {
     /**
      * Handle button action for Answered Questions Button Dark Mode.
      *
-     * @param event the event
      */
     public void answeredQuestionListDark(){
         Scene scene = EntryRoomDisplay.getCurrentScene();
@@ -226,8 +223,6 @@ public class StudentViewUIController {
 
     /**
      * Handle button action for List Users Button light Mode.
-     *
-     * @param event the event
      */
     public void listofUsers () {
         Scene scene = EntryRoomDisplay.getCurrentScene();
@@ -239,8 +234,6 @@ public class StudentViewUIController {
 
     /**
      * Handle button action for List Users Button dark Mode.
-     *
-     * @param event the event
      */
     public void listofUsersDark () {
         Scene scene = EntryRoomDisplay.getCurrentScene();
@@ -252,8 +245,6 @@ public class StudentViewUIController {
 
     /**
      * Handle button action for deleting a question.
-     *
-     * @param event the event
      */
     public void deleteQuestion () {
         //TODO

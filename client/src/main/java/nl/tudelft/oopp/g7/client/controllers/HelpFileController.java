@@ -59,6 +59,11 @@ public class HelpFileController {
         EntryRoomDisplay.setCurrentScene("/HelpFileStudent.fxml");
     }
 
+    /**
+     * Handle button action for Help Button Light Mode.
+     *
+     * @param event the event
+     */
     public void handleHelpButtonLight(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
@@ -67,6 +72,11 @@ public class HelpFileController {
         EntryRoomDisplay.setCurrentScene("/HelpFileStudent.fxml");
     }
 
+    /**
+     * Handle button action for Help Button Dark Mode.
+     *
+     * @param event the event
+     */
     public void handleHelpButtonDark(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
