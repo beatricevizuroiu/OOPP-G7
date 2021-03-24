@@ -7,12 +7,12 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane minHeight="500" minWidth="750" stylesheets="@UIstyle(DARKMODE).css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.LecturerViewController">
+<GridPane minHeight="500" minWidth="750" stylesheets="@UIstyle(DARKMODE).css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.TAViewController">
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" minWidth="128.0" />
         <ColumnConstraints hgrow="SOMETIMES" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" />
-        <ColumnConstraints />
+      <ColumnConstraints />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints minHeight="75.0" vgrow="NEVER" />
@@ -34,18 +34,6 @@
         <VBox fx:id="questionContainer" />
     </ScrollPane>
 
-    <TextArea fx:id="answerBox" prefHeight="95.0" prefWidth="885.0" promptText="Type your answer here" GridPane.columnIndex="1" GridPane.rowIndex="2">
-        <font>
-            <Font name="Book Antiqua" size="21.0" />
-        </font>
-    </TextArea>
-
-    <Button fx:id="postAnswerButton" mnemonicParsing="false" styleClass="post-button" text="Post Answer" textFill="#360a41" GridPane.columnIndex="2" GridPane.rowIndex="2">
-        <font>
-            <Font name="Book Antiqua Bold" size="15.0" />
-        </font>
-    </Button>
-
     <!--    Main Buttons    -->
     <Button mnemonicParsing="false" onAction="#handleButtonMode2" text="Mode" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
         <graphic>
@@ -59,14 +47,17 @@
 
     <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonDark" styleClass="help-button" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
 
-    <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionListDark" styleClass="answered-question-button" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="0" />
+    <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionListDark" styleClass="answered-question-button" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="0">
+        <GridPane.margin>
+            <Insets left="740.0" />
+        </GridPane.margin></Button>
 
     <Button fx:id="userList" mnemonicParsing="false" onAction="#listofUsersDark" styleClass="upvoteBtn" GridPane.columnIndex="1" GridPane.rowIndex="0">
         <graphic>
             <SVGPath content="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" fill="WHITE" styleClass="link-button" />
         </graphic>
         <GridPane.margin>
-            <Insets left="790.0" />
+            <Insets left="690.0" />
         </GridPane.margin>
     </Button>
 
@@ -77,7 +68,7 @@
             <SVGPath content="M6 6h12v12H6z" fill="WHITE" styleClass="link-button" />
         </graphic>
         <GridPane.margin>
-            <Insets left="840.0" />
+            <Insets left="640.0" />
         </GridPane.margin>
     </Button>
 
@@ -85,12 +76,29 @@
         <graphic>
             <SVGPath content="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="WHITE" styleClass="link-button" />
         </graphic>
+        <GridPane.margin>
+            <Insets left="590.0" />
+        </GridPane.margin>
     </Button>
 
-    <Button id="link" mnemonicParsing="false" onAction="#createLink" styleClass="upvoteBtn" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
-        <graphic>
-            <SVGPath content="M12 7.77L18.39 18H5.61L12 7.77M12 4L2 20h20L12 4z" fill="WHITE" styleClass="link-button" />
-        </graphic>
-    </Button>
-    <!--TODO: speed indicator -->
+
+
+    <!--    <TextArea fx:id="answerBox"-->
+    <!--              GridPane.columnIndex="1" GridPane.rowIndex="2"-->
+    <!--              promptText="Type your question here">-->
+    <!--        <font>-->
+    <!--            <Font name="Book Antiqua" size="21.0"/>-->
+    <!--        </font>-->
+    <!--    </TextArea>-->
+
+    <!--    <Button fx:id="postQuestionButton" styleClass="button"-->
+    <!--            GridPane.columnIndex="2" GridPane.rowIndex="2"-->
+    <!--            onAction="#sendQuestion"-->
+    <!--            mnemonicParsing="false"-->
+    <!--            text="Post Question" textFill="WHITE">-->
+    <!--        <font>-->
+    <!--            <Font name="Book Antiqua Bold" size="15.0"/>-->
+    <!--        </font>-->
+    <!--    </Button>-->
+
 </GridPane>

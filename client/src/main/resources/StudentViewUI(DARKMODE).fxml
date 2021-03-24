@@ -2,43 +2,83 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.MainSceneController">
-   <children>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1440.0" styleClass="parent" stylesheets="@UIstyle(DARKMODE).css">
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
-         <children>
-            <ListView layoutX="153.0" layoutY="83.0" prefHeight="579.0" prefWidth="1258.0" />
-            <TextField fx:id="studentView" alignment="TOP_LEFT" layoutX="153.0" layoutY="669.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="114.0" prefWidth="1123.0" text="Type your question here">
-               <font>
-                  <Font name="Roboto Light" size="24.0" />
-               </font></TextField>
-            <SplitPane prefHeight="810.0" prefWidth="120.0">
-              <items>
-                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="810.0" prefWidth="120.0" styleClass="side-pannel" />
-              </items>
-            </SplitPane>
-            <SplitPane prefHeight="75.0" prefWidth="1440.0" styleClass="course-panel" stylesheets="@UIstyle(DARKMODE).css">
-              <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="course-panel" stylesheets="@UIstyle(DARKMODE).css">
-                     <children>
-                        <Text fill="WHITE" layoutX="-9.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Course Name" wrappingWidth="347.9892578125" x="23.0" y="13.0">
-                           <font>
-                              <Font name="Roboto Light" size="36.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </AnchorPane>
-              </items>
-            </SplitPane>
-            <Button fx:id="postQuestionButton" layoutX="1281.0" layoutY="677.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="120.0" styleClass="buttons" stylesheets="@Entry.css" text="Post Question" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font></Button>
-         </children></AnchorPane>
-   </children>
-</VBox>
+<GridPane minHeight="500" minWidth="750" stylesheets="@UIstyle(DARKMODE).css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.StudentViewUIController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="NEVER" minWidth="128.0" />
+        <ColumnConstraints hgrow="SOMETIMES" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" />
+        <ColumnConstraints />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="75.0" vgrow="NEVER" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="95.0" vgrow="SOMETIMES" />
+    </rowConstraints>
+
+    <HBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
+        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" Course Name">
+            <font>
+                <Font name="Book Antiqua Bold" size="36.0" />
+            </font>
+        </Text>
+    </HBox>
+
+    <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+
+    <ScrollPane fx:id="questionList" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+        <VBox fx:id="questionContainer" />
+    </ScrollPane>
+
+    <TextArea fx:id="answerBox" prefHeight="95.0" prefWidth="885.0" promptText="Type your question here" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <font>
+            <Font name="Book Antiqua" size="21.0" />
+        </font>
+    </TextArea>
+
+    <Button fx:id="postQuestionButton" mnemonicParsing="false" onAction="#sendQuestion" styleClass="button" text="Post Question" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2">
+        <font>
+            <Font name="Book Antiqua Bold" size="15.0" />
+        </font>
+    </Button>
+
+    <!--    Main Buttons    -->
+    <Button mnemonicParsing="false" onAction="#handleButtonMode2" text="Mode" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+        <graphic>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@sun (1).png" />
+                </image>
+            </ImageView>
+        </graphic>
+    </Button>
+
+    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonDark" styleClass="upvoteBtn" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" >
+        <graphic>
+            <SVGPath content="M36.7994 13C28.9767 13 23.9098 16.1937 19.9319 21.8893C19.2102 22.9225 19.4327 24.3391 20.4393 25.0996L24.6671 28.2938C25.6838 29.0619 27.1302 28.8823 27.9261 27.8888C30.3811 24.8242 32.2021 23.0598 36.0368 23.0598C39.0519 23.0598 42.7812 24.9933 42.7812 27.9065C42.7812 30.1089 40.9567 31.2399 37.9796 32.903C34.5079 34.8425 29.9138 37.2562 29.9138 43.2941V44.25C29.9138 45.5444 30.9669 46.5938 32.266 46.5938H39.3686C40.6676 46.5938 41.7207 45.5444 41.7207 44.25V43.6862C41.7207 39.5007 53.9978 39.3264 53.9978 28C53.9979 19.4703 45.1183 13 36.7994 13ZM35.8173 49.4706C32.0739 49.4706 29.0283 52.5053 29.0283 56.2354C29.0283 59.9653 32.0739 63 35.8173 63C39.5608 63 42.6063 59.9653 42.6063 56.2353C42.6063 52.5052 39.5608 49.4706 35.8173 49.4706Z" fill="WHITE" styleClass="link-button" />
+        </graphic>
+    </Button>
+
+    <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionListDark" styleClass="upvoteBtn" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="0">
+        <graphic>
+            <SVGPath content="M22,5.18L10.59,16.6l-4.24-4.24l1.41-1.41l2.83,2.83l10-10L22,5.18z M19.79,10.22C19.92,10.79,20,11.39,20,12 c0,4.42-3.58,8-8,8s-8-3.58-8-8c0-4.42,3.58-8,8-8c1.58,0,3.04,0.46,4.28,1.25l1.44-1.44C16.1,2.67,14.13,2,12,2C6.48,2,2,6.48,2,12 c0,5.52,4.48,10,10,10s10-4.48,10-10c0-1.19-0.22-2.33-0.6-3.39L19.79,10.22z" fill="WHITE" styleClass="link-button" />
+        </graphic>
+    </Button>
+
+    <Button fx:id="userList" mnemonicParsing="false" onAction="#listofUsersDark" styleClass="upvoteBtn" GridPane.columnIndex="1" GridPane.rowIndex="0">
+        <graphic>
+            <SVGPath content="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" fill="WHITE" styleClass="link-button" />
+        </graphic>
+        <GridPane.margin>
+            <Insets left="790.0" />
+        </GridPane.margin>
+    </Button>
+
+    <!--    <Button fx:id="mode" mnemonicParsing="false" onAction="#handleButtonMode" styleClass="mode-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />-->
+
+
+</GridPane>

@@ -68,6 +68,35 @@ POST /api/v1/room/YWieMMQQqjGNoLAwTsSUlatHzr43Z3Gt1Wvs/join
 }
 ```
 
+### POST `/room/{room_id}/speed`
+This endpoint can be used to change the speed value of a room. You provide an integer in the 
+form of a SpeedAlterRequest that the server will then use to change the speed value of a room up or down.
+If the user tries to access a room that does not exist the server will respond with http status code 404 (NOT_FOUND).
+If the user tries to edit the speed by more than one in a request the server will respond with
+http status code 400 (BAD_REQUEST).
+
+**Examples:**
+`GET /api/v1/room/{room_id}/speed
+```http request
+POST /api/v1/room/YWieMMQQqjGNoLAwTsSUlatHzr43Z3Gt1Wvs/speed
+{
+    "speed": 1,
+}
+```
+`No response`
+
+### GET `/room/{room_id}/speed`
+Get the speed value of the room with {room_id}. If such a room does not exist the server will respond with 
+http status code 404 (NOT_FOUND).
+
+**Examples:**
+`GET /api/v1/room/{room_id}/speed`
+```json
+{
+  "speed": 5
+}
+```
+
 ## The `/room/{room_id}/question/` endpoints
 The following endpoints are related to creating, getting, and answering questions.
 
