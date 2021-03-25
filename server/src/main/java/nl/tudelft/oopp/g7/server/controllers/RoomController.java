@@ -1,7 +1,9 @@
 package nl.tudelft.oopp.g7.server.controllers;
 
 import nl.tudelft.oopp.g7.common.*;
+import nl.tudelft.oopp.g7.server.repositories.QuestionRepository;
 import nl.tudelft.oopp.g7.server.repositories.RoomRepository;
+import nl.tudelft.oopp.g7.server.repositories.UserRepository;
 import nl.tudelft.oopp.g7.server.utility.RandomString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController()
 @RequestMapping("/api/v1/room")
 public class RoomController {
@@ -17,11 +21,13 @@ public class RoomController {
     Logger logger = LoggerFactory.getLogger(RoomController.class);
 
     private final RoomRepository roomRepository;
+    private final UserRepository userRepository;
 
     private static final int GENERATED_PASSWORD_LENGTH = 16;
 
-    public RoomController(JdbcTemplate jdbcTemplate) {
-        this.roomRepository = new RoomRepository(jdbcTemplate);
+    public RoomController(RoomRepository roomRepository, UserRepository userRepository) {
+        this.roomRepository = roomRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -98,7 +104,7 @@ public class RoomController {
      *      of BAD_REQUEST (400), UNAUTHORIZED (401), NOT_FOUND (404), or OK (200).
      */
     @PostMapping("/{room_id}/join")
-    public ResponseEntity<RoomJoinInfo> joinRoom(@PathVariable("room_id") String roomId, @RequestBody RoomJoinRequest roomJoinRequest) {
+    public ResponseEntity<RoomJoinInfo> joinRoom(@PathVariable("room_id") String roomId, @RequestBody RoomJoinRequest roomJoinRequest, HttpServletRequest request) {
         // Check if the room id field is set.
         if (roomId == null || roomId.equals("")) {
             // Inform that client that they did something wrong.
@@ -114,23 +120,27 @@ public class RoomController {
         }
 
         if (room.getModeratorPassword().equals(roomJoinRequest.getPassword())) {
+            User user = new User(userRepository.createNewId(), roomId, roomJoinRequest.getNickname(), request.getRemoteAddr(), "", UserRole.MODERATOR);
+
             return new ResponseEntity<>(
                     new RoomJoinInfo(
                             room.getId(),
                             room.getName(),
-                            // TODO: User authorization.
-                            "",
+                            user.getAuthorizationToken(),
+                            user.getNickname(),
                             UserRole.MODERATOR),
                     HttpStatus.OK);
         }
 
         if (room.getStudentPassword().equals(roomJoinRequest.getPassword())) {
+            User user = new User(userRepository.createNewId(), roomId, roomJoinRequest.getNickname(), request.getRemoteAddr(), "", UserRole.STUDENT);
+
             return new ResponseEntity<>(
                     new RoomJoinInfo(
                             room.getId(),
                             room.getName(),
-                            // TODO: User authorization.
-                            "",
+                            user.getAuthorizationToken(),
+                            user.getNickname(),
                             UserRole.STUDENT),
                     HttpStatus.OK);
         }

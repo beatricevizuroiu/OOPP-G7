@@ -10,5 +10,6 @@ public class RoomJoinInfo {
     private String roomId;
     private String roomName;
     private String authorization;
+    private String nickname;
     private UserRole role;
 }

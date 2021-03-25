@@ -87,7 +87,7 @@ public class JoinRoomController {
             Stage stage = EntryRoomDisplay.getCurrentStage();
 
             // Send password to the server to determine whether the user is a Student or a Moderator and send the user to the right UI
-            if (RoomServerCommunication.joinRoom(roomId.getText(), new RoomJoinRequest(roomPassword.getText())).getRole() == UserRole.STUDENT) {
+            if (RoomServerCommunication.joinRoom(roomId.getText(), new RoomJoinRequest(roomPassword.getText(), nickname.getText())).getRole() == UserRole.STUDENT) {
                 EntryRoomDisplay.setCurrentScene("/StudentViewUI.fxml");
             } else {
                 EntryRoomDisplay.setCurrentScene("/TAViewUI.fxml");
@@ -135,7 +135,7 @@ public class JoinRoomController {
             Stage stage = EntryRoomDisplay.getCurrentStage();
 
             // Send password to the server to determine whether the user is a Student or a Moderator and send the user to the right UI
-            if (RoomServerCommunication.joinRoom(roomId.getText(), new RoomJoinRequest(roomPassword.getText())).getRole() == UserRole.STUDENT) {
+            if (RoomServerCommunication.joinRoom(roomId.getText(), new RoomJoinRequest(roomPassword.getText(), nickname.getText())).getRole() == UserRole.STUDENT) {
                 EntryRoomDisplay.setCurrentScene("/StudentViewUI(DARKMODE).fxml");
             } else {
                 EntryRoomDisplay.setCurrentScene("/TAViewUI(DARKMODE).fxml");

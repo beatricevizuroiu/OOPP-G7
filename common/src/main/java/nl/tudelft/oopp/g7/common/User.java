@@ -6,7 +6,11 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor @NoArgsConstructor
 @Data
-public class RoomJoinRequest {
-    private String password;
+public class User {
+    private String id;
+    private String roomId;
     private String nickname;
+    private String ip;
+    private String authorizationToken;
+    private UserRole role;
 }

@@ -1,0 +1,113 @@
+package nl.tudelft.oopp.g7.server.repositories;
+
+import nl.tudelft.oopp.g7.common.Question;
+import nl.tudelft.oopp.g7.common.UserInfo;
+import nl.tudelft.oopp.g7.server.utility.RandomString;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class UserRepository {
+
+    private final JdbcTemplate jdbcTemplate;
+    private final Logger logger = LoggerFactory.getLogger(UserRepository.class);
+
+    private static final String QUERY_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS users("
+            + "id varchar(36) PRIMARY KEY not NULL,"
+            + "roomID varchar(36) not NULL,"
+            + "nickname text DEFAULT '' not NULL,"
+            + "ip varchar(39) not NULL,"
+            + "token varchar(128) not NULL,"
+            + "FOREIGN KEY (roomID) REFERENCES rooms(id));";
+
+    private static final String QUERY_COUNT_USERS_WITH_ID = "SELECT count(id) FROM users WHERE id=?";
+    private static final String QUERY_SELECT_USER_BY_ID = "SELECT * FROM users WHERE id=?;";
+    private static final String QUERY_SELECT_ALL_USERS = "SELECT * FROM users WHERE roomID=?;";
+
+    /**
+     * Primary constructor for the user repository.
+     * @param jdbcTemplate The {@link JdbcTemplate} that should handle the database queries.
+     */
+    public UserRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+        try {
+            jdbcTemplate.execute(QUERY_CREATE_TABLE);
+        } catch (DataAccessException e) {
+            logger.error("Database creation failed!", e);
+        }
+    }
+
+    /**
+     * Generate a new user id that is not already in use.
+     * @return The new id as a string.
+     */
+    public String createNewId() {
+        String id;
+
+        // Create a new random string generator with length 36.
+        RandomString randomString = new RandomString(36);
+
+        do {
+            // Create a new random id.
+            id = randomString.nextString();
+            // Check if the id is already in the database. If it is create a new one and try again.
+        } while (countUsersWithId(id) >= 1);
+
+        return id;
+    }
+
+
+    /**
+     * Count the amount of users that have a certain id in the database.
+     * @param userId The id to count
+     * @return Expected values of 0 or 1, if it is more something is wrong.
+     */
+    public int countUsersWithId(String userId) {
+        // Stop intellij from complaining about the query statement.
+        //noinspection ConstantConditions
+        return jdbcTemplate.query(QUERY_COUNT_USERS_WITH_ID,
+                (ps) -> ps.setString(1, userId),
+                (rs) -> {
+                    rs.next();
+                    return rs.getInt(1);
+                });
+    }
+
+    public UserInfo getUserById(String userId) {
+        logger.debug("Retrieving user with id: {} from the database", userId);
+        return jdbcTemplate.query(QUERY_SELECT_USER_BY_ID,
+                (ps) -> {
+                    // Set the first variable in the PreparedStatement to the id of the user being requested.
+                    ps.setString(1, userId);
+                },
+
+                // Send the ResultSet to the UserInfo class to create a UserInfo instance from it.
+                (rs) -> {
+                    return UserInfo.fromResultSet(rs, false);
+                });
+    }
+
+    public List<UserInfo> getAllUsersInRoom(String roomId) {
+        logger.debug("Retrieving all question in room with id: {}", roomId);
+        return jdbcTemplate.query(QUERY_SELECT_ALL_USERS,
+                (ps) -> {
+                    // Set the first variable in the PreparedStatement to the room id.
+                    ps.setString(1, roomId);
+                },
+                (rs) -> {
+                    // Create a list to hold all questions.
+                    List<UserInfo> userList = new ArrayList<>();
+                    // Loop while the result set has entries.
+                    while (rs.next()) {
+                        // Create a new question from the result set and add it to the list of questions.
+                        userList.add(UserInfo.fromResultSet(rs, true));
+                    }
+                    // Return the list of questions.
+                    return userList;
+                });
+    }
+}

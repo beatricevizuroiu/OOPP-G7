@@ -5,6 +5,9 @@ import nl.tudelft.oopp.g7.common.QuestionText;
 import nl.tudelft.oopp.g7.server.repositories.QuestionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,10 +26,9 @@ public class QuestionController {
 
     /**
      * Primary constructor for the question controller.
-     * @param jdbcTemplate The {@link JdbcTemplate} that should handle the database queries.
      */
-    public QuestionController(JdbcTemplate jdbcTemplate) {
-        this.questionRepository = new QuestionRepository(jdbcTemplate);
+    public QuestionController(QuestionRepository questionRepository) {
+        this.questionRepository = questionRepository;
 
         // Log QuestionController construction
         logger.trace("Constructed QuestionController");

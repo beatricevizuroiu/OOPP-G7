@@ -44,12 +44,12 @@ public class ServerCommunication {
      * @param password the password the user has received from the lecturer
      * @return a UserRole object
      */
-    public static RoomJoinInfo joinRoom(String roomID, String password) {
+    public static RoomJoinInfo joinRoom(String roomID, String password, String nickname) {
         // add the appropriate end-point
         URI uri = URI.create(uriBody + roomID + "/join");
 
         // put the password into a RoomJoinRequest and prepare a request body
-        String body = gson.toJson(new RoomJoinRequest(password));
+        String body = gson.toJson(new RoomJoinRequest(password, nickname));
 
         // send a request to the server to create the room and store the response
         HttpResponse<String> response = HttpMethods.post(uri, body);

@@ -16,7 +16,7 @@ public class QuestionRepository {
 
     private static final String QUERY_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS questions("
             + "id serial PRIMARY KEY not NULL,"
-            + "userID int not NULL,"
+            + "userID varchar(36) not NULL,"
             + "roomID varchar(36) not NULL,"
             + "text text not NULL,"
             + "answer text DEFAULT '' not NULL,"
@@ -24,7 +24,8 @@ public class QuestionRepository {
             + "upvotes int not NULL DEFAULT 0,"
             + "answered boolean DEFAULT FALSE not NUll,"
             + "edited boolean DEFAULT FALSE not NULL,"
-            + "FOREIGN KEY (roomID) REFERENCES rooms(id));";
+            + "FOREIGN KEY (roomID) REFERENCES rooms(id),"
+            + "FOREIGN KEY (userID) REFERENCES users(id));";
 
     private static final String QUERY_SELECT_QUESTION_BY_ID = "SELECT * FROM questions WHERE id=? AND roomID=?;";
     private static final String QUERY_SELECT_ALL_QUESTIONS = "SELECT * FROM questions WHERE roomID=?;";
@@ -163,8 +164,7 @@ public class QuestionRepository {
             (ps) -> {
                 // Set the first variable in the PreparedStatement to the user id.
                 // TODO: This is currently just a placeholder user ID.
-                ps.setInt(1, 0);
-
+                ps.setString(1, "dummy");
                 // Set the second variable in the PreparedStatement to the room id.
                 ps.setString(2, roomId);
 

@@ -23,6 +23,7 @@ public class HttpMethods {
             response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) { // any exception means there was a problem
             System.out.println("Communication with server failed.");
+            e.printStackTrace();
         }
 
         return response;
