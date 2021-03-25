@@ -134,7 +134,7 @@ public class RoomController {
                             UserRole.STUDENT),
                     HttpStatus.OK);
         }
-
+        // Otherwise you get an unauthorized
         return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
     }
 
