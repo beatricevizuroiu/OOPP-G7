@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS users (
     roomID varchar(36) not NULL,
     nickname text DEFAULT '' not NULL,
     ip varchar(39) not NULL,
+    userRole varchar(32) not NULL,
     token varchar(128) not NULL,
     FOREIGN KEY (roomID) REFERENCES rooms(id)
 );
@@ -53,8 +54,8 @@ INSERT INTO rooms (id, studentPassword, moderatorPassword, name, open, over, sta
 VALUES ('SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH', '', 'NQj7RWvT4yQKUJsE', 'Test room', false, false, '1970-01-01 00:00:00+00:00');
 
 -- Setup users.
-INSERT INTO users (ID, ROOMID, NICKNAME, IP, TOKEN)
-VALUES ('dummy', 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH', 'dummy', '127.10.0.1', '');
+INSERT INTO users (ID, ROOMID, NICKNAME, IP, USERROLE, TOKEN)
+VALUES ('dummy', 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH', 'dummy', '127.10.0.1', 'STUDENT', 'Ftqp8J5Ub8PcUO0qJDXGuAooXZZfzZrZbfb51pCeYWDchzf6wyuwtFNzYeEeacE7k82Xn7y6ue9KWxPmP0eENubnz3PMelle4i9NLKb0RiQiVCDK8xdDjuu1uacyHdTC');
 
 -- Setup questions.
 INSERT INTO questions (ID, USERID, ROOMID, TEXT, ANSWER, POSTEDAT, UPVOTES, ANSWERED, EDITED)

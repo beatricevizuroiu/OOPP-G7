@@ -22,12 +22,14 @@ public class UserRepository {
             + "roomID varchar(36) not NULL,"
             + "nickname text DEFAULT '' not NULL,"
             + "ip varchar(39) not NULL,"
+            + "userRole varchar(32) not NULL,"
             + "token varchar(128) not NULL,"
             + "FOREIGN KEY (roomID) REFERENCES rooms(id));";
 
     private static final String QUERY_COUNT_USERS_WITH_ID = "SELECT count(id) FROM users WHERE id=?";
     private static final String QUERY_SELECT_USER_BY_ID = "SELECT * FROM users WHERE id=?;";
     private static final String QUERY_SELECT_ALL_USERS = "SELECT * FROM users WHERE roomID=?;";
+    private static final String QUERY_SELECT_USER_BY_TOKEN = "SELECT * FROM users WHERE token=?;";
 
     /**
      * Primary constructor for the user repository.
@@ -123,6 +125,20 @@ public class UserRepository {
                     }
                     // Return the list of questions.
                     return userList;
+                });
+    }
+
+    public User getUserByToken(String token) {
+        logger.debug("Retrieving user with token: {} from the database", token);
+        return jdbcTemplate.query(QUERY_SELECT_USER_BY_TOKEN,
+                (ps) -> {
+                    // Set the first variable in the PreparedStatement to the id of the user being requested.
+                    ps.setString(1, token);
+                },
+
+                // Send the ResultSet to the UserInfo class to create a UserInfo instance from it.
+                (rs) -> {
+                    return User.fromResultSet(rs, false);
                 });
     }
 }

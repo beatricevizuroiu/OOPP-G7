@@ -1,8 +1,9 @@
 package nl.tudelft.oopp.g7.client.communication;
 
+import nl.tudelft.oopp.g7.client.logic.LocalData;
+
 import java.net.URI;
 import java.net.http.HttpClient;
-import java.net.http.HttpHeaders;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
@@ -19,7 +20,12 @@ public class HttpMethods {
         // object that will hold the response
         HttpResponse<String> response = null;
 
-        request.setHeader("Authorization", "TOKEN HERE");
+        if (LocalData.getToken() == null) {
+            System.err.println("No authorization token found.");
+            return null;
+        }
+
+        request.setHeader("Authorization", "Bearer " + LocalData.getToken());
 
         try {
             // send the request through client and store the result in response

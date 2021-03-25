@@ -3,6 +3,9 @@ package nl.tudelft.oopp.g7.server.controllers;
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
 import nl.tudelft.oopp.g7.server.repositories.QuestionRepository;
+import nl.tudelft.oopp.g7.server.utility.authorization.AuthorizationHelper;
+import nl.tudelft.oopp.g7.server.utility.authorization.conditions.*;
+import org.aspectj.weaver.ast.Or;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.DependsOn;
@@ -13,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.net.http.HttpResponse;
 import java.util.List;
 
 
@@ -23,12 +28,14 @@ public class QuestionController {
     Logger logger = LoggerFactory.getLogger(QuestionController.class);
 
     private final QuestionRepository questionRepository;
+    private final AuthorizationHelper authorizationHelper;
 
     /**
      * Primary constructor for the question controller.
      */
-    public QuestionController(QuestionRepository questionRepository) {
+    public QuestionController(QuestionRepository questionRepository, AuthorizationHelper authorizationHelper) {
         this.questionRepository = questionRepository;
+        this. authorizationHelper = authorizationHelper;
 
         // Log QuestionController construction
         logger.trace("Constructed QuestionController");
@@ -41,7 +48,15 @@ public class QuestionController {
      *         if there is no question found it will return an empty {@link ResponseEntity} with http status 404 (NOT_FOUND).
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Question> getQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id) {
+    public ResponseEntity<Question> getQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
+        authorizationHelper.isAuthorized(
+                roomId,
+                authorization,
+                request.getRemoteAddr(),
+                new All(
+                        new BelongsToRoom()
+                ));
+
         // Log question request
         logger.debug("Question with id " + id + " requested");
         // Get the question with the id from the database.
@@ -64,7 +79,15 @@ public class QuestionController {
      * @return A {@link List} of {@link Question}s containing every question in the database.
      */
     @GetMapping("/all")
-    public List<Question> getAllQuestions(@PathVariable("room_id") String roomId) {
+    public List<Question> getAllQuestions(@PathVariable("room_id") String roomId, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
+        authorizationHelper.isAuthorized(
+                roomId,
+                authorization,
+                request.getRemoteAddr(),
+                new All(
+                        new BelongsToRoom()
+                ));
+
         // Log questions request
         logger.debug("All questions requested.");
         // Return every question in the database.
@@ -78,17 +101,28 @@ public class QuestionController {
      *       (NOT_FOUND) if no question was upvoted.
      */
     @PutMapping("/{id}/upvote")
-    public ResponseEntity<Void> upvoteQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id) {
+    public ResponseEntity<Void> upvoteQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
+        if (!authorizationHelper.isAuthorized(
+                roomId,
+                authorization,
+                request.getRemoteAddr(),
+                new All(
+                        new BelongsToRoom(),
+                        new IsStudent()
+                ))) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
         // Try to increase the upvote number by 1 and store the number of effected rows.
         int rowsChanged = questionRepository.upvoteQuestionWithId(roomId, id);
 
         if (rowsChanged == 1) {
             // If there was return http status code 200 (OK)
             return new ResponseEntity<>(null, HttpStatus.OK);
-        } else {
-            // Otherwise return http status code 404 (NOT_FOUND)
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+
+        // Otherwise return http status code 404 (NOT_FOUND)
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -99,17 +133,32 @@ public class QuestionController {
      *       (NOT_FOUND) if no question was edited.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Void> editQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestBody QuestionText question) {
+    public ResponseEntity<Void> editQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestBody QuestionText question, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
+        if (!authorizationHelper.isAuthorized(
+                roomId,
+                authorization,
+                request.getRemoteAddr(),
+                new All(
+                        new BelongsToRoom(),
+                        new OneOf(
+                                new IsModerator(),
+                                new OwnsQuestion(id)
+                        )
+                ))) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+
         // Try to edit the question body and store the number of effected rows.
         int rowsChanged = questionRepository.editQuestionWithId(roomId, id, question.getText());
 
         if (rowsChanged == 1) {
             // If there was return http status code 200 (OK)
             return new ResponseEntity<>(null, HttpStatus.OK);
-        } else {
-            // Otherwise return http status code 404 (NOT_FOUND)
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+
+        // Otherwise return http status code 404 (NOT_FOUND)
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -119,7 +168,21 @@ public class QuestionController {
      *      (NOT_FOUND) if no question was deleted.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id) {
+    public ResponseEntity<Void> deleteQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
+        if (!authorizationHelper.isAuthorized(
+                roomId,
+                authorization,
+                request.getRemoteAddr(),
+                new All(
+                        new BelongsToRoom(),
+                        new OneOf(
+                                new IsModerator(),
+                                new OwnsQuestion(id)
+                        )
+                ))) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
         // Log the deletion request
         logger.debug("Question " + id + " is being deleted.");
         // Try to delete the question with id and store the amount of rows changed.
@@ -130,11 +193,12 @@ public class QuestionController {
             // If there was log the deletion and return http status code 200 (OK)
             logger.info("Question " + id + " has successfully been deleted.");
             return new ResponseEntity<>(null, HttpStatus.OK);
-        } else {
-            // Otherwise log a warning and return http status code 404 (NOT_FOUND)
-            logger.debug("Question " + id + " was requested to be deleted but does not exist!");
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+
+        // Otherwise log a warning and return http status code 404 (NOT_FOUND)
+        logger.debug("Question " + id + " was requested to be deleted but does not exist!");
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
     }
 
     /**
@@ -142,7 +206,16 @@ public class QuestionController {
      * @param newQuestion The {@link QuestionText} object representing the new question.
      */
     @PostMapping("/new")
-    public void newQuestion(@PathVariable("room_id") String roomId, @RequestBody QuestionText newQuestion) {
+    public ResponseEntity<Void> newQuestion(@PathVariable("room_id") String roomId, @RequestBody QuestionText newQuestion, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
+        if (!authorizationHelper.isAuthorized(
+                roomId,
+                authorization,
+                request.getRemoteAddr(),
+                new All(
+                        new BelongsToRoom()
+                ))) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
         // Log the creation of a question
         logger.debug("A new question is being made.");
 
@@ -152,9 +225,12 @@ public class QuestionController {
         // Check whether the question was successfully created and log the result
         if (rowsChanged == 0) {
             logger.debug("A question was attempted to be made but it failed!");
-        } else {
-            logger.info("A question was successfully made.");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
+        logger.info("A question was successfully made.");
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
@@ -164,7 +240,17 @@ public class QuestionController {
      * @return A {@link ResponseEntity} containing NULL and a http status of 200 (OK) if a row is changed and 404 (NOT_FOUND) if no rows changed.
      */
     @PostMapping("/{id}/answer")
-    public ResponseEntity<Void> answerQuestion(@PathVariable("room_id") String roomId, @PathVariable int id, @RequestBody QuestionText answer) {
+    public ResponseEntity<Void> answerQuestion(@PathVariable("room_id") String roomId, @PathVariable int id, @RequestBody QuestionText answer, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
+        if (!authorizationHelper.isAuthorized(
+                roomId,
+                authorization,
+                request.getRemoteAddr(),
+                new All(
+                        new IsModerator()
+                ))) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
         // Log the answering of a question
         logger.debug("Question " + id + " is being answered");
         

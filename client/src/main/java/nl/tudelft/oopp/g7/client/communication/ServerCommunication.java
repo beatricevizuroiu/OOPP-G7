@@ -17,50 +17,6 @@ public class ServerCommunication {
     private static final String uriBody = "http://localhost:8080/api/v1/room/";
 
     /**
-     * Create a Room and retrieve its information.
-     * @param newRoom a newRoom object that contains the necessary information to create a new room
-     * @return a Room object containing all relevant data of the created room
-     */
-    public static Room createRoom(NewRoom newRoom) {
-        // add the appropriate end-point
-        URI uri = URI.create(uriBody + "/create");
-
-        // prepare the body of the request
-        String body = gson.toJson(newRoom);
-
-        // send a request to the server to create the room and store the response
-        HttpResponse<String> response = HttpMethods.post(uri, body);
-
-        // extract the room from the server response
-        String room = response.body();
-
-        // parse the JSON into a Room object containing relevant information and return it
-        return gson.fromJson(room, Room.class);
-    }
-
-    /**
-     * Logs a user into a room to determine whether they are a moderator or a student.
-     * @param roomID the ID of the room the user wants to log into
-     * @param password the password the user has received from the lecturer
-     * @return a UserRole object
-     */
-    public static RoomJoinInfo joinRoom(String roomID, String password, String nickname) {
-        // add the appropriate end-point
-        URI uri = URI.create(uriBody + roomID + "/join");
-
-        // put the password into a RoomJoinRequest and prepare a request body
-        String body = gson.toJson(new RoomJoinRequest(password, nickname));
-
-        // send a request to the server to create the room and store the response
-        HttpResponse<String> response = HttpMethods.post(uri, body);
-
-        String roomJoinInfo = response.body();
-
-        // parse the JSON into a UserRole object
-        return gson.fromJson(roomJoinInfo, RoomJoinInfo.class);
-    }
-
-    /**
      * Retrieve a question specified by ID.
      * @param roomID ID of the room student belongs
      * @param questionID ID of the question
