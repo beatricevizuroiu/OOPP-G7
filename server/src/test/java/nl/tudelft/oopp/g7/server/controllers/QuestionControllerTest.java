@@ -2,6 +2,7 @@ package nl.tudelft.oopp.g7.server.controllers;
 
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
+import nl.tudelft.oopp.g7.server.repositories.QuestionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -40,13 +41,13 @@ class QuestionControllerTest {
         jdbcTemplate.execute(sqlQueries);
 
         // Create our questionController with our in memory datasource.
-        questionController = new QuestionController(jdbcTemplate);
+        questionController = new QuestionController(new QuestionRepository(jdbcTemplate));
     }
 
     @Test
     void getQuestion() {
         // Create the question we expect to see.
-        Question expected = new Question(1, 1, "This is a question", "", new Date(0), 0, false, false);
+        Question expected = new Question(1, "dummy", "This is a question", "", new Date(0), 0, false, false);
 
         // Get the question from the controller.
         Question actual = questionController.getQuestion(TEST_ROOM_ID,1).getBody();
@@ -59,9 +60,9 @@ class QuestionControllerTest {
     void getAllQuestions() {
         // Create the list of question we expect to have.
         List<Question> expected = new ArrayList<>();
-        expected.add(new Question(1, 1, "This is a question", "", new Date(0), 0, false, false));
-        expected.add(new Question(2, 1, "This is a question", "This is an answer to the question", new Date(1614511580000L), 0, true, false));
-        expected.add(new Question(3, 1, "This is a question", "", new Date(0), 20, true, false));
+        expected.add(new Question(1, "dummy", "This is a question", "", new Date(0), 0, false, false));
+        expected.add(new Question(2, "dummy", "This is a question", "This is an answer to the question", new Date(1614511580000L), 0, true, false));
+        expected.add(new Question(3, "dummy", "This is a question", "", new Date(0), 20, true, false));
 
         // Get all questions from the controller.
         List<Question> actual = questionController.getAllQuestions(TEST_ROOM_ID);
@@ -74,9 +75,9 @@ class QuestionControllerTest {
     void upvoteQuestion() {
         // Create the list of question we expect to have.
         List<Question> expected = new ArrayList<>();
-        expected.add(new Question(1, 1, "This is a question", "", new Date(0), 0, false, false));
-        expected.add(new Question(2, 1, "This is a question", "This is an answer to the question", new Date(1614511580000L), 0, true, false));
-        expected.add(new Question(3, 1, "This is a question", "", new Date(0), 21, true, false));
+        expected.add(new Question(1, "dummy", "This is a question", "", new Date(0), 0, false, false));
+        expected.add(new Question(2, "dummy", "This is a question", "This is an answer to the question", new Date(1614511580000L), 0, true, false));
+        expected.add(new Question(3, "dummy", "This is a question", "", new Date(0), 21, true, false));
 
         // Upvote the question with id 3.
         questionController.upvoteQuestion(TEST_ROOM_ID, 3);
@@ -92,9 +93,9 @@ class QuestionControllerTest {
     void editQuestion() {
         // Create the list of questions we expect to have.
         List<Question> expected = new ArrayList<>();
-        expected.add(new Question(1, 1, "This is a question", "", new Date(0), 0, false, false));
-        expected.add(new Question(2, 1, "This is a question", "This is an answer to the question", new Date(1614511580000L), 0, true, false));
-        expected.add(new Question(3, 1, "This is updated question body.", "", new Date(0), 20, true, true));
+        expected.add(new Question(1, "dummy", "This is a question", "", new Date(0), 0, false, false));
+        expected.add(new Question(2, "dummy", "This is a question", "This is an answer to the question", new Date(1614511580000L), 0, true, false));
+        expected.add(new Question(3, "dummy", "This is updated question body.", "", new Date(0), 20, true, true));
 
         // Edit the question with id 3.
         questionController.editQuestion(TEST_ROOM_ID, 3, new QuestionText("This is updated question body."));
@@ -110,8 +111,8 @@ class QuestionControllerTest {
     void deleteQuestion() {
         // Create the list of questions we expect to have.
         List<Question> expected = new ArrayList<>();
-        expected.add(new Question(1, 1, "This is a question", "", new Date(0), 0, false, false));
-        expected.add(new Question(3, 1, "This is a question", "", new Date(0), 20, true, false));
+        expected.add(new Question(1, "dummy", "This is a question", "", new Date(0), 0, false, false));
+        expected.add(new Question(3, "dummy", "This is a question", "", new Date(0), 20, true, false));
 
         // Delete question with id 2.
         questionController.deleteQuestion(TEST_ROOM_ID, 2);

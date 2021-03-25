@@ -29,7 +29,6 @@ public class UserController {
         this.banRepository = banRepository;
     }
 
-
     @GetMapping("/{user_id}")
     public ResponseEntity<UserInfo> getUserInfoById(@PathVariable("user_id") String userId) {
         logger.trace("getUserById called");

@@ -1,18 +1,26 @@
 package nl.tudelft.oopp.g7.server.controllers;
 
 import nl.tudelft.oopp.g7.common.*;
+import nl.tudelft.oopp.g7.server.repositories.RoomRepository;
+import nl.tudelft.oopp.g7.server.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.mock.web.MockHttpServletRequest;
 
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Date;
+import java.security.Principal;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -42,7 +50,7 @@ public class RoomControllerTest {
         jdbcTemplate.execute(sqlQueries);
 
         // Create our questionController with our in memory datasource.
-        roomController = new RoomController(jdbcTemplate);
+        roomController = new RoomController(new RoomRepository(jdbcTemplate), new UserRepository(jdbcTemplate));
     }
 
     @Test
@@ -66,7 +74,10 @@ public class RoomControllerTest {
 
     @Test
     void joinRoomStudent() {
-        ResponseEntity<RoomJoinInfo> response = roomController.joinRoom(TEST_ROOM_ID, new RoomJoinRequest(TEST_ROOM_STUDENT_PASSWORD));
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setRemoteAddr("127.10.0.1");
+
+        ResponseEntity<RoomJoinInfo> response = roomController.joinRoom(TEST_ROOM_ID, new RoomJoinRequest(TEST_ROOM_STUDENT_PASSWORD, "nickname"), request);
 
         // Check if the request completed successfully.
         assertEquals(response.getStatusCode(), HttpStatus.OK);
@@ -84,7 +95,10 @@ public class RoomControllerTest {
 
     @Test
     void joinRoomModerator() {
-        ResponseEntity<RoomJoinInfo> response = roomController.joinRoom(TEST_ROOM_ID, new RoomJoinRequest(TEST_ROOM_MODERATOR_PASSWORD));
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setRemoteAddr("127.10.0.1");
+
+        ResponseEntity<RoomJoinInfo> response = roomController.joinRoom(TEST_ROOM_ID, new RoomJoinRequest(TEST_ROOM_MODERATOR_PASSWORD, "nickname"), request);
 
         // Check if the request completed successfully.
         assertEquals(response.getStatusCode(), HttpStatus.OK);

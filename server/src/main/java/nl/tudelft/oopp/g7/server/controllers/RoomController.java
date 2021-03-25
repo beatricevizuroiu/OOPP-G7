@@ -30,6 +30,11 @@ public class RoomController {
         this.userRepository = userRepository;
     }
 
+    @GetMapping("/coffee")
+    public ResponseEntity<Void> brewCoffee() {
+        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+    }
+
     /**
      * Endpoint to create a new room.
      * @param newRoom The {@link NewRoom} object containing the information about the new room.
