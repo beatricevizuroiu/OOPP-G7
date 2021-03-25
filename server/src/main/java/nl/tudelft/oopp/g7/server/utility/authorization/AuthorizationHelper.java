@@ -33,7 +33,11 @@ public class AuthorizationHelper {
     }
 
     public boolean isAuthorized(String roomId, String authorizationHeader, String ip, AuthorizationCondition condition) {
-        String token = authorizationHeader.split(" ")[1];
+        String[] authParts = authorizationHeader.split(" ");
+        if (authParts.length < 2)
+            return false;
+
+        String token = authParts[1];
         User user = userRepository.getUserByToken(token);
 
         return condition.check(roomId, user, ip, banRepository, userRepository, questionRepository);

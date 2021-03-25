@@ -1,8 +1,11 @@
 package nl.tudelft.oopp.g7.server.controllers;
 
 import nl.tudelft.oopp.g7.common.*;
+import nl.tudelft.oopp.g7.server.repositories.BanRepository;
+import nl.tudelft.oopp.g7.server.repositories.QuestionRepository;
 import nl.tudelft.oopp.g7.server.repositories.RoomRepository;
 import nl.tudelft.oopp.g7.server.repositories.UserRepository;
+import nl.tudelft.oopp.g7.server.utility.authorization.AuthorizationHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -29,11 +32,16 @@ public class RoomControllerTest {
     private DriverManagerDataSource dataSource;
     private JdbcTemplate jdbcTemplate;
     private RoomController roomController;
+    private MockHttpServletRequest request_stud;
+    private MockHttpServletRequest request_mod;
 
     private final String TEST_ROOM_ID = "SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH";
     private final String TEST_ROOM_NAME = "Test room";
     private final String TEST_ROOM_STUDENT_PASSWORD = "";
     private final String TEST_ROOM_MODERATOR_PASSWORD = "NQj7RWvT4yQKUJsE";
+    private final String AUTHORIZATION_STUDENT = "Bearer Ftqp8J5Ub8PcUO0qJDXGuAooXZZfzZrZbfb51pCeYWDchzf6wyuwtFNzYeEeacE7k82Xn7y6ue9KWxPmP0eENubnz3PMelle4i9NLKb0RiQiVCDK8xdDjuu1uacyHdTC";
+    private final String AUTHORIZATION_MODERATOR = "Bearer Dm1J7ZsghOtyvFnbMEMWrJDlWHteOGx3rr60stqn405f4sdgPqsj8wO9lWcGkrNGCYf5yH9Y1efaMgnD32hUwaSi3Jsi1mdtXUBK2U7C2HdqdAPdnuUqih2ihmjMk5lG";
+    private final String AUTHORIZATION_EMPTY = "";
 
     @BeforeEach
     void setUp() throws IOException {
@@ -49,8 +57,26 @@ public class RoomControllerTest {
         String sqlQueries = Files.readString(Path.of(new File("src/test/resources/test-question.sql").getPath()));
         jdbcTemplate.execute(sqlQueries);
 
+        request_stud = new MockHttpServletRequest();
+        request_stud.setRemoteAddr("127.10.0.1");
+
+        request_mod = new MockHttpServletRequest();
+        request_mod.setRemoteAddr("127.11.0.1");
+
+        QuestionRepository questionRepository = new QuestionRepository(jdbcTemplate);
+        UserRepository userRepository = new UserRepository(jdbcTemplate);
+        BanRepository banRepository = new BanRepository(jdbcTemplate);
+        RoomRepository roomRepository = new RoomRepository(jdbcTemplate);
+
         // Create our questionController with our in memory datasource.
-        roomController = new RoomController(new RoomRepository(jdbcTemplate), new UserRepository(jdbcTemplate));
+        roomController = new RoomController(
+                roomRepository,
+                userRepository,
+                new AuthorizationHelper(
+                        userRepository,
+                        banRepository,
+                        questionRepository
+                ));
     }
 
     @Test
@@ -74,10 +100,7 @@ public class RoomControllerTest {
 
     @Test
     void joinRoomStudent() {
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        request.setRemoteAddr("127.10.0.1");
-
-        ResponseEntity<RoomJoinInfo> response = roomController.joinRoom(TEST_ROOM_ID, new RoomJoinRequest(TEST_ROOM_STUDENT_PASSWORD, "nickname"), request);
+        ResponseEntity<RoomJoinInfo> response = roomController.joinRoom(TEST_ROOM_ID, new RoomJoinRequest(TEST_ROOM_STUDENT_PASSWORD, "nickname"), AUTHORIZATION_EMPTY, request_stud);
 
         // Check if the request completed successfully.
         assertEquals(response.getStatusCode(), HttpStatus.OK);
@@ -95,10 +118,7 @@ public class RoomControllerTest {
 
     @Test
     void joinRoomModerator() {
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        request.setRemoteAddr("127.10.0.1");
-
-        ResponseEntity<RoomJoinInfo> response = roomController.joinRoom(TEST_ROOM_ID, new RoomJoinRequest(TEST_ROOM_MODERATOR_PASSWORD, "nickname"), request);
+        ResponseEntity<RoomJoinInfo> response = roomController.joinRoom(TEST_ROOM_ID, new RoomJoinRequest(TEST_ROOM_MODERATOR_PASSWORD, "nickname"), AUTHORIZATION_EMPTY, request_mod);
 
         // Check if the request completed successfully.
         assertEquals(response.getStatusCode(), HttpStatus.OK);
@@ -116,7 +136,7 @@ public class RoomControllerTest {
 
     @Test
     void speedUpTest() {
-        ResponseEntity<Void> response = roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(1));
+        ResponseEntity<Void> response = roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(1), AUTHORIZATION_STUDENT, request_stud);
 
         // Check if the request completed successfully.
         assertEquals(response.getStatusCode(), HttpStatus.OK);
@@ -124,7 +144,7 @@ public class RoomControllerTest {
 
     @Test
     void speedDownTest() {
-        ResponseEntity<Void> response = roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(-1));
+        ResponseEntity<Void> response = roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(-1), AUTHORIZATION_STUDENT, request_stud);
 
         // Check if the request completed successfully.
         assertEquals(response.getStatusCode(), HttpStatus.OK);
@@ -132,7 +152,7 @@ public class RoomControllerTest {
 
     @Test
     void badSpeedRequest() {
-        ResponseEntity<Void> response = roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(2));
+        ResponseEntity<Void> response = roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(2), AUTHORIZATION_STUDENT, request_stud);
 
         // Check if the request failed successfully.
         assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
@@ -140,27 +160,29 @@ public class RoomControllerTest {
 
     @Test
     void getSpeedTest() {
-        ResponseEntity<SpeedAlterRequest> response = roomController.getRoomSpeed(TEST_ROOM_ID);
+        ResponseEntity<SpeedAlterRequest> response = roomController.getRoomSpeed(TEST_ROOM_ID, AUTHORIZATION_MODERATOR, request_mod);
 
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(response.getBody().getSpeed(), 0);
     }
 
     @Test
     void getSpeedTestPos() {
+        roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(1), AUTHORIZATION_STUDENT, request_stud);
+        ResponseEntity<SpeedAlterRequest> response = roomController.getRoomSpeed(TEST_ROOM_ID, AUTHORIZATION_MODERATOR, request_mod);
 
-        roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(1));
-        ResponseEntity<SpeedAlterRequest> response = roomController.getRoomSpeed(TEST_ROOM_ID);
-
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(response.getBody().getSpeed(), 1);
     }
 
     @Test
     void getSpeedTestNeg() {
-        roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(-1));
-        roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(-1));
-        roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(-1));
-        ResponseEntity<SpeedAlterRequest> response = roomController.getRoomSpeed((TEST_ROOM_ID));
+        roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(-1), AUTHORIZATION_STUDENT, request_stud);
+        roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(-1), AUTHORIZATION_STUDENT, request_stud);
+        roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(-1), AUTHORIZATION_STUDENT, request_stud);
+        ResponseEntity<SpeedAlterRequest> response = roomController.getRoomSpeed((TEST_ROOM_ID), AUTHORIZATION_MODERATOR, request_mod);
 
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(response.getBody().getSpeed(), -3);
     }
 }

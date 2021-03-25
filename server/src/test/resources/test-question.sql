@@ -55,14 +55,17 @@ VALUES ('SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH', '', 'NQj7RWvT4yQKUJsE', 'Test ro
 
 -- Setup users.
 INSERT INTO users (ID, ROOMID, NICKNAME, IP, USERROLE, TOKEN)
-VALUES ('dummy', 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH', 'dummy', '127.10.0.1', 'STUDENT', 'Ftqp8J5Ub8PcUO0qJDXGuAooXZZfzZrZbfb51pCeYWDchzf6wyuwtFNzYeEeacE7k82Xn7y6ue9KWxPmP0eENubnz3PMelle4i9NLKb0RiQiVCDK8xdDjuu1uacyHdTC');
+VALUES ('RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q', 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH', 'Student name', '127.10.0.1', 'STUDENT', 'Ftqp8J5Ub8PcUO0qJDXGuAooXZZfzZrZbfb51pCeYWDchzf6wyuwtFNzYeEeacE7k82Xn7y6ue9KWxPmP0eENubnz3PMelle4i9NLKb0RiQiVCDK8xdDjuu1uacyHdTC');
+
+INSERT INTO users (ID, ROOMID, NICKNAME, IP, USERROLE, TOKEN)
+VALUES ('eWMuhJfj41ShR1BdPGbLg2NKZ7FIEMb4VE6R', 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH', 'Moderator name', '127.11.0.1', 'MODERATOR', 'Dm1J7ZsghOtyvFnbMEMWrJDlWHteOGx3rr60stqn405f4sdgPqsj8wO9lWcGkrNGCYf5yH9Y1efaMgnD32hUwaSi3Jsi1mdtXUBK2U7C2HdqdAPdnuUqih2ihmjMk5lG');
 
 -- Setup questions.
 INSERT INTO questions (ID, USERID, ROOMID, TEXT, ANSWER, POSTEDAT, UPVOTES, ANSWERED, EDITED)
-VALUES (1, 'dummy', 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH', 'This is a question', '', '1970-01-01 00:00:00+00:00', 0, false, false);
+VALUES (1, 'RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q', 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH', 'This is a question', '', '1970-01-01 00:00:00+00:00', 0, false, false);
 
 INSERT INTO questions (ID, USERID, ROOMID, TEXT, ANSWER, POSTEDAT, UPVOTES, ANSWERED, EDITED)
-VALUES (2, 'dummy', 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH','This is a question', 'This is an answer to the question', '2021-02-28 11:26:20+00:00', 0, true, false);
+VALUES (2, 'RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q', 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH','This is a question', 'This is an answer to the question', '2021-02-28 11:26:20+00:00', 0, true, false);
 
 INSERT INTO questions (ID, USERID, ROOMID, TEXT, ANSWER, POSTEDAT, UPVOTES, ANSWERED, EDITED)
-VALUES (3, 'dummy', 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH','This is a question', '', '1970-01-01 00:00:00+00:00', 20, true, false);
+VALUES (3, 'RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q', 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH','This is a question', '', '1970-01-01 00:00:00+00:00', 20, true, false);

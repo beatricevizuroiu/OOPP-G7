@@ -9,6 +9,6 @@ public class NotBanned extends AuthorizationCondition {
 
     @Override
     public boolean check(String roomId, User user, String ip, BanRepository banRepository, UserRepository userRepository, QuestionRepository questionRepository) {
-        return banRepository.checkBanned(roomId, ip);
+        return !banRepository.checkBanned(roomId, ip);
     }
 }

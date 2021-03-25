@@ -5,6 +5,10 @@ This document contains a description of every API endpoint that exists and what 
 Each API endpoint has to be prefixed with a version. The following versions exist.
 - /api/v1/ [The original and current version of the API]
 
+## Authorization
+To authenticate with the server you have to attach the bearer token that was provided to you by the `/room/{id}/join`
+request to every request you sent after that. Currently, you are also required to attach the header even if you don't
+have a token for technical reasons.
 
 ## The `/room/` endpoints
 
@@ -89,13 +93,62 @@ POST /api/v1/room/YWieMMQQqjGNoLAwTsSUlatHzr43Z3Gt1Wvs/speed
 Get the speed value of the room with {room_id}. If such a room does not exist the server will respond with 
 http status code 404 (NOT_FOUND).
 
-**Examples:**
+**Examples:**  
 `GET /api/v1/room/{room_id}/speed`
 ```json
 {
   "speed": 5
 }
 ```
+
+## The `/room/{room_id}/user/` endpoints
+The following endpoints are related to getting userdata and moderating users.
+
+### GET /room/{room_id}/user/{user_id}
+Get information about the user with {user_id}. If such a user does not exist the server will respond with
+http status code 404 (NOT_FOUND).
+
+**Examples:**  
+`GET /api/v1/room/8fH0vBsgAiQxQ4yiTq5uFI76kEhUv7fK9rKQ/user/zvbC3z2ySGKV9G7wrQ1DPsUvYR3uc1UhNgb9`
+```json
+{
+    "id": "zvbC3z2ySGKV9G7wrQ1DPsUvYR3uc1UhNgb9",
+    "roomId": "8fH0vBsgAiQxQ4yiTq5uFI76kEhUv7fK9rKQ",
+    "nickname": "Nickname",
+    "userRole": "STUDENT"
+}
+```
+
+
+### GET /room/{room_id}/user/all
+Get information about all users. If there are no users the server will respond with http status code 
+404 (NOT_FOUND).
+
+**Examples:**  
+`GET /api/v1/room/8fH0vBsgAiQxQ4yiTq5uFI76kEhUv7fK9rKQ/user/all`
+```json
+[
+    {
+        "id": "zvbC3z2ySGKV9G7wrQ1DPsUvYR3uc1UhNgb9",
+        "roomId": "8fH0vBsgAiQxQ4yiTq5uFI76kEhUv7fK9rKQ",
+        "nickname": "Nickname",
+        "userRole": "STUDENT"
+    },
+    {
+        "id": "v3pNWbkAQOQCtS7VVJomjZVTVoTc5IpI3bj1",
+        "roomId": "8fH0vBsgAiQxQ4yiTq5uFI76kEhUv7fK9rKQ",
+        "nickname": "Nickname",
+        "userRole": "MODERATOR"
+    }
+]
+```
+
+### DELETE /room/{room_id}/user/{user_id}
+Ban a user, making them unable to send questions, upvote them and give feedback to lecturer about his/her speed.
+
+**Examples:**  
+`DELETE /api/v1/room/8fH0vBsgAiQxQ4yiTq5uFI76kEhUv7fK9rKQ/user/zvbC3z2ySGKV9G7wrQ1DPsUvYR3uc1UhNgb9`
+`No response`
 
 ## The `/room/{room_id}/question/` endpoints
 The following endpoints are related to creating, getting, and answering questions.

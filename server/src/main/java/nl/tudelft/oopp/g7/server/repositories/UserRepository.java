@@ -3,12 +3,14 @@ package nl.tudelft.oopp.g7.server.repositories;
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.User;
 import nl.tudelft.oopp.g7.common.UserInfo;
+import nl.tudelft.oopp.g7.common.UserRole;
 import nl.tudelft.oopp.g7.server.utility.RandomString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +29,7 @@ public class UserRepository {
             + "FOREIGN KEY (roomID) REFERENCES rooms(id));";
 
     private static final String QUERY_COUNT_USERS_WITH_ID = "SELECT count(id) FROM users WHERE id=?";
+    private static final String QUERY_STORE_USER = "INSERT INTO users (id, roomID, nickname, ip, userRole, token) VALUES (?,?,?,?,?,?);";
     private static final String QUERY_SELECT_USER_BY_ID = "SELECT * FROM users WHERE id=?;";
     private static final String QUERY_SELECT_ALL_USERS = "SELECT * FROM users WHERE roomID=?;";
     private static final String QUERY_SELECT_USER_BY_TOKEN = "SELECT * FROM users WHERE token=?;";
@@ -139,6 +142,25 @@ public class UserRepository {
                 // Send the ResultSet to the UserInfo class to create a UserInfo instance from it.
                 (rs) -> {
                     return User.fromResultSet(rs, false);
+                });
+    }
+
+    public int storeUser(User user) {
+        logger.debug("Storing user with id: {} from the database", user.getId());
+        return jdbcTemplate.update(QUERY_STORE_USER,
+                (ps) -> {
+                    // Set the userID in the PreparedStatement.
+                    ps.setString(1, user.getId());
+                    // Set the roomId of the user in the PreparedStatement.
+                    ps.setString(2, user.getRoomId());
+                    // Set the nickname of the user in the PreparedStatement.
+                    ps.setString(3, user.getNickname());
+                    // Set the ip of the user in the PreparedStatement.
+                    ps.setString(4, user.getIp());
+                    // Set whether or not the user is a moderator in the PreparedStatement.
+                    ps.setString(5, user.getRole().toString());
+                    // Set the authorizationToken of the user in the PreparedStatement.
+                    ps.setString(6, user.getAuthorizationToken());
                 });
     }
 }

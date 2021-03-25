@@ -2,7 +2,9 @@ package nl.tudelft.oopp.g7.server.controllers;
 
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
+import nl.tudelft.oopp.g7.common.User;
 import nl.tudelft.oopp.g7.server.repositories.QuestionRepository;
+import nl.tudelft.oopp.g7.server.repositories.UserRepository;
 import nl.tudelft.oopp.g7.server.utility.authorization.AuthorizationHelper;
 import nl.tudelft.oopp.g7.server.utility.authorization.conditions.*;
 import org.aspectj.weaver.ast.Or;
@@ -28,14 +30,16 @@ public class QuestionController {
     Logger logger = LoggerFactory.getLogger(QuestionController.class);
 
     private final QuestionRepository questionRepository;
+    private final UserRepository userRepository;
     private final AuthorizationHelper authorizationHelper;
 
     /**
      * Primary constructor for the question controller.
      */
-    public QuestionController(QuestionRepository questionRepository, AuthorizationHelper authorizationHelper) {
+    public QuestionController(QuestionRepository questionRepository, UserRepository userRepository, AuthorizationHelper authorizationHelper) {
         this.questionRepository = questionRepository;
-        this. authorizationHelper = authorizationHelper;
+        this.userRepository = userRepository;
+        this.authorizationHelper = authorizationHelper;
 
         // Log QuestionController construction
         logger.trace("Constructed QuestionController");
@@ -49,13 +53,15 @@ public class QuestionController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Question> getQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
-        authorizationHelper.isAuthorized(
+        if (!authorizationHelper.isAuthorized(
                 roomId,
                 authorization,
                 request.getRemoteAddr(),
                 new All(
                         new BelongsToRoom()
-                ));
+                ))) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
 
         // Log question request
         logger.debug("Question with id " + id + " requested");
@@ -79,19 +85,21 @@ public class QuestionController {
      * @return A {@link List} of {@link Question}s containing every question in the database.
      */
     @GetMapping("/all")
-    public List<Question> getAllQuestions(@PathVariable("room_id") String roomId, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
-        authorizationHelper.isAuthorized(
+    public ResponseEntity<List<Question>> getAllQuestions(@PathVariable("room_id") String roomId, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
+        if (!authorizationHelper.isAuthorized(
                 roomId,
                 authorization,
                 request.getRemoteAddr(),
                 new All(
                         new BelongsToRoom()
-                ));
+                ))) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
 
         // Log questions request
         logger.debug("All questions requested.");
         // Return every question in the database.
-        return questionRepository.getAllQuestionsInRoom(roomId);
+        return new ResponseEntity<>(questionRepository.getAllQuestionsInRoom(roomId), HttpStatus.OK);
     }
 
     /**
@@ -108,7 +116,8 @@ public class QuestionController {
                 request.getRemoteAddr(),
                 new All(
                         new BelongsToRoom(),
-                        new IsStudent()
+                        new IsStudent(),
+                        new NotBanned()
                 ))) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -140,6 +149,7 @@ public class QuestionController {
                 request.getRemoteAddr(),
                 new All(
                         new BelongsToRoom(),
+                        new NotBanned(),
                         new OneOf(
                                 new IsModerator(),
                                 new OwnsQuestion(id)
@@ -175,6 +185,7 @@ public class QuestionController {
                 request.getRemoteAddr(),
                 new All(
                         new BelongsToRoom(),
+                        new NotBanned(),
                         new OneOf(
                                 new IsModerator(),
                                 new OwnsQuestion(id)
@@ -212,15 +223,19 @@ public class QuestionController {
                 authorization,
                 request.getRemoteAddr(),
                 new All(
-                        new BelongsToRoom()
+                        new BelongsToRoom(),
+                        new NotBanned()
                 ))) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+
+        User user = userRepository.getUserByToken(authorization.split(" ")[1]);
+
         // Log the creation of a question
         logger.debug("A new question is being made.");
 
         // Create a new question in the database.
-        int rowsChanged = questionRepository.createQuestion(roomId, newQuestion.getText());
+        int rowsChanged = questionRepository.createQuestion(roomId, newQuestion.getText(), user.getId());
 
         // Check whether the question was successfully created and log the result
         if (rowsChanged == 0) {
@@ -246,7 +261,8 @@ public class QuestionController {
                 authorization,
                 request.getRemoteAddr(),
                 new All(
-                        new IsModerator()
+                        new IsModerator(),
+                        new NotBanned()
                 ))) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }

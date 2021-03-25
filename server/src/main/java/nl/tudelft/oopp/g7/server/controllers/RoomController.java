@@ -1,9 +1,12 @@
 package nl.tudelft.oopp.g7.server.controllers;
 
 import nl.tudelft.oopp.g7.common.*;
+import nl.tudelft.oopp.g7.server.repositories.QuestionRepository;
 import nl.tudelft.oopp.g7.server.repositories.RoomRepository;
 import nl.tudelft.oopp.g7.server.repositories.UserRepository;
 import nl.tudelft.oopp.g7.server.utility.RandomString;
+import nl.tudelft.oopp.g7.server.utility.authorization.AuthorizationHelper;
+import nl.tudelft.oopp.g7.server.utility.authorization.conditions.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -20,12 +23,14 @@ public class RoomController {
 
     private final RoomRepository roomRepository;
     private final UserRepository userRepository;
+    private final AuthorizationHelper authorizationHelper;
 
     private static final int GENERATED_PASSWORD_LENGTH = 16;
 
-    public RoomController(RoomRepository roomRepository, UserRepository userRepository) {
+    public RoomController(RoomRepository roomRepository, UserRepository userRepository, AuthorizationHelper authorizationHelper) {
         this.roomRepository = roomRepository;
         this.userRepository = userRepository;
+        this.authorizationHelper = authorizationHelper;
     }
 
     @GetMapping("/coffee")
@@ -107,11 +112,15 @@ public class RoomController {
      *      of BAD_REQUEST (400), UNAUTHORIZED (401), NOT_FOUND (404), or OK (200).
      */
     @PostMapping("/{room_id}/join")
-    public ResponseEntity<RoomJoinInfo> joinRoom(@PathVariable("room_id") String roomId, @RequestBody RoomJoinRequest roomJoinRequest, HttpServletRequest request) {
+    public ResponseEntity<RoomJoinInfo> joinRoom(@PathVariable("room_id") String roomId,
+                                                 @RequestBody RoomJoinRequest roomJoinRequest,
+                                                 @RequestHeader("Authorization") String authorization,
+                                                 HttpServletRequest request) {
+
         // Check if the room id field is set.
         if (roomId == null || roomId.equals("")) {
             // Inform that client that they did something wrong.
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         Room room = roomRepository.getRoomById(roomId);
@@ -123,28 +132,32 @@ public class RoomController {
         }
 
         if (room.getModeratorPassword().equals(roomJoinRequest.getPassword())) {
-            User user = new User(userRepository.createNewId(), roomId, roomJoinRequest.getNickname(), request.getRemoteAddr(), "", UserRole.MODERATOR);
+            User user = new User(userRepository.createNewId(), roomId, roomJoinRequest.getNickname(), request.getRemoteAddr(), authorizationHelper.createAuthorizationToken(), UserRole.MODERATOR);
+            userRepository.storeUser(user);
 
             return new ResponseEntity<>(
                     new RoomJoinInfo(
                             room.getId(),
+                            user.getId(),
                             room.getName(),
                             user.getAuthorizationToken(),
                             user.getNickname(),
-                            UserRole.MODERATOR),
+                            user.getRole()),
                     HttpStatus.OK);
         }
 
         if (room.getStudentPassword().equals(roomJoinRequest.getPassword())) {
-            User user = new User(userRepository.createNewId(), roomId, roomJoinRequest.getNickname(), request.getRemoteAddr(), "", UserRole.STUDENT);
+            User user = new User(userRepository.createNewId(), roomId, roomJoinRequest.getNickname(), request.getRemoteAddr(), authorizationHelper.createAuthorizationToken(), UserRole.STUDENT);
+            userRepository.storeUser(user);
 
             return new ResponseEntity<>(
                     new RoomJoinInfo(
                             room.getId(),
+                            user.getId(),
                             room.getName(),
                             user.getAuthorizationToken(),
                             user.getNickname(),
-                            UserRole.STUDENT),
+                            user.getRole()),
                     HttpStatus.OK);
         }
 
@@ -159,7 +172,23 @@ public class RoomController {
      *      NOT_FOUND (404), INTERNAL_SERVER_ERROR (500) or OK (200)
      */
     @PostMapping("/{room_id}/speed")
-    public ResponseEntity<Void> setRoomSpeed(@PathVariable("room_id") String roomId, @RequestBody SpeedAlterRequest speedAlterRequest) {
+    public ResponseEntity<Void> setRoomSpeed(@PathVariable("room_id") String roomId,
+                                             @RequestBody SpeedAlterRequest speedAlterRequest,
+                                             @RequestHeader("Authorization") String authorization,
+                                             HttpServletRequest request) {
+
+        if (!authorizationHelper.isAuthorized(
+                roomId,
+                authorization,
+                request.getRemoteAddr(),
+                new All(
+                        new NotBanned(),
+                        new IsStudent(),
+                        new BelongsToRoom()
+                )
+        )) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
 
         if (speedAlterRequest.getSpeed() != -1 && speedAlterRequest.getSpeed() != 1) {
             logger.debug("Invalid speed request received with value \"{}\" for room \"{}\"", speedAlterRequest.getSpeed(), roomId);
@@ -185,7 +214,22 @@ public class RoomController {
      *      or OK (200)
      */
     @GetMapping("/{room_id}/speed")
-    public ResponseEntity<SpeedAlterRequest> getRoomSpeed(@PathVariable("room_id") String roomId) {
+    public ResponseEntity<SpeedAlterRequest> getRoomSpeed(@PathVariable("room_id") String roomId,
+                                                          @RequestHeader("Authorization") String authorization,
+                                                          HttpServletRequest request) {
+
+        if (!authorizationHelper.isAuthorized(
+                roomId,
+                authorization,
+                request.getRemoteAddr(),
+                new All(
+                        new NotBanned(),
+                        new IsModerator()
+                )
+        )) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
         SpeedAlterRequest response = roomRepository.getSpeedById(roomId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
