@@ -83,6 +83,7 @@ public class RoomRepository {
      * @return The amount of rows that where changed.
      */
     public int createRoom(Room room) {
+        //set everything in a prepared statement and run it
         return jdbcTemplate.update(QUERY_CREATE_ROOM,
             (ps) -> {
                 // Set the id of the room in the PreparedStatement.
