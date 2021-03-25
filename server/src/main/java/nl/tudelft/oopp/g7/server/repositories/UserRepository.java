@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.g7.server.repositories;
 
 import nl.tudelft.oopp.g7.common.Question;
+import nl.tudelft.oopp.g7.common.User;
 import nl.tudelft.oopp.g7.common.UserInfo;
 import nl.tudelft.oopp.g7.server.utility.RandomString;
 import org.slf4j.Logger;
@@ -77,7 +78,7 @@ public class UserRepository {
                 });
     }
 
-    public UserInfo getUserById(String userId) {
+    public UserInfo getUserInfoById(String userId) {
         logger.debug("Retrieving user with id: {} from the database", userId);
         return jdbcTemplate.query(QUERY_SELECT_USER_BY_ID,
                 (ps) -> {
@@ -88,6 +89,20 @@ public class UserRepository {
                 // Send the ResultSet to the UserInfo class to create a UserInfo instance from it.
                 (rs) -> {
                     return UserInfo.fromResultSet(rs, false);
+                });
+    }
+
+    public User getUserById(String userId) {
+        logger.debug("Retrieving user with id: {} from the database", userId);
+        return jdbcTemplate.query(QUERY_SELECT_USER_BY_ID,
+                (ps) -> {
+                    // Set the first variable in the PreparedStatement to the id of the user being requested.
+                    ps.setString(1, userId);
+                },
+
+                // Send the ResultSet to the UserInfo class to create a UserInfo instance from it.
+                (rs) -> {
+                    return User.fromResultSet(rs, false);
                 });
     }
 

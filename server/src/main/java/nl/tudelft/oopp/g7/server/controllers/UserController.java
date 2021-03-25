@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.g7.server.controllers;
 
+import nl.tudelft.oopp.g7.common.BanReason;
 import nl.tudelft.oopp.g7.common.User;
 import nl.tudelft.oopp.g7.common.UserInfo;
 import nl.tudelft.oopp.g7.server.repositories.BanRepository;
@@ -16,8 +17,9 @@ import java.util.List;
 @RestController()
 @RequestMapping("/api/v1/room/{room_id}/user")
 public class UserController {
-
     Logger logger = LoggerFactory.getLogger(RoomController.class);
+
+    private static final String DEFAULT_BAN_REASON = "You have been banned from this room!";
 
     private final UserRepository userRepository;
     private final BanRepository banRepository;
@@ -29,11 +31,11 @@ public class UserController {
 
 
     @GetMapping("/{user_id}")
-    public ResponseEntity<UserInfo> getUserById(@PathVariable("user_id") String userId) {
+    public ResponseEntity<UserInfo> getUserInfoById(@PathVariable("user_id") String userId) {
         logger.trace("getUserById called");
         //TODO(Authentication)
 
-        UserInfo userInfo = userRepository.getUserById(userId);
+        UserInfo userInfo = userRepository.getUserInfoById(userId);
 
         if (userInfo == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -62,14 +64,27 @@ public class UserController {
 
 
     @DeleteMapping("/{user_id}")
-    public ResponseEntity<Void> banUserById(@PathVariable("user_id") String userId) {
+    public ResponseEntity<Void> banUserById(@PathVariable("room_id") String roomId, @PathVariable("user_id") String userId, @RequestBody BanReason reason) {
         logger.trace("banUserById called");
         //TODO(Authentication)
+
+        User user = userRepository.getUserById(userId);
+
+        if (reason.getReason() == null || reason.getReason().equalsIgnoreCase("")) {
+            reason.setReason(DEFAULT_BAN_REASON);
+        }
 
         if(userId == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        int linesChanged = banRepository.banUser(roomId, user.getIp(), reason.getReason());
+
+        if (linesChanged == 1) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
 }

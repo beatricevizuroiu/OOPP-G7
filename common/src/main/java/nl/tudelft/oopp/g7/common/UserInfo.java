@@ -16,9 +16,9 @@ public class UserInfo {
     private UserRole userRole;
 
     /**
-     * Create a {@link Room} object from a {@link ResultSet}.
-     * @param rs The result to create the {@link Room} from.
-     * @return A new {@link Room} if the result set contained the needed information. Null otherwise.
+     * Create a {@link UserInfo} object from a {@link ResultSet}.
+     * @param rs The result to create the {@link UserInfo} from.
+     * @return A new {@link UserInfo} if the result set contained the needed information. Null otherwise.
      * @throws SQLException Thrown if something goes wrong getting the information out of the {@link ResultSet}.
      */
     public static UserInfo fromResultSet(ResultSet rs, boolean noNext) throws SQLException {
