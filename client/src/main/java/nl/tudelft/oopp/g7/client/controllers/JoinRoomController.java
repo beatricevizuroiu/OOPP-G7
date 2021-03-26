@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.communication.RoomServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.LocalData;
+import nl.tudelft.oopp.g7.client.logic.JoinRoomLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.RoomJoinRequest;
 import nl.tudelft.oopp.g7.common.UserRole;
@@ -52,31 +53,10 @@ public class JoinRoomController {
      */
     public void buttonClicked() {
 
-        // show confirmation type pop-up with what you entered as text
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-
-        // title of pop-up
-        alert.setTitle("Join Room");
-        alert.setHeaderText(null);
-
-        // body of pop-up with what the user entered
-        if(nickname.getText() == null || nickname.getText().equals("")){
-            alert.setContentText("You are joining room: " + roomId.getText());
-        }else {
-            alert.setContentText("You are joining room: " + roomId.getText() + " as: " + nickname.getText());
-        }
-
-        // set types of buttons for the pop-up
-        ButtonType okButton = new ButtonType ("OK");
-        ButtonType cancelButton = new ButtonType ("Cancel");
-
-        alert.getButtonTypes().setAll(okButton, cancelButton);
-
-        // wait for the alert to appear
-        alert.showAndWait();
+        boolean isConfirmed = JoinRoomLogic.joinRoomConfirmation(nickname, roomId);
 
         // if the user presses OK, the go to Student View
-        if (alert.getResult() == okButton) {
+        if (isConfirmed) {
 
             // Store all the entered information
             LocalData.setNickname(nickname.getText());
@@ -100,31 +80,10 @@ public class JoinRoomController {
      */
     public void buttonClickedDark() {
 
-        // show confirmation type pop-up with what you entered as text
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-
-        // title of pop-up
-        alert.setTitle("Join Room");
-        alert.setHeaderText(null);
-
-        // body of pop-up with what the user entered
-        if(nickname.getText() == null || nickname.getText().equals("")){
-            alert.setContentText("You are joining room: " + roomId.getText());
-        }else {
-            alert.setContentText("You are joining room: " + roomId.getText() + " as: " + nickname.getText());
-        }
-
-        // set types of buttons for the pop-up
-        ButtonType okButton = new ButtonType ("OK");
-        ButtonType cancelButton = new ButtonType ("Cancel");
-
-        alert.getButtonTypes().setAll(okButton, cancelButton);
-
-        // wait for the alert to appear
-        alert.showAndWait();
+        boolean isConfirmed = JoinRoomLogic.joinRoomConfirmation(nickname, roomId);
 
         // if the user presses OK, the go to Student View
-        if (alert.getResult() == okButton) {
+        if (isConfirmed) {
 
             // Store all the entered information
             LocalData.setNickname(nickname.getText());
