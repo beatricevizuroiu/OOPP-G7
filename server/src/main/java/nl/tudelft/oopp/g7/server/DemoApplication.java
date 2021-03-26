@@ -1,9 +1,6 @@
 package nl.tudelft.oopp.g7.server;
 
-import nl.tudelft.oopp.g7.server.repositories.BanRepository;
-import nl.tudelft.oopp.g7.server.repositories.QuestionRepository;
-import nl.tudelft.oopp.g7.server.repositories.RoomRepository;
-import nl.tudelft.oopp.g7.server.repositories.UserRepository;
+import nl.tudelft.oopp.g7.server.repositories.*;
 import org.hibernate.sql.ordering.antlr.OrderingSpecification;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -33,10 +30,22 @@ public class DemoApplication {
         return new BanRepository(jdbcTemplate);
     }
 
+    @Bean("speedRepository")
+    @DependsOn({"userRepository", "roomRepository"})
+    public SpeedRepository speedRepository(JdbcTemplate jdbcTemplate) {
+        return new SpeedRepository(jdbcTemplate);
+    }
+
     @Bean("questionRepository")
     @DependsOn({"userRepository", "roomRepository"})
     public QuestionRepository questionRepository(JdbcTemplate jdbcTemplate) {
         return new QuestionRepository(jdbcTemplate);
+    }
+
+    @Bean("voteRepository")
+    @DependsOn({"userRepository", "roomRepository", "questionRepository"})
+    public UpvoteRepository upvoteRepository(JdbcTemplate jdbcTemplate) {
+        return new UpvoteRepository(jdbcTemplate);
     }
 
     public static void main(String[] args) {

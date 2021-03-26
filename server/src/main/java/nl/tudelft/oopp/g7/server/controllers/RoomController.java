@@ -3,6 +3,7 @@ package nl.tudelft.oopp.g7.server.controllers;
 import nl.tudelft.oopp.g7.common.*;
 import nl.tudelft.oopp.g7.server.repositories.QuestionRepository;
 import nl.tudelft.oopp.g7.server.repositories.RoomRepository;
+import nl.tudelft.oopp.g7.server.repositories.SpeedRepository;
 import nl.tudelft.oopp.g7.server.repositories.UserRepository;
 import nl.tudelft.oopp.g7.server.utility.RandomString;
 import nl.tudelft.oopp.g7.server.utility.authorization.AuthorizationHelper;
@@ -23,13 +24,15 @@ public class RoomController {
 
     private final RoomRepository roomRepository;
     private final UserRepository userRepository;
+    private final SpeedRepository speedRepository;
     private final AuthorizationHelper authorizationHelper;
 
     private static final int GENERATED_PASSWORD_LENGTH = 16;
 
-    public RoomController(RoomRepository roomRepository, UserRepository userRepository, AuthorizationHelper authorizationHelper) {
+    public RoomController(RoomRepository roomRepository, UserRepository userRepository, SpeedRepository speedRepository, AuthorizationHelper authorizationHelper) {
         this.roomRepository = roomRepository;
         this.userRepository = userRepository;
+        this.speedRepository = speedRepository;
         this.authorizationHelper = authorizationHelper;
     }
 
@@ -190,12 +193,18 @@ public class RoomController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        if (speedAlterRequest.getSpeed() != -1 && speedAlterRequest.getSpeed() != 1) {
+        int speed = speedAlterRequest.getSpeed();
+
+        if (speed < -1 || speed > 1) {
             logger.debug("Invalid speed request received with value \"{}\" for room \"{}\"", speedAlterRequest.getSpeed(), roomId);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        int rowsChanged = roomRepository.editSpeedById(roomId, speedAlterRequest);
+        User user = authorizationHelper.getUserFromAuthorizationHeader(authorization);
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        int rowsChanged = speedRepository.setSpeedForUserInRoom(roomId, user.getId(), speed);
 
         // Check if there was any other amount of rows changed then the expected 1.
         if (rowsChanged != 1) {
@@ -206,6 +215,31 @@ public class RoomController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * Endpoint to reset the speed of a room.
+     * @param roomId The id of the room to reset the speed of.
+     * @return A {@link ResponseEntity} containing a {@link SpeedAlterRequest} and a {@link HttpStatus} that is one of
+     *      UNAUTHORIZED (401) or OK (200)
+     */
+    @DeleteMapping("/{room_id}/speed")
+    public ResponseEntity<Void> resetRoomSpeed(@PathVariable("room_id") String roomId,
+                                                          @RequestHeader("Authorization") String authorization,
+                                                          HttpServletRequest request) {
+
+        if (!authorizationHelper.isAuthorized(
+                roomId,
+                authorization,
+                request.getRemoteAddr(),
+                new All(
+                        new IsModerator()
+                )
+        )) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        speedRepository.resetSpeedForRoom(roomId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
     /**
      * Endpoint to get the speed of a room.
      * @param roomId The id of the room to edit the speed of.
@@ -223,14 +257,13 @@ public class RoomController {
                 authorization,
                 request.getRemoteAddr(),
                 new All(
-                        new NotBanned(),
                         new IsModerator()
                 )
         )) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        SpeedAlterRequest response = roomRepository.getSpeedById(roomId);
+        SpeedAlterRequest response = new SpeedAlterRequest(speedRepository.getSpeedForRoom(roomId));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

@@ -4,6 +4,7 @@ import nl.tudelft.oopp.g7.common.BanReason;
 import nl.tudelft.oopp.g7.common.User;
 import nl.tudelft.oopp.g7.common.UserInfo;
 import nl.tudelft.oopp.g7.server.repositories.BanRepository;
+import nl.tudelft.oopp.g7.server.repositories.UpvoteRepository;
 import nl.tudelft.oopp.g7.server.repositories.UserRepository;
 import nl.tudelft.oopp.g7.server.utility.authorization.AuthorizationHelper;
 import nl.tudelft.oopp.g7.server.utility.authorization.conditions.All;
@@ -30,11 +31,13 @@ public class UserController {
     private final UserRepository userRepository;
     private final BanRepository banRepository;
     private final AuthorizationHelper authorizationHelper;
+    private final UpvoteRepository upvoteRepository;
 
-    public UserController(UserRepository userRepository, BanRepository banRepository, AuthorizationHelper authorizationHelper) {
+    public UserController(UserRepository userRepository, BanRepository banRepository, AuthorizationHelper authorizationHelper, UpvoteRepository upvoteRepository) {
         this.userRepository = userRepository;
         this.banRepository = banRepository;
         this.authorizationHelper = authorizationHelper;
+        this.upvoteRepository = upvoteRepository;
     }
 
     @GetMapping("/{user_id}")
@@ -61,9 +64,29 @@ public class UserController {
         }
 
         return new ResponseEntity<>(userInfo, HttpStatus.OK);
-
-
     }
+
+    @GetMapping("/{user_id}/upvotes")
+    public ResponseEntity<List<Integer>> getUpvotesByUser(@PathVariable("room_id") String roomId,
+                                                          @PathVariable("user_id") String userId,
+                                                          @RequestHeader("Authorization") String authorization,
+                                                          HttpServletRequest request) {
+        logger.trace("getUpvotesByUser called");
+
+        if (!authorizationHelper.isAuthorized(
+                roomId,
+                authorization,
+                request.getRemoteAddr(),
+                new All(
+                        new BelongsToRoom()
+                )
+        )) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity<List<Integer>>(upvoteRepository.getUpvotesForUser(roomId,userId), HttpStatus.OK);
+    }
+
 
     @GetMapping("/all")
     public ResponseEntity<List<UserInfo>> getAllUsersInRoom(@PathVariable("room_id") String roomId,

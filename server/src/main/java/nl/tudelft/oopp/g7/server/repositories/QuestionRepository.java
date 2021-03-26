@@ -21,18 +21,22 @@ public class QuestionRepository {
             + "text text not NULL,"
             + "answer text DEFAULT '' not NULL,"
             + "postedAt timestamp with time zone DEFAULT NOW(),"
-            + "upvotes int not NULL DEFAULT 0,"
             + "answered boolean DEFAULT FALSE not NUll,"
             + "edited boolean DEFAULT FALSE not NULL,"
-            + "FOREIGN KEY (roomID) REFERENCES rooms(id),"
-            + "FOREIGN KEY (userID) REFERENCES users(id));";
+            + "FOREIGN KEY (roomID) REFERENCES rooms(id) ON DELETE CASCADE,"
+            + "FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE);";
 
-    private static final String QUERY_SELECT_QUESTION_BY_ID = "SELECT * FROM questions WHERE id=? AND roomID=?;";
-    private static final String QUERY_SELECT_ALL_QUESTIONS = "SELECT * FROM questions WHERE roomID=?;";
+    private static final String QUERY_SELECT_QUESTION_BY_ID = "SELECT q.id, q.userID, q.roomID, q.text, q.answer, q.postedAt, q.answered, q.edited,\n" +
+            "       (SELECT COUNT(questionID) from upvotes WHERE questionID = q.id) as upvotes\n" +
+            "FROM questions as q\n" +
+            "WHERE q.id=? AND q.roomID=?;";
+    private static final String QUERY_SELECT_ALL_QUESTIONS = "SELECT q.id, q.userID, q.roomID, q.text, q.answer, q.postedAt, q.answered, q.edited,\n" +
+            "       (SELECT COUNT(questionID) from upvotes WHERE questionID = q.id) as upvotes\n" +
+            "FROM questions as q\n" +
+            "WHERE q.roomID=?;";
     private static final String QUERY_CREATE_QUESTION = "INSERT INTO questions (userID, roomID, text) VALUES (?, ?, ?);";
     private static final String QUERY_ANSWER_QUESTION = "UPDATE questions SET answer=?, answered=true WHERE id=? AND roomID=?;";
     private static final String QUERY_EDIT_QUESTION = "UPDATE questions SET text=?, edited=true WHERE id=? AND roomID=?;";
-    private static final String QUERY_UPVOTE_QUESTION = "UPDATE questions SET upvotes = upvotes + 1 WHERE id=? AND roomID=?;";
     private static final String QUERY_DELETE_QUESTION = "DELETE FROM questions WHERE id=? AND roomID=?;";
 
     /**
@@ -92,24 +96,6 @@ public class QuestionRepository {
                 }
                 // Return the list of questions.
                 return questionList;
-            });
-    }
-
-    /**
-     * Add an upvote to a question in the database.
-     * @param roomId The id of the room the question is in.
-     * @param id The id of the question to upvote.
-     * @return The amount of rows changed by the query.
-     */
-    public int upvoteQuestionWithId(String roomId, int id) {
-        logger.debug("Adding an upvote to question with id: {}", id);
-        return jdbcTemplate.update(QUERY_UPVOTE_QUESTION,
-            (ps) -> {
-                // Set the first variable in the PreparedStatement to the question id.
-                ps.setInt(1, id);
-
-                // Set the second variable in the PreparedStatement to the room id.
-                ps.setString(2, roomId);
             });
     }
 

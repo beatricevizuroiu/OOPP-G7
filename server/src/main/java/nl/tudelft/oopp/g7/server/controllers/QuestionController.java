@@ -4,22 +4,17 @@ import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
 import nl.tudelft.oopp.g7.common.User;
 import nl.tudelft.oopp.g7.server.repositories.QuestionRepository;
+import nl.tudelft.oopp.g7.server.repositories.UpvoteRepository;
 import nl.tudelft.oopp.g7.server.repositories.UserRepository;
 import nl.tudelft.oopp.g7.server.utility.authorization.AuthorizationHelper;
 import nl.tudelft.oopp.g7.server.utility.authorization.conditions.*;
-import org.aspectj.weaver.ast.Or;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.DependsOn;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.net.http.HttpResponse;
 import java.util.List;
 
 
@@ -32,14 +27,16 @@ public class QuestionController {
     private final QuestionRepository questionRepository;
     private final UserRepository userRepository;
     private final AuthorizationHelper authorizationHelper;
+    private final UpvoteRepository upvoteRepository;
 
     /**
      * Primary constructor for the question controller.
      */
-    public QuestionController(QuestionRepository questionRepository, UserRepository userRepository, AuthorizationHelper authorizationHelper) {
+    public QuestionController(QuestionRepository questionRepository, UserRepository userRepository, AuthorizationHelper authorizationHelper, UpvoteRepository upvoteRepository) {
         this.questionRepository = questionRepository;
-        this.userRepository = userRepository;
         this.authorizationHelper = authorizationHelper;
+        this.userRepository = userRepository;
+        this.upvoteRepository = upvoteRepository;
 
         // Log QuestionController construction
         logger.trace("Constructed QuestionController");
@@ -108,7 +105,7 @@ public class QuestionController {
      * @return A {@link ResponseEntity} containing NULL and a status code of 200 (OK) if a question was upvoted and 404
      *       (NOT_FOUND) if no question was upvoted.
      */
-    @PutMapping("/{id}/upvote")
+    @PostMapping("/{id}/upvote")
     public ResponseEntity<Void> upvoteQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
         if (!authorizationHelper.isAuthorized(
                 roomId,
@@ -122,8 +119,48 @@ public class QuestionController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
+        User user = authorizationHelper.getUserFromAuthorizationHeader(authorization);
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
         // Try to increase the upvote number by 1 and store the number of effected rows.
-        int rowsChanged = questionRepository.upvoteQuestionWithId(roomId, id);
+        int rowsChanged = upvoteRepository.addUpvote(roomId, user.getId(), id);
+
+        if (rowsChanged == 1) {
+            // If there was return http status code 200 (OK)
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        }
+
+        // Otherwise return http status code 404 (NOT_FOUND)
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
+    /**
+     * Endpoint for removing an upvote from a question.
+     * @param id The id of the question that will be un-upvoted.
+     * @return A {@link ResponseEntity} containing NULL and a status code of 200 (OK) if a question was upvoted and 404
+     *       (NOT_FOUND) if no question was upvoted.
+     */
+    @DeleteMapping("/{id}/upvote")
+    public ResponseEntity<Void> removeUpvoteQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
+        if (!authorizationHelper.isAuthorized(
+                roomId,
+                authorization,
+                request.getRemoteAddr(),
+                new All(
+                        new BelongsToRoom(),
+                        new IsStudent(),
+                        new NotBanned()
+                ))) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        User user = authorizationHelper.getUserFromAuthorizationHeader(authorization);
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        // Try to increase the upvote number by 1 and store the number of effected rows.
+        int rowsChanged = upvoteRepository.removeUpvote(roomId, user.getId(), id);
 
         if (rowsChanged == 1) {
             // If there was return http status code 200 (OK)
@@ -141,7 +178,7 @@ public class QuestionController {
      * @return A {@link ResponseEntity} containing NULL and a status code of 200 (OK) if a question was edited and 404
      *       (NOT_FOUND) if no question was edited.
      */
-    @PutMapping("/{id}")
+    @PostMapping("/{id}")
     public ResponseEntity<Void> editQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestBody QuestionText question, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
         if (!authorizationHelper.isAuthorized(
                 roomId,

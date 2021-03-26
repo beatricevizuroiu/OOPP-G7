@@ -13,7 +13,7 @@ public class BanRepository {
             + "ip varchar(39) not NULL,"
             + "roomID varchar(36) not NULL,"
             + "reason text DEFAULT '' not NULL,"
-            + "FOREIGN KEY (roomID) REFERENCES rooms(id),"
+            + "FOREIGN KEY (roomID) REFERENCES rooms(id) ON DELETE CASCADE,"
             + "PRIMARY KEY (ip, roomID));";
 
     private static final String QUERY_COUNT_USER_BY_IP = "SELECT COUNT(ip) FROM bannedUsers WHERE ip=? AND roomID=?;";

@@ -26,7 +26,7 @@ public class UserRepository {
             + "ip varchar(39) not NULL,"
             + "userRole varchar(32) not NULL,"
             + "token varchar(128) not NULL,"
-            + "FOREIGN KEY (roomID) REFERENCES rooms(id));";
+            + "FOREIGN KEY (roomID) REFERENCES rooms(id) ON DELETE CASCADE);";
 
     private static final String QUERY_COUNT_USERS_WITH_ID = "SELECT count(id) FROM users WHERE id=?";
     private static final String QUERY_STORE_USER = "INSERT INTO users (id, roomID, nickname, ip, userRole, token) VALUES (?,?,?,?,?,?);";
