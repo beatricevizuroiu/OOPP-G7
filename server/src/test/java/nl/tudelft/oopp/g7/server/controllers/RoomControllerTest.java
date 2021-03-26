@@ -1,10 +1,7 @@
 package nl.tudelft.oopp.g7.server.controllers;
 
 import nl.tudelft.oopp.g7.common.*;
-import nl.tudelft.oopp.g7.server.repositories.BanRepository;
-import nl.tudelft.oopp.g7.server.repositories.QuestionRepository;
-import nl.tudelft.oopp.g7.server.repositories.RoomRepository;
-import nl.tudelft.oopp.g7.server.repositories.UserRepository;
+import nl.tudelft.oopp.g7.server.repositories.*;
 import nl.tudelft.oopp.g7.server.utility.authorization.AuthorizationHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -67,16 +64,18 @@ public class RoomControllerTest {
         UserRepository userRepository = new UserRepository(jdbcTemplate);
         BanRepository banRepository = new BanRepository(jdbcTemplate);
         RoomRepository roomRepository = new RoomRepository(jdbcTemplate);
+        SpeedRepository speedRepository = new SpeedRepository(jdbcTemplate);
 
         // Create our questionController with our in memory datasource.
         roomController = new RoomController(
                 roomRepository,
                 userRepository,
+                speedRepository,
                 new AuthorizationHelper(
                         userRepository,
                         banRepository,
-                        questionRepository
-                ));
+                        questionRepository)
+                );
     }
 
     @Test

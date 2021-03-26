@@ -4,6 +4,7 @@ import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
 import nl.tudelft.oopp.g7.server.repositories.BanRepository;
 import nl.tudelft.oopp.g7.server.repositories.QuestionRepository;
+import nl.tudelft.oopp.g7.server.repositories.UpvoteRepository;
 import nl.tudelft.oopp.g7.server.repositories.UserRepository;
 import nl.tudelft.oopp.g7.server.utility.authorization.AuthorizationHelper;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +22,8 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+//TODO: Fix SQL!
 
 class QuestionControllerTest {
 
@@ -52,6 +55,7 @@ class QuestionControllerTest {
         QuestionRepository questionRepository = new QuestionRepository(jdbcTemplate);
         UserRepository userRepository = new UserRepository(jdbcTemplate);
         BanRepository banRepository = new BanRepository(jdbcTemplate);
+        UpvoteRepository upvoteRepository = new UpvoteRepository(jdbcTemplate);
 
         // Create our questionController with our in memory datasource.
         questionController = new QuestionController(
@@ -60,8 +64,8 @@ class QuestionControllerTest {
                 new AuthorizationHelper(
                         userRepository,
                         banRepository,
-                        questionRepository
-                ));
+                        questionRepository),
+                upvoteRepository);
 
         request_stud = new MockHttpServletRequest();
         request_stud.setRemoteAddr("127.10.0.1");

@@ -5,6 +5,7 @@ import nl.tudelft.oopp.g7.common.UserInfo;
 import nl.tudelft.oopp.g7.common.UserRole;
 import nl.tudelft.oopp.g7.server.repositories.BanRepository;
 import nl.tudelft.oopp.g7.server.repositories.QuestionRepository;
+import nl.tudelft.oopp.g7.server.repositories.UpvoteRepository;
 import nl.tudelft.oopp.g7.server.repositories.UserRepository;
 import nl.tudelft.oopp.g7.server.utility.authorization.AuthorizationHelper;
 import org.junit.jupiter.api.BeforeEach;
@@ -60,6 +61,7 @@ class UserControllerTest {
         QuestionRepository questionRepository = new QuestionRepository(jdbcTemplate);
         UserRepository userRepository = new UserRepository(jdbcTemplate);
         BanRepository banRepository = new BanRepository(jdbcTemplate);
+        UpvoteRepository upvoteRepository = new UpvoteRepository(jdbcTemplate);
 
         // Create our questionController with our in memory datasource.
         userController = new UserController(
@@ -68,8 +70,8 @@ class UserControllerTest {
                 new AuthorizationHelper(
                         userRepository,
                         banRepository,
-                        questionRepository
-                ));
+                        questionRepository),
+                upvoteRepository);
 
         request_stud = new MockHttpServletRequest();
         request_stud.setRemoteAddr("127.10.0.1");
