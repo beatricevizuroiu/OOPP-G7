@@ -101,6 +101,13 @@ http status code 404 (NOT_FOUND).
 }
 ```
 
+### DELETE `/room/{room_id}/speed`
+Reset the current lecturer speed in the room with {room_id}. This method will respond with http status code 200 (OK).
+
+**Examples:**   
+`DELETE /api/v1/room/8fH0vBsgAiQxQ4yiTq5uFI76kEhUv7fK9rKQ/speed`  
+`No response`
+
 ## The `/room/{room_id}/user/` endpoints
 The following endpoints are related to getting userdata and moderating users.
 
@@ -229,16 +236,7 @@ Get information about every question known to the system.
 ]
 ```
 
-## PUT `/room/{room_id}/questions/{id}/upvote`
-Upvote the question with {id}.
-
-**Example:**
-```http request
-PUT /api/v1/room/{room_id}/question/1/upvote
-```
-`No response`
-
-## PUT `/questions/{id}`
+## POST `/questions/{id}`
 Edit the question with {id}.
 
 **Example:**
@@ -291,3 +289,20 @@ POST /api/v1/room/{room_id}/question/3/answer
 }
 ```
 `No response`
+
+## POST `/room/{room_id}/questions/{id}/upvote`
+Upvote the question with {id}.
+
+**Example:**
+```http request
+PUT /api/v1/room/{room_id}/question/1/upvote
+```
+`No response`  
+
+## DELETE `/room/{room_id}/questions/{id}/upvote`   
+Remove an upvote to the question with {id}.
+  
+  **Example:**  
+
+  `DELETE /api/vi/room/8fH0vBsgAiQxQ4yiTq5uFI76kEhUv7fK9rKQ/question/1/upvote`  
+  `No response.`
