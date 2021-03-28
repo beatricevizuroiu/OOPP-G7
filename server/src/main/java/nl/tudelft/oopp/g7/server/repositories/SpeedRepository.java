@@ -45,11 +45,11 @@ public class SpeedRepository {
 
         //noinspection ConstantConditions
         return jdbcTemplate.query(QUERY_SELECT_SPEED_FOR_ROOM,
-                (ps) -> ps.setString(1, roomId),
-                (rs) -> {
-                    rs.next();
-                    return rs.getInt(1);
-                });
+            (ps) -> ps.setString(1, roomId),
+            (rs) -> {
+                rs.next();
+                return rs.getInt(1);
+            });
     }
 
     /**
@@ -61,9 +61,9 @@ public class SpeedRepository {
         logger.debug("Resetting the speed of room with id: {}", roomId);
 
         return jdbcTemplate.update(QUERY_DELETE_SPEED_FOR_ROOM,
-                (ps) -> {
-                    ps.setString(1, roomId);
-                });
+            (ps) -> {
+                ps.setString(1, roomId);
+            });
     }
 
     /**
@@ -77,16 +77,16 @@ public class SpeedRepository {
         logger.debug("Setting the speed for user with id: {}, in room with id: {}, to {}", userId, roomId, speed);
 
         jdbcTemplate.update(QUERY_DELETE_SPEED_FOR_ROOM_FROM_USER,
-                (ps) -> {
-                    ps.setString(1, userId);
-                    ps.setString(2, roomId);
-                });
+            (ps) -> {
+                ps.setString(1, userId);
+                ps.setString(2, roomId);
+            });
 
         return jdbcTemplate.update(QUERY_INSERT_SPEED_FOR_ROOM,
-                (ps) -> {
-                    ps.setString(1, userId);
-                    ps.setString(2, roomId);
-                    ps.setInt(3, speed);
-                });
+            (ps) -> {
+                ps.setString(1, userId);
+                ps.setString(2, roomId);
+                ps.setInt(3, speed);
+            });
     }
 }

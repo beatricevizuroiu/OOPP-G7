@@ -76,11 +76,11 @@ public class UserRepository {
         // Stop intellij from complaining about the query statement.
         //noinspection ConstantConditions
         return jdbcTemplate.query(QUERY_COUNT_USERS_WITH_ID,
-                (ps) -> ps.setString(1, userId),
-                (rs) -> {
-                    rs.next();
-                    return rs.getInt(1);
-                });
+            (ps) -> ps.setString(1, userId),
+            (rs) -> {
+                rs.next();
+                return rs.getInt(1);
+            });
     }
 
     /**
@@ -91,15 +91,15 @@ public class UserRepository {
     public UserInfo getUserInfoById(String userId) {
         logger.debug("Retrieving user with id: {} from the database", userId);
         return jdbcTemplate.query(QUERY_SELECT_USER_BY_ID,
-                (ps) -> {
-                    // Set the first variable in the PreparedStatement to the id of the user being requested.
-                    ps.setString(1, userId);
-                },
+            (ps) -> {
+                // Set the first variable in the PreparedStatement to the id of the user being requested.
+                ps.setString(1, userId);
+            },
 
-                // Send the ResultSet to the UserInfo class to create a UserInfo instance from it.
-                (rs) -> {
-                    return UserInfo.fromResultSet(rs, false);
-                });
+            // Send the ResultSet to the UserInfo class to create a UserInfo instance from it.
+            (rs) -> {
+                return UserInfo.fromResultSet(rs, false);
+            });
     }
 
     /**
@@ -110,15 +110,15 @@ public class UserRepository {
     public User getUserById(String userId) {
         logger.debug("Retrieving user with id: {} from the database", userId);
         return jdbcTemplate.query(QUERY_SELECT_USER_BY_ID,
-                (ps) -> {
-                    // Set the first variable in the PreparedStatement to the id of the user being requested.
-                    ps.setString(1, userId);
-                },
+            (ps) -> {
+                // Set the first variable in the PreparedStatement to the id of the user being requested.
+                ps.setString(1, userId);
+            },
 
-                // Send the ResultSet to the UserInfo class to create a UserInfo instance from it.
-                (rs) -> {
-                    return User.fromResultSet(rs, false);
-                });
+            // Send the ResultSet to the UserInfo class to create a UserInfo instance from it.
+            (rs) -> {
+                return User.fromResultSet(rs, false);
+            });
     }
 
     /**
@@ -129,21 +129,21 @@ public class UserRepository {
     public List<UserInfo> getAllUsersInRoom(String roomId) {
         logger.debug("Retrieving all question in room with id: {}", roomId);
         return jdbcTemplate.query(QUERY_SELECT_ALL_USERS,
-                (ps) -> {
-                    // Set the first variable in the PreparedStatement to the room id.
-                    ps.setString(1, roomId);
-                },
-                (rs) -> {
-                    // Create a list to hold all questions.
-                    List<UserInfo> userList = new ArrayList<>();
-                    // Loop while the result set has entries.
-                    while (rs.next()) {
-                        // Create a new question from the result set and add it to the list of questions.
-                        userList.add(UserInfo.fromResultSet(rs, true));
-                    }
-                    // Return the list of questions.
-                    return userList;
-                });
+            (ps) -> {
+                // Set the first variable in the PreparedStatement to the room id.
+                ps.setString(1, roomId);
+            },
+            (rs) -> {
+                // Create a list to hold all questions.
+                List<UserInfo> userList = new ArrayList<>();
+                // Loop while the result set has entries.
+                while (rs.next()) {
+                    // Create a new question from the result set and add it to the list of questions.
+                    userList.add(UserInfo.fromResultSet(rs, true));
+                }
+                // Return the list of questions.
+                return userList;
+            });
     }
 
     /**
@@ -154,15 +154,15 @@ public class UserRepository {
     public User getUserByToken(String token) {
         logger.debug("Retrieving user with token: {} from the database", token);
         return jdbcTemplate.query(QUERY_SELECT_USER_BY_TOKEN,
-                (ps) -> {
-                    // Set the first variable in the PreparedStatement to the id of the user being requested.
-                    ps.setString(1, token);
-                },
+            (ps) -> {
+                // Set the first variable in the PreparedStatement to the id of the user being requested.
+                ps.setString(1, token);
+            },
 
-                // Send the ResultSet to the UserInfo class to create a UserInfo instance from it.
-                (rs) -> {
-                    return User.fromResultSet(rs, false);
-                });
+            // Send the ResultSet to the UserInfo class to create a UserInfo instance from it.
+            (rs) -> {
+                return User.fromResultSet(rs, false);
+            });
     }
 
     /**
@@ -173,19 +173,19 @@ public class UserRepository {
     public int storeUser(User user) {
         logger.debug("Storing user with id: {} from the database", user.getId());
         return jdbcTemplate.update(QUERY_STORE_USER,
-                (ps) -> {
-                    // Set the userID in the PreparedStatement.
-                    ps.setString(1, user.getId());
-                    // Set the roomId of the user in the PreparedStatement.
-                    ps.setString(2, user.getRoomId());
-                    // Set the nickname of the user in the PreparedStatement.
-                    ps.setString(3, user.getNickname());
-                    // Set the ip of the user in the PreparedStatement.
-                    ps.setString(4, user.getIp());
-                    // Set whether or not the user is a moderator in the PreparedStatement.
-                    ps.setString(5, user.getRole().toString());
-                    // Set the authorizationToken of the user in the PreparedStatement.
-                    ps.setString(6, user.getAuthorizationToken());
-                });
+            (ps) -> {
+                // Set the userID in the PreparedStatement.
+                ps.setString(1, user.getId());
+                // Set the roomId of the user in the PreparedStatement.
+                ps.setString(2, user.getRoomId());
+                // Set the nickname of the user in the PreparedStatement.
+                ps.setString(3, user.getNickname());
+                // Set the ip of the user in the PreparedStatement.
+                ps.setString(4, user.getIp());
+                // Set whether or not the user is a moderator in the PreparedStatement.
+                ps.setString(5, user.getRole().toString());
+                // Set the authorizationToken of the user in the PreparedStatement.
+                ps.setString(6, user.getAuthorizationToken());
+            });
     }
 }

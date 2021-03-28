@@ -50,22 +50,22 @@ public class UpvoteRepository {
         logger.debug("Retrieving upvotes from user with id: {} in room with id: {} from the database", userId, roomId);
 
         return jdbcTemplate.query(QUERY_SELECT_UPVOTES_BY_USER_ID,
-                (ps) -> {
-                    // Set the first variable in the PreparedStatement to the id of the room being requested.
-                    ps.setString(1, roomId);
-                    // Set the second variable in the PreparedStatement to the id of the user being requested.
-                    ps.setString(2, userId);
-                },
+            (ps) -> {
+                // Set the first variable in the PreparedStatement to the id of the room being requested.
+                ps.setString(1, roomId);
+                // Set the second variable in the PreparedStatement to the id of the user being requested.
+                ps.setString(2, userId);
+            },
 
                 // Send the ResultSet to the UserInfo class to create a UserInfo instance from it.
-                (rs) -> {
-                    List<Integer> questionIds = new ArrayList<>();
-                    while (rs.next()) {
-                        questionIds.add(rs.getInt("questionID"));
-                    }
+            (rs) -> {
+                List<Integer> questionIds = new ArrayList<>();
+                while (rs.next()) {
+                    questionIds.add(rs.getInt("questionID"));
+                }
 
-                    return questionIds;
-                });
+                return questionIds;
+            });
     }
 
     /**
@@ -79,11 +79,11 @@ public class UpvoteRepository {
         logger.debug("Adding an upvote to question with id: {}, in room with id: {}, for user with id: {}", questionId, roomId, userId);
 
         return jdbcTemplate.update(QUERY_INSERT_UPVOTE,
-                (ps) -> {
-                    ps.setString(1, userId);
-                    ps.setString(2, roomId);
-                    ps.setInt(3, questionId);
-                });
+            (ps) -> {
+                ps.setString(1, userId);
+                ps.setString(2, roomId);
+                ps.setInt(3, questionId);
+            });
     }
 
     /**
@@ -97,10 +97,10 @@ public class UpvoteRepository {
         logger.debug("Removing an upvote to question with id: {}, in room with id: {}, for user with id: {}", questionId, roomId, userId);
 
         return jdbcTemplate.update(QUERY_DELETE_UPVOTE,
-                (ps) -> {
-                    ps.setString(1, userId);
-                    ps.setString(2, roomId);
-                    ps.setInt(3, questionId);
-                });
+            (ps) -> {
+                ps.setString(1, userId);
+                ps.setString(2, roomId);
+                ps.setInt(3, questionId);
+            });
     }
 }

@@ -74,11 +74,11 @@ public class RoomRepository {
         // Stop intellij from complaining about the query statement.
         //noinspection ConstantConditions
         return jdbcTemplate.query(QUERY_COUNT_ROOMS_WITH_ID,
-                (ps) -> ps.setString(1, roomId),
-                (rs) -> {
-                    rs.next();
-                    return rs.getInt(1);
-                });
+            (ps) -> ps.setString(1, roomId),
+            (rs) -> {
+                rs.next();
+                return rs.getInt(1);
+            });
     }
 
     /**
@@ -88,22 +88,22 @@ public class RoomRepository {
      */
     public int createRoom(Room room) {
         return jdbcTemplate.update(QUERY_CREATE_ROOM,
-                (ps) -> {
-                    // Set the id of the room in the PreparedStatement.
-                    ps.setString(1, room.getId());
-                    // Set the student password of the room in the PreparedStatement.
-                    ps.setString(2, room.getStudentPassword());
-                    // Set the moderator password of the room in the PreparedStatement.
-                    ps.setString(3, room.getModeratorPassword());
-                    // Set the name of the room in the PreparedStatement.
-                    ps.setString(4, room.getName());
-                    // Set whether or not the room is open in the PreparedStatement.
-                    ps.setBoolean(5, room.isOpen());
-                    // Set whether or not the room is over in the PreparedStatement.
-                    ps.setBoolean(6, room.isOver());
-                    // Set the start date of the room in the PreparedStatement.
-                    ps.setDate(7, new Date(room.getStartDate().getTime()));
-                });
+            (ps) -> {
+                // Set the id of the room in the PreparedStatement.
+                ps.setString(1, room.getId());
+                // Set the student password of the room in the PreparedStatement.
+                ps.setString(2, room.getStudentPassword());
+                // Set the moderator password of the room in the PreparedStatement.
+                ps.setString(3, room.getModeratorPassword());
+                // Set the name of the room in the PreparedStatement.
+                ps.setString(4, room.getName());
+                // Set whether or not the room is open in the PreparedStatement.
+                ps.setBoolean(5, room.isOpen());
+                // Set whether or not the room is over in the PreparedStatement.
+                ps.setBoolean(6, room.isOver());
+                // Set the start date of the room in the PreparedStatement.
+                ps.setDate(7, new Date(room.getStartDate().getTime()));
+            });
     }
 
     /**
@@ -113,6 +113,6 @@ public class RoomRepository {
      */
     public Room getRoomById(String roomId) {
         return jdbcTemplate.query(QUERY_GET_ROOM_WITH_ID,
-                (ps) -> ps.setString(1, roomId), Room::fromResultSet);
+            (ps) -> ps.setString(1, roomId), Room::fromResultSet);
     }
 }

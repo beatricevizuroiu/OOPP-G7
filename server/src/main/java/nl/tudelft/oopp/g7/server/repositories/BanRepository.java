@@ -41,14 +41,14 @@ public class BanRepository {
     public boolean checkBanned(String roomId, String ip) {
         //noinspection ConstantConditions
         int bannedAmount = jdbcTemplate.query(QUERY_COUNT_USER_BY_IP,
-                (ps) -> {
-                    ps.setString(1, ip);
-                    ps.setString(2, roomId);
-                },
-                (rs) -> {
-                    rs.next();
-                    return rs.getInt(1);
-                });
+            (ps) -> {
+                ps.setString(1, ip);
+                ps.setString(2, roomId);
+            },
+            (rs) -> {
+                rs.next();
+                return rs.getInt(1);
+            });
 
         return bannedAmount > 0;
     }
@@ -62,11 +62,11 @@ public class BanRepository {
      */
     public int banUser(String roomId, String ip, String reason) {
         return jdbcTemplate.update(QUERY_BAN_USER,
-                (ps) -> {
-                    ps.setString(1, ip);
-                    ps.setString(2, roomId);
-                    ps.setString(3, reason);
-                });
+            (ps) -> {
+                ps.setString(1, ip);
+                ps.setString(2, roomId);
+                ps.setString(3, reason);
+            });
     }
 
 }
