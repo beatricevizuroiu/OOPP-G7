@@ -120,6 +120,16 @@ class UserControllerTest {
     }
 
     @Test
+    void getUpvotesByUser() {
+        ResponseEntity<List<Integer>> actual = userController.getUpvotesByUser(TEST_ROOM_ID, "RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q", AUTHORIZATION_STUDENT, request_stud);
+
+        List<Integer> expected = List.of(2);
+
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
+        assertEquals(expected, actual.getBody());
+    }
+
+    @Test
     void banUserById() {
         ResponseEntity<Void> actual = userController.banUserById(TEST_ROOM_ID, "RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q", new BanReason("You are banned!"), AUTHORIZATION_MODERATOR, request_mod);
 

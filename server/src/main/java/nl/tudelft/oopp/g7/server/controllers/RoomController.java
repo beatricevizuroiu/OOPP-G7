@@ -231,7 +231,8 @@ public class RoomController {
                 authorization,
                 request.getRemoteAddr(),
                 new All(
-                        new IsModerator()
+                        new IsModerator(),
+                        new NotBanned()
                 )
         )) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

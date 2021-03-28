@@ -38,6 +38,7 @@ class QuestionControllerTest {
     private final String AUTHORIZATION_STUDENT = "Bearer Ftqp8J5Ub8PcUO0qJDXGuAooXZZfzZrZbfb51pCeYWDchzf6wyuwtFNzYeEeacE7k82Xn7y6ue9KWxPmP0eENubnz3PMelle4i9NLKb0RiQiVCDK8xdDjuu1uacyHdTC";
     private final String AUTHORIZATION_MODERATOR = "Bearer Dm1J7ZsghOtyvFnbMEMWrJDlWHteOGx3rr60stqn405f4sdgPqsj8wO9lWcGkrNGCYf5yH9Y1efaMgnD32hUwaSi3Jsi1mdtXUBK2U7C2HdqdAPdnuUqih2ihmjMk5lG";
     private final String AUTHORIZATION_EMPTY = "";
+
     @BeforeEach
     void setUp() throws IOException {
         // Setup an in memory database with H2.
@@ -91,8 +92,8 @@ class QuestionControllerTest {
         // Create the list of question we expect to have.
         List<Question> expected = new ArrayList<>();
         expected.add(new Question(1, "RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q", "This is a question", "", new Date(0), 0, false, false));
-        expected.add(new Question(2, "RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q", "This is a question", "This is an answer to the question", new Date(1614511580000L), 0, true, false));
-        expected.add(new Question(3, "RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q", "This is a question", "", new Date(0), 20, true, false));
+        expected.add(new Question(2, "RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q", "This is a question", "This is an answer to the question", new Date(1614511580000L), 1, true, false));
+        expected.add(new Question(3, "RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q", "This is a question", "", new Date(0), 1, true, false));
 
         // Get all questions from the controller.
         List<Question> actual = questionController.getAllQuestions(TEST_ROOM_ID, AUTHORIZATION_STUDENT, request_stud).getBody();
@@ -106,8 +107,8 @@ class QuestionControllerTest {
         // Create the list of question we expect to have.
         List<Question> expected = new ArrayList<>();
         expected.add(new Question(1, "RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q", "This is a question", "", new Date(0), 0, false, false));
-        expected.add(new Question(2, "RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q", "This is a question", "This is an answer to the question", new Date(1614511580000L), 0, true, false));
-        expected.add(new Question(3, "RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q", "This is a question", "", new Date(0), 21, true, false));
+        expected.add(new Question(2, "RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q", "This is a question", "This is an answer to the question", new Date(1614511580000L), 1, true, false));
+        expected.add(new Question(3, "RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q", "This is a question", "", new Date(0), 2, true, false));
 
         // Upvote the question with id 3.
         questionController.upvoteQuestion(TEST_ROOM_ID, 3, AUTHORIZATION_STUDENT, request_stud);
@@ -124,8 +125,8 @@ class QuestionControllerTest {
         // Create the list of questions we expect to have.
         List<Question> expected = new ArrayList<>();
         expected.add(new Question(1, "RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q", "This is a question", "", new Date(0), 0, false, false));
-        expected.add(new Question(2, "RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q", "This is a question", "This is an answer to the question", new Date(1614511580000L), 0, true, false));
-        expected.add(new Question(3, "RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q", "This is updated question body.", "", new Date(0), 20, true, true));
+        expected.add(new Question(2, "RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q", "This is a question", "This is an answer to the question", new Date(1614511580000L), 1, true, false));
+        expected.add(new Question(3, "RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q", "This is updated question body.", "", new Date(0), 1, true, true));
 
         // Edit the question with id 3.
         questionController.editQuestion(TEST_ROOM_ID, 3, new QuestionText("This is updated question body."), AUTHORIZATION_STUDENT, request_stud);
@@ -142,7 +143,7 @@ class QuestionControllerTest {
         // Create the list of questions we expect to have.
         List<Question> expected = new ArrayList<>();
         expected.add(new Question(1, "RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q", "This is a question", "", new Date(0), 0, false, false));
-        expected.add(new Question(3, "RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q", "This is a question", "", new Date(0), 20, true, false));
+        expected.add(new Question(3, "RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q", "This is a question", "", new Date(0), 1, true, false));
 
         // Delete question with id 2.
         questionController.deleteQuestion(TEST_ROOM_ID, 2, AUTHORIZATION_STUDENT, request_stud);
@@ -185,5 +186,23 @@ class QuestionControllerTest {
 
         // Check if the question is marked as answered.
         assertTrue(actual.isAnswered());
+    }
+
+    @Test
+    void removeUpvoteQuestion() {
+        // Create the list of question we expect to have.
+        List<Question> expected = new ArrayList<>();
+        expected.add(new Question(1, "RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q", "This is a question", "", new Date(0), 0, false, false));
+        expected.add(new Question(2, "RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q", "This is a question", "This is an answer to the question", new Date(1614511580000L), 0, true, false));
+        expected.add(new Question(3, "RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q", "This is a question", "", new Date(0), 1, true, false));
+
+        // Upvote the question with id 3.
+        questionController.removeUpvoteQuestion(TEST_ROOM_ID, 2, AUTHORIZATION_STUDENT, request_stud);
+
+        // Get all questions from the controller.
+        List<Question> actual = questionController.getAllQuestions(TEST_ROOM_ID, AUTHORIZATION_STUDENT, request_stud).getBody();
+
+        // Check if they are the same.
+        assertEquals(expected, actual);
     }
 }

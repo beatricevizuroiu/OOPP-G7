@@ -1,4 +1,6 @@
 -- Drop tables if they exist.
+DROP TABLE IF EXISTS upvotes;
+DROP TABLE IF EXISTS speeds;
 DROP TABLE IF EXISTS questions;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS bannedUsers;
@@ -20,7 +22,7 @@ CREATE TABLE IF NOT EXISTS bannedUsers (
     ip varchar(39) not NULL,
     roomID varchar(36) not NULL,
     reason text DEFAULT '' not NULL,
-    FOREIGN KEY (roomID) REFERENCES rooms(id),
+    FOREIGN KEY (roomID) REFERENCES rooms(id) ON DELETE CASCADE,
     PRIMARY KEY (ip, roomID)
 );
 
@@ -31,7 +33,7 @@ CREATE TABLE IF NOT EXISTS users (
     ip varchar(39) not NULL,
     userRole varchar(32) not NULL,
     token varchar(128) not NULL,
-    FOREIGN KEY (roomID) REFERENCES rooms(id)
+    FOREIGN KEY (roomID) REFERENCES rooms(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS questions (
@@ -41,13 +43,30 @@ CREATE TABLE IF NOT EXISTS questions (
     text text not NULL,
     answer text DEFAULT '' not NULL,
     postedAt timestamp with time zone DEFAULT NOW(),
-    upvotes int not NULL DEFAULT 0,
     answered boolean DEFAULT FALSE not NUll,
     edited boolean DEFAULT FALSE not NULL,
-    FOREIGN KEY (roomID) REFERENCES rooms(id),
-    FOREIGN KEY (userID) REFERENCES users(id)
+    FOREIGN KEY (roomID) REFERENCES rooms(id) ON DELETE CASCADE,
+    FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS upvotes(
+    userID varchar(36) not NULL,
+    roomID varchar(36) not NULL,
+    questionID int not NULL,
+    PRIMARY KEY (userID, roomID, questionID),
+    FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (questionID) REFERENCES questions(id) ON DELETE CASCADE,
+    FOREIGN KEY (roomID) REFERENCES rooms(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS speeds(
+    userID varchar(36) not NULL,
+    roomID varchar(36) not NULL,
+    speed int not NULL,
+    PRIMARY KEY (userID, roomID),
+    FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (roomID) REFERENCES rooms(id) ON DELETE CASCADE
+);
 
 -- Setup rooms.
 INSERT INTO rooms (id, studentPassword, moderatorPassword, name, open, over, startDate)
@@ -61,11 +80,17 @@ INSERT INTO users (ID, ROOMID, NICKNAME, IP, USERROLE, TOKEN)
 VALUES ('eWMuhJfj41ShR1BdPGbLg2NKZ7FIEMb4VE6R', 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH', 'Moderator name', '127.11.0.1', 'MODERATOR', 'Dm1J7ZsghOtyvFnbMEMWrJDlWHteOGx3rr60stqn405f4sdgPqsj8wO9lWcGkrNGCYf5yH9Y1efaMgnD32hUwaSi3Jsi1mdtXUBK2U7C2HdqdAPdnuUqih2ihmjMk5lG');
 
 -- Setup questions.
-INSERT INTO questions (ID, USERID, ROOMID, TEXT, ANSWER, POSTEDAT, UPVOTES, ANSWERED, EDITED)
-VALUES (1, 'RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q', 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH', 'This is a question', '', '1970-01-01 00:00:00+00:00', 0, false, false);
+INSERT INTO questions (ID, USERID, ROOMID, TEXT, ANSWER, POSTEDAT, ANSWERED, EDITED)
+VALUES (1, 'RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q', 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH', 'This is a question', '', '1970-01-01 00:00:00+00:00', false, false);
 
-INSERT INTO questions (ID, USERID, ROOMID, TEXT, ANSWER, POSTEDAT, UPVOTES, ANSWERED, EDITED)
-VALUES (2, 'RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q', 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH','This is a question', 'This is an answer to the question', '2021-02-28 11:26:20+00:00', 0, true, false);
+INSERT INTO questions (ID, USERID, ROOMID, TEXT, ANSWER, POSTEDAT, ANSWERED, EDITED)
+VALUES (2, 'RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q', 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH','This is a question', 'This is an answer to the question', '2021-02-28 11:26:20+00:00', true, false);
 
-INSERT INTO questions (ID, USERID, ROOMID, TEXT, ANSWER, POSTEDAT, UPVOTES, ANSWERED, EDITED)
-VALUES (3, 'RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q', 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH','This is a question', '', '1970-01-01 00:00:00+00:00', 20, true, false);
+INSERT INTO questions (ID, USERID, ROOMID, TEXT, ANSWER, POSTEDAT, ANSWERED, EDITED)
+VALUES (3, 'RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q', 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH','This is a question', '', '1970-01-01 00:00:00+00:00', true, false);
+
+-- Setup upvotes.
+INSERT INTO upvotes (userID, roomID, questionID)
+VALUES ('RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q', 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH', 2);
+INSERT INTO upvotes (userID, roomID, questionID)
+VALUES ('eWMuhJfj41ShR1BdPGbLg2NKZ7FIEMb4VE6R', 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH', 3);
