@@ -7,7 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -95,7 +94,7 @@ public class LecturerViewController {
      *
      * @param event the event
      */
-    public void goBackButtonLight(ActionEvent event) {
+    public void handleBackButton(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -108,7 +107,7 @@ public class LecturerViewController {
      *
      * @param event the event
      */
-    public void goBackButtonDark(ActionEvent event) {
+    public void handleBackButtonDark(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -152,7 +151,7 @@ public class LecturerViewController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/HelpFileModerator.fxml");
+        EntryRoomDisplay.setCurrentScene("/HelpFileLecturer.fxml");
     }
 
     /**
@@ -165,7 +164,7 @@ public class LecturerViewController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/HelpFileModerator(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/HelpFileLecturer(DARKMODE).fxml");
     }
 
     /**

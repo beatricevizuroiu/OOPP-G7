@@ -182,7 +182,7 @@ public class StudentViewUIController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/HelpFileModerator.fxml");
+        EntryRoomDisplay.setCurrentScene("/HelpFileTA.fxml");
     }
 
     /**
@@ -195,7 +195,7 @@ public class StudentViewUIController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/HelpFileModerator(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/HelpFileTA(DARKMODE).fxml");
     }
 
     /**
