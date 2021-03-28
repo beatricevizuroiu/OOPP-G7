@@ -23,8 +23,7 @@ public class SpeedRepository {
     private static final String QUERY_INSERT_SPEED_FOR_ROOM = "INSERT INTO speeds (userID, roomID, speed) VALUES (?, ?, ?);";
 
     /**
-     * Primary constructor for the user repository.
-     *
+     * Primary constructor for the UserRepository class.
      * @param jdbcTemplate The {@link JdbcTemplate} that should handle the database queries.
      */
     public SpeedRepository(JdbcTemplate jdbcTemplate) {
@@ -36,6 +35,11 @@ public class SpeedRepository {
         }
     }
 
+    /**
+     * Get the current (lecturer) Speed in a Room.
+     * @param roomId The roomId to get the speed of.
+     * @return The current Speed value.
+     */
     public int getSpeedForRoom(String roomId) {
         logger.debug("Retrieving speed for room with id: {} from the database", roomId);
 
@@ -48,6 +52,11 @@ public class SpeedRepository {
                 });
     }
 
+    /**
+     * Resets the current Speed in a Room to 0.
+     * @param roomId The roomId of the Room to reset the Speed of.
+     * @return The number of rows changed in the database.
+     */
     public int resetSpeedForRoom(String roomId) {
         logger.debug("Resetting the speed of room with id: {}", roomId);
 
@@ -57,6 +66,13 @@ public class SpeedRepository {
                 });
     }
 
+    /**
+     * Sets the Speed for a User in a Room.
+     * @param roomId The roomId the User is in.
+     * @param userId The userId of the User.
+     * @param speed The Speed to set (-1, 0 or 1).
+     * @return The number of rows changed in the database.
+     */
     public int setSpeedForUserInRoom(String roomId, String userId, int speed) {
         logger.debug("Setting the speed for user with id: {}, in room with id: {}, to {}", userId, roomId, speed);
 

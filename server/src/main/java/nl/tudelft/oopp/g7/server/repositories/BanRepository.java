@@ -19,6 +19,10 @@ public class BanRepository {
     private static final String QUERY_COUNT_USER_BY_IP = "SELECT COUNT(ip) FROM bannedUsers WHERE ip=? AND roomID=?;";
     private static final String QUERY_BAN_USER = "INSERT INTO bannedUsers (ip, roomID, reason) VALUES (?, ?, ?);";
 
+    /**
+     * The primary constructor for the BanRepository class.
+     * @param jdbcTemplate The {@link JdbcTemplate} that should handle the database queries.
+     */
     public BanRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         try {
@@ -28,6 +32,12 @@ public class BanRepository {
         }
     }
 
+    /**
+     * Checks whether an Ip is currently banned.
+     * @param roomId The roomId of the Room in which the check should be performed.
+     * @param ip The Ip to check.
+     * @return Whether the Ip is banned in the form of a boolean.
+     */
     public boolean checkBanned(String roomId, String ip) {
         //noinspection ConstantConditions
         int bannedAmount = jdbcTemplate.query(QUERY_COUNT_USER_BY_IP,
@@ -43,6 +53,13 @@ public class BanRepository {
         return bannedAmount > 0;
     }
 
+    /**
+     * Ban an Ip from interacting with a Room.
+     * @param roomId The roomId to ban the Ip from.
+     * @param ip The Ip to ban from the Room.
+     * @param reason The reason of banning this Ip.
+     * @return The number of lines changed in the database.
+     */
     public int banUser(String roomId, String ip, String reason) {
         return jdbcTemplate.update(QUERY_BAN_USER,
                 (ps) -> {

@@ -33,6 +33,9 @@ public class UserController {
     private final AuthorizationHelper authorizationHelper;
     private final UpvoteRepository upvoteRepository;
 
+    /**
+     * The primary constructor for the UserController.
+     */
     public UserController(UserRepository userRepository, BanRepository banRepository, AuthorizationHelper authorizationHelper, UpvoteRepository upvoteRepository) {
         this.userRepository = userRepository;
         this.banRepository = banRepository;
@@ -40,6 +43,14 @@ public class UserController {
         this.upvoteRepository = upvoteRepository;
     }
 
+    /**
+     * Get the information of a User by UserId.
+     * @param roomId The roomId of the Room the User belongs to.
+     * @param userId The userId of the User.
+     * @param authorization The raw Authorization Header of the one who sent the request.
+     * @param request The HttpServletRequest containing the Ip of the one who sent the request.
+     * @return A {@link ResponseEntity} containing a relevant Http Status and the UserInfo of the requested User.
+     */
     @GetMapping("/{user_id}")
     public ResponseEntity<UserInfo> getUserInfoById(@PathVariable("room_id") String roomId,
                                                     @PathVariable("user_id") String userId,
@@ -66,6 +77,14 @@ public class UserController {
         return new ResponseEntity<>(userInfo, HttpStatus.OK);
     }
 
+    /**
+     * Get the Questions a specific user has upvoted.
+     * @param roomId The roomId of the Room the User, Questions and Upvotes belong to.
+     * @param userId The userId of the requested User.
+     * @param authorization The Authorization Header of the one who sent the request.
+     * @param request The HttpServletRequest containing the Ip of the one who sent the request.
+     * @return A {@link ResponseEntity} containing a relevant Http Status and a list of the questionIds of the Questions the User has upvoted.
+     */
     @GetMapping("/{user_id}/upvotes")
     public ResponseEntity<List<Integer>> getUpvotesByUser(@PathVariable("room_id") String roomId,
                                                           @PathVariable("user_id") String userId,
@@ -88,6 +107,13 @@ public class UserController {
     }
 
 
+    /**
+     * Get all Users in a Room.
+     * @param roomId The roomId of the Room of the requested Users.
+     * @param authorization The Authorization Header of the one who sent the request.
+     * @param request The HttpServletRequest containing the Ip of the one who sent the request.
+     * @return A {@link ResponseEntity} containing a relevant Http Status and a list of UserInfo.
+     */
     @GetMapping("/all")
     public ResponseEntity<List<UserInfo>> getAllUsersInRoom(@PathVariable("room_id") String roomId,
                                                             @RequestHeader("Authorization") String authorization,
@@ -115,7 +141,15 @@ public class UserController {
 
     }
 
-
+    /**
+     * Ban a User from interacting with a Room.
+     * @param roomId The roomId of the Room to ban the User from.
+     * @param userId The userId of the User to ban.
+     * @param reason The reason of banning the User.
+     * @param authorization The Authorization Header of the one who sent the request.
+     * @param request The HttpServletRequest containing the Ip of the one who sent the request.
+     * @return A {@link ResponseEntity} containing a relevant Http Status.
+     */
     @DeleteMapping("/{user_id}")
     public ResponseEntity<Void> banUserById(@PathVariable("room_id") String roomId,
                                             @PathVariable("user_id") String userId,

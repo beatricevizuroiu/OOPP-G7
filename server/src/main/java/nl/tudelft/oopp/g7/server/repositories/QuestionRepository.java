@@ -26,21 +26,21 @@ public class QuestionRepository {
             + "FOREIGN KEY (roomID) REFERENCES rooms(id) ON DELETE CASCADE,"
             + "FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE);";
 
-    private static final String QUERY_SELECT_QUESTION_BY_ID = "SELECT q.id, q.userID, q.roomID, q.text, q.answer, q.postedAt, q.answered, q.edited,\n" +
-            "       (SELECT COUNT(questionID) from upvotes WHERE questionID = q.id) as upvotes\n" +
-            "FROM questions as q\n" +
-            "WHERE q.id=? AND q.roomID=?;";
-    private static final String QUERY_SELECT_ALL_QUESTIONS = "SELECT q.id, q.userID, q.roomID, q.text, q.answer, q.postedAt, q.answered, q.edited,\n" +
-            "       (SELECT COUNT(questionID) from upvotes WHERE questionID = q.id) as upvotes\n" +
-            "FROM questions as q\n" +
-            "WHERE q.roomID=?;";
+    private static final String QUERY_SELECT_QUESTION_BY_ID = "SELECT q.id, q.userID, q.roomID, q.text, q.answer, q.postedAt, q.answered, q.edited,\n"
+            + "       (SELECT COUNT(questionID) from upvotes WHERE questionID = q.id) as upvotes\n"
+            + "FROM questions as q\n"
+            + "WHERE q.id=? AND q.roomID=?;";
+    private static final String QUERY_SELECT_ALL_QUESTIONS = "SELECT q.id, q.userID, q.roomID, q.text, q.answer, q.postedAt, q.answered, q.edited,\n"
+            + "       (SELECT COUNT(questionID) from upvotes WHERE questionID = q.id) as upvotes\n"
+            + "FROM questions as q\n"
+            + "WHERE q.roomID=?;";
     private static final String QUERY_CREATE_QUESTION = "INSERT INTO questions (userID, roomID, text) VALUES (?, ?, ?);";
     private static final String QUERY_ANSWER_QUESTION = "UPDATE questions SET answer=?, answered=true WHERE id=? AND roomID=?;";
     private static final String QUERY_EDIT_QUESTION = "UPDATE questions SET text=?, edited=true WHERE id=? AND roomID=?;";
     private static final String QUERY_DELETE_QUESTION = "DELETE FROM questions WHERE id=? AND roomID=?;";
 
     /**
-     * Primary constructor for the question repository.
+     * Primary constructor for the QuestionRepository class.
      * @param jdbcTemplate The {@link JdbcTemplate} that should handle the database queries.
      */
     public QuestionRepository(JdbcTemplate jdbcTemplate) {
@@ -53,9 +53,9 @@ public class QuestionRepository {
     }
 
     /**
-     * Get a single question from the database.
-     * @param roomId The id of the room of the question.
-     * @param id The id of the question.
+     * Get a Question from the database.
+     * @param roomId The id of the Room the Question is in.
+     * @param id The id of the Question.
      * @return The {@link Question} that was retrieved.
      */
     public Question getQuestionById(String roomId, int id) {
@@ -75,9 +75,9 @@ public class QuestionRepository {
     }
 
     /**
-     * Get all question within a specific room from the database.
-     * @param roomId The id of the room to list the questions from.
-     * @return The {@link List} of {@link Question}s that are in the room.
+     * Get all Questions within a specific Room.
+     * @param roomId The id of the Room to list the Questions from.
+     * @return The {@link List} of {@link Question}s from the Room.
      */
     public List<Question> getAllQuestionsInRoom(String roomId) {
         logger.debug("Retrieving all question in room with id: {}", roomId);
@@ -100,11 +100,11 @@ public class QuestionRepository {
     }
 
     /**
-     * Edit a question's body in the database.
-     * @param roomId The id of the room to edit the question in.
-     * @param id The id of the question.
-     * @param newBody The new body of the question.
-     * @return The amount of rows changed by the query.
+     * Edit a Question's body in the database.
+     * @param roomId The id of the Room to edit the Question in.
+     * @param id The id of the Question.
+     * @param newBody The new body of the Question.
+     * @return The amount of rows changed in the database.
      */
     public int editQuestionWithId(String roomId, int id, String newBody) {
         logger.debug("Changing the text of question with id: {}, to \"{}\"", id, newBody);
@@ -122,10 +122,10 @@ public class QuestionRepository {
     }
 
     /**
-     * Delete a question from the database.
-     * @param roomId The id of the room to delete the question from.
-     * @param id The id of the question to delete.
-     * @return The amount of rows changed by the query.
+     * Delete a Question from the database.
+     * @param roomId The id of the Room to delete the Question from.
+     * @param id The id of the Question to delete.
+     * @return The amount of rows changed in the database.
      */
     public int deleteQuestionWithId(String roomId, int id) {
         return jdbcTemplate.update(QUERY_DELETE_QUESTION,
@@ -139,10 +139,10 @@ public class QuestionRepository {
     }
 
     /**
-     * Create a new question in the database.
-     * @param roomId The id of the room to create the question in.
-     * @param questionText The text for the new question.
-     * @return The amount of rows changed by the query.
+     * Create a new Question in the database.
+     * @param roomId The id of the Room to create the Question in.
+     * @param questionText The text for the new Question.
+     * @return The amount of rows changed in the database.
      */
     public int createQuestion(String roomId, String questionText, String userId) {
         logger.debug("Storing a new question with text: \"{}\"", questionText);
@@ -160,11 +160,11 @@ public class QuestionRepository {
     }
 
     /**
-     * Store the answer to a question into the database.
-     * @param roomId The room the question is in.
-     * @param id The id of the question.
-     * @param answer The answer to the question.
-     * @return The amount of rows that where changed by the query.
+     * Store the answer to a Question in the database.
+     * @param roomId The Room the Question is in.
+     * @param id The id of the Question.
+     * @param answer The answer to the Question.
+     * @return The amount of rows that where changed in the database.
      */
     public int answerQuestionWithId(String roomId, int id, String answer) {
         logger.debug("Storing answer to question with id: {}, answer: {}", id, answer);

@@ -35,7 +35,7 @@ public class UserRepository {
     private static final String QUERY_SELECT_USER_BY_TOKEN = "SELECT * FROM users WHERE token=?;";
 
     /**
-     * Primary constructor for the user repository.
+     * Primary constructor for the UserRepository class.
      * @param jdbcTemplate The {@link JdbcTemplate} that should handle the database queries.
      */
     public UserRepository(JdbcTemplate jdbcTemplate) {
@@ -48,8 +48,8 @@ public class UserRepository {
     }
 
     /**
-     * Generate a new user id that is not already in use.
-     * @return The new id as a string.
+     * Generate a new userId that is not yet in use.
+     * @return The new userId as a string.
      */
     public String createNewId() {
         String id;
@@ -68,7 +68,7 @@ public class UserRepository {
 
 
     /**
-     * Count the amount of users that have a certain id in the database.
+     * Count the amount of Users that have a certain id in the database.
      * @param userId The id to count
      * @return Expected values of 0 or 1, if it is more something is wrong.
      */
@@ -83,6 +83,11 @@ public class UserRepository {
                 });
     }
 
+    /**
+     * Get the UserInfo of a User by userId.
+     * @param userId The userId of the User to get the UserInfo of.
+     * @return The UserInfo of the User in question.
+     */
     public UserInfo getUserInfoById(String userId) {
         logger.debug("Retrieving user with id: {} from the database", userId);
         return jdbcTemplate.query(QUERY_SELECT_USER_BY_ID,
@@ -97,6 +102,11 @@ public class UserRepository {
                 });
     }
 
+    /**
+     * Get a User by userId.
+     * @param userId The userId of the User to get.
+     * @return The requested User.
+     */
     public User getUserById(String userId) {
         logger.debug("Retrieving user with id: {} from the database", userId);
         return jdbcTemplate.query(QUERY_SELECT_USER_BY_ID,
@@ -111,6 +121,11 @@ public class UserRepository {
                 });
     }
 
+    /**
+     * Get all Users in a Room.
+     * @param roomId The roomId of the Room to get all Users from.
+     * @return A list of UserInfo of all the Users in the Room.
+     */
     public List<UserInfo> getAllUsersInRoom(String roomId) {
         logger.debug("Retrieving all question in room with id: {}", roomId);
         return jdbcTemplate.query(QUERY_SELECT_ALL_USERS,
@@ -131,6 +146,11 @@ public class UserRepository {
                 });
     }
 
+    /**
+     * Get a User by their Authorization Token.
+     * @param token The Authorization Token of the User.
+     * @return The requested User.
+     */
     public User getUserByToken(String token) {
         logger.debug("Retrieving user with token: {} from the database", token);
         return jdbcTemplate.query(QUERY_SELECT_USER_BY_TOKEN,
@@ -145,6 +165,11 @@ public class UserRepository {
                 });
     }
 
+    /**
+     * Store a User in the database.
+     * @param user The User to store.
+     * @return The number of rows changed in the database.
+     */
     public int storeUser(User user) {
         logger.debug("Storing user with id: {} from the database", user.getId());
         return jdbcTemplate.update(QUERY_STORE_USER,

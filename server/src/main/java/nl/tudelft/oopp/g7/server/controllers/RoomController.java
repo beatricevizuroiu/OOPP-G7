@@ -29,6 +29,9 @@ public class RoomController {
 
     private static final int GENERATED_PASSWORD_LENGTH = 16;
 
+    /**
+     * The primary constructor for the RoomController .
+     */
     public RoomController(RoomRepository roomRepository, UserRepository userRepository, SpeedRepository speedRepository, AuthorizationHelper authorizationHelper) {
         this.roomRepository = roomRepository;
         this.userRepository = userRepository;
@@ -42,9 +45,9 @@ public class RoomController {
     }
 
     /**
-     * Endpoint to create a new room.
-     * @param newRoom The {@link NewRoom} object containing the information about the new room.
-     * @return A {@link ResponseEntity} containing the {@link Room} or null and a {@link HttpStatus} that is one of
+     * Endpoint to create a new Room.
+     * @param newRoom The {@link NewRoom} object containing the information about the new Room.
+     * @return A {@link ResponseEntity} containing the {@link Room} if successfully made and a {@link HttpStatus} that is one of
      *      OK (200), BAD_REQUEST (400), or INTERNAL_SERVER_ERROR (500).
      */
     @PostMapping("/create")
@@ -108,10 +111,10 @@ public class RoomController {
     }
 
     /**
-     * Endpoint to join a room.
-     * @param roomId The id of the room to join.
-     * @param roomJoinRequest A {@link RoomJoinRequest} containing the information required to join the room.
-     * @return A {@link ResponseEntity} containing a {@link RoomJoinInfo} or null and a {@link HttpStatus} that is one
+     * Endpoint to join a Room.
+     * @param roomId The id of the Room to join.
+     * @param roomJoinRequest A {@link RoomJoinRequest} containing the information required to join the Room.
+     * @return A {@link ResponseEntity} containing a {@link RoomJoinInfo} if it was found and a {@link HttpStatus} that is one
      *      of BAD_REQUEST (400), UNAUTHORIZED (401), NOT_FOUND (404), or OK (200).
      */
     @PostMapping("/{room_id}/join")
@@ -168,9 +171,9 @@ public class RoomController {
     }
 
     /**
-     * Endpoint to change the speed of a room.
-     * @param roomId The id of the room to edit the speed of.
-     * @param speedAlterRequest A request containing a speed integer by which to edit the speed.
+     * Endpoint to change the Speed of a Room.
+     * @param roomId The id of the Room to edit the Speed of.
+     * @param speedAlterRequest A request containing a Speed integer by which to edit the Speed.
      * @return A {@link ResponseEntity} containing a {@link HttpStatus} that is one of BAD_REQUEST (400),
      *      NOT_FOUND (404), INTERNAL_SERVER_ERROR (500) or OK (200)
      */
@@ -216,9 +219,9 @@ public class RoomController {
     }
 
     /**
-     * Endpoint to reset the speed of a room.
-     * @param roomId The id of the room to reset the speed of.
-     * @return A {@link ResponseEntity} containing a {@link SpeedAlterRequest} and a {@link HttpStatus} that is one of
+     * Endpoint to reset the Speed of a Room.
+     * @param roomId The id of the Room to reset the Speed of.
+     * @return A {@link ResponseEntity} containing a {@link HttpStatus} that is one of
      *      UNAUTHORIZED (401) or OK (200)
      */
     @DeleteMapping("/{room_id}/speed")
@@ -241,11 +244,12 @@ public class RoomController {
         speedRepository.resetSpeedForRoom(roomId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     /**
-     * Endpoint to get the speed of a room.
-     * @param roomId The id of the room to edit the speed of.
-     * @return A {@link ResponseEntity} containing a {@link SpeedAlterRequest} and a {@link HttpStatus} that is one of
-     *      TODO: INTERNAL_SERVER_ERROR (500), NOT_FOUND (404)
+     * Endpoint to get the Speed of a Room.
+     * @param roomId The id of the Room to edit the Speed of.
+     * @return A {@link ResponseEntity} containing a {@link SpeedAlterRequest} with the Room's Speed and a
+     *       {@link HttpStatus} that is one of TODO: INTERNAL_SERVER_ERROR (500), NOT_FOUND (404)
      *      or OK (200)
      */
     @GetMapping("/{room_id}/speed")

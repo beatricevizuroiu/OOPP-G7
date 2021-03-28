@@ -14,12 +14,22 @@ public class AuthorizationHelper {
     private final BanRepository banRepository;
     private final QuestionRepository questionRepository;
 
+    /**
+     * The constructor for the AuthorizationHelper class.
+     * @param userRepository The UserRepository instance that is currently in use.
+     * @param banRepository The BanRepository instance that is currently in use.
+     * @param questionRepository The QuestionRepository instance that is currently in use.
+     */
     public AuthorizationHelper(UserRepository userRepository, BanRepository banRepository, QuestionRepository questionRepository) {
         this.userRepository = userRepository;
         this.banRepository = banRepository;
         this.questionRepository = questionRepository;
     }
 
+    /**
+     * Generates a random Authorization Token for a new user.
+     * @return A new Authorization Token as a String.
+     */
     public String createAuthorizationToken() {
         String authorizationToken;
 
@@ -32,6 +42,11 @@ public class AuthorizationHelper {
         return authorizationToken;
     }
 
+    /**
+     * Splits an Authorization Header into the header and the token and returns the token for further use if possible.
+     * @param header A raw Authorization Header.
+     * @return A usable Authorization Token.
+     */
     public String parseAuthorizationHeader(String header) {
         String[] authParts = header.split(" ");
         if (authParts.length < 2)
@@ -40,6 +55,11 @@ public class AuthorizationHelper {
         return authParts[1];
     }
 
+    /**
+     * Searches the database for the User associated with an Authorization Header.
+     * @param header A raw Authorization Header.
+     * @return A User.
+     */
     public User getUserFromAuthorizationHeader(String header) {
         String token = parseAuthorizationHeader(header);
         if (token == null)
@@ -48,6 +68,14 @@ public class AuthorizationHelper {
         return userRepository.getUserByToken(token);
     }
 
+    /**
+     * Checks if a User meets a certain authorization requirement to perform an action.
+     * @param roomId The roomId of the Room in which the User is acting.
+     * @param authorizationHeader The Authorization Header associated with the User.
+     * @param ip The public Ip address of the User.
+     * @param condition The condition to check.
+     * @return Whether the User meets the given condition in a boolean.
+     */
     public boolean isAuthorized(String roomId, String authorizationHeader, String ip, AuthorizationCondition condition) {
         String token = parseAuthorizationHeader(authorizationHeader);
         if (token == null)

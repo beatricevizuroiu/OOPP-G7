@@ -35,9 +35,10 @@ public class RoomServerCommunication {
 
     /**
      * Join a room if available.
-     * @param roomID ID of the room user wants to join
-     * @param roomJoinRequest contains necessary student/moderator password
-     * @return a {@link RoomJoinInfo}
+     * @param roomID ID of the room user wants to join.
+     * @param password The password the user wants to join with.
+     * @param nickname The nickname the user wants to use.
+     * @return A {@link RoomJoinInfo}
      */
     public static RoomJoinInfo joinRoom(String roomID, String password, String nickname) {
         // create the uri

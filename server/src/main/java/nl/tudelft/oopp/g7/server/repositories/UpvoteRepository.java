@@ -28,7 +28,7 @@ public class UpvoteRepository {
 
 
     /**
-     * Primary constructor for the user repository.
+     * Primary constructor for the UserRepository class.
      * @param jdbcTemplate The {@link JdbcTemplate} that should handle the database queries.
      */
     public UpvoteRepository(JdbcTemplate jdbcTemplate) {
@@ -40,6 +40,12 @@ public class UpvoteRepository {
         }
     }
 
+    /**
+     * Gets all the Questions a User has upvoted.
+     * @param roomId The roomId to get the Questions from.
+     * @param userId The userId of the User to check.
+     * @return A list of questionIds.
+     */
     public List<Integer> getUpvotesForUser(String roomId, String userId) {
         logger.debug("Retrieving upvotes from user with id: {} in room with id: {} from the database", userId, roomId);
 
@@ -62,6 +68,13 @@ public class UpvoteRepository {
                 });
     }
 
+    /**
+     * Add an Upvote to a User and Question.
+     * @param roomId The roomId of the Room the Question and User belong to.
+     * @param userId The userId of the User.
+     * @param questionId The questionId of the Question.
+     * @return The amount of rows changed in the database.
+     */
     public int addUpvote(String roomId, String userId, int questionId) {
         logger.debug("Adding an upvote to question with id: {}, in room with id: {}, for user with id: {}", questionId, roomId, userId);
 
@@ -73,6 +86,13 @@ public class UpvoteRepository {
                 });
     }
 
+    /**
+     * Remove an upvote from a User and Question.
+     * @param roomId The roomId of the Room the Question and User belong to.
+     * @param userId The userId of the User.
+     * @param questionId The questionId of the Question.
+     * @return The amount of rows changed in the database.
+     */
     public int removeUpvote(String roomId, String userId, int questionId) {
         logger.debug("Removing an upvote to question with id: {}, in room with id: {}, for user with id: {}", questionId, roomId, userId);
 

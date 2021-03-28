@@ -32,8 +32,7 @@ public class RoomRepository {
     private static final String QUERY_GET_SPEED_WITH_ID = "SELECT speed FROM rooms WHERE id=?";
 
     /**
-     * Primary constructor for the room repository.
-     *
+     * Primary constructor for the RoomRepository class.
      * @param jdbcTemplate The {@link JdbcTemplate} that should handle the database queries.
      */
     public RoomRepository(JdbcTemplate jdbcTemplate) {
@@ -47,9 +46,8 @@ public class RoomRepository {
     }
 
     /**
-     * Generate a new room id that is not already in use.
-     *
-     * @return The new id as a string.
+     * Generate a new roomId that is not yet in use.
+     * @return The new roomId as a string.
      */
     public String createNewId() {
         String id;
@@ -68,8 +66,7 @@ public class RoomRepository {
 
 
     /**
-     * Count the amount of rooms that have a certain id in the database.
-     *
+     * Count the amount of Rooms that have a certain id in the database.
      * @param roomId The id to count
      * @return Expected values of 0 or 1, if it is more something is wrong.
      */
@@ -85,10 +82,9 @@ public class RoomRepository {
     }
 
     /**
-     * Store a new room into the database.
-     *
+     * Store a new Room in the database.
      * @param room The {@link Room} to store.
-     * @return The amount of rows that where changed.
+     * @return The amount of rows that where changed in the database.
      */
     public int createRoom(Room room) {
         return jdbcTemplate.update(QUERY_CREATE_ROOM,
@@ -111,9 +107,8 @@ public class RoomRepository {
     }
 
     /**
-     * Retrieve a {@link Room} from the database.
-     *
-     * @param roomId The id of the room to retrieve.
+     * Retrieve a Room from the database.
+     * @param roomId The id of the Room to retrieve.
      * @return The {@link Room} that was retrieved.
      */
     public Room getRoomById(String roomId) {

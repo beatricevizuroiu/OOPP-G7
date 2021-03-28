@@ -91,7 +91,7 @@ public class CreateRoomController {
             LocalData.setStudentPassword(room.getStudentPassword());
             LocalData.setModeratorPassword(room.getModeratorPassword());
 
-            if (true /* TODO: Check if the lecture is not scheduled */ ) {
+            if (true /* TODO: Check if the lecture is not scheduled */) {
                 RoomServerCommunication.joinRoom(room.getId(), room.getModeratorPassword(), lecturerName.getText());
                 
                 // Proceed to Lecturer View
@@ -145,7 +145,7 @@ public class CreateRoomController {
             LocalData.setStudentPassword(room.getStudentPassword());
             LocalData.setModeratorPassword(room.getModeratorPassword());
 
-            if (true /* TODO: Check if the lecture is not scheduled */ ) {
+            if (true /* TODO: Check if the lecture is not scheduled */) {
                 RoomServerCommunication.joinRoom(room.getId(), room.getModeratorPassword(), lecturerName.getText());
 
                 // Proceed to Lecturer View

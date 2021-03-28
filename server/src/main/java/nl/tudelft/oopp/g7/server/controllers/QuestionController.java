@@ -30,7 +30,7 @@ public class QuestionController {
     private final UpvoteRepository upvoteRepository;
 
     /**
-     * Primary constructor for the question controller.
+     * Primary constructor for the QuestionController.
      */
     public QuestionController(QuestionRepository questionRepository, UserRepository userRepository, AuthorizationHelper authorizationHelper, UpvoteRepository upvoteRepository) {
         this.questionRepository = questionRepository;
@@ -46,7 +46,7 @@ public class QuestionController {
      * Endpoint for retrieving a question by ID.
      * @param id The ID of the question that should be retrieved.
      * @return A {@link ResponseEntity} containing a {@link Question} and a http status of 200 (OK)
-     *         if there is no question found it will return an empty {@link ResponseEntity} with http status 404 (NOT_FOUND).
+     *         if there is no question found it will return an empty {@link ResponseEntity} with Http Status 404 (NOT_FOUND).
      */
     @GetMapping("/{id}")
     public ResponseEntity<Question> getQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
@@ -78,8 +78,9 @@ public class QuestionController {
     }
 
     /**
-     * Endpoint for retrieving all questions.
-     * @return A {@link List} of {@link Question}s containing every question in the database.
+     * Endpoint for retrieving all Questions.
+     * @return A {@link ResponseEntity} containing a {@link List} of {@link Question}s containing every Question in the database
+     *          and a Http Status of 200 (OK).
      */
     @GetMapping("/all")
     public ResponseEntity<List<Question>> getAllQuestions(@PathVariable("room_id") String roomId, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
@@ -100,10 +101,10 @@ public class QuestionController {
     }
 
     /**
-     * Endpoint for upvoting a question.
-     * @param id The id of the question that will be upvoted.
-     * @return A {@link ResponseEntity} containing NULL and a status code of 200 (OK) if a question was upvoted and 404
-     *       (NOT_FOUND) if no question was upvoted.
+     * Endpoint for upvoting a Question.
+     * @param id The id of the Question that will be upvoted.
+     * @return A {@link ResponseEntity} containing a Http Status of 200 (OK) if a Question was upvoted, 401 (BAD_REQUEST)
+     *       if not all requirements for upvoting are met and 404 (NOT_FOUND) if no Question was upvoted.
      */
     @PostMapping("/{id}/upvote")
     public ResponseEntity<Void> upvoteQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
@@ -136,10 +137,10 @@ public class QuestionController {
     }
 
     /**
-     * Endpoint for removing an upvote from a question.
-     * @param id The id of the question that will be un-upvoted.
-     * @return A {@link ResponseEntity} containing NULL and a status code of 200 (OK) if a question was upvoted and 404
-     *       (NOT_FOUND) if no question was upvoted.
+     * Endpoint for removing an Upvote from a Question.
+     * @param id The id of the Question that will be un-upvoted.
+     * @return A {@link ResponseEntity} containing a Http Status of 200 (OK) if a Question was un-upvoted, 401 (BAD_REQUEST)
+     *       if not all requirements for un-upvoting are met and 404 (NOT_FOUND) if no Question was un-upvoted.
      */
     @DeleteMapping("/{id}/upvote")
     public ResponseEntity<Void> removeUpvoteQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
@@ -173,10 +174,10 @@ public class QuestionController {
 
     /**
      * Endpoint to edit questions.
-     * @param id The id of the question to edit.
+     * @param id The id of the Question to edit.
      * @param question The {@link QuestionText} that will replace the old one.
-     * @return A {@link ResponseEntity} containing NULL and a status code of 200 (OK) if a question was edited and 404
-     *       (NOT_FOUND) if no question was edited.
+     * @return A {@link ResponseEntity} containing a Http Status of 200 (OK) if a Question was edited and 404
+     *       (NOT_FOUND) if no Question was edited.
      */
     @PostMapping("/{id}")
     public ResponseEntity<Void> editQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestBody QuestionText question, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
@@ -209,10 +210,10 @@ public class QuestionController {
     }
 
     /**
-     * Endpoint to delete questions.
-     * @param id The id of the question to delete.
-     * @return A {@link ResponseEntity} containing NULL and a status code of 200 (OK) if a question was delete and 404
-     *      (NOT_FOUND) if no question was deleted.
+     * Endpoint to delete Questions.
+     * @param id The id of the Question to delete.
+     * @return A {@link ResponseEntity} containing a Http Status of 200 (OK) if a Question was deleted and 404
+     *      (NOT_FOUND) if no Question was deleted.
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
@@ -250,8 +251,10 @@ public class QuestionController {
     }
 
     /**
-     * Endpoint to create a new question.
+     * Endpoint to create a new Question.
      * @param newQuestion The {@link QuestionText} object representing the new question.
+     * @return A {@link ResponseEntity} containing a Http Status of 200 (OK) if a Question was made and 500
+     *       (INTERNAL_SERVER_ERROR) if no new Question could be made.
      */
     @PostMapping("/new")
     public ResponseEntity<Void> newQuestion(@PathVariable("room_id") String roomId, @RequestBody QuestionText newQuestion, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
@@ -286,10 +289,11 @@ public class QuestionController {
     }
 
     /**
-     * Endpoint to answer a question.
-     * @param id The id of the question being answered.
-     * @param answer The {@link QuestionText} to the question.
-     * @return A {@link ResponseEntity} containing NULL and a http status of 200 (OK) if a row is changed and 404 (NOT_FOUND) if no rows changed.
+     * Endpoint to answer a Question.
+     * @param id The id of the Question being answered.
+     * @param answer The {@link QuestionText} to the Question.
+     * @return A {@link ResponseEntity} containing a Http Status of 200 (OK) if a Question was answered and 404 (NOT_FOUND)
+     *       if no Question could be edited.
      */
     @PostMapping("/{id}/answer")
     public ResponseEntity<Void> answerQuestion(@PathVariable("room_id") String roomId, @PathVariable int id, @RequestBody QuestionText answer, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
