@@ -134,6 +134,36 @@ public class ServerCommunication {
     }
 
     /**
+     * Get the current speed in a room.
+     * @param roomID The room ID of the room to get the speed from.
+     * @return The current lecturer speed in a room.
+     */
+    public static Integer getSpeed(String roomID) {
+        // add the appropriate end-point
+        URI uri = URI.create(uriBody + roomID + "/speed");
+
+        // send the speed request and save the response
+        HttpResponse<String> response = HttpMethods.get(uri);
+
+        // get the speed value from the response body and return it
+        return gson.fromJson(response.body(), SpeedAlterRequest.class).getSpeed();
+    }
+
+    /**
+     * Set the speed in a room.
+     * @param roomID The room ID of the room to set the speed in.
+     * @param speed An integer value of either 1 or -1 to increment or decrement the lecturer speed.
+     * @return A {@link HttpResponse} containing the response received from the server.
+     */
+    public static HttpResponse<String> setSpeed(String roomID, int speed) {
+        // add the appropriate end-point
+        URI uri = URI.create(uriBody + roomID + "/speed");
+
+        // send the speed request and return the response
+        return HttpMethods.post(uri, gson.toJson(new SpeedAlterRequest(speed)));
+    }
+
+    /**
      * Edit the question with the specified ID.
      * @param roomID ID of the room student belongs
      * @param questionID ID of the question

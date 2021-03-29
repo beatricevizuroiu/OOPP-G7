@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.g7.server.repositories;
 
 import nl.tudelft.oopp.g7.common.Room;
+import nl.tudelft.oopp.g7.common.SpeedAlterRequest;
 import nl.tudelft.oopp.g7.server.utility.RandomString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,11 +22,14 @@ public class RoomRepository {
             + "name text not NULL,"
             + "open boolean DEFAULT FALSE not NULL,"
             + "over boolean DEFAULT FALSE not NULL,"
-            + "startDate timestamp with time zone not NUlL);";
+            + "startDate timestamp with time zone not NULL,"
+            + "speed int DEFAULT 0 not NULL);";
 
     private static final String QUERY_COUNT_ROOMS_WITH_ID = "SELECT count(id) FROM rooms WHERE id=?";
     private static final String QUERY_CREATE_ROOM = "INSERT INTO rooms (id, studentPassword, moderatorPassword, name, open, over, startDate) VALUES (?, ?, ?, ?, ?, ?, ?);";
     private static final String QUERY_GET_ROOM_WITH_ID = "SELECT * FROM rooms WHERE id=?";
+    private static final String QUERY_EDIT_SPEED = "UPDATE rooms SET speed = speed + ? WHERE id=?;";
+    private static final String QUERY_GET_SPEED_WITH_ID = "SELECT speed FROM rooms WHERE id=?";
 
     /**
      * Primary constructor for the room repository.
@@ -110,5 +114,57 @@ public class RoomRepository {
     public Room getRoomById(String roomId) {
         return jdbcTemplate.query(QUERY_GET_ROOM_WITH_ID,
             (ps) -> ps.setString(1, roomId), Room::fromResultSet);
+    }
+
+    /**
+     * Edit the speed of a {@link Room} in the database.
+     * @param roomId The id of the room to edit.
+     * @param speedAlterRequest the amount by which to edit the speed.
+     * @return The amount of rows that was changed (should be 1).
+     */
+    public int editSpeedById(String roomId, SpeedAlterRequest speedAlterRequest) {
+        switch (speedAlterRequest.getSpeed()) {
+            case -1:
+                logger.debug("Lowering the speed of room with id: {}", roomId);
+                return jdbcTemplate.update(QUERY_EDIT_SPEED,
+                    (ps) -> {
+                        // Set the first variable in the PreparedStatement to the question id.
+                        ps.setInt(1, speedAlterRequest.getSpeed());
+
+                        // Set the second variable in the PreparedStatement to the room id.
+                        ps.setString(2, roomId);
+                    });
+
+            case 1:
+                logger.debug("Raising the speed of room with id: {}", roomId);
+                return jdbcTemplate.update(QUERY_EDIT_SPEED,
+                    (ps) -> {
+                        // Set the first variable in the PreparedStatement to the question id.
+                        ps.setInt(1, speedAlterRequest.getSpeed());
+
+                        // Set the second variable in the PreparedStatement to the room id.
+                        ps.setString(2, roomId);
+                    });
+            default:
+                return 0;
+        }
+    }
+
+    /**
+     * Get the speed of a {@link Room} in the database.
+     * @param roomId The id of the room to get the speed of.
+     * @return The speed of the room.
+     */
+    public SpeedAlterRequest getSpeedById(String roomId) {
+        logger.debug("Getting the current speed of room with id: {}", roomId);
+
+        int result = jdbcTemplate.query(QUERY_GET_SPEED_WITH_ID,
+            (ps) -> ps.setString(1, roomId),
+            (rs) -> {
+                rs.next();
+                return rs.getInt(1);
+            });
+
+        return new SpeedAlterRequest(result);
     }
 }
