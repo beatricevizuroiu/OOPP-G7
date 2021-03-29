@@ -182,6 +182,12 @@ public class QuestionRepository {
             });
     }
 
+    /**
+     * Calculates and returns the amount of time that has passes since a user last a question.
+     * @param roomId The room the Question / user is in.
+     * @param userId The id of the User
+     * @return Amount of time that passed since a user posted a question.
+     */
     public long timeSinceLastQuestionByUser(String roomId, String userId) {
         //noinspection ConstantConditions
         return jdbcTemplate.query(QUERY_MOST_RECENT_QUESTION_FROM_USER,

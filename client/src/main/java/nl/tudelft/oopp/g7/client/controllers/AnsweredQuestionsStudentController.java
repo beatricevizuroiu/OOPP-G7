@@ -30,8 +30,10 @@ public class AnsweredQuestionsStudentController {
     private VBox answeredQuestionContainer;
 
 
+    /**
+     * Start a timer and create a separate thread on it to automatically refresh answered question list.
+     */
     public AnsweredQuestionsStudentController() {
-        // Start a timer and create a separate thread on it to automatically call retrieveQuestions()
         Timer timer = new Timer(true);
 
         AnsweredQuestionsStudentController reference = this;

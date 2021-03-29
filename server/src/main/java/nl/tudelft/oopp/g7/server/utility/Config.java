@@ -16,6 +16,10 @@ public class Config {
 
     public static int RATE_LIMIT = -1;
 
+    /**
+     * Config object that contains customizable rules.( such as amount of questions per unit time)
+     * @param file config file that will be read at the start of application
+     */
     public Config(File file) {
         try {
             if (file == null)

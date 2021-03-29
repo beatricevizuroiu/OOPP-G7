@@ -51,6 +51,10 @@ public class DemoApplication {
         return new UpvoteRepository(jdbcTemplate);
     }
 
+    /**
+     * Create a config object from the config file and then run the application.
+     * @param args command line args
+     */
     public static void main(String[] args) {
         new Config(new File("./config.yml"));
 
