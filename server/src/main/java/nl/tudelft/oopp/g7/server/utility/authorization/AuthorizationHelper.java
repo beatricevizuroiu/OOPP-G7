@@ -77,11 +77,10 @@ public class AuthorizationHelper {
      * @return Whether the User meets the given condition in a boolean.
      */
     public boolean isAuthorized(String roomId, String authorizationHeader, String ip, AuthorizationCondition condition) {
-        String token = parseAuthorizationHeader(authorizationHeader);
-        if (token == null)
+        User user = getUserFromAuthorizationHeader(authorizationHeader);
+        if (user == null) {
             return false;
-
-        User user = userRepository.getUserByToken(token);
+        }
 
         return condition.check(roomId, user, ip, banRepository, userRepository, questionRepository);
     }
