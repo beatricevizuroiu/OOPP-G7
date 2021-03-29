@@ -9,8 +9,8 @@
 <?import javafx.scene.text.TextFlow?>
 <?import javafx.geometry.Insets?>
 <HBox xmlns="http://javafx.com/javafx"
-      stylesheets="@StudentQuestion.css"
-      id="question">
+      stylesheets="@LecturerQuestion(DARKMODE).css"
+      id="lecturerQuestion">
         <padding>
                 <Insets>
                         <top>15</top>
@@ -20,15 +20,25 @@
                 </Insets>
         </padding>
         <VBox styleClass="upvoteArea">
-                <Button id="QuestionUpvoteBtn" styleClass="upvoteBtn">
-                        <graphic>
-                                <SVGPath content="M 1, 31 H 31 L 16.25,1 Z" styleClass="upvoteBtnSVG" />
-                        </graphic>
-                </Button>
+                <padding>
+                        <Insets>
+                                <top>5</top>
+                                <right>5</right>
+                                <bottom>5</bottom>
+                                <left>5</left>
+                        </Insets>
+                </padding>
                 <TextFlow textAlignment="CENTER">
                         <Text id="QuestionUpvoteCount" >
                                 <font>
-                                        <Font name="Book Antiqua" size="21.0"/>
+                                        <Font name="System" size="21.0"/>
+                                </font>
+                        </Text>
+                </TextFlow>
+                <TextFlow textAlignment="CENTER">
+                        <Text styleClass="upvoteText" text="Upvotes">
+                                <font>
+                                        <Font name="System" size="10.0" />
                                 </font>
                         </Text>
                 </TextFlow>

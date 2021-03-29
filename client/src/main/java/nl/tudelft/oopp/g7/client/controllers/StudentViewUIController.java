@@ -76,18 +76,23 @@ public class StudentViewUIController {
 
         questionNodes.clear();
 
+        String questionComponentName = EntryRoomDisplay.isDarkMode() ? "/components/StudentQuestion(DARKMODE).fxml" : "/components/StudentQuestion.fxml";
+
         try {
             for (Question question : questions) {
-                HBox questionNode = FXMLLoader.load(getClass().getResource("/components/StudentQuestion.fxml"));
+                HBox questionNode = FXMLLoader.load(getClass().getResource(questionComponentName));
 
                 Button upvoteBtn = (Button) questionNode.lookup("#QuestionUpvoteBtn");
                 Text upvoteCount = (Text) questionNode.lookup("#QuestionUpvoteCount");
                 Text body = (Text) questionNode.lookup("#QuestionText");
+                Text authorText = (Text) questionNode.lookup("#QuestionAuthor");
 
                 upvoteBtn.setOnAction((event) -> upvoteQuestion(question.getId()));
 
                 upvoteCount.setText(Integer.toString(Math.min(question.getUpvotes(), 999)));
                 body.setText(question.getText());
+
+                authorText.setText(question.getAuthorId() + " asks");
 
                 questionNodes.add(questionNode);
             }

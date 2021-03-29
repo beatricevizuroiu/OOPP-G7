@@ -70,15 +70,21 @@ public class TAViewController {
 
         questionNodes.clear();
 
+        String questionComponentName = EntryRoomDisplay.isDarkMode() ? "/components/LecturerQuestion(DARKMODE).fxml" : "/components/LecturerQuestion.fxml";
+
         try {
             for (Question question : questions) {
-                HBox questionNode = FXMLLoader.load(getClass().getResource("/components/LecturerQuestion.fxml"));
+                HBox questionNode = FXMLLoader.load(getClass().getResource(questionComponentName));
 
                 Text upvoteCount = (Text) questionNode.lookup("#QuestionUpvoteCount");
                 Text body = (Text) questionNode.lookup("#QuestionText");
+                Text authorText = (Text) questionNode.lookup("#QuestionAuthor");
 
                 upvoteCount.setText(Integer.toString(Math.min(question.getUpvotes(), 999)));
                 body.setText(question.getText());
+
+                authorText.setText(question.getAuthorId() + " asks");
+
 
                 questionNodes.add(questionNode);
             }
