@@ -12,6 +12,7 @@ import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.NewRoom;
 import nl.tudelft.oopp.g7.common.Room;
+import nl.tudelft.oopp.g7.common.RoomJoinInfo;
 
 import java.util.Date;
 
@@ -92,8 +93,10 @@ public class CreateRoomController {
             LocalData.setModeratorPassword(room.getModeratorPassword());
 
             if (true /* TODO: Check if the lecture is not scheduled */) {
-                RoomServerCommunication.joinRoom(room.getId(), room.getModeratorPassword(), lecturerName.getText());
-                
+                RoomJoinInfo roomJoinInfo = RoomServerCommunication.joinRoom(room.getId(), room.getModeratorPassword(), lecturerName.getText());
+
+                LocalData.setToken(roomJoinInfo.getAuthorization());
+
                 // Proceed to Lecturer View
                 Scene scene = EntryRoomDisplay.getCurrentScene();
                 Stage stage = EntryRoomDisplay.getCurrentStage();
@@ -146,7 +149,9 @@ public class CreateRoomController {
             LocalData.setModeratorPassword(room.getModeratorPassword());
 
             if (true /* TODO: Check if the lecture is not scheduled */) {
-                RoomServerCommunication.joinRoom(room.getId(), room.getModeratorPassword(), lecturerName.getText());
+                RoomJoinInfo roomJoinInfo = RoomServerCommunication.joinRoom(room.getId(), room.getModeratorPassword(), lecturerName.getText());
+
+                LocalData.setToken(roomJoinInfo.getAuthorization());
 
                 // Proceed to Lecturer View
                 Scene scene = EntryRoomDisplay.getCurrentScene();

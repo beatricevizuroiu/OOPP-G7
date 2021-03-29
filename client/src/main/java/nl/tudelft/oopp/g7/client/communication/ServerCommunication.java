@@ -86,7 +86,7 @@ public class ServerCommunication {
         URI uri = URI.create(uriBody + roomID + "/question/" + questionID + "/upvote");
 
         // send the upvote request and return the response
-        return HttpMethods.put(uri, "");
+        return HttpMethods.post(uri, "");
     }
 
     /**
@@ -134,7 +134,7 @@ public class ServerCommunication {
         URI uri = URI.create(uriBody + roomID + "/question/" + questionID);
 
         // send the PUT request and return the response
-        return HttpMethods.put(uri, body);
+        return HttpMethods.post(uri, body);
     }
 
     /**
