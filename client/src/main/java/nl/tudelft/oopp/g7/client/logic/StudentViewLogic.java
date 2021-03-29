@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
+import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.Question;
 
 import java.io.IOException;
@@ -30,13 +31,17 @@ public class StudentViewLogic {
 
         questionNodes.clear();
 
+        String componentName = EntryRoomDisplay.isDarkMode() ? "/components/StudentQuestion(DARKMODE).fxml" : "/components/StudentQuestion.fxml";
+
+
         try {
             for (Question question : questions) {
-                HBox questionNode = FXMLLoader.load(StudentViewLogic.class.getResource("/components/StudentQuestion.fxml"));
+                HBox questionNode = FXMLLoader.load(StudentViewLogic.class.getResource(componentName));
 
                 Button upvoteBtn = (Button) questionNode.lookup("#QuestionUpvoteBtn");
                 Text upvoteCount = (Text) questionNode.lookup("#QuestionUpvoteCount");
                 Text body = (Text) questionNode.lookup("#QuestionText");
+                Text authorText = (Text) questionNode.lookup("#QuestionAuthor");
 
                 // add event listeners for upvoting buttons
                 upvoteBtn.setOnAction((event) -> upvoteQuestion(roomID, question.getId(), questionContainer, questionList));
@@ -44,6 +49,8 @@ public class StudentViewLogic {
                 // cap the number of upvotes at 999
                 upvoteCount.setText(Integer.toString(Math.min(question.getUpvotes(), 999)));
                 body.setText(question.getText());
+
+                authorText.setText(question.getAuthorId() + " asks");
 
                 questionNodes.add(questionNode);
             }
