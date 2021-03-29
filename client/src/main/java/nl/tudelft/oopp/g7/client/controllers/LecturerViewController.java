@@ -44,7 +44,7 @@ public class LecturerViewController {
         System.out.println(roomID);
 
         // Start a timer and create a separate thread on it to automatically call retrieveQuestions()
-        Timer timer = new Timer();
+        Timer timer = new Timer(true);
 
         LecturerViewController reference = this;
         timer.schedule(new TimerTask() {
