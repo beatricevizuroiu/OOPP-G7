@@ -108,7 +108,7 @@ public class StudentViewUIController {
         if (response.statusCode() == 429) {
             Optional<String> header = response.headers().firstValue("X-Ratelimit-Expires");
             if (header.isPresent()) {
-                int timeLeft = Integer.getInteger(header.get());
+                int timeLeft = Integer.parseInt(header.get());
 
                 Alert alert = new Alert(Alert.AlertType.WARNING);
 
@@ -116,7 +116,7 @@ public class StudentViewUIController {
                 alert.setContentText("You are asking questions too fast!\n"
                             + "Time remaining until you can ask a new question: "
                             + timeLeft
-                            + " seconds");
+                            + " second(s)");
 
                 // set types of buttons for the pop-up
                 ButtonType okButton = new ButtonType ("OK");

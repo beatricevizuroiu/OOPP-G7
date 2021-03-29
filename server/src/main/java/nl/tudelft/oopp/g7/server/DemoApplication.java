@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.g7.server;
 
 import nl.tudelft.oopp.g7.server.repositories.*;
+import nl.tudelft.oopp.g7.server.utility.Config;
 import org.hibernate.sql.ordering.antlr.OrderingSpecification;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,6 +10,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.io.File;
 
 @SpringBootApplication
 public class DemoApplication {
@@ -49,6 +52,8 @@ public class DemoApplication {
     }
 
     public static void main(String[] args) {
+        new Config(new File("./config.yml"));
+
         SpringApplication.run(DemoApplication.class, args);
     }
 
