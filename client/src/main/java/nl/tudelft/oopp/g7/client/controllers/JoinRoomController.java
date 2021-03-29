@@ -8,9 +8,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.communication.RoomServerCommunication;
-import nl.tudelft.oopp.g7.client.logic.LocalData;
+import nl.tudelft.oopp.g7.client.communication.LocalData;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
-import nl.tudelft.oopp.g7.common.RoomJoinInfo;
 import nl.tudelft.oopp.g7.common.RoomJoinRequest;
 import nl.tudelft.oopp.g7.common.UserRole;
 
@@ -82,16 +81,13 @@ public class JoinRoomController {
             // Store all the entered information
             LocalData.setNickname(nickname.getText());
             LocalData.setRoomID(roomId.getText());
+            LocalData.setPassword(roomPassword.getText());
 
             Scene scene = EntryRoomDisplay.getCurrentScene();
             Stage stage = EntryRoomDisplay.getCurrentStage();
 
-            RoomJoinInfo roomJoinInfo = RoomServerCommunication.joinRoom(roomId.getText(), roomPassword.getText(), nickname.getText());
-
-            LocalData.setToken(roomJoinInfo.getAuthorization());
-
             // Send password to the server to determine whether the user is a Student or a Moderator and send the user to the right UI
-            if (roomJoinInfo.getRole() == UserRole.STUDENT) {
+            if (RoomServerCommunication.joinRoom(roomId.getText(), new RoomJoinRequest(roomPassword.getText())).getRole() == UserRole.STUDENT) {
                 EntryRoomDisplay.setCurrentScene("/StudentViewUI.fxml");
             } else {
                 EntryRoomDisplay.setCurrentScene("/TAViewUI.fxml");
@@ -133,16 +129,13 @@ public class JoinRoomController {
             // Store all the entered information
             LocalData.setNickname(nickname.getText());
             LocalData.setRoomID(roomId.getText());
+            LocalData.setPassword(roomPassword.getText());
 
             Scene scene = EntryRoomDisplay.getCurrentScene();
             Stage stage = EntryRoomDisplay.getCurrentStage();
 
-            RoomJoinInfo roomJoinInfo = RoomServerCommunication.joinRoom(roomId.getText(), roomPassword.getText(), nickname.getText());
-
-            LocalData.setToken(roomJoinInfo.getAuthorization());
-
             // Send password to the server to determine whether the user is a Student or a Moderator and send the user to the right UI
-            if (roomJoinInfo.getRole() == UserRole.STUDENT) {
+            if (RoomServerCommunication.joinRoom(roomId.getText(), new RoomJoinRequest(roomPassword.getText())).getRole() == UserRole.STUDENT) {
                 EntryRoomDisplay.setCurrentScene("/StudentViewUI(DARKMODE).fxml");
             } else {
                 EntryRoomDisplay.setCurrentScene("/TAViewUI(DARKMODE).fxml");

@@ -8,5 +8,4 @@ import lombok.NoArgsConstructor;
 @Data
 public class RoomJoinRequest {
     private String password;
-    private String nickname;
 }

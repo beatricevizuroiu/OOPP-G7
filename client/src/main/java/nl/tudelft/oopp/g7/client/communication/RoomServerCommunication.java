@@ -35,17 +35,16 @@ public class RoomServerCommunication {
 
     /**
      * Join a room if available.
-     * @param roomID ID of the room user wants to join.
-     * @param password The password the user wants to join with.
-     * @param nickname The nickname the user wants to use.
-     * @return A {@link RoomJoinInfo}
+     * @param roomID ID of the room user wants to join
+     * @param roomJoinRequest contains necessary student/moderator password
+     * @return a {@link RoomJoinInfo}
      */
-    public static RoomJoinInfo joinRoom(String roomID, String password, String nickname) {
+    public static RoomJoinInfo joinRoom(String roomID, RoomJoinRequest roomJoinRequest) {
         // create the uri
         URI uri = URI.create(uriBody + roomID + "/join");
 
         // convert roomJoinRequest to JSON
-        String jsonRoomJoinRequest = gson.toJson(new RoomJoinRequest(password, nickname));
+        String jsonRoomJoinRequest = gson.toJson(roomJoinRequest);
 
         // send the request and store the response
         HttpResponse<String> response = HttpMethods.post(uri, jsonRoomJoinRequest);

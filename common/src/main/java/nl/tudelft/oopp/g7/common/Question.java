@@ -12,7 +12,7 @@ import java.util.Date;
 @Data
 public class Question {
     private int id;
-    private String authorId;
+    private int authorId;
     private String text;
     private String answer;
     private Date postedAt;
@@ -31,7 +31,7 @@ public class Question {
         if (noNext || rs.next())
             return new Question(
                     rs.getInt("id"),
-                    rs.getString("userId"),
+                    rs.getInt("userId"),
                     rs.getString("text"),
                     rs.getString("answer"),
                     new Date(rs.getTimestamp("postedAt").getTime()),

@@ -8,11 +8,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.communication.RoomServerCommunication;
-import nl.tudelft.oopp.g7.client.logic.LocalData;
+import nl.tudelft.oopp.g7.client.communication.LocalData;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.NewRoom;
 import nl.tudelft.oopp.g7.common.Room;
-import nl.tudelft.oopp.g7.common.RoomJoinInfo;
 
 import java.util.Date;
 
@@ -92,19 +91,11 @@ public class CreateRoomController {
             LocalData.setStudentPassword(room.getStudentPassword());
             LocalData.setModeratorPassword(room.getModeratorPassword());
 
-            if (true /* TODO: Check if the lecture is not scheduled */) {
-                RoomJoinInfo roomJoinInfo = RoomServerCommunication.joinRoom(room.getId(), room.getModeratorPassword(), lecturerName.getText());
+            // Proceed to Lecturer View
+            Scene scene = EntryRoomDisplay.getCurrentScene();
+            Stage stage = EntryRoomDisplay.getCurrentStage();
 
-                LocalData.setToken(roomJoinInfo.getAuthorization());
-
-                // Proceed to Lecturer View
-                Scene scene = EntryRoomDisplay.getCurrentScene();
-                Stage stage = EntryRoomDisplay.getCurrentStage();
-
-                EntryRoomDisplay.setCurrentScene("/LecturerViewUI.fxml");
-            } else {
-                // TODO: Implement scheduled lecture UI
-            }
+            EntryRoomDisplay.setCurrentScene("/LecturerViewUI.fxml");
         }
     }
 
@@ -148,19 +139,11 @@ public class CreateRoomController {
             LocalData.setStudentPassword(room.getStudentPassword());
             LocalData.setModeratorPassword(room.getModeratorPassword());
 
-            if (true /* TODO: Check if the lecture is not scheduled */) {
-                RoomJoinInfo roomJoinInfo = RoomServerCommunication.joinRoom(room.getId(), room.getModeratorPassword(), lecturerName.getText());
+            // Proceed to Lecturer View
+            Scene scene = EntryRoomDisplay.getCurrentScene();
+            Stage stage = EntryRoomDisplay.getCurrentStage();
 
-                LocalData.setToken(roomJoinInfo.getAuthorization());
-
-                // Proceed to Lecturer View
-                Scene scene = EntryRoomDisplay.getCurrentScene();
-                Stage stage = EntryRoomDisplay.getCurrentStage();
-
-                EntryRoomDisplay.setCurrentScene("/LecturerViewUI.fxml");
-            } else {
-                // TODO: Implement scheduled lecture UI
-            }
+            EntryRoomDisplay.setCurrentScene("/LecturerViewUI(DARKMODE).fxml");
         }
     }
 }
