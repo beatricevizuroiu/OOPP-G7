@@ -191,15 +191,15 @@ public class QuestionRepository {
     public long timeSinceLastQuestionByUser(String roomId, String userId) {
         //noinspection ConstantConditions
         return jdbcTemplate.query(QUERY_MOST_RECENT_QUESTION_FROM_USER,
-                (ps) -> {
-                    ps.setString(1, roomId);
-                    ps.setString(2, userId);
-                }, (rs) -> {
-                    if (rs.next()) {
-                        return (new Date().getTime() - rs.getTimestamp("postedAt").getTime()) / 1000;
-                    }
+            (ps) -> {
+                ps.setString(1, roomId);
+                ps.setString(2, userId);
+            }, (rs) -> {
+                if (rs.next()) {
+                    return (new Date().getTime() - rs.getTimestamp("postedAt").getTime()) / 1000;
+                }
 
-                    return Long.MAX_VALUE;
-                });
+                return Long.MAX_VALUE;
+            });
     }
 }
