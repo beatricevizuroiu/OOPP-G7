@@ -183,6 +183,12 @@ public class RoomController {
                                              @RequestHeader("Authorization") String authorization,
                                              HttpServletRequest request) {
 
+        // Check if the room id field is set.
+        if (roomId == null || roomId.equals("")) {
+            // Inform that client that they did something wrong.
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         if (!authorizationHelper.isAuthorized(
                 roomId,
                 authorization,
@@ -229,6 +235,12 @@ public class RoomController {
                                                           @RequestHeader("Authorization") String authorization,
                                                           HttpServletRequest request) {
 
+        // Check if the room id field is set.
+        if (roomId == null || roomId.equals("")) {
+            // Inform that client that they did something wrong.
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         if (!authorizationHelper.isAuthorized(
                 roomId,
                 authorization,
@@ -256,6 +268,12 @@ public class RoomController {
     public ResponseEntity<SpeedAlterRequest> getRoomSpeed(@PathVariable("room_id") String roomId,
                                                           @RequestHeader("Authorization") String authorization,
                                                           HttpServletRequest request) {
+
+        // Check if the room id field is set.
+        if (roomId == null || roomId.equals("")) {
+            // Inform that client that they did something wrong.
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         if (!authorizationHelper.isAuthorized(
                 roomId,

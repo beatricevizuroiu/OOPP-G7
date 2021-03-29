@@ -50,6 +50,10 @@ public class QuestionController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Question> getQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
+        if (roomId == null || roomId.equals("")) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         if (!authorizationHelper.isAuthorized(
                 roomId,
                 authorization,
@@ -61,7 +65,7 @@ public class QuestionController {
         }
 
         // Log question request
-        logger.debug("Question with id " + id + " requested");
+        logger.debug("Question with id {} in room with id {} requested", id, roomId);
         // Get the question with the id from the database.
         Question question = questionRepository.getQuestionById(roomId, id);
 
@@ -84,6 +88,10 @@ public class QuestionController {
      */
     @GetMapping("/all")
     public ResponseEntity<List<Question>> getAllQuestions(@PathVariable("room_id") String roomId, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
+        if (roomId == null || roomId.equals("")) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         if (!authorizationHelper.isAuthorized(
                 roomId,
                 authorization,
@@ -108,6 +116,10 @@ public class QuestionController {
      */
     @PostMapping("/{id}/upvote")
     public ResponseEntity<Void> upvoteQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
+        if (roomId == null || roomId.equals("")) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         if (!authorizationHelper.isAuthorized(
                 roomId,
                 authorization,
@@ -144,6 +156,10 @@ public class QuestionController {
      */
     @DeleteMapping("/{id}/upvote")
     public ResponseEntity<Void> removeUpvoteQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
+        if (roomId == null || roomId.equals("")) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         if (!authorizationHelper.isAuthorized(
                 roomId,
                 authorization,
@@ -181,6 +197,10 @@ public class QuestionController {
      */
     @PostMapping("/{id}")
     public ResponseEntity<Void> editQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestBody QuestionText question, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
+        if (roomId == null || roomId.equals("")) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         if (!authorizationHelper.isAuthorized(
                 roomId,
                 authorization,
@@ -217,6 +237,10 @@ public class QuestionController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
+        if (roomId == null || roomId.equals("")) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         if (!authorizationHelper.isAuthorized(
                 roomId,
                 authorization,
@@ -258,6 +282,10 @@ public class QuestionController {
      */
     @PostMapping("/new")
     public ResponseEntity<Void> newQuestion(@PathVariable("room_id") String roomId, @RequestBody QuestionText newQuestion, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
+        if (roomId == null || roomId.equals("")) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         if (!authorizationHelper.isAuthorized(
                 roomId,
                 authorization,
@@ -269,7 +297,11 @@ public class QuestionController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        User user = userRepository.getUserByToken(authorization.split(" ")[1]);
+        User user = authorizationHelper.getUserFromAuthorizationHeader(authorization);
+
+        if (user == null || newQuestion == null || newQuestion.getText() == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         // Log the creation of a question
         logger.debug("A new question is being made.");
@@ -297,6 +329,10 @@ public class QuestionController {
      */
     @PostMapping("/{id}/answer")
     public ResponseEntity<Void> answerQuestion(@PathVariable("room_id") String roomId, @PathVariable int id, @RequestBody QuestionText answer, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
+        if (roomId == null || roomId.equals("")) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         if (!authorizationHelper.isAuthorized(
                 roomId,
                 authorization,
@@ -306,6 +342,10 @@ public class QuestionController {
                         new NotBanned()
                 ))) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        if (answer.getText() == null) {
+            answer.setText("");
         }
 
         // Log the answering of a question

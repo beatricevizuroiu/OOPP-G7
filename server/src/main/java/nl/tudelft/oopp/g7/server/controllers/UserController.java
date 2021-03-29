@@ -57,6 +57,19 @@ public class UserController {
                                                     @RequestHeader("Authorization") String authorization,
                                                     HttpServletRequest request) {
         logger.trace("getUserById called");
+
+        // Check if the room id field is set.
+        if (roomId == null || roomId.equals("")) {
+            // Inform that client that they did something wrong.
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        // Check if the user id field is set.
+        if (userId == null || userId.equals("")) {
+            // Inform that client that they did something wrong.
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         if (!authorizationHelper.isAuthorized(
                 roomId,
                 authorization,
@@ -92,6 +105,18 @@ public class UserController {
                                                           HttpServletRequest request) {
         logger.trace("getUpvotesByUser called");
 
+        // Check if the room id field is set.
+        if (roomId == null || roomId.equals("")) {
+            // Inform that client that they did something wrong.
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        // Check if the user id field is set.
+        if (userId == null || userId.equals("")) {
+            // Inform that client that they did something wrong.
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         if (!authorizationHelper.isAuthorized(
                 roomId,
                 authorization,
@@ -119,6 +144,12 @@ public class UserController {
                                                             @RequestHeader("Authorization") String authorization,
                                                             HttpServletRequest request) {
         logger.trace("getAllUserInRoom called");
+
+        // Check if the room id field is set.
+        if (roomId == null || roomId.equals("")) {
+            // Inform that client that they did something wrong.
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         if (!authorizationHelper.isAuthorized(
                 roomId,
@@ -159,6 +190,18 @@ public class UserController {
 
         logger.trace("banUserById called");
 
+        // Check if the room id field is set.
+        if (roomId == null || roomId.equals("")) {
+            // Inform that client that they did something wrong.
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        // Check if the user id field is set.
+        if (userId == null || userId.equals("")) {
+            // Inform that client that they did something wrong.
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         if (!authorizationHelper.isAuthorized(
                 roomId,
                 authorization,
@@ -175,10 +218,6 @@ public class UserController {
 
         if (reason.getReason() == null || reason.getReason().equalsIgnoreCase("")) {
             reason.setReason(DEFAULT_BAN_REASON);
-        }
-
-        if(userId == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         int linesChanged = banRepository.banUser(roomId, user.getIp(), reason.getReason());
