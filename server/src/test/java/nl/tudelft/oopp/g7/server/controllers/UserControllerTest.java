@@ -135,10 +135,10 @@ class UserControllerTest {
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals(1, jdbcTemplate.query(QUERY_CHECK_BANNED,
-                ps -> ps.setString(1, "127.10.0.1"),
-                (ResultSetExtractor<Integer>) rs -> {
-                    rs.next();
-                    return rs.getInt(1);
-                }));
+            ps -> ps.setString(1, "127.10.0.1"),
+            (ResultSetExtractor<Integer>) rs -> {
+                rs.next();
+                return rs.getInt(1);
+            }));
     }
 }
