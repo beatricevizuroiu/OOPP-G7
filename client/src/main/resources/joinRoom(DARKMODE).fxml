@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <AnchorPane prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #15041A;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.JoinRoomController">
     <children>
         <Text fill="WHITE" layoutX="315.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Join Room">
@@ -31,7 +30,16 @@
                 <Font name="Book Antiqua Bold" size="13.0" />
             </font>
         </Button>
-        <Button layoutX="14.0" layoutY="23.0" mnemonicParsing="false" onAction="#handleButtonMode2" style="-fx-background-color: #360A41;" text="Mode" textFill="WHITE">
+        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBackButtonDark" style="-fx-background-color: #360A41;">
+            <graphic>
+                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@back.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Button layoutX="714.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonMode" style="-fx-background-color: #360A41;" text="Mode" textFill="WHITE">
             <graphic>
                 <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                     <image>

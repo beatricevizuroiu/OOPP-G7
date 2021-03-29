@@ -89,31 +89,6 @@ public class LecturerViewController {
         questionList.setVvalue(scrollHeight + 0);
     }
 
-    /**
-     * Handle button action for going back to lecturer view (light).
-     *
-     * @param event the event
-     */
-    public void goBackButtonLight(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
-        // if goBack is clicked, change Scene to LecturerViewUI
-        EntryRoomDisplay.setCurrentScene("/LecturerViewUI.fxml");
-    }
-
-    /**
-     * Handle button action for going back to lecturer view (dark).
-     *
-     * @param event the event
-     */
-    public void goBackButtonDark(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
-        // if goBack is clicked, change Scene to LecturerViewUI
-        EntryRoomDisplay.setCurrentScene("/LecturerViewUI(DARKMODE).fxml");
-    }
 
     /**
      * Handle button action for button Mode from Light to Dark.
@@ -151,7 +126,7 @@ public class LecturerViewController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/HelpFileModerator.fxml");
+        EntryRoomDisplay.setCurrentScene("/HelpFileLecturer.fxml");
     }
 
     /**
@@ -164,7 +139,7 @@ public class LecturerViewController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/HelpFileModerator(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/HelpFileLecturer(DARKMODE).fxml");
     }
 
     /**

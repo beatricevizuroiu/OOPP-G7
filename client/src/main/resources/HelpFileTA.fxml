@@ -5,12 +5,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane minHeight="450" minWidth="750" stylesheets="@UIstyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.HelpFileController">
+<GridPane minHeight="640" minWidth="750" stylesheets="@UIstyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.HelpFileController">
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" minWidth="128.0" />
         <ColumnConstraints hgrow="SOMETIMES" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" />
-      <ColumnConstraints />
+        <ColumnConstraints />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints minHeight="75.0" vgrow="NEVER" />
@@ -19,7 +19,7 @@
     </rowConstraints>
 
     <HBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
-        <Button layoutX="14.0" layoutY="72.0" mnemonicParsing="false" onAction="#handleBackButtonStudent">
+        <Button layoutX="14.0" layoutY="72.0" mnemonicParsing="false" onAction="#handleBackButtonTA">
             <graphic>
                 <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -49,23 +49,28 @@
         </items></SplitPane>
 
     <ScrollPane fx:id="questionList" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
-        <VBox fx:id="questionContainer" prefHeight="267.0" prefWidth="653.0">
+        <VBox fx:id="questionContainer" prefHeight="350.0" prefWidth="653.0">
             <children>
                 <Text fill="#15041a" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello user," wrappingWidth="120.13670349121094">
                     <font>
                         <Font name="Book Antiqua" size="20.0" />
                     </font></Text>
-                <Text fill="#15041a" strokeType="OUTSIDE" strokeWidth="0.0" text="This is an application for students to ask questions during lectures. A simple process of how this aplication works is the following: Students ask questions, other students upvote questions that they find relevant and the Lecturer will answer them live. There are also TAs that moderate the questions and some of them will receive a short answer from the TA if the number of upvotes is low and it does not require an in depth answer. As a Student, you can also inform the Lecturer if the r" wrappingWidth="734.13671875">
+                <Text fill="#15041a" strokeType="OUTSIDE" strokeWidth="0.0" text="This is an application for students to ask questions during lectures. A simple process of how this application works is the following: Students ask questions, other students upvote questions that they find relevant and the Lecturer will answer them live. You, as  Moderator can give a short answer to questions that do not require an in depth one. You can also mark questions as answered and they will automatically move to a separate list of answered questions. As a Moderator, you should answer questions in text from the answered questions list so that at the end of the lecture it will be easier for the Lecturer to export the list of questions and answers." wrappingWidth="734.13671875">
                     <font>
                         <Font name="Book Antiqua" size="20.0" />
                     </font>
                 </Text>
-                <Text fill="#15041a" strokeType="OUTSIDE" strokeWidth="0.0" text="At the end of the lecture, the Lecturer will export a file containing all the questions and answers for all the question asked during the lecture." wrappingWidth="734.6816558837891">
+                <Text fill="#15041a" strokeType="OUTSIDE" strokeWidth="0.0" text="At the end of the lecture, as the Lecturer you should export a file containing all the questions and answers for all the question asked during the lecture." wrappingWidth="734.6816558837891">
                     <font>
                         <Font name="Book Antiqua" size="20.0" />
                     </font>
                 </Text>
-                <Text fill="#15041a" strokeType="OUTSIDE" strokeWidth="0.0" text="In this application, you can change the mode from Light to Dark (with colors accessible to all types of color blindness as well) by simply clicking the Mode button available in the left part of the screen. In the upper part of the screen, you have a human buttun that when clicked will list you all the participants, as well as a check button that when pressed will show you the list of answered questions (with no answer unless answered by the TAs). " wrappingWidth="734.6816558837891">
+                <Text fill="#15041a" strokeType="OUTSIDE" strokeWidth="0.0" text="As a Moderator, you can edit/delete questions, ban Students who ask inappropriate questions, timeout Students who spam or block suspicious users. You can also create polls by simply clicking the Poll button in the upper right corner. As a Lecturer, you can also see if you are going too slow/too fast by glancing at the 5 dots in the left part of the page." wrappingWidth="734.6816558837891">
+                    <font>
+                        <Font name="Book Antiqua" size="20.0" />
+                    </font>
+                </Text>
+                <Text fill="#15041a" strokeType="OUTSIDE" strokeWidth="0.0" text="In this application, you can change the mode from Light to Dark (with colors accessible to all types of color blindness as well) by simply clicking the Mode button available in the left part of the screen. In the upper part of the screen, you have a human button that when clicked will list you all the participants, a check button that when pressed will show you the list of answered questions (with no answer unless answered by the TAs)." wrappingWidth="734.6816558837891">
                     <font>
                         <Font name="Book Antiqua" size="20.0" />
                     </font>
