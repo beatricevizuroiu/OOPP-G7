@@ -6,8 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.ZoneId;
+import java.util.*;
 
 public class QuestionRepository {
 
@@ -38,6 +38,7 @@ public class QuestionRepository {
     private static final String QUERY_ANSWER_QUESTION = "UPDATE questions SET answer=?, answered=true WHERE id=? AND roomID=?;";
     private static final String QUERY_EDIT_QUESTION = "UPDATE questions SET text=?, edited=true WHERE id=? AND roomID=?;";
     private static final String QUERY_DELETE_QUESTION = "DELETE FROM questions WHERE id=? AND roomID=?;";
+    private static final String QUERY_MOST_RECENT_QUESTION_FROM_USER = "SELECT * FROM questions WHERE roomID=? AND userID=? ORDER BY postedAt DESC LIMIT 1;";
 
     /**
      * Primary constructor for the QuestionRepository class.
@@ -179,5 +180,20 @@ public class QuestionRepository {
                 // Set the third variable in the PreparedStatement to the room id.
                 ps.setString(3, roomId);
             });
+    }
+
+    public long timeSinceLastQuestionByUser(String roomId, String userId) {
+        //noinspection ConstantConditions
+        return jdbcTemplate.query(QUERY_MOST_RECENT_QUESTION_FROM_USER,
+                (ps) -> {
+                    ps.setString(1, roomId);
+                    ps.setString(2, userId);
+                }, (rs) -> {
+                    if (rs.next()) {
+                        return (new Date().getTime() - rs.getTimestamp("postedAt").getTime()) / 1000;
+                    }
+
+                    return Long.MAX_VALUE;
+                });
     }
 }

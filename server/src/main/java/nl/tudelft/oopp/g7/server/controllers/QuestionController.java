@@ -6,10 +6,12 @@ import nl.tudelft.oopp.g7.common.User;
 import nl.tudelft.oopp.g7.server.repositories.QuestionRepository;
 import nl.tudelft.oopp.g7.server.repositories.UpvoteRepository;
 import nl.tudelft.oopp.g7.server.repositories.UserRepository;
+import nl.tudelft.oopp.g7.server.utility.Config;
 import nl.tudelft.oopp.g7.server.utility.authorization.AuthorizationHelper;
 import nl.tudelft.oopp.g7.server.utility.authorization.conditions.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -301,6 +303,13 @@ public class QuestionController {
 
         if (user == null || newQuestion == null || newQuestion.getText() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        long lastQuestionAsked = questionRepository.timeSinceLastQuestionByUser(roomId, user.getId());
+        if (Config.RATE_LIMIT > lastQuestionAsked) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("X-Ratelimit-Expires", Long.toString(Config.RATE_LIMIT - lastQuestionAsked));
+            return new ResponseEntity<>(headers, HttpStatus.TOO_MANY_REQUESTS);
         }
 
         // Log the creation of a question

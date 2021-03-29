@@ -6,9 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -20,8 +18,11 @@ import nl.tudelft.oopp.g7.client.logic.StudentViewLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
+
 import java.io.IOException;
+import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -74,7 +75,31 @@ public class StudentViewUIController {
      * Send question.
      */
     public void sendQuestion() {
-        StudentServerCommunication.askQuestion(roomID, new QuestionText(answerBox.getText()));
+        HttpResponse<String> response = StudentServerCommunication.askQuestion(roomID, new QuestionText(answerBox.getText()));
+        if (response.statusCode() == 429) {
+            Optional<String> header = response.headers().firstValue("X-Ratelimit-Expires");
+            if (header.isPresent()) {
+                int timeLeft = Integer.parseInt(header.get());
+
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+
+                // body of pop-up with what the user entered
+                alert.setContentText("You are asking questions too fast!\n"
+                            + "Time remaining until you can ask a new question: "
+                            + timeLeft
+                            + " second(s)");
+
+                // set types of buttons for the pop-up
+                ButtonType okButton = new ButtonType ("OK");
+
+                alert.getButtonTypes().setAll(okButton);
+
+                // wait for the alert to appear
+                alert.showAndWait();
+                return;
+            }
+            System.err.println("A ratelimit status was returned but the rate limit header does not exist!");
+        }
         answerBox.setText("");
         retrieveQuestions();
     }
