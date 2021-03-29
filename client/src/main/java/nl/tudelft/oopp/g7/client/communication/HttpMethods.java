@@ -1,7 +1,5 @@
 package nl.tudelft.oopp.g7.client.communication;
 
-import nl.tudelft.oopp.g7.client.logic.LocalData;
-
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -16,23 +14,15 @@ public class HttpMethods {
      * @param request HttpRequest object that contains appropriate information.
      * @return response's status code
      */
-    public static HttpResponse<String> send(HttpRequest.Builder request) {
+    public static HttpResponse<String> send(HttpRequest request) {
         // object that will hold the response
         HttpResponse<String> response = null;
 
-        if (LocalData.getToken() == null) {
-            System.err.println("No authorization token found.");
-            return null;
-        }
-
-        request.setHeader("Authorization", "Bearer " + LocalData.getToken());
-
         try {
             // send the request through client and store the result in response
-            response = httpClient.send(request.build(), HttpResponse.BodyHandlers.ofString());
+            response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) { // any exception means there was a problem
             System.out.println("Communication with server failed.");
-            e.printStackTrace();
         }
 
         return response;
@@ -45,7 +35,7 @@ public class HttpMethods {
      */
     public static HttpResponse<String> get(URI uri) {
         // create the GET request
-        HttpRequest.Builder request =  HttpRequest.newBuilder().GET().uri(uri);
+        HttpRequest request =  HttpRequest.newBuilder().GET().uri(uri).build();
         // send the request through the http client and store the response
         HttpResponse<String> response = send(request);
 
@@ -65,8 +55,9 @@ public class HttpMethods {
      */
     public static HttpResponse<String> post(URI uri, String body) {
         // create a POST request object with a body of JSON
-        HttpRequest.Builder request = HttpRequest.newBuilder().POST(HttpRequest.BodyPublishers.ofString(body))
-                                         .uri(uri).header("Content-Type", "application/json");
+        HttpRequest request = HttpRequest.newBuilder().POST(HttpRequest.BodyPublishers.ofString(body))
+                                         .uri(uri).header("Content-Type", "application/json")
+                                         .build();
         // send the request through the http client and store the response
         HttpResponse<String> response = send(request);
 
@@ -85,8 +76,9 @@ public class HttpMethods {
      */
     public static HttpResponse<String> put(URI uri, String body) {
         // create a PUT request object with a body of JSON
-        HttpRequest.Builder request = HttpRequest.newBuilder().PUT(HttpRequest.BodyPublishers.ofString(body))
-                                         .uri(uri).header("Content-Type", "application/json");
+        HttpRequest request = HttpRequest.newBuilder().PUT(HttpRequest.BodyPublishers.ofString(body))
+                                         .uri(uri).header("Content-Type", "application/json")
+                                         .build();
         // send the request through the http client and store the response
         HttpResponse<String> response = send(request);
 
@@ -106,8 +98,9 @@ public class HttpMethods {
      */
     public static HttpResponse<String> delete(URI uri) {
         // create a DELETE request object, the deleted resource will have a JSON body
-        HttpRequest.Builder request = HttpRequest.newBuilder().DELETE()
-                                         .uri(uri).header("Content-Type", "application/json");
+        HttpRequest request = HttpRequest.newBuilder().DELETE()
+                                         .uri(uri).header("Content-Type", "application/json")
+                                         .build();
         // send the request through the http client and store the response
         HttpResponse<String> response = send(request);
 
