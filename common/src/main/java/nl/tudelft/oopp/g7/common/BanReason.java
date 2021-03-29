@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor @NoArgsConstructor
 @Data
-public class RoomJoinRequest {
-    private String password;
-    private String nickname;
+public class BanReason {
+    private String reason;
 }
