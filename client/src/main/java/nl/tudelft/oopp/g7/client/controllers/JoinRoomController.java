@@ -59,9 +59,7 @@ public class JoinRoomController {
         if (isConfirmed) {
 
             // Store all the entered information
-            LocalData.setNickname(nickname.getText());
-            LocalData.setRoomID(roomId.getText());
-            LocalData.setPassword(roomPassword.getText());
+            JoinRoomLogic.joinRoomStoreLocalData(nickname, roomId, roomPassword);
 
             Scene scene = EntryRoomDisplay.getCurrentScene();
             Stage stage = EntryRoomDisplay.getCurrentStage();
@@ -86,9 +84,7 @@ public class JoinRoomController {
         if (isConfirmed) {
 
             // Store all the entered information
-            LocalData.setNickname(nickname.getText());
-            LocalData.setRoomID(roomId.getText());
-            LocalData.setPassword(roomPassword.getText());
+            JoinRoomLogic.joinRoomStoreLocalData(nickname, roomId, roomPassword);
 
             Scene scene = EntryRoomDisplay.getCurrentScene();
             Stage stage = EntryRoomDisplay.getCurrentStage();

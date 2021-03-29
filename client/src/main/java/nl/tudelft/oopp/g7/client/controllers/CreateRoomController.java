@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import nl.tudelft.oopp.g7.client.communication.LocalData;
 import nl.tudelft.oopp.g7.client.communication.RoomServerCommunication;
 import nl.tudelft.oopp.g7.client.logic.CreateRoomLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
@@ -24,7 +23,6 @@ public class CreateRoomController {
     @FXML
     TextField moderatorPassword;
 
-    //TODO: change the function names and documentation
     /**
      * Handle button action for button Mode from Light.
      *
@@ -55,7 +53,6 @@ public class CreateRoomController {
      * Handles clicking the button Create from Light.
      */
     public void buttonClicked() {
-        //TODO: separate the duplicates to another function
 
         // pop-up an alert to confirm creating the room
         boolean isConfirmed = CreateRoomLogic.createRoomConfirmation(lecturerName, roomName);
@@ -68,16 +65,13 @@ public class CreateRoomController {
             Room room = RoomServerCommunication.createRoom(newRoom);
 
             // Store all relevant room information for future reference
-            LocalData.setNickname(lecturerName.getText());
-            LocalData.setRoomID(room.getId());
-            LocalData.setStudentPassword(room.getStudentPassword());
-            LocalData.setModeratorPassword(room.getModeratorPassword());
+            CreateRoomLogic.createRoomStoreLocalData(lecturerName, room);
 
             // Proceed to Lecturer View
             Scene scene = EntryRoomDisplay.getCurrentScene();
             Stage stage = EntryRoomDisplay.getCurrentStage();
 
-            EntryRoomDisplay.setCurrentScene("/LecturerViewUI(DARKMODE).fxml");
+            EntryRoomDisplay.setCurrentScene("/LecturerViewUI.fxml");
         }
     }
 
@@ -96,10 +90,7 @@ public class CreateRoomController {
             Room room = RoomServerCommunication.createRoom(newRoom);
 
             // Store all relevant room information for future reference
-            LocalData.setNickname(lecturerName.getText());
-            LocalData.setRoomID(room.getId());
-            LocalData.setStudentPassword(room.getStudentPassword());
-            LocalData.setModeratorPassword(room.getModeratorPassword());
+            CreateRoomLogic.createRoomStoreLocalData(lecturerName, room);
 
             // Proceed to Lecturer View
             Scene scene = EntryRoomDisplay.getCurrentScene();

@@ -5,6 +5,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import nl.tudelft.oopp.g7.client.communication.LocalData;
 import nl.tudelft.oopp.g7.common.Room;
+import org.w3c.dom.Text;
 
 public class JoinRoomLogic {
     public static boolean joinRoomConfirmation(TextField nickname, TextField roomId) {
@@ -33,5 +34,11 @@ public class JoinRoomLogic {
 
         // return whether the user pressed OK or not
         return alert.getResult() == okButton;
+    }
+
+    public static void joinRoomStoreLocalData(TextField nickname, TextField roomId, TextField roomPassword) {
+        LocalData.setNickname(nickname.getText());
+        LocalData.setRoomID(roomId.getText());
+        LocalData.setPassword(roomPassword.getText());
     }
 }

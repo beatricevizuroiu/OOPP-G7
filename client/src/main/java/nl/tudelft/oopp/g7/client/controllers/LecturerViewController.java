@@ -14,6 +14,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.communication.ModeratorServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.LocalData;
+import nl.tudelft.oopp.g7.client.logic.ModeratorViewLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.Question;
 
@@ -64,27 +65,8 @@ public class LecturerViewController {
         // Store the current position of the user in the scroll list
         double scrollHeight = questionList.getVvalue();
 
-        // list of questions containing the questions received from the server
-        List<Question> questions = ModeratorServerCommunication.retrieveAllQuestions(roomID);
-        List<Node> questionNodes = questionContainer.getChildren();
-
-        questionNodes.clear();
-
-        try {
-            for (Question question : questions) {
-                HBox questionNode = FXMLLoader.load(getClass().getResource("/components/LecturerQuestion.fxml"));
-
-                Text upvoteCount = (Text) questionNode.lookup("#QuestionUpvoteCount");
-                Text body = (Text) questionNode.lookup("#QuestionText");
-
-                upvoteCount.setText(Integer.toString(Math.min(question.getUpvotes(), 999)));
-                body.setText(question.getText());
-
-                questionNodes.add(questionNode);
-            }
-        } catch (IOException ignored) {
-            System.err.println("A problem occurred.");
-        }
+        // Retrieve all of the questions and then put them into question pane
+        ModeratorViewLogic.retrieveAllQuestions(roomID, questionContainer);
 
         // Store the current position of the user in the scroll list
         questionList.setVvalue(scrollHeight + 0);

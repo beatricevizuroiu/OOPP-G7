@@ -33,4 +33,11 @@ public class CreateRoomLogic {
         // return whether the user pressed OK or not
         return alert.getResult() == okButton;
     }
+
+    public static void createRoomStoreLocalData(TextField lecturerName, Room room) {
+        LocalData.setNickname(lecturerName.getText());
+        LocalData.setRoomID(room.getId());
+        LocalData.setStudentPassword(room.getStudentPassword());
+        LocalData.setModeratorPassword(room.getModeratorPassword());
+    }
 }
