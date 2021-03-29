@@ -13,6 +13,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
+import nl.tudelft.oopp.g7.client.logic.ModeratorViewLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.Question;
 
@@ -26,7 +27,6 @@ public class TAViewController {
     private final String nickname;
     private final String moderatorPassword;
     private final String studentPassword;
-    private int i = 0;
 
     @FXML
     public ScrollPane questionList;
@@ -60,34 +60,8 @@ public class TAViewController {
      * Retrieve all questions to List sorted by new.
      */
     public void retrieveQuestions() {
-
-        // Store the current position of the user in the scroll list
-        double scrollHeight = questionList.getVvalue();
-
-        // list of questions containing the questions received from the server
-        List<Question> questions = StudentServerCommunication.retrieveAllQuestions(roomID);
-        List<Node> questionNodes = questionContainer.getChildren();
-
-        questionNodes.clear();
-
-        try {
-            for (Question question : questions) {
-                HBox questionNode = FXMLLoader.load(getClass().getResource("/components/LecturerQuestion.fxml"));
-
-                Text upvoteCount = (Text) questionNode.lookup("#QuestionUpvoteCount");
-                Text body = (Text) questionNode.lookup("#QuestionText");
-
-                upvoteCount.setText(Integer.toString(Math.min(question.getUpvotes(), 999)));
-                body.setText(question.getText());
-
-                questionNodes.add(questionNode);
-            }
-        } catch (IOException ignored) {
-            System.err.println("A problem occurred");
-        }
-
-        // Return the user to their original position in the scroll list
-        questionList.setVvalue(scrollHeight + 0);
+        // Retrieve all of the questions and then put them into question pane
+        ModeratorViewLogic.retrieveAllQuestions(roomID, questionContainer, questionList);
     }
 
     /**

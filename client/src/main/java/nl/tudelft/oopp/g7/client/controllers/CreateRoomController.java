@@ -3,12 +3,11 @@ package nl.tudelft.oopp.g7.client.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.communication.RoomServerCommunication;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
+import nl.tudelft.oopp.g7.client.logic.CreateRoomLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.NewRoom;
 import nl.tudelft.oopp.g7.common.Room;
@@ -57,40 +56,18 @@ public class CreateRoomController {
      */
     public void buttonClicked() {
 
-        // show confirmation type pop-up with what you entered as text
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-
-        // title of pop-up
-        alert.setTitle("Create Room");
-        alert.setHeaderText(null);
-
-        // body of pop-up with what the user entered
-        alert.setContentText("You are creating the room for Course: " + roomName.getText()
-                + " held by lecturer: "
-                + lecturerName.getText()
-                + ".");
-
-        // set types of buttons for the pop-up
-        ButtonType okButton = new ButtonType ("OK");
-        ButtonType cancelButton = new ButtonType ("Cancel");
-
-        alert.getButtonTypes().setAll(okButton, cancelButton);
-
-        // wait for the alert to appear
-        alert.showAndWait();
+        // pop-up an alert to confirm creating the room
+        boolean isConfirmed = CreateRoomLogic.createRoomConfirmation(lecturerName, roomName);
 
         // if the user presses OK, the go to Lecturer View
-        if (alert.getResult() == okButton){
+        if (isConfirmed){
 
             // Put all information for a new room in a NewRoom object and send it to the server to have it create the room
             NewRoom newRoom = new NewRoom(roomName.getText(), studentPassword.getText(), moderatorPassword.getText(), new Date());
             Room room = RoomServerCommunication.createRoom(newRoom);
 
             // Store all relevant room information for future reference
-            LocalData.setNickname(lecturerName.getText());
-            LocalData.setRoomID(room.getId());
-            LocalData.setStudentPassword(room.getStudentPassword());
-            LocalData.setModeratorPassword(room.getModeratorPassword());
+            CreateRoomLogic.createRoomStoreLocalData(lecturerName, room);
 
             if (true /* TODO: Check if the lecture is not scheduled */) {
                 RoomJoinInfo roomJoinInfo = RoomServerCommunication.joinRoom(room.getId(), room.getModeratorPassword(), lecturerName.getText());
@@ -112,41 +89,18 @@ public class CreateRoomController {
      * Handles clicking the button Create from Dark.
      */
     public void buttonClicked2() {
-
-        // show confirmation type pop-up with what you entered as text
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-
-        // title of pop-up
-        alert.setTitle("Create Room");
-        alert.setHeaderText(null);
-
-        // body of pop-up with what the user entered
-        alert.setContentText("You are creating the room for Course: " + roomName.getText()
-                + " held by lecturer: "
-                + lecturerName.getText()
-                + ".");
-
-        // set types of buttons for the pop-up
-        ButtonType okButton = new ButtonType ("OK");
-        ButtonType cancelButton = new ButtonType ("Cancel");
-
-        alert.getButtonTypes().setAll(okButton, cancelButton);
-
-        // wait for the alert to appear
-        alert.showAndWait();
+        // pop-up an alert to confirm creating the room
+        boolean isConfirmed = CreateRoomLogic.createRoomConfirmation(lecturerName, roomName);
 
         // if the user presses OK, the go to Lecturer View
-        if (alert.getResult() == okButton){
+        if (isConfirmed){
 
             // Put all information for a new room in a NewRoom object and send it to the server to have it create the room
             NewRoom newRoom = new NewRoom(roomName.getText(), studentPassword.getText(), moderatorPassword.getText(), new Date());
             Room room = RoomServerCommunication.createRoom(newRoom);
 
             // Store all relevant room information for future reference
-            LocalData.setNickname(lecturerName.getText());
-            LocalData.setRoomID(room.getId());
-            LocalData.setStudentPassword(room.getStudentPassword());
-            LocalData.setModeratorPassword(room.getModeratorPassword());
+            CreateRoomLogic.createRoomStoreLocalData(lecturerName, room);
 
             if (true /* TODO: Check if the lecture is not scheduled */) {
                 RoomJoinInfo roomJoinInfo = RoomServerCommunication.joinRoom(room.getId(), room.getModeratorPassword(), lecturerName.getText());
