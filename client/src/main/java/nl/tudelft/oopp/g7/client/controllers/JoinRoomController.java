@@ -142,4 +142,30 @@ public class JoinRoomController {
             }
         }
     }
+
+    /**
+     * Handle button action for going back to Entry page from Light.
+     *
+     * @param event the event
+     */
+    public void handleBackButton(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if goBack is clicked, change Scene to LecturerViewUI
+        EntryRoomDisplay.setCurrentScene("/entryPage.fxml");
+    }
+
+    /**
+     * Handle button action for going back to Entry page from Dark.
+     *
+     * @param event the event
+     */
+    public void handleBackButtonDark(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if goBack is clicked, change Scene to LecturerViewUI
+        EntryRoomDisplay.setCurrentScene("/entryPage(DARKMODE).fxml");
+    }
 }

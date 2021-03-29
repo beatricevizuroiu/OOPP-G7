@@ -89,31 +89,6 @@ public class LecturerViewController {
         questionList.setVvalue(scrollHeight + 0);
     }
 
-    /**
-     * Handle button action for going back to lecturer view (light).
-     *
-     * @param event the event
-     */
-    public void handleBackButton(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
-        // if goBack is clicked, change Scene to LecturerViewUI
-        EntryRoomDisplay.setCurrentScene("/LecturerViewUI.fxml");
-    }
-
-    /**
-     * Handle button action for going back to lecturer view (dark).
-     *
-     * @param event the event
-     */
-    public void handleBackButtonDark(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
-        // if goBack is clicked, change Scene to LecturerViewUI
-        EntryRoomDisplay.setCurrentScene("/LecturerViewUI(DARKMODE).fxml");
-    }
 
     /**
      * Handle button action for button Mode from Light to Dark.
