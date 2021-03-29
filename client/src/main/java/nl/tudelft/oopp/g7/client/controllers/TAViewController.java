@@ -27,7 +27,6 @@ public class TAViewController {
     private final String nickname;
     private final String moderatorPassword;
     private final String studentPassword;
-    private int i = 0;
 
     @FXML
     public ScrollPane questionList;
@@ -61,15 +60,8 @@ public class TAViewController {
      * Retrieve all questions to List sorted by new.
      */
     public void retrieveQuestions() {
-
-        // Store the current position of the user in the scroll list
-        double scrollHeight = questionList.getVvalue();
-
         // Retrieve all of the questions and then put them into question pane
-        ModeratorViewLogic.retrieveAllQuestions(roomID, questionContainer);
-
-        // Return the user to their original position in the scroll list
-        questionList.setVvalue(scrollHeight + 0);
+        ModeratorViewLogic.retrieveAllQuestions(roomID, questionContainer, questionList);
     }
 
     /**

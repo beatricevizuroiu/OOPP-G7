@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.LocalData;
+import nl.tudelft.oopp.g7.client.logic.StudentViewLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
@@ -62,44 +63,14 @@ public class StudentViewUIController {
             public void run() {
                 Platform.runLater(reference::retrieveQuestions);
             }
-        }, 0L, 2500L);
+        }, 0L, 500L);
     }
 
     /**
      * Retrieve all questions to List sorted by new.
      */
     public void retrieveQuestions() {
-
-        // Store the current position of the user in the scroll list
-        double scrollHeight = questionList.getVvalue();
-
-        // list of questions containing the questions received from the server
-        List<Question> questions = StudentServerCommunication.retrieveAllQuestions(roomID);
-        List<Node> questionNodes = questionContainer.getChildren();
-
-        questionNodes.clear();
-
-        try {
-            for (Question question : questions) {
-                HBox questionNode = FXMLLoader.load(getClass().getResource("/components/StudentQuestion.fxml"));
-
-                Button upvoteBtn = (Button) questionNode.lookup("#QuestionUpvoteBtn");
-                Text upvoteCount = (Text) questionNode.lookup("#QuestionUpvoteCount");
-                Text body = (Text) questionNode.lookup("#QuestionText");
-
-                upvoteBtn.setOnAction((event) -> upvoteQuestion(question.getId()));
-
-                upvoteCount.setText(Integer.toString(Math.min(question.getUpvotes(), 999)));
-                body.setText(question.getText());
-
-                questionNodes.add(questionNode);
-            }
-        } catch (IOException ignored) {
-            System.err.println("A problem occurred.");
-        }
-
-        // Return the user to their original position in the scroll list
-        questionList.setVvalue(scrollHeight + 0);
+        StudentViewLogic.retrieveAllQuestions(roomID, questionContainer, questionList);
     }
 
     /**
@@ -116,8 +87,7 @@ public class StudentViewUIController {
      * @param questionId the id of the question that is being upvoted
      */
     public void upvoteQuestion(int questionId) {
-        ServerCommunication.upvoteQuestion(roomID, questionId);
-        retrieveQuestions();
+        StudentViewLogic.upvoteQuestion(roomID, questionId, questionContainer, questionList);
     }
 
     /**

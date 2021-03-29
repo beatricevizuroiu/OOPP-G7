@@ -3,23 +3,14 @@ package nl.tudelft.oopp.g7.client.controllers;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import nl.tudelft.oopp.g7.client.communication.ModeratorServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.LocalData;
 import nl.tudelft.oopp.g7.client.logic.ModeratorViewLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
-import nl.tudelft.oopp.g7.common.Question;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -61,15 +52,8 @@ public class LecturerViewController {
      * Update the list of questions sorted by most upvotes.
      */
     public void retrieveQuestions() {
-
-        // Store the current position of the user in the scroll list
-        double scrollHeight = questionList.getVvalue();
-
         // Retrieve all of the questions and then put them into question pane
-        ModeratorViewLogic.retrieveAllQuestions(roomID, questionContainer);
-
-        // Store the current position of the user in the scroll list
-        questionList.setVvalue(scrollHeight + 0);
+        ModeratorViewLogic.retrieveAllQuestions(roomID, questionContainer, questionList);
     }
 
     /**

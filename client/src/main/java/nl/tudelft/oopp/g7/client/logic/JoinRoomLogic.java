@@ -8,6 +8,12 @@ import nl.tudelft.oopp.g7.common.Room;
 import org.w3c.dom.Text;
 
 public class JoinRoomLogic {
+    /**
+     * Create pop-up confirming joining a room.
+     * @param nickname TextField in which user's name is written
+     * @param roomId TextField in which id of the room user wants to join is written
+     * @return a boolean confirming whether the user pressed OK or cancel
+     */
     public static boolean joinRoomConfirmation(TextField nickname, TextField roomId) {
         // show confirmation type pop-up with what you entered as text
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -36,6 +42,12 @@ public class JoinRoomLogic {
         return alert.getResult() == okButton;
     }
 
+    /**
+     * Stores the room/user information into a local static class.
+     * @param nickname TextField in which user's name is written
+     * @param roomId TextField in which id of the room user wants to join is written
+     * @param roomPassword TextField in which the appropriate password (student/moderator) is written
+     */
     public static void joinRoomStoreLocalData(TextField nickname, TextField roomId, TextField roomPassword) {
         LocalData.setNickname(nickname.getText());
         LocalData.setRoomID(roomId.getText());
