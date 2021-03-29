@@ -90,11 +90,11 @@ public class HelpFileController {
      *
      * @param event the event
      */
-    public void handleButtonMode(ActionEvent event) {
+    public void handleButtonModeStudent(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
-        // if Mode is clicked, change Scene to Join Room
+        // if Mode is clicked, change Scene to student dark mode
         EntryRoomDisplay.setCurrentScene("/HelpFileStudent(DARKMODE).fxml");
     }
 
@@ -103,37 +103,63 @@ public class HelpFileController {
      *
      * @param event the event
      */
-    public void handleButtonMode2(ActionEvent event) {
+    public void handleButtonModeStudentDark(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
-        // if Mode is clicked, change Scene to Join Room
+        // if Mode is clicked, change Scene to student light mode
         EntryRoomDisplay.setCurrentScene("/HelpFileStudent.fxml");
     }
 
     /**
-     * Handle button action for Help Button Light Mode.
+     * Handle button action for button Mode in Light Mode.
      *
      * @param event the event
      */
-    public void handleHelpButtonLight(ActionEvent event) {
+    public void handleButtonModeTA(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
-        // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/HelpFileStudent.fxml");
+        // if Mode is clicked, change Scene to TA dark mode
+        EntryRoomDisplay.setCurrentScene("/HelpFileTA(DARKMODE).fxml");
     }
 
     /**
-     * Handle button action for Help Button Dark Mode.
+     * Handle button action for button Mode in Dark Mode.
      *
      * @param event the event
      */
-    public void handleHelpButtonDark(ActionEvent event) {
+    public void handleButtonModeTADark(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
-        // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/HelpFileStudent(DARKMODE).fxml");
+        // if Mode is clicked, change Scene to TA light mode
+        EntryRoomDisplay.setCurrentScene("/HelpFileTA.fxml");
+    }
+
+    /**
+     * Handle button action for button Mode in Light Mode.
+     *
+     * @param event the event
+     */
+    public void handleButtonModeLecturer(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Mode is clicked, change Scene to lecturer dark mode
+        EntryRoomDisplay.setCurrentScene("/HelpFileLecturer(DARKMODE).fxml");
+    }
+
+    /**
+     * Handle button action for button Mode in Dark Mode.
+     *
+     * @param event the event
+     */
+    public void handleButtonModeLecturerDark(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Mode is clicked, change Scene to lecturer light mode
+        EntryRoomDisplay.setCurrentScene("/HelpFileLecturer.fxml");
     }
 }
