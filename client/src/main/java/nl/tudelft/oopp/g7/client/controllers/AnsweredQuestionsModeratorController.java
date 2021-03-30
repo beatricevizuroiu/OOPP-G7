@@ -11,9 +11,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import nl.tudelft.oopp.g7.client.communication.ModeratorServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
-import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
+import nl.tudelft.oopp.g7.client.logic.AnsweredQuestionsLogic;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.Question;
@@ -23,7 +22,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class AnsweredQuestionsController {
+public class AnsweredQuestionsModeratorController {
 
     @FXML
     public ScrollPane answeredQuestionList;
@@ -32,13 +31,12 @@ public class AnsweredQuestionsController {
 
 
     /**
-     * Instantiates a new Answered questions controller.
+     * Start a timer and create a separate thread on it to automatically refresh answered question list.
      */
-    public AnsweredQuestionsController() {
-        // Start a timer and create a separate thread on it to automatically call retrieveQuestions()
+    public AnsweredQuestionsModeratorController() {
         Timer timer = new Timer(true);
 
-        AnsweredQuestionsController reference = this;
+        AnsweredQuestionsModeratorController reference = this;
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -48,37 +46,8 @@ public class AnsweredQuestionsController {
     }
 
 
-    /**
-     * Retrieve questions.
-     */
     public void retrieveQuestions() {
-        // Store the current position of the user in the scroll list
-        double scrollHeight = answeredQuestionList.getVvalue();
-
-        // list of questions containing the questions received from the server
-        List<Question> questions = ServerCommunication.retrieveAllAnsweredQuestions(LocalData.getRoomID());
-        List<Node> questionNodes = answeredQuestionContainer.getChildren();
-
-        questionNodes.clear();
-
-        try {
-            for (Question question : questions) {
-                HBox questionNode = FXMLLoader.load(getClass().getResource("/components/LecturerQuestion.fxml"));
-
-                Text upvoteCount = (Text) questionNode.lookup("#QuestionUpvoteCount");
-                Text body = (Text) questionNode.lookup("#QuestionText");
-
-                upvoteCount.setText(Integer.toString(Math.min(question.getUpvotes(), 999)));
-                body.setText(question.getText());
-
-                questionNodes.add(questionNode);
-            }
-        } catch (IOException ignored) {
-            System.err.println("A problem occurred");
-        }
-
-        // Return the user to their original position in the scroll list
-        answeredQuestionList.setVvalue(scrollHeight + 0);
+        AnsweredQuestionsLogic.retrieveAllAnsweredQuestions(answeredQuestionContainer, answeredQuestionList);
     }
 
     /**
@@ -120,7 +89,7 @@ public class AnsweredQuestionsController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Mode is clicked, change Scene to Join Room
-        EntryRoomDisplay.setCurrentScene("/AnsweredQuestions(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/AnsweredQuestionsModerator(DARKMODE).fxml");
     }
 
     /**
@@ -133,7 +102,7 @@ public class AnsweredQuestionsController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Mode is clicked, change Scene to Join Room
-        EntryRoomDisplay.setCurrentScene("/AnsweredQuestions.fxml");
+        EntryRoomDisplay.setCurrentScene("/AnsweredQuestionsModerator.fxml");
     }
 
     /**

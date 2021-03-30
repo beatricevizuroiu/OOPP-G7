@@ -10,7 +10,8 @@ import java.io.OutputStream;
 public class Util {
 
     /**
-     * Method to export a file from the jar to the plugin folder.
+     * Method to export a file from the jar to an external folder.
+     *
      * @param resourceName the name of the resource
      * @param output file that will be outputted to
      */
