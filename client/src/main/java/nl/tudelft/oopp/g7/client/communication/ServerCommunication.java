@@ -35,6 +35,12 @@ public class ServerCommunication {
         return gson.fromJson(question, Question.class);
     }
 
+    /**
+     * Retrieve UserInfo by userId.
+     * @param roomId The roomId of the Room containing the User.
+     * @param userId The userId to request the User of.
+     * @return UserInfo of the requested User.
+     */
     public static UserInfo retrieveUserById(String roomId, String userId) {
         // add the appropriate end-point
         URI uri = URI.create(uriBody + roomId + "/user/" + userId);

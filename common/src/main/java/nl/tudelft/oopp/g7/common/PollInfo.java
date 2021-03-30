@@ -21,7 +21,11 @@ public class PollInfo {
     // The options the user can select and possibly their results.
     private PollOption[] options;
 
-
+    /**
+     * Construct PollInfo from a resultSet.
+     * @param rs The resultSet.
+     * @return PollInfo.
+     */
     public static PollInfo fromResultSet(ResultSet rs, boolean noNext) throws SQLException {
         if (noNext || rs.next()) {
             return new PollInfo(

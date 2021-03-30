@@ -67,6 +67,10 @@ public class ModeratorViewLogic {
         questionList.setVvalue(scrollHeight + 0);
     }
 
+    /**
+     * Export all Questions in a Room to a JSON formatted text file.
+     * @param roomID the roomID of the Room to export the Questions from.
+     */
     public static void exportQuestions(String roomID) {
 
         List<Question> questions = StudentServerCommunication.retrieveAllQuestions(roomID);
