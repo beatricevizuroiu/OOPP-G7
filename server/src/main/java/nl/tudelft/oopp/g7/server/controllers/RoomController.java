@@ -351,9 +351,9 @@ public class RoomController {
         }
 
         // Make sure the poll create request is all in order.
-        if (pollCreateRequest == null ||
-                pollCreateRequest.getQuestion() == null ||
-                pollCreateRequest.getOptions() == null) {
+        if (pollCreateRequest == null
+                || pollCreateRequest.getQuestion() == null
+                || pollCreateRequest.getOptions() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 

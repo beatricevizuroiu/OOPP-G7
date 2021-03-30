@@ -80,7 +80,8 @@ public class PollRepository {
     public int createPoll(String roomId, String question, boolean publicResults, String[] options) {
         logger.debug("Creating poll in database for room with id {}, and question: {}", roomId, question);
         //noinspection ConstantConditions
-        int pollId = jdbcTemplate.query(QUERY_CREATE_POLL, (ps) -> {
+        int pollId = jdbcTemplate.query(QUERY_CREATE_POLL,
+            (ps) -> {
                 ps.setString(1, roomId);
                 ps.setString(2, question);
                 ps.setBoolean(3, publicResults);
@@ -88,7 +89,6 @@ public class PollRepository {
             (rs) -> {
                 rs.next();
                 return rs.getInt("id");
-
             });
 
         for (String option : options) {
@@ -153,12 +153,14 @@ public class PollRepository {
         if (pollId == -1) {
             pollInfo = getMostRecentPollInRoom(roomId);
         } else {
-            pollInfo = jdbcTemplate.query(QUERY_GET_POLL_WITH_ID, (ps) -> {
-                ps.setString(1, roomId);
-                ps.setInt(2, pollId);
-            }, (rs) -> {
-                return PollInfo.fromResultSet(rs, false);
-            });
+            pollInfo = jdbcTemplate.query(QUERY_GET_POLL_WITH_ID,
+                (ps) -> {
+                    ps.setString(1, roomId);
+                    ps.setInt(2, pollId);
+                },
+                (rs) -> {
+                    return PollInfo.fromResultSet(rs, false);
+                });
         }
 
         if (pollInfo == null)
@@ -188,11 +190,13 @@ public class PollRepository {
      */
     public PollInfo getMostRecentPollInRoom(String roomId) {
         logger.debug("Getting most recent poll from database in room with id {}", roomId);
-        return jdbcTemplate.query(QUERY_GET_POLL_MOST_RECENT, (ps) -> {
-            ps.setString(1, roomId);
-        }, (rs) -> {
-            return PollInfo.fromResultSet(rs, false);
-        });
+        return jdbcTemplate.query(QUERY_GET_POLL_MOST_RECENT,
+            (ps) -> {
+                ps.setString(1, roomId);
+            },
+            (rs) -> {
+                return PollInfo.fromResultSet(rs, false);
+            });
     }
 
     /**
@@ -203,22 +207,24 @@ public class PollRepository {
      */
     private List<PollOption> getOptionsForPoll(String roomId, PollInfo pollInfo) {
         logger.debug("Retrieving options for poll with id {}, in room with id {}", pollInfo.getId(), roomId);
-        return jdbcTemplate.query(QUERY_GET_POLL_OPTIONS, (ps) -> {
-            ps.setString(1, roomId);
-            ps.setInt(2, pollInfo.getId());
-        }, (rs) -> {
-            List<PollOption> options = new ArrayList<>();
-            while (rs.next()) {
-                PollOption option = PollOption.fromResultSet(rs, true);
-                if (pollInfo.isHasResults()) {
-                    option.setResultCount(getResultCountForOption(roomId, pollInfo.getId(), option));
+        return jdbcTemplate.query(QUERY_GET_POLL_OPTIONS,
+            (ps) -> {
+                ps.setString(1, roomId);
+                ps.setInt(2, pollInfo.getId());
+            },
+            (rs) -> {
+                List<PollOption> options = new ArrayList<>();
+                while (rs.next()) {
+                    PollOption option = PollOption.fromResultSet(rs, true);
+                    if (pollInfo.isHasResults()) {
+                        option.setResultCount(getResultCountForOption(roomId, pollInfo.getId(), option));
+                    }
+
+                    options.add(option);
                 }
 
-                options.add(option);
-            }
-
-            return options;
-        });
+                return options;
+            });
     }
 
     /**
@@ -230,13 +236,15 @@ public class PollRepository {
      */
     private Integer getResultCountForOption(String roomId, int pollId, PollOption option) {
         logger.debug("Retrieving the amount of votes for option with id {}, in room with id {}, for poll with id {}", option.getId(), roomId, pollId);
-        return jdbcTemplate.query(QUERY_COUNT_ANSWERS_TO_RESULT, (ps) -> {
-            ps.setInt(1, pollId);
-            ps.setString(2, roomId);
-            ps.setInt(3, option.getId());
-        }, (rs2) -> {
-            rs2.next();
-            return rs2.getInt(1);
-        });
+        return jdbcTemplate.query(QUERY_COUNT_ANSWERS_TO_RESULT,
+            (ps) -> {
+                ps.setInt(1, pollId);
+                ps.setString(2, roomId);
+                ps.setInt(3, option.getId());
+            },
+            (rs2) -> {
+                rs2.next();
+                return rs2.getInt(1);
+            });
     }
 }
