@@ -70,37 +70,6 @@ public class HttpMethodsTest {
     }
 
     @Test
-    void putTest() {
-        // create uri for get
-        URI uri = URI.create(endBody + "/put");
-
-        // create a dummy body for easy JSON conversion
-        QuestionText newQuestion = new QuestionText("Test");
-
-        // convert to json and send / store the response
-        HttpResponse<String> response = HttpMethods.put(uri, gson.toJson(newQuestion));
-
-        assertEquals(200, response.statusCode());
-    }
-
-
-    @Test
-    void incorrectPutPathTest() {
-        // create a non-existing path
-        URI uri = URI.create(endBody + "/dummy");
-
-        // create a dummy body for easy JSON conversion
-        QuestionText newQuestion = new QuestionText("Test");
-
-        // convert to json and send / store the response
-        HttpResponse<String> response = HttpMethods.put(uri, gson.toJson(newQuestion));
-
-        // it should receive 404
-        assertNotEquals(200, response.statusCode());
-        assertEquals(404, response.statusCode());
-    }
-
-    @Test
     void deleteTest() {
         // create uri for get
         URI uri = URI.create(endBody + "/delete");
