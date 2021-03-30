@@ -14,12 +14,10 @@ import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.ExportQuestion;
 import nl.tudelft.oopp.g7.common.Question;
-import nl.tudelft.oopp.g7.common.UserInfo;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class ModeratorViewLogic {
@@ -31,7 +29,7 @@ public class ModeratorViewLogic {
      * @param questionContainer VBox containing the UI elements.
      * @param questionList ScrollPane containing the whole list of questions.
      */
-    public static void retrieveAllQuestions(String roomID, VBox questionContainer, ScrollPane questionList, HashMap<String, UserInfo> userMap) {
+    public static void retrieveAllQuestions(String roomID, VBox questionContainer, ScrollPane questionList) {
         // Store the current position of the user in the scroll list
         double scrollHeight = questionList.getVvalue();
 
@@ -54,22 +52,22 @@ public class ModeratorViewLogic {
                 upvoteCount.setText(Integer.toString(Math.min(question.getUpvotes(), 999)));
                 body.setText(question.getText());
 
-                if (!userMap.containsKey(question.getAuthorId())) {
-                    userMap.put(question.getAuthorId(), ServerCommunication.retrieveUserById(roomID, question.getAuthorId()));
+                if (!LocalData.userMap.containsKey(question.getAuthorId())) {
+                    LocalData.userMap.put(question.getAuthorId(), ServerCommunication.retrieveUserById(roomID, question.getAuthorId()));
                 }
-                authorText.setText(userMap.get(question.getAuthorId()).getNickname() + " asks");
+                authorText.setText(LocalData.userMap.get(question.getAuthorId()).getNickname() + " asks");
 
                 questionNodes.add(questionNode);
             }
         } catch (IOException ignored) {
-            System.err.println("A problem occurred.");
+            System.err.println("A problem occurred while retrieving questions.");
         }
 
         // Store the current position of the user in the scroll list
         questionList.setVvalue(scrollHeight + 0);
     }
 
-    public static void exportQuestions(String roomID, HashMap<String, UserInfo> userMap) {
+    public static void exportQuestions(String roomID) {
 
         List<Question> questions = StudentServerCommunication.retrieveAllQuestions(roomID);
         List<ExportQuestion> exportQuestions = new ArrayList<>();
@@ -81,12 +79,12 @@ public class ModeratorViewLogic {
             for (Question question : questions) {
 
                 userId = question.getAuthorId();
-                if (!userMap.containsKey(userId)) {
-                    userMap.put(userId, ServerCommunication.retrieveUserById(roomID, userId));
+                if (!LocalData.userMap.containsKey(userId)) {
+                    LocalData.userMap.put(userId, ServerCommunication.retrieveUserById(roomID, userId));
                 }
 
                 exportQuestions.add(new ExportQuestion(
-                        userMap.get(userId).getNickname(),
+                        LocalData.userMap.get(userId).getNickname(),
                         question.getText(),
                         question.getAnswer(),
                         question.getPostedAt(),

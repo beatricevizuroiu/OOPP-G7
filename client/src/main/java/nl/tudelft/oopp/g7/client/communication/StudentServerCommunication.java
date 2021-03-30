@@ -2,8 +2,10 @@ package nl.tudelft.oopp.g7.client.communication;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
+import nl.tudelft.oopp.g7.common.SortingOrder;
 
 import java.net.URI;
 import java.net.http.HttpResponse;
@@ -41,8 +43,14 @@ public class StudentServerCommunication {
         // retrieve the question list from server
         List<Question> questions = ServerCommunication.retrieveAllQuestions(roomID);
 
-        // sort the questions based on most recent and return the list
-        return questions.stream().sorted(Comparator.comparing(Question::getPostedAt).reversed())
-                        .collect(Collectors.toList());
+        if (LocalData.getSortingOrder() == SortingOrder.NEW) {
+            // sort the questions based on most recent and return the list
+            return questions.stream().sorted(Comparator.comparing(Question::getPostedAt).reversed())
+                    .collect(Collectors.toList());
+        }
+
+        // sort the questions based on number of upvotes and return the list
+        return questions.stream().sorted(Comparator.comparing(Question::getUpvotes).reversed())
+                .collect(Collectors.toList());
     }
 }

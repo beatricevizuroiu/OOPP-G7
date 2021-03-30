@@ -56,7 +56,7 @@ public class LecturerViewController {
      */
     public void retrieveQuestions() {
         // Retrieve all of the questions and then put them into question pane
-        ModeratorViewLogic.retrieveAllQuestions(roomID, questionContainer, questionList, userMap);
+        ModeratorViewLogic.retrieveAllQuestions(roomID, questionContainer, questionList);
     }
 
 
@@ -193,7 +193,7 @@ public class LecturerViewController {
      * Handle button action for exporting questions.
      */
     public void exportQuestions(){
-        ModeratorViewLogic.exportQuestions(roomID, userMap);
+        ModeratorViewLogic.exportQuestions(roomID);
     }
 
     /**

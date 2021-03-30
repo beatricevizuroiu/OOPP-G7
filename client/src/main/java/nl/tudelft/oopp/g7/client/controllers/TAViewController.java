@@ -22,7 +22,6 @@ public class TAViewController {
     private final String moderatorPassword;
     private final String studentPassword;
     private int i = 0;
-    private HashMap<String, UserInfo> userMap = new HashMap<>();
 
     @FXML
     public ScrollPane questionList;
@@ -57,7 +56,7 @@ public class TAViewController {
      */
     public void retrieveQuestions() {
         // Retrieve all of the questions and then put them into question pane
-        ModeratorViewLogic.retrieveAllQuestions(roomID, questionContainer, questionList, userMap);
+        ModeratorViewLogic.retrieveAllQuestions(roomID, questionContainer, questionList);
     }
 
     /**
@@ -194,7 +193,7 @@ public class TAViewController {
      * Handle button action for exporting questions.
      */
     public void exportQuestions(){
-        ModeratorViewLogic.exportQuestions(roomID, userMap);
+        ModeratorViewLogic.exportQuestions(roomID);
     }
 
 }

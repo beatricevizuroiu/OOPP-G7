@@ -41,7 +41,6 @@ public class StudentViewUIController {
 
     private final String roomID;
     private final String nickname;
-    private HashMap<String, UserInfo> userMap = new HashMap<>();
 
     /**
      * Constructor for StudentViewUIController.
@@ -66,7 +65,7 @@ public class StudentViewUIController {
      * Retrieve all questions to List sorted by new.
      */
     public void retrieveQuestions() {
-        StudentViewLogic.retrieveAllQuestions(roomID, questionContainer, questionList, userMap);
+        StudentViewLogic.retrieveAllQuestions(roomID, questionContainer, questionList);
     }
 
     /**
@@ -107,7 +106,7 @@ public class StudentViewUIController {
      * @param questionId the id of the question that is being upvoted
      */
     public void upvoteQuestion(int questionId) {
-        StudentViewLogic.upvoteQuestion(roomID, questionId, questionContainer, questionList, userMap);
+        StudentViewLogic.upvoteQuestion(roomID, questionId, questionContainer, questionList);
     }
 
 
