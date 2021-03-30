@@ -11,8 +11,10 @@ import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.Question;
+import nl.tudelft.oopp.g7.common.UserInfo;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 public class StudentViewLogic {
@@ -22,7 +24,7 @@ public class StudentViewLogic {
      * @param questionContainer VBox containing the UI elements.
      * @param questionList ScrollPane containing the whole list of questions.
      */
-    public static void retrieveAllQuestions(String roomID, VBox questionContainer, ScrollPane questionList) {
+    public static void retrieveAllQuestions(String roomID, VBox questionContainer, ScrollPane questionList, HashMap<String, UserInfo> userMap) {
         // Store the current position of the user in the scroll list
         double scrollHeight = questionList.getVvalue();
 
@@ -44,13 +46,17 @@ public class StudentViewLogic {
                 Text authorText = (Text) questionNode.lookup("#QuestionAuthor");
 
                 // add event listeners for upvoting buttons
-                upvoteBtn.setOnAction((event) -> upvoteQuestion(roomID, question.getId(), questionContainer, questionList));
+                upvoteBtn.setOnAction((event) -> upvoteQuestion(roomID, question.getId(), questionContainer, questionList, userMap));
 
                 // cap the number of upvotes at 999
                 upvoteCount.setText(Integer.toString(Math.min(question.getUpvotes(), 999)));
                 body.setText(question.getText());
 
-                authorText.setText(question.getAuthorId() + " asks");
+                if (!userMap.containsKey(question.getAuthorId())) {
+                    userMap.put(question.getAuthorId(), ServerCommunication.retrieveUserById(roomID, question.getAuthorId()));
+                }
+
+                authorText.setText(userMap.get(question.getAuthorId()).getNickname() + " asks");
 
                 questionNodes.add(questionNode);
             }
@@ -69,8 +75,8 @@ public class StudentViewLogic {
      * @param questionContainer VBox containing the UI elements.
      * @param questionList ScrollPane containing the whole list of questions.
      */
-    public static void upvoteQuestion(String roomID, int questionId, VBox questionContainer, ScrollPane questionList) {
+    public static void upvoteQuestion(String roomID, int questionId, VBox questionContainer, ScrollPane questionList, HashMap<String, UserInfo> userMap) {
         ServerCommunication.upvoteQuestion(roomID, questionId);
-        retrieveAllQuestions(roomID, questionContainer, questionList);
+        retrieveAllQuestions(roomID, questionContainer, questionList, userMap);
     }
 }

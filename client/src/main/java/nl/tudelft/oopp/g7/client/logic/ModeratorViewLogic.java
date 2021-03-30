@@ -7,10 +7,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import nl.tudelft.oopp.g7.client.communication.ModeratorServerCommunication;
+import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.Question;
+import nl.tudelft.oopp.g7.common.UserInfo;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 public class ModeratorViewLogic {
@@ -20,7 +23,7 @@ public class ModeratorViewLogic {
      * @param questionContainer VBox containing the UI elements.
      * @param questionList ScrollPane containing the whole list of questions.
      */
-    public static void retrieveAllQuestions(String roomID, VBox questionContainer, ScrollPane questionList) {
+    public static void retrieveAllQuestions(String roomID, VBox questionContainer, ScrollPane questionList, HashMap<String, UserInfo> userMap) {
         // Store the current position of the user in the scroll list
         double scrollHeight = questionList.getVvalue();
 
@@ -43,7 +46,10 @@ public class ModeratorViewLogic {
                 upvoteCount.setText(Integer.toString(Math.min(question.getUpvotes(), 999)));
                 body.setText(question.getText());
 
-                authorText.setText(question.getAuthorId() + " asks");
+                if (!userMap.containsKey(question.getAuthorId())) {
+                    userMap.put(question.getAuthorId(), ServerCommunication.retrieveUserById(roomID, question.getAuthorId()));
+                }
+                authorText.setText(userMap.get(question.getAuthorId()).getNickname() + " asks");
 
                 questionNodes.add(questionNode);
             }

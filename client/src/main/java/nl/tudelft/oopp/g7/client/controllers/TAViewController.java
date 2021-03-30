@@ -3,22 +3,16 @@ package nl.tudelft.oopp.g7.client.controllers;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.ModeratorViewLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
-import nl.tudelft.oopp.g7.common.Question;
+import nl.tudelft.oopp.g7.common.UserInfo;
 
-import java.io.IOException;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -27,6 +21,8 @@ public class TAViewController {
     private final String nickname;
     private final String moderatorPassword;
     private final String studentPassword;
+    private int i = 0;
+    private HashMap<String, UserInfo> userMap = new HashMap<>();
 
     @FXML
     public ScrollPane questionList;
@@ -61,7 +57,7 @@ public class TAViewController {
      */
     public void retrieveQuestions() {
         // Retrieve all of the questions and then put them into question pane
-        ModeratorViewLogic.retrieveAllQuestions(roomID, questionContainer, questionList);
+        ModeratorViewLogic.retrieveAllQuestions(roomID, questionContainer, questionList, userMap);
     }
 
     /**

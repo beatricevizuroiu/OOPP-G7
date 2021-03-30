@@ -10,7 +10,9 @@ import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.ModeratorViewLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
+import nl.tudelft.oopp.g7.common.UserInfo;
 
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -19,6 +21,7 @@ public class LecturerViewController {
     private final String nickname;
     private final String moderatorPassword;
     private final String studentPassword;
+    private HashMap<String, UserInfo> userMap = new HashMap<>();
 
     @FXML
     public ScrollPane questionList;
@@ -53,7 +56,7 @@ public class LecturerViewController {
      */
     public void retrieveQuestions() {
         // Retrieve all of the questions and then put them into question pane
-        ModeratorViewLogic.retrieveAllQuestions(roomID, questionContainer, questionList);
+        ModeratorViewLogic.retrieveAllQuestions(roomID, questionContainer, questionList, userMap);
     }
 
 

@@ -8,7 +8,6 @@ import nl.tudelft.oopp.g7.common.*;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.http.HttpResponse;
-import java.util.Date;
 import java.util.List;
 
 // Class for generalizing methods.
@@ -34,6 +33,20 @@ public class ServerCommunication {
 
         // parse the JSON into Question
         return gson.fromJson(question, Question.class);
+    }
+
+    public static UserInfo retrieveUserById(String roomId, String userId) {
+        // add the appropriate end-point
+        URI uri = URI.create(uriBody + roomId + "/user/" + userId);
+
+        // retrieve the response with the UserInfo
+        HttpResponse<String> response = HttpMethods.get(uri);
+
+        // store the UserInfo JSON in a string
+        String userInfo = response.body();
+
+        // parse the JSON into a UserInfo object and return it
+        return gson.fromJson(userInfo, UserInfo.class);
     }
 
     /**

@@ -3,25 +3,22 @@ package nl.tudelft.oopp.g7.client.controllers;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.StudentViewLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
-import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
+import nl.tudelft.oopp.g7.common.UserInfo;
 
-import java.io.IOException;
 import java.net.http.HttpResponse;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -44,6 +41,7 @@ public class StudentViewUIController {
 
     private final String roomID;
     private final String nickname;
+    private HashMap<String, UserInfo> userMap = new HashMap<>();
 
     /**
      * Constructor for StudentViewUIController.
@@ -68,7 +66,7 @@ public class StudentViewUIController {
      * Retrieve all questions to List sorted by new.
      */
     public void retrieveQuestions() {
-        StudentViewLogic.retrieveAllQuestions(roomID, questionContainer, questionList);
+        StudentViewLogic.retrieveAllQuestions(roomID, questionContainer, questionList, userMap);
     }
 
     /**
@@ -109,7 +107,7 @@ public class StudentViewUIController {
      * @param questionId the id of the question that is being upvoted
      */
     public void upvoteQuestion(int questionId) {
-        StudentViewLogic.upvoteQuestion(roomID, questionId, questionContainer, questionList);
+        StudentViewLogic.upvoteQuestion(roomID, questionId, questionContainer, questionList, userMap);
     }
 
 
