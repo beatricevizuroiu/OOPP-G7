@@ -16,6 +16,11 @@ public class Config {
 
     public static int RATE_LIMIT = -1;
 
+    /**
+     * Instantiates a new Config.
+     *
+     * @param file the file
+     */
     public Config(File file) {
         try {
             if (file == null)

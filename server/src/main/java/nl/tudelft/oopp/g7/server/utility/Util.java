@@ -9,10 +9,16 @@ import java.io.OutputStream;
 
 public class Util {
 
-    /*
+    /**
+     * Export resource.
+     *
+     * @param resourceName the resource name
+     * @param output       the output
+     */
+    public static void exportResource(String resourceName, File output) {
+        /*
    Method to export a file from the jar to the plugin folder.
     */
-    public static void exportResource(String resourceName, File output) {
         try (InputStream stream = Util.class.getResourceAsStream(resourceName); OutputStream resStreamOut = new FileOutputStream(output)) {
             if (stream == null) {
                 throw new Exception("Cannot get resource \"" + resourceName + "\" from Jar file.");

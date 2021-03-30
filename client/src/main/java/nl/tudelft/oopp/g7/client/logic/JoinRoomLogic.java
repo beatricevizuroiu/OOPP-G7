@@ -43,7 +43,6 @@ public class JoinRoomLogic {
      * Stores the room/user information into a local static class.
      * @param nickname TextField in which user's name is written
      * @param roomId TextField in which id of the room user wants to join is written
-     * @param roomPassword TextField in which the appropriate password (student/moderator) is written
      */
     public static void joinRoomStoreLocalData(TextField nickname, TextField roomId) {
         LocalData.setNickname(nickname.getText());

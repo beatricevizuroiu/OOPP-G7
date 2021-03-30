@@ -182,6 +182,13 @@ public class QuestionRepository {
             });
     }
 
+    /**
+     * Time since last question was sent by the user.
+     *
+     * @param roomId the room id
+     * @param userId the user id
+     * @return the time in long format
+     */
     public long timeSinceLastQuestionByUser(String roomId, String userId) {
         //noinspection ConstantConditions
         return jdbcTemplate.query(QUERY_MOST_RECENT_QUESTION_FROM_USER,

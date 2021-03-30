@@ -51,6 +51,11 @@ public class DemoApplication {
         return new UpvoteRepository(jdbcTemplate);
     }
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         new Config(new File("./config.yml"));
 

@@ -31,6 +31,9 @@ public class AnsweredQuestionsController {
     private VBox answeredQuestionContainer;
 
 
+    /**
+     * Instantiates a new Answered questions controller.
+     */
     public AnsweredQuestionsController() {
         // Start a timer and create a separate thread on it to automatically call retrieveQuestions()
         Timer timer = new Timer(true);
@@ -45,6 +48,9 @@ public class AnsweredQuestionsController {
     }
 
 
+    /**
+     * Retrieve questions.
+     */
     public void retrieveQuestions() {
         // Store the current position of the user in the scroll list
         double scrollHeight = answeredQuestionList.getVvalue();
