@@ -7,6 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import nl.tudelft.oopp.g7.client.communication.ModeratorServerCommunication;
+import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.Question;
 
 import java.io.IOException;
@@ -29,15 +30,20 @@ public class ModeratorViewLogic {
 
         questionNodes.clear();
 
+        String componentName = EntryRoomDisplay.isDarkMode() ? "/components/LecturerQuestion(DARKMODE).fxml" : "/components/LecturerQuestion.fxml";
+
         try {
             for (Question question : questions) {
-                HBox questionNode = FXMLLoader.load(ModeratorViewLogic.class.getResource("/components/LecturerQuestion.fxml"));
+                HBox questionNode = FXMLLoader.load(ModeratorViewLogic.class.getResource(componentName));
 
                 Text upvoteCount = (Text) questionNode.lookup("#QuestionUpvoteCount");
                 Text body = (Text) questionNode.lookup("#QuestionText");
+                Text authorText = (Text) questionNode.lookup("#QuestionAuthor");
 
                 upvoteCount.setText(Integer.toString(Math.min(question.getUpvotes(), 999)));
                 body.setText(question.getText());
+
+                authorText.setText(question.getAuthorId() + " asks");
 
                 questionNodes.add(questionNode);
             }

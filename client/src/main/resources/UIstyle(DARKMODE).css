@@ -2,6 +2,14 @@ root {
     display: block;
 }
 
+#questionList {
+    -fx-background-color: #3C3C3C;
+}
+
+#questionContainer {
+    -fx-background-color: #3C3C3C;
+}
+
 .button{
     -fx-background-color: #FFFFFF;
 }

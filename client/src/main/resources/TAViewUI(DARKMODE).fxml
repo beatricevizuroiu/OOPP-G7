@@ -30,8 +30,21 @@
 
     <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2" />
 
-    <ScrollPane fx:id="questionList" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
-        <VBox fx:id="questionContainer" />
+    <ScrollPane fx:id="questionList"
+                GridPane.columnIndex="1"
+                GridPane.columnSpan="3"
+                GridPane.rowIndex="1"
+                fitToWidth="true"
+                fitToHeight="true">
+        <padding>
+            <Insets>
+                <top>5</top>
+                <right>20</right>
+                <bottom>5</bottom>
+                <left>20</left>
+            </Insets>
+        </padding>
+        <VBox fx:id="questionContainer" spacing="20" />
     </ScrollPane>
 
     <!--    Main Buttons    -->

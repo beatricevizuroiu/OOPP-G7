@@ -9,7 +9,7 @@
 <?import javafx.scene.text.TextFlow?>
 <?import javafx.geometry.Insets?>
 <HBox xmlns="http://javafx.com/javafx"
-      stylesheets="@StudentQuestion.css"
+      stylesheets="@StudentQuestion(DARKMODE).css"
       id="question">
         <padding>
                 <Insets>

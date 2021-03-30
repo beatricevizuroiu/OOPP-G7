@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import lombok.Getter;
 
 import java.io.IOException;
 import java.net.URL;
@@ -13,6 +14,8 @@ public class EntryRoomDisplay extends Application {
 
     private static Stage currentStage;
     private static Scene currentScene;
+    @Getter
+    private static boolean isDarkMode;
 
     @Override
     public void start(Stage primaryStage) throws IOException{
@@ -52,6 +55,13 @@ public class EntryRoomDisplay extends Application {
             EntryRoomDisplay.currentScene = newScene;
 
             currentStage.show();
+
+            if (newSceneName.contains("DARKMODE")) {
+                isDarkMode = true;
+            } else {
+                isDarkMode = false;
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
