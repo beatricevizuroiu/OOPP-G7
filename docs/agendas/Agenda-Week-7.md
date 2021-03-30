@@ -16,11 +16,7 @@ Note taker:     Cody Boon
 
 # Approval of the agenda
 ## Approval List
- - Beatrice Vizuroiu
- - Cody Boon
  - Elena Martellucci
- - Kalle Struik
- - Mehmet Alp Sozuduz
 
 
 # Approval of the agenda
@@ -28,7 +24,7 @@ Note taker:     Cody Boon
 
 # Points of action
 - We should now be finished with aproximity 50% of the project. How far along are we?
-
+- Presentation video
 - Last week we did not completely finish our sprint, did we this time?
 - Was our past sprint reasonable or should we change upcoming sprints?
 - If all the issues of our past sprint are complete, we should have a decent usable program with a functioning User Interface resembling the final version. Does everything work as intended? Are we all happy with the current result and progress?
