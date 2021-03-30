@@ -6,6 +6,8 @@ build/
 # Ignore Gradle GUI config
 gradle-app.setting
 
+# Ignore the logs
+logs/
 
 ### JetBrains template
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
@@ -146,3 +148,4 @@ build
 
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
+/config.yml

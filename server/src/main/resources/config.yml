@@ -1,0 +1,4 @@
+# Slow mode (Rate limiting) in seconds.
+# A student can ask one question every x seconds.
+# Set to -1 to disable.
+slow-mode: 15

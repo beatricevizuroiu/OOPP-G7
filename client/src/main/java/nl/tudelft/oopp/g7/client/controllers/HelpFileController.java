@@ -8,11 +8,37 @@ import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 public class HelpFileController {
 
     /**
-     * Handle button action for going back to lecturer view (light).
+     * Handle button action for going back to lecturer view from Dark.
      *
      * @param event the event
      */
-    public void goBackButtonLight(ActionEvent event) {
+    public void handleBackButtonLect(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if goBack is clicked, change Scene to LecturerViewUI
+        EntryRoomDisplay.setCurrentScene("/LecturerViewUi.fxml");
+    }
+
+    /**
+     * Handle button action for going back to lecturer view from Light.
+     *
+     * @param event the event
+     */
+    public void handleBackButtonDarkLect(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if goBack is clicked, change Scene to LecturerViewUI
+        EntryRoomDisplay.setCurrentScene("/LecturerViewUi(DARKMODE).fxml");
+    }
+
+    /**
+     * Handle button action for going back to TA view from Dark.
+     *
+     * @param event the event
+     */
+    public void handleBackButtonTA(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -21,16 +47,42 @@ public class HelpFileController {
     }
 
     /**
-     * Handle button action for going back to lecturer view (dark).
+     * Handle button action for going back to TA view from Light.
      *
      * @param event the event
      */
-    public void goBackButtonDark(ActionEvent event) {
+    public void handleBackButtonDarkTA(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if goBack is clicked, change Scene to LecturerViewUI
         EntryRoomDisplay.setCurrentScene("/TAViewUI(DARKMODE).fxml");
+    }
+
+    /**
+     * Handle button action for going back to Student view from Light.
+     *
+     * @param event the event
+     */
+    public void handleBackButtonDarkStudent(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if goBack is clicked, change Scene to LecturerViewUI
+        EntryRoomDisplay.setCurrentScene("/StudentViewUI(DARKMODE).fxml");
+    }
+
+    /**
+     * Handle button action for going back to Student view from Light.
+     *
+     * @param event the event
+     */
+    public void handleBackButtonStudent(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if goBack is clicked, change Scene to LecturerViewUI
+        EntryRoomDisplay.setCurrentScene("/StudentViewUI.fxml");
     }
 
     /**

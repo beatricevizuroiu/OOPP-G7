@@ -6,21 +6,23 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
-import nl.tudelft.oopp.g7.client.communication.LocalData;
+import nl.tudelft.oopp.g7.client.logic.LocalData;
+import nl.tudelft.oopp.g7.client.logic.StudentViewLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
+
 import java.io.IOException;
+import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -42,8 +44,6 @@ public class StudentViewUIController {
 
     private final String roomID;
     private final String nickname;
-    private final String password;
-
 
     /**
      * Constructor for StudentViewUIController.
@@ -51,10 +51,9 @@ public class StudentViewUIController {
     public StudentViewUIController() {
         roomID = LocalData.getRoomID();
         nickname = LocalData.getNickname();
-        password = LocalData.getPassword();
 
         // Start a timer and create a separate thread on it to automatically call retrieveQuestions()
-        Timer timer = new Timer();
+        Timer timer = new Timer(true);
 
         StudentViewUIController reference = this;
         timer.schedule(new TimerTask() {
@@ -62,51 +61,45 @@ public class StudentViewUIController {
             public void run() {
                 Platform.runLater(reference::retrieveQuestions);
             }
-        }, 0L, 2500L);
+        }, 0L, 500L);
     }
 
     /**
      * Retrieve all questions to List sorted by new.
      */
     public void retrieveQuestions() {
-
-        // Store the current position of the user in the scroll list
-        double scrollHeight = questionList.getVvalue();
-
-        // list of questions containing the questions received from the server
-        List<Question> questions = StudentServerCommunication.retrieveAllQuestions(roomID);
-        List<Node> questionNodes = questionContainer.getChildren();
-
-        questionNodes.clear();
-
-        try {
-            for (Question question : questions) {
-                HBox questionNode = FXMLLoader.load(getClass().getResource("/components/StudentQuestion.fxml"));
-
-                Button upvoteBtn = (Button) questionNode.lookup("#QuestionUpvoteBtn");
-                Text upvoteCount = (Text) questionNode.lookup("#QuestionUpvoteCount");
-                Text body = (Text) questionNode.lookup("#QuestionText");
-
-                upvoteBtn.setOnAction((event) -> upvoteQuestion(question.getId()));
-
-                upvoteCount.setText(Integer.toString(Math.min(question.getUpvotes(), 999)));
-                body.setText(question.getText());
-
-                questionNodes.add(questionNode);
-            }
-        } catch (IOException ignored) {
-            System.err.println("A problem occurred.");
-        }
-
-        // Return the user to their original position in the scroll list
-        questionList.setVvalue(scrollHeight + 0);
+        StudentViewLogic.retrieveAllQuestions(roomID, questionContainer, questionList);
     }
 
     /**
      * Send question.
      */
     public void sendQuestion() {
-        StudentServerCommunication.askQuestion(roomID, new QuestionText(answerBox.getText()));
+        HttpResponse<String> response = StudentServerCommunication.askQuestion(roomID, new QuestionText(answerBox.getText()));
+        if (response.statusCode() == 429) {
+            Optional<String> header = response.headers().firstValue("X-Ratelimit-Expires");
+            if (header.isPresent()) {
+                int timeLeft = Integer.parseInt(header.get());
+
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+
+                // body of pop-up with what the user entered
+                alert.setContentText("You are asking questions too fast!\n"
+                            + "Time remaining until you can ask a new question: "
+                            + timeLeft
+                            + " second(s)");
+
+                // set types of buttons for the pop-up
+                ButtonType okButton = new ButtonType ("OK");
+
+                alert.getButtonTypes().setAll(okButton);
+
+                // wait for the alert to appear
+                alert.showAndWait();
+                return;
+            }
+            System.err.println("A ratelimit status was returned but the rate limit header does not exist!");
+        }
         answerBox.setText("");
         retrieveQuestions();
     }
@@ -116,35 +109,9 @@ public class StudentViewUIController {
      * @param questionId the id of the question that is being upvoted
      */
     public void upvoteQuestion(int questionId) {
-        ServerCommunication.upvoteQuestion(roomID, questionId);
-        retrieveQuestions();
+        StudentViewLogic.upvoteQuestion(roomID, questionId, questionContainer, questionList);
     }
 
-    /**
-     * Handle button action for going back to lecturer view (light).
-     *
-     * @param event the event
-     */
-    public void goBackButtonLight(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
-        // if goBack is clicked, change Scene to LecturerViewUI
-        EntryRoomDisplay.setCurrentScene("/StudentViewUI.fxml");
-    }
-
-    /**
-     * Handle button action for going back to lecturer view (dark).
-     *
-     * @param event the event
-     */
-    public void goBackButtonDark(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
-        // if goBack is clicked, change Scene to LecturerViewUI
-        EntryRoomDisplay.setCurrentScene("/StudentViewUI(DARKMODE).fxml");
-    }
 
     /**
      * Handle button action for button Mode from Light to Dark.
@@ -182,7 +149,7 @@ public class StudentViewUIController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/HelpFileModerator.fxml");
+        EntryRoomDisplay.setCurrentScene("/HelpFileTA.fxml");
     }
 
     /**
@@ -195,7 +162,7 @@ public class StudentViewUIController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/HelpFileModerator(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/HelpFileTA(DARKMODE).fxml");
     }
 
     /**
