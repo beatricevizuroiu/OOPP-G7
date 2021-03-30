@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ModeratorViewLogic {
+    private static int i = 1;
+
     /**
      * Retrieves all questions from the server and puts them into the question panel.
      * @param roomID ID of the room questions are in
@@ -75,7 +77,7 @@ public class ModeratorViewLogic {
         Gson gson = new GsonBuilder().setDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz").setPrettyPrinting().create();
 
         try {
-            FileWriter fileWriter = new FileWriter(LocalData.getRoomName() + ".txt");
+            FileWriter fileWriter = new FileWriter(LocalData.getRoomName() + i++ + ".txt");
             for (Question question : questions) {
 
                 userId = question.getAuthorId();
