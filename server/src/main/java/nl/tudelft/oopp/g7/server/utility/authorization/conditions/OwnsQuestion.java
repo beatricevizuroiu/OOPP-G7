@@ -5,6 +5,7 @@ import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.server.repositories.BanRepository;
 import nl.tudelft.oopp.g7.server.repositories.QuestionRepository;
 import nl.tudelft.oopp.g7.server.repositories.UserRepository;
+import nl.tudelft.oopp.g7.server.utility.Exceptions.UnauthorizedException;
 
 public class OwnsQuestion extends AuthorizationCondition {
     private final int questionId;
@@ -14,8 +15,11 @@ public class OwnsQuestion extends AuthorizationCondition {
     }
 
     @Override
-    public boolean check(String roomId, User user, String ip, BanRepository banRepository, UserRepository userRepository, QuestionRepository questionRepository) {
+    public void check(String roomId, User user, String ip, BanRepository banRepository, UserRepository userRepository, QuestionRepository questionRepository) throws UnauthorizedException {
         Question question = questionRepository.getQuestionById(roomId, questionId);
-        return question.getAuthorId().equals(user.getId());
+
+        if (!question.getAuthorId().equals(user.getId())) {
+            throw new UnauthorizedException();
+        }
     }
 }

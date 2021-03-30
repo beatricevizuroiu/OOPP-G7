@@ -4,14 +4,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @AllArgsConstructor @NoArgsConstructor
 @Data
 public class PollOption {
+    @Positive
     private int id;
+    @NotNull @NotEmpty
     private String text;
+    @PositiveOrZero
     private int resultCount;
 
     public static PollOption fromResultSet(ResultSet rs, boolean noNext) throws SQLException {

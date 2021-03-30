@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.test.web.servlet.MockMvc;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -39,7 +40,6 @@ public class RoomControllerTest {
     private final String TEST_ROOM_MODERATOR_PASSWORD = "NQj7RWvT4yQKUJsE";
     private final String AUTHORIZATION_STUDENT = "Bearer Ftqp8J5Ub8PcUO0qJDXGuAooXZZfzZrZbfb51pCeYWDchzf6wyuwtFNzYeEeacE7k82Xn7y6ue9KWxPmP0eENubnz3PMelle4i9NLKb0RiQiVCDK8xdDjuu1uacyHdTC";
     private final String AUTHORIZATION_MODERATOR = "Bearer Dm1J7ZsghOtyvFnbMEMWrJDlWHteOGx3rr60stqn405f4sdgPqsj8wO9lWcGkrNGCYf5yH9Y1efaMgnD32hUwaSi3Jsi1mdtXUBK2U7C2HdqdAPdnuUqih2ihmjMk5lG";
-    private final String AUTHORIZATION_EMPTY = "";
 
     @BeforeEach
     void setUp() throws IOException {
@@ -102,7 +102,7 @@ public class RoomControllerTest {
 
     @Test
     void joinRoomStudent() {
-        ResponseEntity<RoomJoinInfo> response = roomController.joinRoom(TEST_ROOM_ID, new RoomJoinRequest(TEST_ROOM_STUDENT_PASSWORD, "nickname"), AUTHORIZATION_EMPTY, request_stud);
+        ResponseEntity<RoomJoinInfo> response = roomController.joinRoom(TEST_ROOM_ID, new RoomJoinRequest(TEST_ROOM_STUDENT_PASSWORD, "nickname"), request_stud);
 
         // Check if the request completed successfully.
         assertEquals(response.getStatusCode(), HttpStatus.OK);
@@ -127,7 +127,7 @@ public class RoomControllerTest {
 
     @Test
     void joinRoomModerator() {
-        ResponseEntity<RoomJoinInfo> response = roomController.joinRoom(TEST_ROOM_ID, new RoomJoinRequest(TEST_ROOM_MODERATOR_PASSWORD, "nickname"), AUTHORIZATION_EMPTY, request_mod);
+        ResponseEntity<RoomJoinInfo> response = roomController.joinRoom(TEST_ROOM_ID, new RoomJoinRequest(TEST_ROOM_MODERATOR_PASSWORD, "nickname"), request_mod);
 
         // Check if the request completed successfully.
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -156,7 +156,7 @@ public class RoomControllerTest {
         roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(1), AUTHORIZATION_STUDENT, request_stud);
         roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(0), AUTHORIZATION_STUDENT, request_stud);
 
-        ResponseEntity<SpeedAlterRequest> response = roomController.getRoomSpeed(TEST_ROOM_ID, AUTHORIZATION_MODERATOR, request_mod);
+        ResponseEntity<RoomSpeedInfo> response = roomController.getRoomSpeed(TEST_ROOM_ID, AUTHORIZATION_MODERATOR, request_mod);
 
         // Check if the request completed successfully.
         assertEquals(response.getStatusCode(), HttpStatus.OK);
@@ -167,7 +167,7 @@ public class RoomControllerTest {
     void speedResetModeratorTest() {
         roomController.resetRoomSpeed(TEST_ROOM_ID, AUTHORIZATION_MODERATOR, request_mod);
 
-        ResponseEntity<SpeedAlterRequest> response = roomController.getRoomSpeed(TEST_ROOM_ID, AUTHORIZATION_MODERATOR, request_mod);
+        ResponseEntity<RoomSpeedInfo> response = roomController.getRoomSpeed(TEST_ROOM_ID, AUTHORIZATION_MODERATOR, request_mod);
 
         // Check if the request completed successfully.
         assertEquals(response.getStatusCode(), HttpStatus.OK);
@@ -192,7 +192,7 @@ public class RoomControllerTest {
 
     @Test
     void getSpeedTest() {
-        ResponseEntity<SpeedAlterRequest> response = roomController.getRoomSpeed(TEST_ROOM_ID, AUTHORIZATION_MODERATOR, request_mod);
+        ResponseEntity<RoomSpeedInfo> response = roomController.getRoomSpeed(TEST_ROOM_ID, AUTHORIZATION_MODERATOR, request_mod);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(0, response.getBody().getSpeed());
@@ -201,7 +201,7 @@ public class RoomControllerTest {
     @Test
     void getSpeedTestPos() {
         roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(1), AUTHORIZATION_STUDENT, request_stud);
-        ResponseEntity<SpeedAlterRequest> response = roomController.getRoomSpeed(TEST_ROOM_ID, AUTHORIZATION_MODERATOR, request_mod);
+        ResponseEntity<RoomSpeedInfo> response = roomController.getRoomSpeed(TEST_ROOM_ID, AUTHORIZATION_MODERATOR, request_mod);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(1, response.getBody().getSpeed());
@@ -210,7 +210,7 @@ public class RoomControllerTest {
     @Test
     void getSpeedTestNeg() {
         roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(-1), AUTHORIZATION_STUDENT, request_stud);
-        ResponseEntity<SpeedAlterRequest> response = roomController.getRoomSpeed((TEST_ROOM_ID), AUTHORIZATION_MODERATOR, request_mod);
+        ResponseEntity<RoomSpeedInfo> response = roomController.getRoomSpeed((TEST_ROOM_ID), AUTHORIZATION_MODERATOR, request_mod);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(-1, response.getBody().getSpeed());

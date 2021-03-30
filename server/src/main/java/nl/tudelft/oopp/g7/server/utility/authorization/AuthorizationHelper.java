@@ -4,6 +4,7 @@ import nl.tudelft.oopp.g7.common.User;
 import nl.tudelft.oopp.g7.server.repositories.BanRepository;
 import nl.tudelft.oopp.g7.server.repositories.QuestionRepository;
 import nl.tudelft.oopp.g7.server.repositories.UserRepository;
+import nl.tudelft.oopp.g7.server.utility.Exceptions.UnauthorizedException;
 import nl.tudelft.oopp.g7.server.utility.RandomString;
 import nl.tudelft.oopp.g7.server.utility.authorization.conditions.AuthorizationCondition;
 import org.springframework.stereotype.Component;
@@ -76,12 +77,12 @@ public class AuthorizationHelper {
      * @param condition The condition to check.
      * @return Whether the User meets the given condition in a boolean.
      */
-    public boolean isAuthorized(String roomId, String authorizationHeader, String ip, AuthorizationCondition condition) {
+    public void checkAuthorization(String roomId, String authorizationHeader, String ip, AuthorizationCondition condition) throws UnauthorizedException {
         User user = getUserFromAuthorizationHeader(authorizationHeader);
         if (user == null) {
-            return false;
+            throw new UnauthorizedException();
         }
 
-        return condition.check(roomId, user, ip, banRepository, userRepository, questionRepository);
+        condition.check(roomId, user, ip, banRepository, userRepository, questionRepository);
     }
 }
