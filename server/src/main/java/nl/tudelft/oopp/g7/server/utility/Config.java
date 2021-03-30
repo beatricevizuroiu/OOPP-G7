@@ -15,13 +15,21 @@ public class Config {
     Logger logger = LoggerFactory.getLogger(Config.class);
 
     public static int RATE_LIMIT = -1;
+    private final File file;
 
     /**
-     * Instantiates a new Config.
-     *
-     * @param file the file
+     * Constructor for the Config class.
+     * @param file The file to load as the config.
      */
     public Config(File file) {
+        this.file = file;
+        loadConfig();
+    }
+
+    /**
+     * Load the config from disk into the static variables in this class.
+     */
+    private void loadConfig() {
         try {
             if (file == null)
                 throw new IllegalStateException("Config file is not set.");
@@ -42,6 +50,5 @@ public class Config {
         } catch (IOException e) {
             logger.error("An error occurred while loading the config", e);
         }
-
     }
 }

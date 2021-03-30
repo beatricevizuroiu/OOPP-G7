@@ -183,24 +183,23 @@ public class QuestionRepository {
     }
 
     /**
-     * Time since last question was sent by the user.
-     *
-     * @param roomId the room id
-     * @param userId the user id
-     * @return the time in long format
+     * Retrieve the amount of time passed since the last question was posted by the specified user.
+     * @param roomId The room in which to check.
+     * @param userId The id of the user to check.
+     * @return The time in seconds since the last question was posted.
      */
     public long timeSinceLastQuestionByUser(String roomId, String userId) {
         //noinspection ConstantConditions
         return jdbcTemplate.query(QUERY_MOST_RECENT_QUESTION_FROM_USER,
-                (ps) -> {
-                    ps.setString(1, roomId);
-                    ps.setString(2, userId);
-                }, (rs) -> {
-                    if (rs.next()) {
-                        return (new Date().getTime() - rs.getTimestamp("postedAt").getTime()) / 1000;
-                    }
+            (ps) -> {
+                ps.setString(1, roomId);
+                ps.setString(2, userId);
+            }, (rs) -> {
+                if (rs.next()) {
+                    return (new Date().getTime() - rs.getTimestamp("postedAt").getTime()) / 1000;
+                }
 
-                    return Long.MAX_VALUE;
-                });
+                return Long.MAX_VALUE;
+            });
     }
 }
