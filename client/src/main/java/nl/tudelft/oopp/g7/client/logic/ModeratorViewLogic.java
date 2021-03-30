@@ -75,7 +75,7 @@ public class ModeratorViewLogic {
         Gson gson = new GsonBuilder().setDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz").setPrettyPrinting().create();
 
         try {
-            FileWriter fileWriter = new FileWriter("Questions.txt");
+            FileWriter fileWriter = new FileWriter(LocalData.getRoomName() + ".txt");
             for (Question question : questions) {
 
                 userId = question.getAuthorId();

@@ -14,4 +14,6 @@ public class LocalData {
     private static String moderatorPassword = null;
     @Setter @Getter
     private static String token = "";
+    @Setter @Getter
+    private static String roomName = "";
 }
