@@ -301,6 +301,7 @@ public class RoomController {
     public ResponseEntity<PollInfo> getPoll(@PathVariable("room_id") String roomId,
                                             @RequestHeader("Authorization") String authorization,
                                             HttpServletRequest request) {
+
         // Check if the room id field is set.
         if (roomId == null || roomId.equals("")) {
             // Inform that client that they did something wrong.
@@ -411,6 +412,14 @@ public class RoomController {
 
         PollInfo mostRecentPoll = pollRepository.getPoll(roomId, -1, false);
 
+        if (mostRecentPoll == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        if (!mostRecentPoll.isAcceptingAnswers()) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
         boolean found = false;
 
         for (PollOption option : mostRecentPoll.getOptions()) {
@@ -466,6 +475,10 @@ public class RoomController {
 
 
         PollInfo mostRecentPoll = pollRepository.getMostRecentPollInRoom(roomId);
+
+        if (mostRecentPoll == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
         pollRepository.endPoll(roomId, mostRecentPoll.getId(), pollCloseRequest.isPublishResults());
 

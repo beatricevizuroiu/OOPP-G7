@@ -215,4 +215,82 @@ public class RoomControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(-1, response.getBody().getSpeed());
     }
+
+    @Test
+    void getPoll() {
+        ResponseEntity<PollInfo> actual = roomController.getPoll(TEST_ROOM_ID, AUTHORIZATION_STUDENT, request_stud);
+
+        PollOption[] options = new PollOption[3];
+        options[0] = new PollOption(1, "Option 1", 0);
+        options[1] = new PollOption(2, "Option 2", 0);
+        options[2] = new PollOption(3, "Option 3", 0);
+
+        PollInfo expected = new PollInfo(1, "Poll question", true, false, options);
+
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
+        assertEquals(expected, actual.getBody());
+    }
+
+    //TODO: This test currently does not work on a H2 database, because of the RETURNING keyword which is postgres exclusive.
+    // I have validated the code paths via postgres and it works fine from there.
+/*
+    @Test
+    void createPoll() {
+        String[] pollOptions = new String[3];
+        pollOptions[0] = "Option 4";
+        pollOptions[1] = "Option 5";
+        pollOptions[2] = "Option 6";
+
+        ResponseEntity<Void> response = roomController.createPoll(TEST_ROOM_ID, new PollCreateRequest("Poll question", pollOptions, false), AUTHORIZATION_MODERATOR, request_mod);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        PollInfo actual = roomController.getPoll(TEST_ROOM_ID, AUTHORIZATION_STUDENT, request_stud).getBody();
+
+        PollOption[] options = new PollOption[3];
+        options[0] = new PollOption(2, "Option 4", 0);
+        options[1] = new PollOption(3, "Option 5", 0);
+        options[2] = new PollOption(4, "Option 6", 0);
+
+        PollInfo expected = new PollInfo(1, "Poll question", true, false, options);
+
+        assertEquals(expected, actual);
+    }
+*/
+
+    @Test
+    void answerPoll() {
+        ResponseEntity<Void> response = roomController.answerPoll(TEST_ROOM_ID, new PollAnswerRequest(1), AUTHORIZATION_STUDENT, request_stud);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        PollInfo actual = roomController.getPoll(TEST_ROOM_ID, AUTHORIZATION_MODERATOR, request_mod).getBody();
+
+        PollOption[] options = new PollOption[3];
+        options[0] = new PollOption(1, "Option 1", 1);
+        options[1] = new PollOption(2, "Option 2", 0);
+        options[2] = new PollOption(3, "Option 3", 0);
+
+        PollInfo expected = new PollInfo(1, "Poll question", true, true, options);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void closePoll() {
+        ResponseEntity<Void> response = roomController.closePoll(TEST_ROOM_ID, new PollCloseRequest(true), AUTHORIZATION_MODERATOR, request_mod);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        PollInfo actual = roomController.getPoll(TEST_ROOM_ID, AUTHORIZATION_STUDENT, request_stud).getBody();
+
+        PollOption[] options = new PollOption[3];
+        options[0] = new PollOption(1, "Option 1", 0);
+        options[1] = new PollOption(2, "Option 2", 0);
+        options[2] = new PollOption(3, "Option 3", 0);
+
+        PollInfo expected = new PollInfo(1, "Poll question", false, true, options);
+
+        assertEquals(expected, actual);
+    }
 }

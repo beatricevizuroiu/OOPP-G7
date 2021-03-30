@@ -22,16 +22,15 @@ public class PollRepository {
             + "createdAt timestamp with time zone DEFAULT NOW(),"
             + "publicResults boolean DEFAULT FALSE not NUll,"
             + "isOver boolean DEFAULT FALSE not NULL,"
-            + "FOREIGN KEY (roomID) REFERENCES users(id) ON DELETE CASCADE);";
+            + "FOREIGN KEY (roomID) REFERENCES rooms(id) ON DELETE CASCADE);";
 
     private static final String QUERY_CREATE_TABLE_OPTIONS = "CREATE TABLE IF NOT EXISTS pollOptions("
-            + "id serial not NULL,"
+            + "id serial PRIMARY KEY not NULL,"
             + "pollID int not NULL,"
             + "roomID varchar(36) not NULL,"
             + "text text not NULL,"
-            + "PRIMARY KEY (id, pollID, roomID),"
             + "FOREIGN KEY (pollID) REFERENCES polls(id) ON DELETE CASCADE,"
-            + "FOREIGN KEY (roomID) REFERENCES users(id) ON DELETE CASCADE);";
+            + "FOREIGN KEY (roomID) REFERENCES rooms(id) ON DELETE CASCADE);";
 
     private static final String QUERY_CREATE_TABLE_RESULTS = "CREATE TABLE IF NOT EXISTS pollResults("
             + "pollID int not NULL,"
@@ -192,10 +191,7 @@ public class PollRepository {
         return jdbcTemplate.query(QUERY_GET_POLL_MOST_RECENT, (ps) -> {
             ps.setString(1, roomId);
         }, (rs) -> {
-            if (rs.next()) {
-                return PollInfo.fromResultSet(rs, false);
-            }
-            return null;
+            return PollInfo.fromResultSet(rs, false);
         });
     }
 
@@ -208,7 +204,8 @@ public class PollRepository {
     private List<PollOption> getOptionsForPoll(String roomId, PollInfo pollInfo) {
         logger.debug("Retrieving options for poll with id {}, in room with id {}", pollInfo.getId(), roomId);
         return jdbcTemplate.query(QUERY_GET_POLL_OPTIONS, (ps) -> {
-
+            ps.setString(1, roomId);
+            ps.setInt(2, pollInfo.getId());
         }, (rs) -> {
             List<PollOption> options = new ArrayList<>();
             while (rs.next()) {
