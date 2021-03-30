@@ -3,6 +3,7 @@ package nl.tudelft.oopp.g7.server.controllers;
 import nl.tudelft.oopp.g7.common.*;
 import nl.tudelft.oopp.g7.server.repositories.*;
 import nl.tudelft.oopp.g7.server.utility.authorization.AuthorizationHelper;
+import org.apache.tomcat.jni.Poll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -64,6 +65,7 @@ public class RoomControllerTest {
         UserRepository userRepository = new UserRepository(jdbcTemplate);
         BanRepository banRepository = new BanRepository(jdbcTemplate);
         RoomRepository roomRepository = new RoomRepository(jdbcTemplate);
+        PollRepository pollRepository = new PollRepository(jdbcTemplate);
         SpeedRepository speedRepository = new SpeedRepository(jdbcTemplate);
 
         // Create our questionController with our in memory datasource.
@@ -71,6 +73,7 @@ public class RoomControllerTest {
                 roomRepository,
                 userRepository,
                 speedRepository,
+                pollRepository,
                 new AuthorizationHelper(
                         userRepository,
                         banRepository,

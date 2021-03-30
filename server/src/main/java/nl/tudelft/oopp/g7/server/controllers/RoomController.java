@@ -1,10 +1,7 @@
 package nl.tudelft.oopp.g7.server.controllers;
 
 import nl.tudelft.oopp.g7.common.*;
-import nl.tudelft.oopp.g7.server.repositories.QuestionRepository;
-import nl.tudelft.oopp.g7.server.repositories.RoomRepository;
-import nl.tudelft.oopp.g7.server.repositories.SpeedRepository;
-import nl.tudelft.oopp.g7.server.repositories.UserRepository;
+import nl.tudelft.oopp.g7.server.repositories.*;
 import nl.tudelft.oopp.g7.server.utility.RandomString;
 import nl.tudelft.oopp.g7.server.utility.authorization.AuthorizationHelper;
 import nl.tudelft.oopp.g7.server.utility.authorization.conditions.*;
@@ -25,6 +22,7 @@ public class RoomController {
     private final RoomRepository roomRepository;
     private final UserRepository userRepository;
     private final SpeedRepository speedRepository;
+    private final PollRepository pollRepository;
     private final AuthorizationHelper authorizationHelper;
 
     private static final int GENERATED_PASSWORD_LENGTH = 16;
@@ -32,10 +30,11 @@ public class RoomController {
     /**
      * The primary constructor for the RoomController .
      */
-    public RoomController(RoomRepository roomRepository, UserRepository userRepository, SpeedRepository speedRepository, AuthorizationHelper authorizationHelper) {
+    public RoomController(RoomRepository roomRepository, UserRepository userRepository, SpeedRepository speedRepository, PollRepository pollRepository, AuthorizationHelper authorizationHelper) {
         this.roomRepository = roomRepository;
         this.userRepository = userRepository;
         this.speedRepository = speedRepository;
+        this.pollRepository = pollRepository;
         this.authorizationHelper = authorizationHelper;
     }
 
@@ -288,6 +287,189 @@ public class RoomController {
 
         SpeedAlterRequest response = new SpeedAlterRequest(speedRepository.getSpeedForRoom(roomId));
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    /**
+     * Get the {@link PollInfo} for the room with roomId.
+     * @param roomId The id of the room to retrieve the poll for.
+     * @param authorization The authorization header.
+     * @param request The {@link HttpServletRequest} associated with the Http request.
+     * @return A {@link ResponseEntity} containing the {@link PollInfo} and a http status of OK (200) or null and a non
+     *          OK http status.
+     */
+    @GetMapping("/{room_id}/poll")
+    public ResponseEntity<PollInfo> getPoll(@PathVariable("room_id") String roomId,
+                                            @RequestHeader("Authorization") String authorization,
+                                            HttpServletRequest request) {
+        // Check if the room id field is set.
+        if (roomId == null || roomId.equals("")) {
+            // Inform that client that they did something wrong.
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (!authorizationHelper.isAuthorized(
+                roomId,
+                authorization,
+                request.getRemoteAddr(),
+                new All(
+                        new BelongsToRoom()
+                )
+        )) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        User user = authorizationHelper.getUserFromAuthorizationHeader(authorization);
+
+        PollInfo pollInfo = pollRepository.getPoll(roomId, -1,user.getRole() == UserRole.MODERATOR);
+
+        if (pollInfo == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(pollInfo, HttpStatus.OK);
+    }
+
+    /**
+     * Create a new poll in the room specified.
+     * @param roomId The id of the room to create the poll in.
+     * @param pollCreateRequest The {@link PollCreateRequest} to create the poll from.
+     * @param authorization The authorization header.
+     * @param request The {@link HttpServletRequest} associated with the Http request.
+     * @return A {@link ResponseEntity} containing the http status code indicating whether the request completed
+     *          successfully or if there was an error.
+     */
+    @PostMapping("/{room_id}/poll")
+    public ResponseEntity<Void> createPoll(@PathVariable("room_id") String roomId,
+                                               @RequestBody PollCreateRequest pollCreateRequest,
+                                               @RequestHeader("Authorization") String authorization,
+                                               HttpServletRequest request) {
+
+        // Check if the room id field is set.
+        if (roomId == null || roomId.equals("")) {
+            // Inform that client that they did something wrong.
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        // Make sure the poll create request is all in order.
+        if (pollCreateRequest == null ||
+                pollCreateRequest.getQuestion() == null ||
+                pollCreateRequest.getOptions() == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (!authorizationHelper.isAuthorized(
+                roomId,
+                authorization,
+                request.getRemoteAddr(),
+                new All(
+                        new BelongsToRoom(),
+                        new IsModerator(),
+                        new NotBanned()
+                )
+        )) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        pollRepository.createPoll(roomId, pollCreateRequest.getQuestion(), pollCreateRequest.isHasPublicResults(), pollCreateRequest.getOptions());
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /**
+     * Change the answer given to the current poll.
+     * @param roomId The id of the room to answer the poll in.
+     * @param pollAnswerRequest The {@link PollAnswerRequest} to answer the poll from.
+     * @param authorization The authorization header.
+     * @param request The {@link HttpServletRequest} associated with the Http request.
+     * @return A {@link ResponseEntity} containing the http status code indicating whether the request completed
+     *          successfully or if there was an error.
+     */
+    @PostMapping("/{room_id}/poll/answer")
+    public ResponseEntity<Void> answerPoll(@PathVariable("room_id") String roomId,
+                                           @RequestBody PollAnswerRequest pollAnswerRequest,
+                                           @RequestHeader("Authorization") String authorization,
+                                           HttpServletRequest request) {
+
+        // Check if the room id field is set.
+        if (roomId == null || roomId.equals("")) {
+            // Inform that client that they did something wrong.
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (!authorizationHelper.isAuthorized(
+                roomId,
+                authorization,
+                request.getRemoteAddr(),
+                new All(
+                        new BelongsToRoom(),
+                        new NotBanned()
+                )
+        )) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        User user = authorizationHelper.getUserFromAuthorizationHeader(authorization);
+
+        PollInfo mostRecentPoll = pollRepository.getPoll(roomId, -1, false);
+
+        boolean found = false;
+
+        for (PollOption option : mostRecentPoll.getOptions()) {
+            if (option.getId() == pollAnswerRequest.getOptionId()) {
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        pollRepository.updateResult(roomId, user.getId(),mostRecentPoll.getId(), pollAnswerRequest.getOptionId());
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
+    /**
+     * Close the currently running poll.
+     * @param roomId The id of the room to close the poll in.
+     * @param pollCloseRequest The {@link PollCloseRequest} to close the poll from.
+     * @param authorization The authorization header.
+     * @param request The {@link HttpServletRequest} associated with the Http request.
+     * @return A {@link ResponseEntity} containing the http status code indicating whether the request completed
+     *          successfully or if there was an error.
+     */
+    @DeleteMapping("/{room_id}/poll")
+    public ResponseEntity<Void> closePoll(@PathVariable("room_id") String roomId,
+                                          @RequestBody PollCloseRequest pollCloseRequest,
+                                          @RequestHeader("Authorization") String authorization,
+                                          HttpServletRequest request) {
+
+        // Check if the room id field is set.
+        if (roomId == null || roomId.equals("")) {
+            // Inform that client that they did something wrong.
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (!authorizationHelper.isAuthorized(
+                roomId,
+                authorization,
+                request.getRemoteAddr(),
+                new All(
+                        new BelongsToRoom(),
+                        new NotBanned(),
+                        new IsModerator()
+                )
+        )) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+
+        PollInfo mostRecentPoll = pollRepository.getMostRecentPollInRoom(roomId);
+
+        pollRepository.endPoll(roomId, mostRecentPoll.getId(), pollCloseRequest.isPublishResults());
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
