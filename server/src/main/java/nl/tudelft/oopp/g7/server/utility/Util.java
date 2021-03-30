@@ -9,7 +9,9 @@ public class Util {
 
     /**
      * Method to export a file from the jar to an external folder.
-    */
+     * @param resourceName the name of the resource
+     * @param output file that will be outputted to
+     */
     public static void exportResource(String resourceName, File output) {
         try (InputStream stream = Util.class.getResourceAsStream(resourceName); OutputStream resStreamOut = new FileOutputStream(output)) {
             if (stream == null) {

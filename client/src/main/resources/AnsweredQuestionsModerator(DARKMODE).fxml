@@ -9,7 +9,7 @@
 <?import javafx.scene.image.Image?>
 <GridPane xmlns="http://javafx.com/javafx/11.0.1"
           xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="nl.tudelft.oopp.g7.client.controllers.AnsweredQuestionsController"
+          fx:controller="nl.tudelft.oopp.g7.client.controllers.AnsweredQuestionsModeratorController"
           stylesheets="@UIstyle(DARKMODE).css"
           minHeight="500" minWidth="750">
     <columnConstraints>

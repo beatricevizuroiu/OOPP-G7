@@ -3,25 +3,17 @@ package nl.tudelft.oopp.g7.client.controllers;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.StudentViewLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
-import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
 
-import java.io.IOException;
 import java.net.http.HttpResponse;
-import java.util.List;
 import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -149,7 +141,7 @@ public class StudentViewUIController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/HelpFileTA.fxml");
+        EntryRoomDisplay.setCurrentScene("/HelpFileStudent.fxml");
     }
 
     /**
@@ -162,7 +154,7 @@ public class StudentViewUIController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/HelpFileTA(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/HelpFileStudent(DARKMODE).fxml");
     }
 
     /**
@@ -173,7 +165,7 @@ public class StudentViewUIController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Answered questions is clicked, change to Answered Questions (lightmode) scene
-        EntryRoomDisplay.setCurrentScene("/AnsweredQuestions.fxml");
+        EntryRoomDisplay.setCurrentScene("/AnsweredQuestionsStudent.fxml");
     }
 
     /**
@@ -185,7 +177,7 @@ public class StudentViewUIController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Answered questions is clicked, change to Answered Questions (darkmode) scene
-        EntryRoomDisplay.setCurrentScene("/AnsweredQuestions(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/AnsweredQuestionsStudent(DARKMODE).fxml");
     }
 
     /**
