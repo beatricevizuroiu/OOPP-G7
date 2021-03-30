@@ -1,5 +1,7 @@
 package nl.tudelft.oopp.g7.client.logic;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
@@ -8,11 +10,15 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import nl.tudelft.oopp.g7.client.communication.ModeratorServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
+import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
+import nl.tudelft.oopp.g7.common.ExportQuestion;
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.UserInfo;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -59,5 +65,39 @@ public class ModeratorViewLogic {
 
         // Store the current position of the user in the scroll list
         questionList.setVvalue(scrollHeight + 0);
+    }
+
+    public static void exportQuestions(String roomID, HashMap<String, UserInfo> userMap) {
+
+        List<Question> questions = StudentServerCommunication.retrieveAllQuestions(roomID);
+        List<ExportQuestion> exportQuestions = new ArrayList<>();
+        String userId;
+        Gson gson = new GsonBuilder().setDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz").setPrettyPrinting().create();
+
+        try {
+            FileWriter fileWriter = new FileWriter("Questions.txt");
+            for (Question question : questions) {
+
+                userId = question.getAuthorId();
+                if (!userMap.containsKey(userId)) {
+                    userMap.put(userId, ServerCommunication.retrieveUserById(roomID, userId));
+                }
+
+                exportQuestions.add(new ExportQuestion(
+                        userMap.get(userId).getNickname(),
+                        question.getText(),
+                        question.getAnswer(),
+                        question.getPostedAt(),
+                        question.getUpvotes(),
+                        question.isAnswered(),
+                        question.isEdited()
+                        )
+                );
+            }
+            gson.toJson(exportQuestions, fileWriter);
+            fileWriter.flush();
+        } catch (IOException e) {
+            System.err.println("File couldn't be written!" + e);
+        }
     }
 }

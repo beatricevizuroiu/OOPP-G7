@@ -194,7 +194,7 @@ public class TAViewController {
      * Handle button action for exporting questions.
      */
     public void exportQuestions(){
-        //TODO
+        ModeratorViewLogic.exportQuestions(roomID, userMap);
     }
 
 }

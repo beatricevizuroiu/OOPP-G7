@@ -193,7 +193,7 @@ public class LecturerViewController {
      * Handle button action for exporting questions.
      */
     public void exportQuestions(){
-        //TODO
+        ModeratorViewLogic.exportQuestions(roomID, userMap);
     }
 
     /**
