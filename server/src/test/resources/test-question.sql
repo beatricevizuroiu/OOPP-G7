@@ -1,6 +1,9 @@
 -- Drop tables if they exist.
 DROP TABLE IF EXISTS upvotes;
 DROP TABLE IF EXISTS speeds;
+DROP TABLE IF EXISTS pollResults;
+DROP TABLE IF EXISTS pollOptions;
+DROP TABLE IF EXISTS polls;
 DROP TABLE IF EXISTS questions;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS bannedUsers;
@@ -49,6 +52,37 @@ CREATE TABLE IF NOT EXISTS questions (
     FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS polls(
+    id serial PRIMARY KEY not NULL,
+    roomID varchar(36) not NULL,
+    question text not NULL,
+    createdAt timestamp with time zone DEFAULT NOW(),
+    publicResults boolean DEFAULT FALSE not NUll,
+    isOver boolean DEFAULT FALSE not NULL,
+    FOREIGN KEY (roomID) REFERENCES rooms(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS pollOptions(
+    id serial PRIMARY KEY not NULL,
+    pollID int not NULL,
+    roomID varchar(36) not NULL,
+    text text not NULL,
+    FOREIGN KEY (pollID) REFERENCES polls(id) ON DELETE CASCADE,
+    FOREIGN KEY (roomID) REFERENCES rooms(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS pollResults(
+    pollID int not NULL,
+    roomID varchar(36) not NULL,
+    userID varchar(36) not NULL,
+    optionID int not NULL,
+    PRIMARY KEY (pollID, roomID, optionID),
+    FOREIGN KEY (pollID) REFERENCES polls(id) ON DELETE CASCADE,
+    FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (roomID) REFERENCES rooms(id) ON DELETE CASCADE,
+    FOREIGN KEY (optionID) REFERENCES pollOptions(id) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS upvotes(
     userID varchar(36) not NULL,
     roomID varchar(36) not NULL,
@@ -88,6 +122,19 @@ VALUES (2, 'RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q', 'SIfhfCMwN6np3WcMW27ka4hAwBtS
 
 INSERT INTO questions (ID, USERID, ROOMID, TEXT, ANSWER, POSTEDAT, ANSWERED, EDITED)
 VALUES (3, 'RhNWf7SijmtQO8FIaaXNqKc13jvz4uuB4L9Q', 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH','This is a question', '', '1970-01-01 00:00:00+00:00', true, false);
+
+-- Setup polls.
+INSERT INTO polls (ID, roomID, question, createdAt, publicResults, isOver)
+VALUES (1, 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH', 'Poll question', '1970-01-01 00:00:00+00:00', false, false);
+
+INSERT INTO pollOptions (ID, pollId, roomId, text)
+VALUES (1, 1, 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH', 'Option 1');
+
+INSERT INTO pollOptions (ID, pollId, roomId, text)
+VALUES (2, 1, 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH', 'Option 2');
+
+INSERT INTO pollOptions (ID, pollId, roomId, text)
+VALUES (3, 1, 'SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH', 'Option 3');
 
 -- Setup upvotes.
 INSERT INTO upvotes (userID, roomID, questionID)
