@@ -22,7 +22,7 @@ client-build:
 
 client-checkstyle:
   stage: validate
-  script: ./gradlew :client:checkstyleMain :client:checkstyleTest
+  script: ./gradlew :client:checkstyleMain
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
