@@ -1,7 +1,5 @@
 package nl.tudelft.oopp.g7.server.utility;
 
-import nl.tudelft.oopp.g7.server.DemoApplication;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -9,8 +7,8 @@ import java.io.OutputStream;
 
 public class Util {
 
-    /*
-   Method to export a file from the jar to the plugin folder.
+    /**
+     * Method to export a file from the jar to an external folder.
     */
     public static void exportResource(String resourceName, File output) {
         try (InputStream stream = Util.class.getResourceAsStream(resourceName); OutputStream resStreamOut = new FileOutputStream(output)) {
