@@ -182,13 +182,14 @@ public class RoomControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
-    @Test
-    void badSpeedRequest() {
-        ResponseEntity<Void> response = roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(2), AUTHORIZATION_STUDENT, request_stud);
-
-        // Check if the request failed successfully.
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    }
+    //TODO: Move the invalid tests to MVCMock tests, since validation is now handled by spring and not us.
+//    @Test
+//    void badSpeedRequest() {
+//        ResponseEntity<Void> response = roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(2), AUTHORIZATION_STUDENT, request_stud);
+//
+//        // Check if the request failed successfully.
+//        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+//    }
 
     @Test
     void getSpeedTest() {
