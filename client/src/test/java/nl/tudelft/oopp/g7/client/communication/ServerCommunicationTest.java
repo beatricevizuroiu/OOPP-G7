@@ -2,197 +2,305 @@ package nl.tudelft.oopp.g7.client.communication;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import nl.tudelft.oopp.g7.common.NewRoom;
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
-import nl.tudelft.oopp.g7.common.Room;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import nl.tudelft.oopp.g7.common.SpeedAlterRequest;
+import org.junit.jupiter.api.*;
+import org.mockserver.client.MockServerClient;
+import org.mockserver.integration.ClientAndServer;
+import org.mockserver.verify.VerificationTimes;
 
-import java.net.URI;
 import java.net.http.HttpResponse;
-import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockserver.model.HttpRequest.request;
 
 public class ServerCommunicationTest {
-    private static Question question;
-    private static Question anotherQuestion;
-    private static String roomID;
-
-    private static String uriBody = "http://localhost:8080/api/v1/room/";
+    private static MockServerConfigurations expectations;
+    private static ClientAndServer mockServer;
+    private static String roomID = "TestRoomID";
+    private static String path = "/api/v1/room/" + roomID + "/";
     private static Gson gson = new GsonBuilder().setDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz").create();
 
-    private static boolean isConnected;
-
     @BeforeAll
-    static void testConnection() {
-        try {
-            // test an endpoint to see if connection is alive
-            URI uri = URI.create(uriBody);
-            HttpMethods.get(uri);
-
-            isConnected = true;
-
-        } catch (NullPointerException e) { // if connection is dead we don't want to fail all tests
-            isConnected = false;
-        }
+    static void setUpServer() {
+        // initialize the expectation class
+        expectations = new MockServerConfigurations();
+        mockServer = ClientAndServer.startClientAndServer(8080);
     }
 
-
-    /**
-     * Helper method for setting up the test suite.
-     */
-    @BeforeEach
-    void setUp() {
-        // in the case that the server is not connected do not test
-        if (!isConnected) {
-            return;
-        }
-
-        // create the room uri
-        URI uriRoom = URI.create(uriBody + "create");
-
-        // create NewRoom object
-        NewRoom newRoom = new NewRoom("Test", "s", "m", new Date(0));
-
-        // convert NewRoom into JSON and send to server
-        HttpResponse<String> roomHttpResponse = HttpMethods.post(uriRoom, gson.toJson(newRoom));
-
-        roomID = gson.fromJson(roomHttpResponse.body(), Room.class).getId();
-
-        // if connection is alive create the questions with timestamps
-        QuestionText questionText = new QuestionText("Current time: " + (new Date()).getTime());
-        QuestionText anotherQuestionText = new QuestionText("Current time: " + (new Date()).getTime());
-
-        // create the question uri
-        URI uriQuestion = URI.create(uriBody + roomID + "/question/new");
-
-        // convert to json and send / store the response
-        HttpMethods.post(uriQuestion, gson.toJson(questionText));
-        HttpMethods.post(uriQuestion, gson.toJson(anotherQuestionText));
-
-        // extract questionText and anotherQuestionText
-        List<Question> questions = ServerCommunication.retrieveAllQuestions(roomID);
-        question = questions.get(questions.size() - 2);
-        anotherQuestion = questions.get(questions.size() - 1);
-    }
-
-    /**
-     * Helper method for cleaning up questions.
-     */
-    @AfterEach
-    void cleanUp() {
-        // in the case that the server is not connected do not test
-        if (!isConnected) {
-            return;
-        }
-
-        // extract questionText and anotherQuestionText
-        List<Question> questions = ServerCommunication.retrieveAllQuestions(roomID);
-        HttpMethods.delete(URI.create(uriBody + roomID + "/question/" + question.getId()));
-        HttpMethods.delete(URI.create(uriBody + roomID + "/question/" + anotherQuestion.getId()));
+    @AfterAll
+    static void stopServer() {
+        mockServer.stop();
+        while (!mockServer.hasStopped(3,100L, TimeUnit.MILLISECONDS)){}
     }
 
     @Test
     void testRetrieveAllQuestions() {
-        // in the case that the server is not connected do not test
-        if (!isConnected) {
-            return;
-        }
+        // mock the /all endpoint
+        expectations.createExpectationAll();
 
-        List<Question> questions = ServerCommunication.retrieveAllQuestions(roomID);
+        // retrieve the list of questions
+        List<Question> questionList = ServerCommunication.retrieveAllQuestions(roomID);
 
-        assertEquals(question, questions.get(questions.size() - 2));
-        assertEquals(anotherQuestion, questions.get(questions.size() - 1));
+        // check whether the request has been received by the server
+        new MockServerClient("localhost", 8080)
+                .verify(
+                        request()
+                                .withMethod("GET")
+                                .withPath("/api/v1/room/TestRoomID/question/all"),
+                        VerificationTimes.atLeast(1)
+                );
+
+        // get the actual question list and check
+        assertEquals(expectations.getQuestionList(), questionList);
     }
 
     @Test
     void testRetrieveQuestionByID() {
-        // in the case that the server is not connected do not test
-        if (!isConnected) {
-            return;
-        }
+        // mock the endpoint
+        expectations.createExpectationQuestionID(1);
 
-        // test whether the questions are the same
-        assertEquals(ServerCommunication.retrieveQuestionById(roomID, question.getId()), question);
-        assertEquals(ServerCommunication.retrieveQuestionById(roomID, anotherQuestion.getId()), anotherQuestion);
+        // retrieve all answered questions
+        Question question = ServerCommunication.retrieveQuestionById(roomID, 1);
+
+        // check whether the request has been received by the server
+        new MockServerClient("localhost", 8080)
+                .verify(
+                        request()
+                                .withMethod("GET")
+                                .withPath("/api/v1/room/TestRoomID/question/" + 1),
+                        VerificationTimes.atLeast(1)
+                );
+
+        assertEquals(expectations.getQuestion(), question);
     }
+    
+    @Test
+    void testRetrieveQuestionByIDNotWorks() {
+        // mock the endpoint
+        expectations.createExpectationQuestionIDNotWorks();
+
+        // retrieve all answered questions
+        Question question = ServerCommunication.retrieveQuestionById(roomID, 5);
+
+        // check whether the request has been received by the server
+        new MockServerClient("localhost", 8080)
+                .verify(
+                        request()
+                                .withMethod("GET")
+                                .withPath("/api/v1/room/TestRoomID/question/" + 5),
+                        VerificationTimes.atLeast(1)
+                );
+
+        assertNull(question);
+     }
+
 
     @Test
     void testRetrieveAllAnsweredQuestions() {
-        // in the case that the server is not connected do not test
-        if (!isConnected) {
-            return;
-        }
+        // mock the endpoint
+        expectations.createExpectationAll();
 
-        // extract questionText and anotherQuestionText
-        List<Question> questions = ServerCommunication.retrieveAllQuestions(roomID);
+        List<Question> questionList = ServerCommunication.retrieveAllAnsweredQuestions(roomID);
 
-        URI answerBody = URI.create(uriBody + roomID + "/question/" + anotherQuestion.getId() + "/answer");
-        HttpMethods.post(answerBody, gson.toJson(new QuestionText("Test answer")));
+        // check whether the request has been received by the server
+        new MockServerClient("localhost", 8080)
+                .verify(
+                        request()
+                                .withMethod("GET")
+                                .withPath("/api/v1/room/TestRoomID/question/all"),
+                        VerificationTimes.atLeast(1)
+                );
 
-        // test whether the answered question has been received
-        List<Question> answeredQuestions = ServerCommunication.retrieveAllAnsweredQuestions(roomID);
-        assertNotEquals(questions, answeredQuestions);
-
-        // test whether questions match
-        assertEquals(anotherQuestion.getId(), answeredQuestions.get(0).getId());
+        assertEquals(expectations.getQuestionWithAnswer(), questionList.get(0));
     }
 
     @Test
     void testUpvoteQuestion() {
-        // in the case that the server is not connected do not test
-        if (!isConnected) {
-            return;
-        }
+        // mock the endpoint
+        expectations.createExpectationUpvoteWorks();
 
-        // retrieve a question from the server
-        // extract questionText and anotherQuestionText
-        List<Question> questions = ServerCommunication.retrieveAllQuestions(roomID);
-        Question question = questions.get(questions.size() - 2);
+        HttpResponse<String> response = ServerCommunication.upvoteQuestion(roomID, 1);
 
-        // upvote a question
-        HttpResponse<String> response = ServerCommunication.upvoteQuestion(roomID, question.getId());
+        // check whether the request has been received by the server
+        new MockServerClient("localhost", 8080)
+                .verify(
+                        request()
+                                .withMethod("POST")
+                                .withPath("/api/v1/room/TestRoomID/question/1/upvote"),
+                        VerificationTimes.atLeast(1)
+                );
 
-        // test whether upvote is registered
         assertEquals(200, response.statusCode());
-        assertEquals(1, ServerCommunication.retrieveQuestionById(roomID, question.getId()).getUpvotes());
     }
 
     @Test
-    void testEditQuestion() {
-        // in the case that the server is not connected do not test
-        if (!isConnected) {
-            return;
-        }
+    void testUpvoteQuestionNotWorks() {
+        // mock the endpoint
+        expectations.createExpectationUpvoteNotWorks();
 
-        // edit the question body
-        HttpResponse<String> response = ServerCommunication.editQuestion(roomID,
-                                            anotherQuestion.getId(), new QuestionText("Edited body"));
+        HttpResponse<String> response = ServerCommunication.upvoteQuestion(roomID, 2);
 
-        Question editedQuestion = ServerCommunication.retrieveQuestionById(roomID, anotherQuestion.getId());
-        assertEquals(200, response.statusCode());
-        assertNotEquals(anotherQuestion, editedQuestion);
-        assertEquals("Edited body", editedQuestion.getText());
+        // check whether the request has been received by the server
+        new MockServerClient("localhost", 8080)
+                .verify(
+                        request()
+                                .withMethod("POST")
+                                .withPath("/api/v1/room/TestRoomID/question/2/upvote"),
+                        VerificationTimes.atLeast(1)
+                );
+
+        assertEquals(404, response.statusCode());
     }
 
     @Test
-    void deleteQuestion() {
-        // in the case that the server is not connected do not test
-        if (!isConnected) {
-            return;
-        }
+    void testEditQuestionWorks() {
+        // mock the endpoint
+        expectations.createExpectationEditQuestionWorks(1);
 
-        // delete the last question
-        HttpResponse<String> response = ServerCommunication.deleteQuestion(roomID, anotherQuestion.getId());
+        // create the edited body
+        QuestionText text = new QuestionText("Edited text");
 
-        // retrieve all questions and check whether the last question is still there
-        List<Question> questionList = ServerCommunication.retrieveAllQuestions(roomID);
+        HttpResponse<String> response = ServerCommunication.editQuestion(roomID, 1, text);
+
+        // check whether the request has been received by the server
+        new MockServerClient("localhost", 8080)
+                .verify(
+                        request()
+                                .withMethod("POST")
+                                .withPath(path + "question/" + 1)
+                                .withBody(gson.toJson(text)),
+                        VerificationTimes.atLeast(1)
+                );
+
         assertEquals(200, response.statusCode());
-        assertFalse(questionList.contains(anotherQuestion));
+    }
+
+    @Test
+    void testEditQuestionNotWorks() {
+        // mock the endpoint
+        expectations.createExpectationEditQuestionNotWorks();
+
+        // create the edited body
+        QuestionText text = new QuestionText("Edited text");
+
+        HttpResponse<String> response = ServerCommunication.editQuestion(roomID, 5, text);
+
+        // check whether the request has been received by the server
+        new MockServerClient("localhost", 8080)
+                .verify(
+                        request()
+                                .withMethod("POST")
+                                .withPath(path + "question/" + 5)
+                                .withBody(gson.toJson(text)),
+                        VerificationTimes.atLeast(1)
+                );
+
+        assertEquals(404, response.statusCode());
+    }
+
+
+    @Test
+    void deleteQuestionWorks() {
+        // mock the endpoint
+        expectations.createExpectationDeleteQuestionWorks(1);
+
+        HttpResponse<String> response = ServerCommunication.deleteQuestion(roomID, 1);
+
+        // check whether the request has been received by the server
+        new MockServerClient("localhost", 8080)
+                .verify(
+                        request()
+                                .withMethod("DELETE")
+                                .withPath("/api/v1/room/TestRoomID/question/1"),
+                        VerificationTimes.atLeast(1)
+                );
+
+        assertEquals(200, response.statusCode());
+    }
+
+    @Test
+    void deleteQuestionNotWorks() {
+        // mock the endpoint
+        expectations.createExpectationDeleteQuestionNotWorks();
+
+        HttpResponse<String> response = ServerCommunication.deleteQuestion(roomID, 5);
+
+        // check whether the request has been received by the server
+        new MockServerClient("localhost", 8080)
+                .verify(
+                        request()
+                                .withMethod("DELETE")
+                                .withPath("/api/v1/room/TestRoomID/question/5"),
+                        VerificationTimes.atLeast(1)
+                );
+
+        assertEquals(404, response.statusCode());
+    }
+
+    @Test
+    void getSpeed() {
+        // mock the endpoint
+        expectations.createExpectationGetSpeed();
+
+        int speed = ServerCommunication.getSpeed(roomID);
+
+        // check whether the request has been received by the server
+        new MockServerClient("localhost", 8080)
+                .verify(
+                        request()
+                                .withMethod("GET")
+                                .withPath("/api/v1/room/TestRoomID/speed"),
+                        VerificationTimes.atLeast(1)
+                );
+
+        assertEquals(1, speed);
+    }
+
+    @Test
+    void setSpeedWorks() {
+        // mock the endpoint
+        expectations.createExpectationSetSpeedWorks();
+
+        SpeedAlterRequest request = new SpeedAlterRequest(1);
+
+        HttpResponse<String> response = ServerCommunication.setSpeed(roomID, 1);
+
+        // check whether the request has been received by the server
+        new MockServerClient("localhost", 8080)
+                .verify(
+                        request()
+                                .withMethod("POST")
+                                .withPath("/api/v1/room/TestRoomID/speed")
+                                .withBody(gson.toJson(request)),
+                        VerificationTimes.atLeast(1)
+                );
+
+        assertEquals(200, response.statusCode());
+    }
+
+    @Test
+    void setSpeedBadRequest() {
+        // mock the endpoint
+        expectations.createExpectationSetSpeedBadRequest();
+
+        SpeedAlterRequest request = new SpeedAlterRequest(5);
+
+        HttpResponse<String> response = ServerCommunication.setSpeed(roomID, 5);
+
+        // check whether the request has been received by the server
+        new MockServerClient("localhost", 8080)
+                .verify(
+                        request()
+                                .withMethod("POST")
+                                .withPath("/api/v1/room/TestRoomID/speed")
+                                .withBody(gson.toJson(request)),
+                        VerificationTimes.atLeast(1)
+                );
+
+        assertEquals(404, response.statusCode());
     }
 }

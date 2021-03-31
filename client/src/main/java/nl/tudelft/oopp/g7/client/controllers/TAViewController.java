@@ -21,7 +21,6 @@ public class TAViewController {
     private final String nickname;
     private final String moderatorPassword;
     private final String studentPassword;
-    private int i = 0;
 
     @FXML
     public ScrollPane questionList;
@@ -120,7 +119,7 @@ public class TAViewController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Answered questions is clicked, change to Answered Questions (lightmode) scene
-        EntryRoomDisplay.setCurrentScene("/AnsweredQuestions.fxml");
+        EntryRoomDisplay.setCurrentScene("/AnsweredQuestionsModerator.fxml");
     }
 
     /**
@@ -132,7 +131,7 @@ public class TAViewController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Answered questions is clicked, change to Answered Questions (darkmode) scene
-        EntryRoomDisplay.setCurrentScene("/AnsweredQuestions(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/AnsweredQuestionsModerator(DARKMODE).fxml");
     }
 
     /**
