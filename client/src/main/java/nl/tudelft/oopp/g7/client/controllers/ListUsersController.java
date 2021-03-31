@@ -18,7 +18,7 @@ public class ListUsersController {
 
         // if goBack is clicked, change Scene to LecturerViewUI
         EntryRoomDisplay.setCurrentScene("/TAViewUI.fxml");
-//        TODO
+//        TODO (fix here)
     }
 
     /**
@@ -32,7 +32,7 @@ public class ListUsersController {
 
         // if goBack is clicked, change Scene to LecturerViewUI
         EntryRoomDisplay.setCurrentScene("/TAViewUI(DARKMODE).fxml");
-//        TODO
+//        TODO (fix here)
 
     }
 
