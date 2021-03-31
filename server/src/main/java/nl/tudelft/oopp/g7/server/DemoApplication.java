@@ -44,6 +44,12 @@ public class DemoApplication {
     public QuestionRepository questionRepository(JdbcTemplate jdbcTemplate) {
         return new QuestionRepository(jdbcTemplate);
     }
+    
+    @Bean("pollRepository")
+    @DependsOn({"userRepository", "roomRepository"})
+    public PollRepository pollRepository(JdbcTemplate jdbcTemplate) {
+        return new PollRepository(jdbcTemplate);
+    }
 
     @Bean("voteRepository")
     @DependsOn({"userRepository", "roomRepository", "questionRepository"})
