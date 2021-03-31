@@ -21,6 +21,11 @@ public class PollOption {
     @PositiveOrZero
     private int resultCount;
 
+    /**
+     * Construct PollOption from a resultSet.
+     * @param rs The ResultSet to use.
+     * @return PollOption.
+     */
     public static PollOption fromResultSet(ResultSet rs, boolean noNext) throws SQLException {
         if (noNext || rs.next()) {
             return new PollOption(

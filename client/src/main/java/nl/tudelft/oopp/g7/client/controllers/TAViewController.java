@@ -10,7 +10,9 @@ import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.ModeratorViewLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
+import nl.tudelft.oopp.g7.common.UserInfo;
 
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -190,7 +192,7 @@ public class TAViewController {
      * Handle button action for exporting questions.
      */
     public void exportQuestions(){
-        //TODO
+        ModeratorViewLogic.exportQuestions(roomID);
     }
 
 }

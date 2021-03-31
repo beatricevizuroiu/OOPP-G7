@@ -3,16 +3,12 @@ package nl.tudelft.oopp.g7.client.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.communication.RoomServerCommunication;
-import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.JoinRoomLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.RoomJoinInfo;
-import nl.tudelft.oopp.g7.common.RoomJoinRequest;
 import nl.tudelft.oopp.g7.common.UserRole;
 
 public class JoinRoomController {
@@ -54,20 +50,16 @@ public class JoinRoomController {
      */
     public void buttonClicked() {
 
-        boolean isConfirmed = JoinRoomLogic.joinRoomConfirmation(nickname, roomId);
-
         // if the user presses OK, the go to Student View
-        if (isConfirmed) {
-
-            // Store all the entered information
-            JoinRoomLogic.joinRoomStoreLocalData(nickname, roomId);
-
-            Scene scene = EntryRoomDisplay.getCurrentScene();
-            Stage stage = EntryRoomDisplay.getCurrentStage();
+        if (JoinRoomLogic.joinRoomConfirmation(nickname, roomId)) {
 
             RoomJoinInfo roomJoinInfo = RoomServerCommunication.joinRoom(roomId.getText(), roomPassword.getText(), nickname.getText());
 
-            LocalData.setToken(roomJoinInfo.getAuthorization());
+            // Store all the entered information
+            JoinRoomLogic.joinRoomStoreLocalData(nickname, roomId, roomJoinInfo);
+
+            Scene scene = EntryRoomDisplay.getCurrentScene();
+            Stage stage = EntryRoomDisplay.getCurrentStage();
 
             // Send password to the server to determine whether the user is a Student or a Moderator and send the user to the right UI
             if (roomJoinInfo.getRole() == UserRole.STUDENT) {
@@ -83,20 +75,16 @@ public class JoinRoomController {
      */
     public void buttonClickedDark() {
 
-        boolean isConfirmed = JoinRoomLogic.joinRoomConfirmation(nickname, roomId);
-
         // if the user presses OK, the go to Student View
-        if (isConfirmed) {
-
-            // Store all the entered information
-            JoinRoomLogic.joinRoomStoreLocalData(nickname, roomId);
-
-            Scene scene = EntryRoomDisplay.getCurrentScene();
-            Stage stage = EntryRoomDisplay.getCurrentStage();
+        if (JoinRoomLogic.joinRoomConfirmation(nickname, roomId)) {
 
             RoomJoinInfo roomJoinInfo = RoomServerCommunication.joinRoom(roomId.getText(), roomPassword.getText(), nickname.getText());
 
-            LocalData.setToken(roomJoinInfo.getAuthorization());
+            // Store all the entered information
+            JoinRoomLogic.joinRoomStoreLocalData(nickname, roomId, roomJoinInfo);
+
+            Scene scene = EntryRoomDisplay.getCurrentScene();
+            Stage stage = EntryRoomDisplay.getCurrentStage();
 
             // Send password to the server to determine whether the user is a Student or a Moderator and send the user to the right UI
             if (roomJoinInfo.getRole() == UserRole.STUDENT) {
