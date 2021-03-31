@@ -69,7 +69,7 @@
 
     <Button mnemonicParsing="false" style="-fx-background-color: #15041A" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
         <graphic>
-            <ImageView fitHeight="38.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="56.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                 <image>
                     <Image url="@faster.png" />
                 </image>
@@ -79,7 +79,7 @@
 
     <Button mnemonicParsing="false" style="-fx-background-color: #15041A" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
         <graphic>
-            <ImageView fitHeight="38.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="60.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
                 <image>
                     <Image url="@slower.png" />
                 </image>
