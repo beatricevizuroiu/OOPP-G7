@@ -5,12 +5,12 @@
     -fx-background-radius: 5px;
 }
 
-.upvoteArea {
+.replyArea {
     -fx-border-color: #161616;
     -fx-border-width: 0 1 0 0;
 }
 
-.upvoteBtnSVG {
+.replyBtnSVG {
     -fx-fill: black;
     -fx-stroke: black;
 }
