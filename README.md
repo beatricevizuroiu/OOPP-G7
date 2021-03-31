@@ -1,5 +1,7 @@
-Client: ![Client coverage](https://gitlab.ewi.tudelft.nl/cse1105/2019-2020/organisation/repository-template/badges/master/coverage.svg?job=client-test)
-Server: ![Server coverage](https://gitlab.ewi.tudelft.nl/cse1105/2019-2020/organisation/repository-template/badges/master/coverage.svg?job=server-test)
+Client:  
+![Client coverage](https://gitlab.ewi.tudelft.nl/cse1105/2020-2021/team-repositories/oopp-group-07/repository-template/badges/master/coverage.svg?job=client-test)  
+Server:  
+![Server coverage](https://gitlab.ewi.tudelft.nl/cse1105/2020-2021/team-repositories/oopp-group-07/repository-template/badges/master/coverage.svg?job=server-test)  
 
 
 # Starting template
