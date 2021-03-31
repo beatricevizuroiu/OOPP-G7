@@ -9,12 +9,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 
 @RestController()
 @RequestMapping("/api/v1/room")
+@Validated
 public class RoomController {
 
     Logger logger = LoggerFactory.getLogger(RoomController.class);
@@ -50,28 +54,13 @@ public class RoomController {
      *      OK (200), BAD_REQUEST (400), or INTERNAL_SERVER_ERROR (500).
      */
     @PostMapping("/create")
-    public ResponseEntity<Room> createRoom(@RequestBody NewRoom newRoom) {
+    public ResponseEntity<Room> createRoom(@RequestBody @NotNull @Valid NewRoom newRoom) {
         logger.debug("A new room with name \"{}\" is being made.", newRoom.getName());
-        // Check if the room name is not empty.
-        if (newRoom.getName() == null || newRoom.getName().equals("")) {
-            // Inform the client that the request was malformed.
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
-
-        // Check if the start date is set.
-        if (newRoom.getStartDate() == null) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
-
-        // Check if student password is null.
-        if (newRoom.getStudentPassword() == null) {
-            // If it is set it to an empty string.
-            newRoom.setStudentPassword("");
-        }
 
         String studentPassword = parseStudentPassword(newRoom.getStudentPassword());
         String moderatorPassword = parseModeratorPassword(newRoom.getModeratorPassword());
 
+        //TODO: Figure out a way to remove this if somehow.
         if (studentPassword.equals(moderatorPassword)) {
             // Client provided the same password for students and moderators.
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -102,13 +91,14 @@ public class RoomController {
         if (rowsChanged != 1) {
             // If that is the case log an error and inform the client about the error.
             logger.error("The room with id \"{}\" could not be written to the database!", room.getId());
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         // Inform the client that the room has been created and send them the room information.
         return new ResponseEntity<>(room, HttpStatus.OK);
     }
 
+    //TODO: This method still has quite a high cyclomatic complexity.
     /**
      * Endpoint to join a Room.
      * @param roomId The id of the Room to join.
@@ -117,16 +107,9 @@ public class RoomController {
      *      of BAD_REQUEST (400), UNAUTHORIZED (401), NOT_FOUND (404), or OK (200).
      */
     @PostMapping("/{room_id}/join")
-    public ResponseEntity<RoomJoinInfo> joinRoom(@PathVariable("room_id") String roomId,
-                                                 @RequestBody RoomJoinRequest roomJoinRequest,
-                                                 @RequestHeader("Authorization") String authorization,
+    public ResponseEntity<RoomJoinInfo> joinRoom(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                                 @RequestBody @Valid @NotNull RoomJoinRequest roomJoinRequest,
                                                  HttpServletRequest request) {
-
-        // Check if the room id field is set.
-        if (roomId == null || roomId.equals("")) {
-            // Inform that client that they did something wrong.
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
 
         Room room = roomRepository.getRoomById(roomId);
 
@@ -165,7 +148,7 @@ public class RoomController {
                             user.getRole()),
                     HttpStatus.OK);
         }
-
+        // Otherwise you get an unauthorized
         return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
     }
 
@@ -177,42 +160,28 @@ public class RoomController {
      *      NOT_FOUND (404), INTERNAL_SERVER_ERROR (500) or OK (200)
      */
     @PostMapping("/{room_id}/speed")
-    public ResponseEntity<Void> setRoomSpeed(@PathVariable("room_id") String roomId,
-                                             @RequestBody SpeedAlterRequest speedAlterRequest,
-                                             @RequestHeader("Authorization") String authorization,
+    public ResponseEntity<Void> setRoomSpeed(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                             @RequestBody @NotNull @Valid SpeedAlterRequest speedAlterRequest,
+                                             @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
                                              HttpServletRequest request) {
 
-        // Check if the room id field is set.
-        if (roomId == null || roomId.equals("")) {
-            // Inform that client that they did something wrong.
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        authorizationHelper.checkAuthorization(
+            roomId,
+            authorization,
+            request.getRemoteAddr(),
+            new All(
+                new NotBanned(),
+                new IsStudent(),
+                new BelongsToRoom()
+            ));
 
-        if (!authorizationHelper.isAuthorized(
-                roomId,
-                authorization,
-                request.getRemoteAddr(),
-                new All(
-                        new NotBanned(),
-                        new IsStudent(),
-                        new BelongsToRoom()
-                )
-        )) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
-        int speed = speedAlterRequest.getSpeed();
-
-        if (speed < -1 || speed > 1) {
-            logger.debug("Invalid speed request received with value \"{}\" for room \"{}\"", speedAlterRequest.getSpeed(), roomId);
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
 
         User user = authorizationHelper.getUserFromAuthorizationHeader(authorization);
-        if (user == null)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        int rowsChanged = speedRepository.setSpeedForUserInRoom(roomId, user.getId(), speed);
+        int rowsChanged = speedRepository.setSpeedForUserInRoom(
+                roomId,
+                user.getId(),
+                speedAlterRequest.getSpeed());
 
         // Check if there was any other amount of rows changed then the expected 1.
         if (rowsChanged != 1) {
@@ -220,6 +189,7 @@ public class RoomController {
             logger.debug("The speed of the room with id \"{}\" could not be edited", roomId);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -230,27 +200,18 @@ public class RoomController {
      *      UNAUTHORIZED (401) or OK (200)
      */
     @DeleteMapping("/{room_id}/speed")
-    public ResponseEntity<Void> resetRoomSpeed(@PathVariable("room_id") String roomId,
-                                                          @RequestHeader("Authorization") String authorization,
+    public ResponseEntity<Void> resetRoomSpeed(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                                          @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
                                                           HttpServletRequest request) {
 
-        // Check if the room id field is set.
-        if (roomId == null || roomId.equals("")) {
-            // Inform that client that they did something wrong.
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        if (!authorizationHelper.isAuthorized(
-                roomId,
-                authorization,
-                request.getRemoteAddr(),
-                new All(
-                        new IsModerator(),
-                        new NotBanned()
-                )
-        )) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        authorizationHelper.checkAuthorization(
+            roomId,
+            authorization,
+            request.getRemoteAddr(),
+            new All(
+                new IsModerator(),
+                new NotBanned()
+            ));
 
         speedRepository.resetSpeedForRoom(roomId);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -264,28 +225,19 @@ public class RoomController {
      *      or OK (200)
      */
     @GetMapping("/{room_id}/speed")
-    public ResponseEntity<SpeedAlterRequest> getRoomSpeed(@PathVariable("room_id") String roomId,
-                                                          @RequestHeader("Authorization") String authorization,
+    public ResponseEntity<RoomSpeedInfo> getRoomSpeed(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                                          @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
                                                           HttpServletRequest request) {
 
-        // Check if the room id field is set.
-        if (roomId == null || roomId.equals("")) {
-            // Inform that client that they did something wrong.
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        authorizationHelper.checkAuthorization(
+            roomId,
+            authorization,
+            request.getRemoteAddr(),
+            new All(
+                new IsModerator()
+            ));
 
-        if (!authorizationHelper.isAuthorized(
-                roomId,
-                authorization,
-                request.getRemoteAddr(),
-                new All(
-                        new IsModerator()
-                )
-        )) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
-        SpeedAlterRequest response = new SpeedAlterRequest(speedRepository.getSpeedForRoom(roomId));
+        RoomSpeedInfo response = new RoomSpeedInfo(speedRepository.getSpeedForRoom(roomId));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -298,26 +250,17 @@ public class RoomController {
      *          OK http status.
      */
     @GetMapping("/{room_id}/poll")
-    public ResponseEntity<PollInfo> getPoll(@PathVariable("room_id") String roomId,
-                                            @RequestHeader("Authorization") String authorization,
+    public ResponseEntity<PollInfo> getPoll(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                            @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
                                             HttpServletRequest request) {
 
-        // Check if the room id field is set.
-        if (roomId == null || roomId.equals("")) {
-            // Inform that client that they did something wrong.
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        if (!authorizationHelper.isAuthorized(
-                roomId,
-                authorization,
-                request.getRemoteAddr(),
-                new All(
-                        new BelongsToRoom()
-                )
-        )) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        authorizationHelper.checkAuthorization(
+            roomId,
+            authorization,
+            request.getRemoteAddr(),
+            new All(
+                new BelongsToRoom()
+            ));
 
         User user = authorizationHelper.getUserFromAuthorizationHeader(authorization);
 
@@ -339,42 +282,27 @@ public class RoomController {
      *          successfully or if there was an error.
      */
     @PostMapping("/{room_id}/poll")
-    public ResponseEntity<Void> createPoll(@PathVariable("room_id") String roomId,
-                                               @RequestBody PollCreateRequest pollCreateRequest,
-                                               @RequestHeader("Authorization") String authorization,
+    public ResponseEntity<Void> createPoll(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                               @RequestBody @Valid @NotNull PollCreateRequest pollCreateRequest,
+                                               @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
                                                HttpServletRequest request) {
 
-        // Check if the room id field is set.
-        if (roomId == null || roomId.equals("")) {
-            // Inform that client that they did something wrong.
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        // Make sure the poll create request is all in order.
-        if (pollCreateRequest == null
-                || pollCreateRequest.getQuestion() == null
-                || pollCreateRequest.getOptions() == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        if (!authorizationHelper.isAuthorized(
-                roomId,
-                authorization,
-                request.getRemoteAddr(),
-                new All(
-                        new BelongsToRoom(),
-                        new IsModerator(),
-                        new NotBanned()
-                )
-        )) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        authorizationHelper.checkAuthorization(
+            roomId,
+            authorization,
+            request.getRemoteAddr(),
+            new All(
+                new BelongsToRoom(),
+                new IsModerator(),
+                new NotBanned()
+            ));
 
         pollRepository.createPoll(roomId, pollCreateRequest.getQuestion(), pollCreateRequest.isHasPublicResults(), pollCreateRequest.getOptions());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //TODO: Find a way to decrease the cyclomatic complexity of this thing.
     /**
      * Change the answer given to the current poll.
      * @param roomId The id of the room to answer the poll in.
@@ -385,28 +313,19 @@ public class RoomController {
      *          successfully or if there was an error.
      */
     @PostMapping("/{room_id}/poll/answer")
-    public ResponseEntity<Void> answerPoll(@PathVariable("room_id") String roomId,
-                                           @RequestBody PollAnswerRequest pollAnswerRequest,
-                                           @RequestHeader("Authorization") String authorization,
+    public ResponseEntity<Void> answerPoll(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                           @RequestBody @NotNull @Valid PollAnswerRequest pollAnswerRequest,
+                                           @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
                                            HttpServletRequest request) {
 
-        // Check if the room id field is set.
-        if (roomId == null || roomId.equals("")) {
-            // Inform that client that they did something wrong.
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        if (!authorizationHelper.isAuthorized(
-                roomId,
-                authorization,
-                request.getRemoteAddr(),
-                new All(
-                        new BelongsToRoom(),
-                        new NotBanned()
-                )
-        )) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        authorizationHelper.checkAuthorization(
+            roomId,
+            authorization,
+            request.getRemoteAddr(),
+            new All(
+                new BelongsToRoom(),
+                new NotBanned()
+            ));
 
         User user = authorizationHelper.getUserFromAuthorizationHeader(authorization);
 
@@ -449,29 +368,20 @@ public class RoomController {
      *          successfully or if there was an error.
      */
     @DeleteMapping("/{room_id}/poll")
-    public ResponseEntity<Void> closePoll(@PathVariable("room_id") String roomId,
-                                          @RequestBody PollCloseRequest pollCloseRequest,
-                                          @RequestHeader("Authorization") String authorization,
+    public ResponseEntity<Void> closePoll(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                          @RequestBody @NotNull PollCloseRequest pollCloseRequest,
+                                          @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
                                           HttpServletRequest request) {
 
-        // Check if the room id field is set.
-        if (roomId == null || roomId.equals("")) {
-            // Inform that client that they did something wrong.
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        if (!authorizationHelper.isAuthorized(
-                roomId,
-                authorization,
-                request.getRemoteAddr(),
-                new All(
-                        new BelongsToRoom(),
-                        new NotBanned(),
-                        new IsModerator()
-                )
-        )) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        authorizationHelper.checkAuthorization(
+            roomId,
+            authorization,
+            request.getRemoteAddr(),
+            new All(
+                new BelongsToRoom(),
+                new NotBanned(),
+                new IsModerator()
+            ));
 
 
         PollInfo mostRecentPoll = pollRepository.getMostRecentPollInRoom(roomId);
@@ -504,10 +414,10 @@ public class RoomController {
      */
     private String parseModeratorPassword(String moderatorPassword) {
         return createOrUsePassword(
-                moderatorPassword.substring(0, Math.min(
-                        moderatorPassword.length(),
-                        32
-                )));
+            moderatorPassword.substring(0, Math.min(
+                moderatorPassword.length(),
+                32
+            )));
     }
 
     /**

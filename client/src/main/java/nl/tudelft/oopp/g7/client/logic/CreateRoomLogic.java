@@ -4,6 +4,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import nl.tudelft.oopp.g7.common.Room;
+import nl.tudelft.oopp.g7.common.SortingOrder;
 
 public class CreateRoomLogic {
     /**
@@ -49,5 +50,6 @@ public class CreateRoomLogic {
         LocalData.setRoomID(room.getId());
         LocalData.setStudentPassword(room.getStudentPassword());
         LocalData.setModeratorPassword(room.getModeratorPassword());
+        LocalData.setSortingOrder(SortingOrder.UPVOTES);
     }
 }

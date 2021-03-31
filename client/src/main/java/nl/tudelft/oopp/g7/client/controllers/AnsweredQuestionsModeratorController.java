@@ -29,11 +29,11 @@ public class AnsweredQuestionsModeratorController {
     @FXML
     private VBox answeredQuestionContainer;
 
-
     /**
-     * Start a timer and create a separate thread on it to automatically refresh answered question list.
+     * Startup routine.
      */
     public AnsweredQuestionsModeratorController() {
+        // Start a timer and create a separate thread on it to automatically call retrieveQuestions()
         Timer timer = new Timer(true);
 
         AnsweredQuestionsModeratorController reference = this;
@@ -45,7 +45,9 @@ public class AnsweredQuestionsModeratorController {
         }, 0L, 500L);
     }
 
-
+    /**
+     * Retrieve Questions.
+     */
     public void retrieveQuestions() {
         AnsweredQuestionsLogic.retrieveAllAnsweredQuestions(answeredQuestionContainer, answeredQuestionList);
     }

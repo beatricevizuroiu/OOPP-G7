@@ -2,8 +2,10 @@ package nl.tudelft.oopp.g7.client.communication;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.common.QuestionText;
 import nl.tudelft.oopp.g7.common.Question;
+import nl.tudelft.oopp.g7.common.SortingOrder;
 import org.junit.jupiter.api.*;
 import org.mockserver.client.MockServerClient;
 import org.mockserver.integration.ClientAndServer;
@@ -47,6 +49,8 @@ public class StudentSeverCommunicationTest {
     void retrieveAllQuestions() {
         // mock the endpoint
         expectations.createExpectationAll();
+
+        LocalData.setSortingOrder(SortingOrder.NEW);
 
         List<Question> questionList = StudentServerCommunication.retrieveAllQuestions(roomID);
 

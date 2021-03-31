@@ -50,7 +50,11 @@ public class StudentViewLogic {
                 upvoteCount.setText(Integer.toString(Math.min(question.getUpvotes(), 999)));
                 body.setText(question.getText());
 
-                authorText.setText(question.getAuthorId() + " asks");
+                if (!LocalData.userMap.containsKey(question.getAuthorId())) {
+                    LocalData.userMap.put(question.getAuthorId(), ServerCommunication.retrieveUserById(roomID, question.getAuthorId()));
+                }
+
+                authorText.setText(LocalData.userMap.get(question.getAuthorId()).getNickname() + " asks");
 
                 questionNodes.add(questionNode);
             }

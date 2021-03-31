@@ -56,11 +56,8 @@ public class CreateRoomController {
      */
     public void buttonClicked() {
 
-        // pop-up an alert to confirm creating the room
-        boolean isConfirmed = CreateRoomLogic.createRoomConfirmation(lecturerName, roomName);
-
         // if the user presses OK, the go to Lecturer View
-        if (isConfirmed){
+        if (CreateRoomLogic.createRoomConfirmation(lecturerName, roomName)){
 
             // Put all information for a new room in a NewRoom object and send it to the server to have it create the room
             NewRoom newRoom = new NewRoom(roomName.getText(), studentPassword.getText(), moderatorPassword.getText(), new Date());
@@ -89,11 +86,9 @@ public class CreateRoomController {
      * Handles clicking the button Create from Dark.
      */
     public void buttonClicked2() {
-        // pop-up an alert to confirm creating the room
-        boolean isConfirmed = CreateRoomLogic.createRoomConfirmation(lecturerName, roomName);
 
         // if the user presses OK, the go to Lecturer View
-        if (isConfirmed){
+        if (CreateRoomLogic.createRoomConfirmation(lecturerName, roomName)){
 
             // Put all information for a new room in a NewRoom object and send it to the server to have it create the room
             NewRoom newRoom = new NewRoom(roomName.getText(), studentPassword.getText(), moderatorPassword.getText(), new Date());

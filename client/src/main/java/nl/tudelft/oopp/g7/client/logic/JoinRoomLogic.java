@@ -3,6 +3,8 @@ package nl.tudelft.oopp.g7.client.logic;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import nl.tudelft.oopp.g7.common.RoomJoinInfo;
+import nl.tudelft.oopp.g7.common.SortingOrder;
 
 public class JoinRoomLogic {
     /**
@@ -44,8 +46,11 @@ public class JoinRoomLogic {
      * @param nickname TextField in which user's name is written
      * @param roomId TextField in which id of the room user wants to join is written
      */
-    public static void joinRoomStoreLocalData(TextField nickname, TextField roomId) {
+    public static void joinRoomStoreLocalData(TextField nickname, TextField roomId, RoomJoinInfo roomJoinInfo) {
         LocalData.setNickname(nickname.getText());
         LocalData.setRoomID(roomId.getText());
+        LocalData.setToken(roomJoinInfo.getAuthorization());
+        LocalData.setSortingOrder(SortingOrder.NEW);
+
     }
 }

@@ -4,15 +4,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @NoArgsConstructor @AllArgsConstructor
 @Data
 public class UserInfo {
+    @NotNull @NotEmpty
     private String id;
+    @NotNull @NotEmpty
     private String roomId;
+    @NotNull @NotEmpty
     private String nickname;
+    @NotNull
     private UserRole userRole;
 
     /**

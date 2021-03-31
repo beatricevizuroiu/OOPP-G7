@@ -16,11 +16,13 @@ import nl.tudelft.oopp.g7.client.logic.ModeratorViewLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
+import nl.tudelft.oopp.g7.common.UserInfo;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Optional;
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -202,7 +204,7 @@ public class TAViewController {
      * Handle button action for exporting questions.
      */
     public void exportQuestions(){
-        //TODO
+        ModeratorViewLogic.exportQuestions(roomID);
     }
 
 }

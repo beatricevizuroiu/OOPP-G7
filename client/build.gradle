@@ -1,8 +1,9 @@
 plugins {
     id 'org.openjfx.javafxplugin' version '0.0.8'
+    id 'application'
 }
 
-mainClassName = "nl.tudelft.oopp.g7.MainApp"
+mainClassName = "nl.tudelft.oopp.g7.EntryApp"
 
 dependencies {
     testImplementation("org.mock-server:mockserver-netty:5.11.2")
