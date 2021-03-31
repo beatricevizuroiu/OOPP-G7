@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
@@ -146,7 +147,7 @@ public class StudentViewUIController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/HelpFileTA.fxml");
+        EntryRoomDisplay.setCurrentScene("/HelpFileStudent.fxml");
     }
 
     /**
@@ -159,7 +160,7 @@ public class StudentViewUIController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/HelpFileTA(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/HelpFileStudent(DARKMODE).fxml");
     }
 
     /**
@@ -170,7 +171,7 @@ public class StudentViewUIController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Answered questions is clicked, change to Answered Questions (lightmode) scene
-        EntryRoomDisplay.setCurrentScene("/AnsweredQuestions.fxml");
+        EntryRoomDisplay.setCurrentScene("/AnsweredQuestionsStudent.fxml");
     }
 
     /**
@@ -182,7 +183,7 @@ public class StudentViewUIController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Answered questions is clicked, change to Answered Questions (darkmode) scene
-        EntryRoomDisplay.setCurrentScene("/AnsweredQuestions(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/AnsweredQuestionsStudent(DARKMODE).fxml");
     }
 
     /**

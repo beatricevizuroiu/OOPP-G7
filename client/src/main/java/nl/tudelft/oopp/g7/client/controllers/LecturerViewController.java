@@ -121,7 +121,7 @@ public class LecturerViewController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Answered questions is clicked, change to Answered Questions (lightmode) scene
-        EntryRoomDisplay.setCurrentScene("/AnsweredQuestions.fxml");
+        EntryRoomDisplay.setCurrentScene("/AnsweredQuestionsModerator.fxml");
     }
 
     /**
@@ -133,7 +133,7 @@ public class LecturerViewController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Answered questions is clicked, change to Answered Questions (darkmode) scene
-        EntryRoomDisplay.setCurrentScene("/AnsweredQuestions(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/AnsweredQuestionsModerator(DARKMODE).fxml");
     }
 
     /**
