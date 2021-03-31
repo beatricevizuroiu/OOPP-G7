@@ -32,7 +32,7 @@ public class AnsweredQuestionsModeratorController {
     /**
      * Startup routine.
      */
-    public AnsweredQuestionsController() {
+    public AnsweredQuestionsModeratorController() {
         // Start a timer and create a separate thread on it to automatically call retrieveQuestions()
         Timer timer = new Timer(true);
 

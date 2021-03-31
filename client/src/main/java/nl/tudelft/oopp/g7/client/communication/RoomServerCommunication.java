@@ -50,6 +50,8 @@ public class RoomServerCommunication {
 
         // send the request and store the response
         HttpResponse<String> response = HttpMethods.post(uri, jsonRoomJoinRequest);
+        if (response.statusCode() != 200)
+            return null;
 
         // extract the RoomJoinInfo object
         RoomJoinInfo roomJoinInfo = gson.fromJson(response.body(), RoomJoinInfo.class);
