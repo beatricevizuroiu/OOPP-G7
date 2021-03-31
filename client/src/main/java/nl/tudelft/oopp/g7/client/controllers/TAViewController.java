@@ -170,7 +170,7 @@ public class TAViewController {
      * Handle button action for deleting a question.
      */
     public void deleteQuestion () {
-        //TODO
+        //ModeratorViewLogic.deleteQuestion(roomID, questionId, questionContainer, questionList);
     }
 
     /**
