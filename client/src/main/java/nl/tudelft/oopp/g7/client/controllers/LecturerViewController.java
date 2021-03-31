@@ -165,7 +165,7 @@ public class LecturerViewController {
      *
      */
     public void deleteQuestion () {
-        //TODO
+        //ModeratorViewLogic.deleteQuestion(roomID, questionId, questionContainer, questionList);
     }
 
     /**
@@ -179,7 +179,9 @@ public class LecturerViewController {
      * Handle button action for answering a question.
      */
     public void answerQuestion (){
-        //TODO
+        /*HttpResponse<String> response = ModeratorServerCommunication.answerQuestion(roomID, new QuestionText(answerBox.getText()));
+        answerBox.setText("");
+        retrieveQuestions();*/
     }
 
     /**

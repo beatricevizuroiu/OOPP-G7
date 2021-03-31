@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import nl.tudelft.oopp.g7.client.communication.ModeratorServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
+import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.ExportQuestion;
@@ -65,6 +66,18 @@ public class ModeratorViewLogic {
 
         // Store the current position of the user in the scroll list
         questionList.setVvalue(scrollHeight + 0);
+    }
+
+    /**
+     * Deletes a question and refreshes the question list.
+     * @param roomID ID of the room question is in.
+     * @param questionId ID of the specified question.
+     * @param questionContainer VBox containing the UI elements.
+     * @param questionList ScrollPane containing the whole list of questions.
+     */
+    public static void deleteQuestion(String roomID, int questionId, VBox questionContainer, ScrollPane questionList) {
+        ServerCommunication.deleteQuestion(roomID, questionId);
+        retrieveAllQuestions(roomID, questionContainer, questionList);
     }
 
     /**
