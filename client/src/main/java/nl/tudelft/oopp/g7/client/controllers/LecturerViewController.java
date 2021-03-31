@@ -161,9 +161,9 @@ public class LecturerViewController {
      * Handle button action for deleting a question.
      *
      */
-    public void deleteQuestion () {
-        //TODO
-    }
+    /*public void deleteQuestion () {
+       ModeratorViewLogic.deleteQuestion(roomID, questionId, questionContainer, questionList);
+    }*/
 
     /**
      * Handle button action for editing a question.
