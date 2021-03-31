@@ -16,15 +16,18 @@ Note taker:     Mehmet Alp Sozuduz
 
 # Approval of the agenda
 ## Approval List
+ - Beatrice Vizuroiu
+ - Cody Boon
  - Elena Martellucci
- 
+ - Kalle Struik
+ - Mehmet Alp Sozuduz 
 
 
 # Approval of the agenda
 *Make sure everything that needs to be discussed is in the agenda or add it if something is missing.*
 
 # Points of action
-- We should now be finished with aproximity 75% of the project. How far along are we?
+- We should now be finished with approximitly 75% of the project. How far along are we?
 - Do Final Buddy Check
     - Note that this Buddy Check will be graded so spend some more time 
 - Presentation video (anything you want to discuss) 
