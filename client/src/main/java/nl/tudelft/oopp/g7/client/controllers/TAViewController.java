@@ -3,15 +3,11 @@ package nl.tudelft.oopp.g7.client.controllers;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.communication.ModeratorServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
@@ -131,7 +127,7 @@ public class TAViewController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Answered questions is clicked, change to Answered Questions (lightmode) scene
-        EntryRoomDisplay.setCurrentScene("/AnsweredQuestions.fxml");
+        EntryRoomDisplay.setCurrentScene("/AnsweredQuestionsModerator.fxml");
     }
 
     /**
@@ -143,7 +139,7 @@ public class TAViewController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Answered questions is clicked, change to Answered Questions (darkmode) scene
-        EntryRoomDisplay.setCurrentScene("/AnsweredQuestions(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/AnsweredQuestionsModerator(DARKMODE).fxml");
     }
 
     /**

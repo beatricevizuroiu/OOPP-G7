@@ -45,12 +45,22 @@ public class DemoApplication {
         return new QuestionRepository(jdbcTemplate);
     }
 
-    @Bean("voteRepository")
+    @Bean("pollRepository")
+    @DependsOn({"userRepository", "roomRepository"})
+    public PollRepository pollRepository(JdbcTemplate jdbcTemplate) {
+        return new PollRepository(jdbcTemplate);
+    }
+
+    @Bean("upvoteRepository")
     @DependsOn({"userRepository", "roomRepository", "questionRepository"})
     public UpvoteRepository upvoteRepository(JdbcTemplate jdbcTemplate) {
         return new UpvoteRepository(jdbcTemplate);
     }
 
+    /**
+     * Entry point for application.
+     * @param args The command line arguments to the application.
+     */
     public static void main(String[] args) {
         new Config(new File("./config.yml"));
 
