@@ -19,6 +19,15 @@
     </rowConstraints>
 
     <HBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
+        <Button layoutX="14.0" layoutY="72.0" mnemonicParsing="false" onAction="#handleBackButtonDarkTA">
+            <graphic>
+                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@back.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" Course Name">
             <font>
                 <Font name="Book Antiqua Bold" size="36.0" />
@@ -28,7 +37,7 @@
 
     <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2">
         <items>
-            <Button layoutX="14.0" layoutY="72.0" mnemonicParsing="false" onAction="#handleButtonMode2" text="Mode" textFill="WHITE">
+            <Button layoutX="14.0" layoutY="72.0" mnemonicParsing="false" onAction="#handleButtonModeTADark" text="Mode">
                 <graphic>
                     <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                         <image>
@@ -42,7 +51,7 @@
     <ScrollPane fx:id="questionList" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
         <VBox fx:id="questionContainer" prefHeight="350.0" prefWidth="653.0">
             <children>
-                <Text fill="#15041a" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello user," wrappingWidth="120.13670349121094">
+                <Text fill="#15041a" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello Moderator," wrappingWidth="170.13670349121094">
                     <font>
                         <Font name="Book Antiqua" size="20.0" />
                     </font></Text>

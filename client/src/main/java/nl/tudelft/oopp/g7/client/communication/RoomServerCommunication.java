@@ -2,6 +2,7 @@ package nl.tudelft.oopp.g7.client.communication;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.common.NewRoom;
 import nl.tudelft.oopp.g7.common.Room;
 import nl.tudelft.oopp.g7.common.RoomJoinInfo;
@@ -35,21 +36,30 @@ public class RoomServerCommunication {
 
     /**
      * Join a room if available.
-     * @param roomID ID of the room user wants to join
-     * @param roomJoinRequest contains necessary student/moderator password
-     * @return a {@link RoomJoinInfo}
+     * @param roomID ID of the room user wants to join.
+     * @param password The password the user wants to join with.
+     * @param nickname The nickname the user wants to use.
+     * @return A {@link RoomJoinInfo}
      */
-    public static RoomJoinInfo joinRoom(String roomID, RoomJoinRequest roomJoinRequest) {
+    public static RoomJoinInfo joinRoom(String roomID, String password, String nickname) {
         // create the uri
         URI uri = URI.create(uriBody + roomID + "/join");
 
         // convert roomJoinRequest to JSON
-        String jsonRoomJoinRequest = gson.toJson(roomJoinRequest);
+        String jsonRoomJoinRequest = gson.toJson(new RoomJoinRequest(password, nickname));
 
         // send the request and store the response
         HttpResponse<String> response = HttpMethods.post(uri, jsonRoomJoinRequest);
+        if (response.statusCode() != 200)
+            return null;
 
-        //return the RoomJoinInfo object
-        return gson.fromJson(response.body(), RoomJoinInfo.class);
+        // extract the RoomJoinInfo object
+        RoomJoinInfo roomJoinInfo = gson.fromJson(response.body(), RoomJoinInfo.class);
+
+        // store the roomName
+        LocalData.setRoomName(roomJoinInfo.getRoomName());
+
+        // return the roomJoinInfo
+        return roomJoinInfo;
     }
 }

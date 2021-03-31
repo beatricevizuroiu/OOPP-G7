@@ -2,8 +2,8 @@ package nl.tudelft.oopp.g7.client.communication;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import nl.tudelft.oopp.g7.common.Question;
-import nl.tudelft.oopp.g7.common.QuestionText;
+import nl.tudelft.oopp.g7.client.logic.LocalData;
+import nl.tudelft.oopp.g7.common.*;
 
 import java.net.URI;
 import java.net.http.HttpResponse;
@@ -24,8 +24,14 @@ public class ModeratorServerCommunication {
         // retrieve the question list from server
         List<Question> questions = ServerCommunication.retrieveAllQuestions(roomID);
 
-        // sort the questions based on number of upvotes and return the list
-        return questions.stream().sorted(Comparator.comparing(Question::getUpvotes).reversed())
+        if (LocalData.getSortingOrder() == SortingOrder.UPVOTES) {
+            // sort the questions based on number of upvotes and return the list
+            return questions.stream().sorted(Comparator.comparing(Question::getUpvotes).reversed())
+                    .collect(Collectors.toList());
+        }
+
+        // sort the questions based on most recent and return the list
+        return questions.stream().sorted(Comparator.comparing(Question::getPostedAt).reversed())
                 .collect(Collectors.toList());
     }
 
@@ -53,5 +59,41 @@ public class ModeratorServerCommunication {
 
     public static HttpResponse<String> markAsAnswered(String roomID, int questionID) {
         return answerQuestion(roomID, questionID, new QuestionText(""));
+    }
+
+    /**
+     * Create a Poll.
+     * @param roomID The roomId of the Room to create a Poll in.
+     * @param question The question text of the Poll.
+     * @param options The answer options of the Poll.
+     * @param publicResults True if the results of the Poll should be public while it is active.
+     * @return The Http Response (No data).
+     */
+    public static HttpResponse<String> createPoll(String roomID, String question, String[] options, boolean publicResults) {
+        // put the information in a PollCreateRequest and convert it to JSON
+        String body = gson.toJson(new PollCreateRequest(question, options, publicResults));
+
+        // add the appropriate end-point
+        URI uri = URI.create(uriBody + roomID + "/poll");
+
+        // send the request to the server
+        return HttpMethods.post(uri, body);
+    }
+
+    /**
+     * Close the open Poll in a Room.
+     * @param roomID The roomId of the Room to close the Poll in.
+     * @param publishResults Determines whether the results should be available to Students.
+     * @return The Http Response (No data).
+     */
+    public static HttpResponse<String> closePoll(String roomID, boolean publishResults) {
+        // convert the body to JSON
+        String body = gson.toJson(new PollCloseRequest(publishResults));
+
+        // add the appropriate end-point
+        URI uri = URI.create(uriBody + roomID + "/poll/close");
+
+        // send the request to the server
+        return HttpMethods.post(uri, body);
     }
 }

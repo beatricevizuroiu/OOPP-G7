@@ -32,7 +32,7 @@ public class RoomRepository {
     private static final String QUERY_GET_SPEED_WITH_ID = "SELECT speed FROM rooms WHERE id=?";
 
     /**
-     * Primary constructor for the room repository.
+     * Primary constructor for the RoomRepository class.
      * @param jdbcTemplate The {@link JdbcTemplate} that should handle the database queries.
      */
     public RoomRepository(JdbcTemplate jdbcTemplate) {
@@ -46,8 +46,8 @@ public class RoomRepository {
     }
 
     /**
-     * Generate a new room id that is not already in use.
-     * @return The new id as a string.
+     * Generate a new roomId that is not yet in use.
+     * @return The new roomId as a string.
      */
     public String createNewId() {
         String id;
@@ -66,7 +66,7 @@ public class RoomRepository {
 
 
     /**
-     * Count the amount of rooms that have a certain id in the database.
+     * Count the amount of Rooms that have a certain id in the database.
      * @param roomId The id to count
      * @return Expected values of 0 or 1, if it is more something is wrong.
      */
@@ -82,11 +82,12 @@ public class RoomRepository {
     }
 
     /**
-     * Store a new room into the database.
+     * Store a new Room in the database.
      * @param room The {@link Room} to store.
-     * @return The amount of rows that where changed.
+     * @return The amount of rows that where changed in the database.
      */
     public int createRoom(Room room) {
+        //set everything in a prepared statement and run it
         return jdbcTemplate.update(QUERY_CREATE_ROOM,
             (ps) -> {
                 // Set the id of the room in the PreparedStatement.
@@ -107,64 +108,12 @@ public class RoomRepository {
     }
 
     /**
-     * Retrieve a {@link Room} from the database.
-     * @param roomId The id of the room to retrieve.
+     * Retrieve a Room from the database.
+     * @param roomId The id of the Room to retrieve.
      * @return The {@link Room} that was retrieved.
      */
     public Room getRoomById(String roomId) {
         return jdbcTemplate.query(QUERY_GET_ROOM_WITH_ID,
             (ps) -> ps.setString(1, roomId), Room::fromResultSet);
-    }
-
-    /**
-     * Edit the speed of a {@link Room} in the database.
-     * @param roomId The id of the room to edit.
-     * @param speedAlterRequest the amount by which to edit the speed.
-     * @return The amount of rows that was changed (should be 1).
-     */
-    public int editSpeedById(String roomId, SpeedAlterRequest speedAlterRequest) {
-        switch (speedAlterRequest.getSpeed()) {
-            case -1:
-                logger.debug("Lowering the speed of room with id: {}", roomId);
-                return jdbcTemplate.update(QUERY_EDIT_SPEED,
-                    (ps) -> {
-                        // Set the first variable in the PreparedStatement to the question id.
-                        ps.setInt(1, speedAlterRequest.getSpeed());
-
-                        // Set the second variable in the PreparedStatement to the room id.
-                        ps.setString(2, roomId);
-                    });
-
-            case 1:
-                logger.debug("Raising the speed of room with id: {}", roomId);
-                return jdbcTemplate.update(QUERY_EDIT_SPEED,
-                    (ps) -> {
-                        // Set the first variable in the PreparedStatement to the question id.
-                        ps.setInt(1, speedAlterRequest.getSpeed());
-
-                        // Set the second variable in the PreparedStatement to the room id.
-                        ps.setString(2, roomId);
-                    });
-            default:
-                return 0;
-        }
-    }
-
-    /**
-     * Get the speed of a {@link Room} in the database.
-     * @param roomId The id of the room to get the speed of.
-     * @return The speed of the room.
-     */
-    public SpeedAlterRequest getSpeedById(String roomId) {
-        logger.debug("Getting the current speed of room with id: {}", roomId);
-
-        int result = jdbcTemplate.query(QUERY_GET_SPEED_WITH_ID,
-            (ps) -> ps.setString(1, roomId),
-            (rs) -> {
-                rs.next();
-                return rs.getInt(1);
-            });
-
-        return new SpeedAlterRequest(result);
     }
 }

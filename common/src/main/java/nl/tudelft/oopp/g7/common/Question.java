@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -11,10 +14,15 @@ import java.util.Date;
 @AllArgsConstructor @NoArgsConstructor
 @Data
 public class Question {
+    @Positive
     private int id;
-    private int authorId;
+    @NotNull @NotEmpty
+    private String authorId;
+    @NotNull @NotEmpty
     private String text;
+    @NotNull
     private String answer;
+    @NotNull
     private Date postedAt;
     private int upvotes;
     private boolean answered;
@@ -31,7 +39,7 @@ public class Question {
         if (noNext || rs.next())
             return new Question(
                     rs.getInt("id"),
-                    rs.getInt("userId"),
+                    rs.getString("userId"),
                     rs.getString("text"),
                     rs.getString("answer"),
                     new Date(rs.getTimestamp("postedAt").getTime()),

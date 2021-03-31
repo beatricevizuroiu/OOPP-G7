@@ -1,0 +1,35 @@
+#lecturerQuestion {
+    -fx-background-color: #151515;
+
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+#QuestionUpvoteCount {
+    -fx-fill: white;
+}
+
+.upvoteText {
+    -fx-fill: white;
+}
+
+.upvoteArea {
+    -fx-border-color: #C8C8C8;
+    -fx-border-width: 0 1 0 0;
+}
+
+.upvoteBtnSVG {
+    -fx-fill: #C8C8C8;
+    -fx-stroke: #C8C8C8;
+}
+
+.questionAsks {
+    -fx-font-style: italic;
+    -fx-font-size: 16px;
+    -fx-fill: #AAAAAA;
+}
+
+.questionText {
+    -fx-font-size: 19px;
+    -fx-fill: white;
+}
