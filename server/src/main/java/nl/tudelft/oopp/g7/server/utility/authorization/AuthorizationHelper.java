@@ -4,7 +4,7 @@ import nl.tudelft.oopp.g7.common.User;
 import nl.tudelft.oopp.g7.server.repositories.BanRepository;
 import nl.tudelft.oopp.g7.server.repositories.QuestionRepository;
 import nl.tudelft.oopp.g7.server.repositories.UserRepository;
-import nl.tudelft.oopp.g7.server.utility.Exceptions.UnauthorizedException;
+import nl.tudelft.oopp.g7.server.utility.exceptions.UnauthorizedException;
 import nl.tudelft.oopp.g7.server.utility.RandomString;
 import nl.tudelft.oopp.g7.server.utility.authorization.conditions.AuthorizationCondition;
 import org.springframework.stereotype.Component;
@@ -75,7 +75,7 @@ public class AuthorizationHelper {
      * @param authorizationHeader The Authorization Header associated with the User.
      * @param ip The public Ip address of the User.
      * @param condition The condition to check.
-     * @return Whether the User meets the given condition in a boolean.
+     * @throws UnauthorizedException If the authorization conditions are not fulfilled.
      */
     public void checkAuthorization(String roomId, String authorizationHeader, String ip, AuthorizationCondition condition) throws UnauthorizedException {
         User user = getUserFromAuthorizationHeader(authorizationHeader);

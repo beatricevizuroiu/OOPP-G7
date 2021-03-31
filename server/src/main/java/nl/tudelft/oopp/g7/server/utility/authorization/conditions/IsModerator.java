@@ -5,7 +5,7 @@ import nl.tudelft.oopp.g7.common.UserRole;
 import nl.tudelft.oopp.g7.server.repositories.BanRepository;
 import nl.tudelft.oopp.g7.server.repositories.QuestionRepository;
 import nl.tudelft.oopp.g7.server.repositories.UserRepository;
-import nl.tudelft.oopp.g7.server.utility.Exceptions.UnauthorizedException;
+import nl.tudelft.oopp.g7.server.utility.exceptions.UnauthorizedException;
 
 public class IsModerator extends AuthorizationCondition {
 
