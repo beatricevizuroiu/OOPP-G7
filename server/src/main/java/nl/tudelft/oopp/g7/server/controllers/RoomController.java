@@ -367,7 +367,7 @@ public class RoomController {
      * @return A {@link ResponseEntity} containing the http status code indicating whether the request completed
      *          successfully or if there was an error.
      */
-    @DeleteMapping("/{room_id}/poll")
+    @PostMapping("/{room_id}/poll/close")
     public ResponseEntity<Void> closePoll(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
                                           @RequestBody @NotNull PollCloseRequest pollCloseRequest,
                                           @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
