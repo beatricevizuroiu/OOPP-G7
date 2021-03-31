@@ -176,7 +176,9 @@ public class LecturerViewController {
      * Handle button action for answering a question.
      */
     public void answerQuestion (){
-        //TODO
+        /*HttpResponse<String> response = ModeratorServerCommunication.answerQuestion(roomID, new QuestionText(answerBox.getText()));
+        answerBox.setText("");
+        retrieveQuestions();*/
     }
 
     /**
