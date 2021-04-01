@@ -35,7 +35,7 @@ The standards expected of team members include:
 - To maintain both during employment and after the termination of collaboration with the Team, the confidentiality of any confidential information, records or other materials acquired during the course of collaboration;
 - At all times, behave in a way that upholds the Team’s core values and the integrity and good reputation of the Team;
 - The group members shall strive to obtain atleast an 8.5;
-- You can use GitLab editor only in-cases where it makes sense;
+- You can use GitLab editor only in-cases where it makes sense (e.g. changing a line);
 - If you want to change the code of conduct you should put it into the agenda for a TA meeting. In this meeting we will vote on the changes and if a 4/5 majority agrees those changes will be made;
 
 Reporting any conduct of other workplace participants which is in breach of any of the above, or potentially in breach of any of the above, without delay.
