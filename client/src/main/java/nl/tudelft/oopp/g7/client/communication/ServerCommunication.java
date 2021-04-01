@@ -58,7 +58,7 @@ public class ServerCommunication {
     /**
      * Retrieves all questions from the server.
      * @param roomID ID of the room student belongs
-     * @return a {@link List} of Questions that include all questions on server
+     * @return a {@link List} of Questions that includes all questions on server
      */
     public static List<Question> retrieveAllQuestions(String roomID) {
         // add the appropriate end-point
@@ -75,6 +75,29 @@ public class ServerCommunication {
 
         // parse JSON array into Question List
         return gson.fromJson(questions, questionListType);
+    }
+
+    /**
+     * Retrieves all users' information from server.
+     * @param roomID ID of the room student belongs
+     * @return a {@link List} of UserInfo that includes all users on server
+     */
+    public static List<UserInfo> retrieveAllUsers(String roomID) {
+        // add the appropriate end-point
+        URI uri = URI.create(uriBody + roomID + "/user/all");
+
+        // retrieve all of the user information
+        HttpResponse<String> response = HttpMethods.get(uri);
+
+        // extract the user information
+        String userInformation = response.body();
+
+        // create correct generic type for GSON parsing
+        Type userInfoListType = new TypeToken<List<UserInfo>>() {}.getType();
+
+        // parse JSON array into UserInfo List
+        return gson.fromJson(userInformation, userInfoListType);
+
     }
 
     /**
