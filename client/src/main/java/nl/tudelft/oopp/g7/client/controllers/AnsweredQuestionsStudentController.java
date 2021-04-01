@@ -61,7 +61,6 @@ public class AnsweredQuestionsStudentController {
 
         // if goBack is clicked, change Scene to StudentViewUI
         EntryRoomDisplay.setCurrentScene("/StudentViewUI.fxml");
-//        TODO
     }
 
     /**
@@ -75,8 +74,6 @@ public class AnsweredQuestionsStudentController {
 
         // if goBack is clicked, change Scene to LecturerViewUI
         EntryRoomDisplay.setCurrentScene("/StudentViewUI(DARKMODE).fxml");
-//        TODO
-
     }
 
     /**
