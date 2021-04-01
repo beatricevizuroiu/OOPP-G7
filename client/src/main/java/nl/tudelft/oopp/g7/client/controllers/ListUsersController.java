@@ -1,11 +1,34 @@
 package nl.tudelft.oopp.g7.client.controllers;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
+
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import nl.tudelft.oopp.g7.client.logic.LocalData;
+import nl.tudelft.oopp.g7.client.logic.StudentViewLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 
+
 public class ListUsersController {
+    @FXML
+    private VBox listUsersContainer;
+
+    /**
+     * Special FXML method that will run as soon as listUsersContainer is populated.
+     */
+    @FXML
+    public void initialize() {
+        retrieveAllUsers();
+    }
+
+    /**
+     * Retrieve all of the users in the room.
+     */
+    public void retrieveAllUsers() {
+        StudentViewLogic.retrieveAllUsers(LocalData.getRoomID(), listUsersContainer);
+    }
 
     /**
      * Handle button action for going back to lecturer view (light).
@@ -18,7 +41,6 @@ public class ListUsersController {
 
         // if goBack is clicked, change Scene to LecturerViewUI
         EntryRoomDisplay.setCurrentScene("/TAViewUI.fxml");
-//        TODO
     }
 
     /**

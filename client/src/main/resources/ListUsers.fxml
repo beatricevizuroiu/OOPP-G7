@@ -7,9 +7,10 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.shape.SVGPath?>
+<?import javafx.geometry.Insets?>
 <GridPane xmlns="http://javafx.com/javafx/11.0.1"
           xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="nl.tudelft.oopp.g7.client.controllers.ListUsersController"
+          fx:controller="nl.tudelft.oopp.g7.client.controllers.ListUsersStudentController"
           stylesheets="@UIstyle.css"
           minHeight="500" minWidth="750">
     <columnConstraints>
@@ -37,13 +38,27 @@
                GridPane.columnIndex="0" GridPane.rowIndex="1"
                GridPane.rowSpan="2"/>
 
-    <ScrollPane
-            GridPane.columnIndex="1" GridPane.rowIndex="1"
-            GridPane.columnSpan="3"
-            fx:id="listUsersList">
-<!--        TODO -->
-        <VBox fx:id="listUsersContainer" />
-<!--        TODO-->
+    <ScrollPane GridPane.columnIndex="1" GridPane.rowIndex="1"
+                GridPane.columnSpan="3"
+                fx:id="listUsersList"
+                fitToWidth="true"
+                fitToHeight="true">
+        <padding>
+            <Insets>
+                <right>10</right>
+                <left>10</left>
+            </Insets>
+        </padding>
+        <VBox fx:id="listUsersContainer" spacing="10">
+            <padding>
+                <Insets>
+                    <top>5</top>
+                    <right>5</right>
+                    <bottom>5</bottom>
+                    <left>5</left>
+                </Insets>
+            </padding>
+        </VBox>
     </ScrollPane>
 
     <!--    Main Buttons    -->
