@@ -6,6 +6,14 @@ root {
     -fx-background-color: #3C3C3C;
 }
 
+#pollWindow {
+    -fx-background-color: #3C3C3C;
+}
+
+#pollWindowBox {
+    -fx-background-color: #3C3C3C;
+}
+
 #questionContainer {
     -fx-background-color: #3C3C3C;
 }

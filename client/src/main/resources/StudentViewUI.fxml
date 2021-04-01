@@ -22,7 +22,7 @@
     </rowConstraints>
 
     <HBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
-        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" Course Name">
+        <Text fx:id="courseName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
             <font>
                 <Font name="Book Antiqua Bold" size="36.0" />
             </font>
@@ -45,7 +45,12 @@
                 <left>20</left>
             </Insets>
         </padding>
-        <VBox fx:id="questionContainer" spacing="20" />
+        <VBox spacing="20">
+            <VBox fx:id="pollWindow">
+                <Text text="A problem occurred." />
+            </VBox>
+            <VBox fx:id="questionContainer" spacing="20" />
+        </VBox>
     </ScrollPane>
 
     <TextArea fx:id="answerBox" prefHeight="95.0" prefWidth="885.0" promptText="Type your question here" GridPane.columnIndex="1" GridPane.rowIndex="2">

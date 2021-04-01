@@ -3,7 +3,7 @@ plugins {
     id 'application'
 }
 
-mainClassName = "nl.tudelft.oopp.g7.EntryApp"
+mainClassName = "nl.tudelft.oopp.g7.client.EntryApp"
 
 dependencies {
     testImplementation("org.mock-server:mockserver-netty:5.11.2")

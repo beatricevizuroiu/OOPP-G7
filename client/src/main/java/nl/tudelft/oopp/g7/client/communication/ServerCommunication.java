@@ -171,4 +171,25 @@ public class ServerCommunication {
         // FIXME: we could do the code handling in these methods
         return HttpMethods.delete(uri);
     }
+
+    /**
+     * Try to retrieve a poll.
+     * @param roomId The roomId to retrieve a Poll from.
+     * @return PollInfo if successful, null if not.
+     */
+    public static PollInfo getPoll(String roomId) {
+        // add the appropriate end-point
+        URI uri = URI.create(uriBody + roomId + "/poll");
+
+        // send the request to the server
+        HttpResponse<String> response = HttpMethods.get(uri);
+
+        // check if a Poll was successfully retrieved
+        if (response.statusCode() != 200) {
+            return null;
+        }
+
+        // parse and return the PollInfo
+        return gson.fromJson(response.body(), PollInfo.class);
+    }
 }

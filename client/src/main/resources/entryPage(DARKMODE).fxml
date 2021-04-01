@@ -17,7 +17,7 @@
             </font></Button>
         <AnchorPane prefHeight="62.0" prefWidth="800.0" styleClass="backgroundTitlePnale">
             <children>
-                <Text fill="WHITE" layoutX="14.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Application Name (ex. QA7)">
+                <Text fill="WHITE" layoutX="14.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RaisedHand">
                     <font>
                         <Font name="Book Antiqua Bold" size="36.0" />
                     </font>

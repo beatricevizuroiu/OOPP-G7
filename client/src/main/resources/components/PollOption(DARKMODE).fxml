@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+
+<?import javafx.scene.text.Text?>
+<?import javafx.geometry.Insets?>
+<HBox xmlns="http://javafx.com/javafx"
+      stylesheets="@PollWindow(DARKMODE).css"
+      xmlns:fx="http://javafx.com/fxml"
+      styleClass="pollOption">
+    <padding>
+        <Insets>
+            <right>10</right>
+            <bottom>5</bottom>
+            <left>10</left>
+        </Insets>
+    </padding>
+    <Text text="Option" id="PollOptionLabel" styleClass="pollOptionLabel">
+        <font>
+            <Font name="System" />
+        </font>
+    </Text>
+    <Region HBox.hgrow="ALWAYS" />
+    <Text text="23" id="PollOptionCount" styleClass="pollOptionCount">
+        <font>
+            <Font name="System" />
+        </font>
+    </Text>
+</HBox>

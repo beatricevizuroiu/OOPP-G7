@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Separator?>
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      stylesheets="@PollWindow.css"
+      id="poll">
+
+    <HBox styleClass="pollRightBorder" />
+
+    <VBox HBox.hgrow="ALWAYS" spacing="10">
+        <padding>
+            <Insets>
+                <top>15</top>
+                <right>15</right>
+                <bottom>15</bottom>
+                <left>5</left>
+            </Insets>
+        </padding>
+        <HBox>
+            <HBox styleClass="pollTextBox">
+                <Text text="POLL" styleClass="pollText">
+                    <font>
+                        <Font name="System" />
+                    </font>
+                </Text>
+            </HBox>
+            <HBox styleClass="pollQuestionBox">
+                <Text text="Poll question?" id="PollQuestion">
+                    <font>
+                        <Font name="System" />
+                    </font>
+                </Text>
+            </HBox>
+        </HBox>
+
+        <Separator style="-fx-background-color: #151515" />
+
+        <HBox id="PollWindowOptionContainer" spacing="10" />
+    </VBox>
+</HBox>

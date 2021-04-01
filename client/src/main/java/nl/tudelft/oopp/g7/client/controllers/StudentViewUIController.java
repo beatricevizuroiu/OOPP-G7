@@ -8,18 +8,16 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.StudentViewLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.QuestionText;
-import nl.tudelft.oopp.g7.common.UserInfo;
 
 import java.net.http.HttpResponse;
-import java.util.HashMap;
 import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -40,6 +38,12 @@ public class StudentViewUIController {
     @FXML
     public TextArea answerBox;
 
+    @FXML
+    private Text courseName;
+
+    @FXML
+    public VBox pollWindow;
+
     private final String roomID;
     private final String nickname;
 
@@ -59,14 +63,15 @@ public class StudentViewUIController {
             public void run() {
                 Platform.runLater(reference::retrieveQuestions);
             }
-        }, 0L, 500L);
+        }, 0L, 2500L);
     }
 
     /**
      * Retrieve all questions to List sorted by new.
      */
     public void retrieveQuestions() {
-        StudentViewLogic.retrieveAllQuestions(roomID, questionContainer, questionList);
+        courseName.setText(LocalData.getRoomName());
+        StudentViewLogic.retrieveServerData(roomID, questionContainer, questionList, pollWindow);
     }
 
     /**
@@ -102,13 +107,13 @@ public class StudentViewUIController {
         retrieveQuestions();
     }
 
-    /**
-     * Upvote questions.
-     * @param questionId the id of the question that is being upvoted
-     */
-    public void upvoteQuestion(int questionId) {
-        StudentViewLogic.upvoteQuestion(roomID, questionId, questionContainer, questionList);
-    }
+//    /**
+//     * Upvote questions.
+//     * @param questionId the id of the question that is being upvoted
+//     */
+//    public void upvoteQuestion(int questionId) {
+//        StudentViewLogic.upvoteQuestion(roomID, questionId, questionContainer, questionList);
+//    }
 
 
     /**
@@ -215,5 +220,7 @@ public class StudentViewUIController {
         //StudentViewLogic.deleteQuestion(roomID, questionId, questionContainer, questionList);
     }
 
+    public void retrievePoll () {
 
+    }
 }
