@@ -56,11 +56,7 @@ public class EntryRoomDisplay extends Application {
 
             currentStage.show();
 
-            if (newSceneName.contains("DARKMODE")) {
-                isDarkMode = true;
-            } else {
-                isDarkMode = false;
-            }
+            isDarkMode = newSceneName.contains("DARKMODE");
 
         } catch (IOException e) {
             e.printStackTrace();

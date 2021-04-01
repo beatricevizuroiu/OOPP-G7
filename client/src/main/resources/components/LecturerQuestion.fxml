@@ -56,12 +56,24 @@
                 <Font name="System"/>
             </font>
         </Text>
-        <HBox>
+        <VBox spacing="20">
             <Text id="QuestionText" styleClass="questionText" >
                 <font>
                     <Font name="System"/>
                 </font>
             </Text>
-        </HBox>
+            <VBox id="QuestionAnswerBox">
+                <Text text="Answer:">
+                    <font>
+                        <Font name="System Bold"/>
+                    </font>
+                </Text>
+                <Text id="QuestionAnswer" styleClass="questionAnswer" >
+                    <font>
+                        <Font name="System"/>
+                    </font>
+                </Text>
+            </VBox>
+        </VBox>
     </VBox>
 </HBox>
