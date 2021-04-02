@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 
 <?import javafx.geometry.Insets?>
-<GridPane prefHeight="500.0" prefWidth="800.0" styleClass="background" stylesheets="@Entry(DARKMODE).css"
+<GridPane prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@Entry(DARKMODE).css"
           xmlns="http://javafx.com/javafx/11.0.1"
           xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="nl.tudelft.oopp.g7.client.controllers.CreateRoomController">
@@ -64,15 +64,16 @@
         <Region HBox.hgrow="ALWAYS"/>
         <VBox>
             <Region VBox.vgrow="ALWAYS" />
-            <HBox>
-                <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBackButtonDark">
+            <HBox spacing="10">
+                <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBackButtonDark" styleClass="buttonBack"
+                        text="Back">
                     <graphic>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                             <Image url="@back.png"/>
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button layoutX="714.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonMode2" styleClass="parent"
+                <Button layoutX="714.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonMode2" styleClass="buttonMode"
                         text="Mode">
                     <graphic>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">

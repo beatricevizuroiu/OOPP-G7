@@ -10,8 +10,13 @@
 }
 
 .buttonMode {
-    -fx-background-color: #360A41;
-    -fx-text-fill: white;
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+.buttonBack {
+    -fx-background-color: white;
+    -fx-text-fill: black;
 }
 
 .applicationName {

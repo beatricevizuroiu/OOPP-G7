@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 
 <?import javafx.geometry.Insets?>
-<GridPane prefHeight="500.0" prefWidth="800.0" styleClass="background" stylesheets="@Entry.css"
+<GridPane prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@Entry.css"
           xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="nl.tudelft.oopp.g7.client.controllers.EntryPageController">
 
