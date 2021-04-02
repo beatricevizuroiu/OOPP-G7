@@ -106,4 +106,5 @@
         </graphic>
     </Button>
     <!--TODO: speed indicator -->
+<!--    TODO: put buttons in hbox-->
 </GridPane>

@@ -92,6 +92,7 @@
     </Button>
 
     <!--    <Button fx:id="mode" mnemonicParsing="false" onAction="#handleButtonMode" styleClass="mode-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />-->
+    <!--    TODO: put buttons in hbox-->
 
 
 </GridPane>

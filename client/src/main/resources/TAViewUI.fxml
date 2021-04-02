@@ -94,6 +94,8 @@
       </GridPane.margin>
     </Button>
 
+    <!--    TODO: put buttons in hbox-->
+
 
 
     <!--    <TextArea fx:id="answerBox"-->
