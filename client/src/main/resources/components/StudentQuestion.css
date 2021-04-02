@@ -18,6 +18,7 @@
 }
 
 .questionAsks {
+    -fx-font-family: "Book Antiqua";
     -fx-font-style: italic;
     -fx-font-size: 16px;
     -fx-fill: #222222;

@@ -20,6 +20,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SharedLogic {
+    /**
+     * Create a new question node and add it to the list of question nodes to be displayed.
+     * @param roomID The room ID that the questions belong to.
+     * @param questionNodes The list of questions nodes that the new question node should be added to.
+     * @param componentName The name of the FXML of that should be used to create the question node.
+     * @param question The {@link Question} object to create the question node from.
+     * @param questionContainer The container that contains the list of questions.
+     * @param questionList The javaFX {@link ScrollPane} that wraps the list of questions to add scrolling.
+     * @throws IOException If JavaFX can not load the FXML file.
+     */
     public static void addQuestionToUI(String roomID, List<Node> questionNodes, String componentName, Question question, VBox questionContainer, ScrollPane questionList) throws IOException {
         HBox questionNode = FXMLLoader.load(ModeratorViewLogic.class.getResource(componentName));
 

@@ -1,23 +1,52 @@
-.parent{
-    -fx-background-color: transparent;
-}
-.backgroundTitlePnale{
+.backgroundTitlePanel {
     -fx-background-color: #8D1BAA;
 }
 
-.buttonEntry{
+.buttonEntry {
     -fx-background-color: #360A41;
+    -fx-font-weight: bold;
+    -fx-font-size: 27px;
+    -fx-text-fill: white;
 }
 
-.background{
+.buttonMode {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+.buttonBack {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+.applicationName {
+    -fx-font-weight: bold;
+    -fx-font-size: 36px;
+    -fx-fill: white;
+}
+
+.formTitle {
+    -fx-font-size: 35;
+    -fx-font-weight: bold;
+}
+
+.background {
     -fx-background-color: #FFFFFF;
 }
 
-.buttons{
+.buttons {
     -fx-background-color: #8D1BAA;
+    -fx-font-weight: bold;
+    -fx-font-size: 17;
+    -fx-text-fill: black;
 }
 
-.textColor{
-    -fx-text-inner-color: #FFFFFF;
+.inputBox {
+    -fx-background-color: #8d1baa;
+    -fx-font-style: italic;
+    -fx-font-weight: bold;
+    -fx-font-size: 17;
+    -fx-text-fill: black;
 }
+
 
