@@ -59,7 +59,7 @@ public class MockServerConfigurations {
                 .when(
                     request()
                         .withMethod("GET")
-                        .withPath("question/all")
+                        .withPath(path + "question/all")
             )
                 .respond(
                     response()
