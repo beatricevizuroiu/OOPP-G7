@@ -7,13 +7,16 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
-import nl.tudelft.oopp.g7.client.logic.StudentViewLogic;
+import nl.tudelft.oopp.g7.client.logic.SharedLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 
 
 public class ListUsersStudentController {
     @FXML
     private VBox listUsersContainer;
+
+    private final String component = "StudentUserInfoContainer.fxml";
+    private final String componentDark = "StudentUserInfoContainer(DARKMODE).fxml";
 
     /**
      * Special FXML method that will run as soon as listUsersContainer is populated.
@@ -27,7 +30,7 @@ public class ListUsersStudentController {
      * Retrieve all of the users in the room.
      */
     public void retrieveAllUsers() {
-        StudentViewLogic.retrieveAllUsers(LocalData.getRoomID(), listUsersContainer);
+        SharedLogic.retrieveAllUsers(LocalData.getRoomID(), listUsersContainer, component, componentDark);
     }
 
     /**
@@ -40,7 +43,7 @@ public class ListUsersStudentController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if goBack is clicked, change Scene to LecturerViewUI
-        EntryRoomDisplay.setCurrentScene("/StudentViewUI(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/StudentViewUI.fxml");
     }
 
     /**
@@ -66,7 +69,7 @@ public class ListUsersStudentController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Mode is clicked, change Scene to Join Room
-        EntryRoomDisplay.setCurrentScene("/ListUsers(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/ListUsersStudent(DARKMODE).fxml");
     }
 
     /**
@@ -79,7 +82,7 @@ public class ListUsersStudentController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Mode is clicked, change Scene to Join Room
-        EntryRoomDisplay.setCurrentScene("/ListUsers.fxml");
+        EntryRoomDisplay.setCurrentScene("/ListUsersStudent.fxml");
     }
 
     /**

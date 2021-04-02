@@ -12,7 +12,7 @@
           xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="nl.tudelft.oopp.g7.client.controllers.ListUsersStudentController"
           stylesheets="@UIstyle.css"
-          minHeight="500" minWidth="750">
+          prefHeight="510" prefWidth="750">
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" minWidth="128.0" />
         <ColumnConstraints hgrow="SOMETIMES" />
@@ -36,10 +36,10 @@
 
     <SplitPane styleClass="side-panel"
                GridPane.columnIndex="0" GridPane.rowIndex="1"
-               GridPane.rowSpan="2"/>
+               GridPane.rowSpan="3"/>
 
     <ScrollPane GridPane.columnIndex="1" GridPane.rowIndex="1"
-                GridPane.columnSpan="3"
+                GridPane.columnSpan="3" GridPane.rowSpan="3"
                 fx:id="listUsersList"
                 fitToWidth="true"
                 fitToHeight="true">
@@ -79,29 +79,4 @@
             <SVGPath content="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" styleClass="link-button" />
         </graphic>
     </Button>
-
-
-    <!--    <Button fx:id="mode" mnemonicParsing="false" onAction="#handleButtonMode" styleClass="mode-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />-->
-
-
-
-
-    <!--    <TextArea fx:id="answerBox"-->
-    <!--              GridPane.columnIndex="1" GridPane.rowIndex="2"-->
-    <!--              promptText="Type your question here">-->
-    <!--        <font>-->
-    <!--            <Font name="Book Antiqua" size="21.0"/>-->
-    <!--        </font>-->
-    <!--    </TextArea>-->
-
-    <!--    <Button fx:id="postQuestionButton" styleClass="button"-->
-    <!--            GridPane.columnIndex="2" GridPane.rowIndex="2"-->
-    <!--            onAction="#sendQuestion"-->
-    <!--            mnemonicParsing="false"-->
-    <!--            text="Post Question" textFill="WHITE">-->
-    <!--        <font>-->
-    <!--            <Font name="Book Antiqua Bold" size="15.0"/>-->
-    <!--        </font>-->
-    <!--    </Button>-->
-
 </GridPane>

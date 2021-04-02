@@ -7,13 +7,16 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
-import nl.tudelft.oopp.g7.client.logic.StudentViewLogic;
+import nl.tudelft.oopp.g7.client.logic.SharedLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 
 
-public class ListUsersController {
+public class ListUsersModeratorController {
     @FXML
     private VBox listUsersContainer;
+
+    private final String component = "ModeratorUserInfoContainer.fxml";
+    private final String componentDark = "ModeratorUserInfoContainer(DARKMODE).fxml";
 
     /**
      * Special FXML method that will run as soon as listUsersContainer is populated.
@@ -27,7 +30,7 @@ public class ListUsersController {
      * Retrieve all of the users in the room.
      */
     public void retrieveAllUsers() {
-        StudentViewLogic.retrieveAllUsers(LocalData.getRoomID(), listUsersContainer);
+        SharedLogic.retrieveAllUsers(LocalData.getRoomID(), listUsersContainer, component, componentDark);
     }
 
     /**
@@ -39,8 +42,12 @@ public class ListUsersController {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
-        // if goBack is clicked, change Scene to LecturerViewUI
-        EntryRoomDisplay.setCurrentScene("/TAViewUI.fxml");
+        // if goBack is clicked, change Scene to LecturerViewUI or TAViewUI
+        if (LocalData.isLecturer()) {
+            EntryRoomDisplay.setCurrentScene("/LecturerViewUI.fxml");
+        } else {
+            EntryRoomDisplay.setCurrentScene("/TAViewUI.fxml");
+        }
     }
 
     /**
@@ -52,10 +59,12 @@ public class ListUsersController {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
-        // if goBack is clicked, change Scene to LecturerViewUI
-        EntryRoomDisplay.setCurrentScene("/TAViewUI(DARKMODE).fxml");
-//        TODO
-
+        // if goBack is clicked, change Scene to LecturerViewUI or TAViewUI
+        if (LocalData.isLecturer()) {
+            EntryRoomDisplay.setCurrentScene("/LecturerViewUI(DARKMODE).fxml");
+        } else {
+            EntryRoomDisplay.setCurrentScene("/TAViewUI(DARKMODE).fxml");
+        }
     }
 
     /**
@@ -68,7 +77,7 @@ public class ListUsersController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Mode is clicked, change Scene to Join Room
-        EntryRoomDisplay.setCurrentScene("/ListUsers(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/ListUsersModerator(DARKMODE).fxml");
     }
 
     /**
@@ -81,7 +90,7 @@ public class ListUsersController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Mode is clicked, change Scene to Join Room
-        EntryRoomDisplay.setCurrentScene("/ListUsers.fxml");
+        EntryRoomDisplay.setCurrentScene("/ListUsersModerator.fxml");
     }
 
     /**
@@ -94,7 +103,11 @@ public class ListUsersController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/HelpFileTA.fxml");
+        if (LocalData.isLecturer()) {
+            EntryRoomDisplay.setCurrentScene("/HelpFileLecturer.fxml");
+        } else {
+            EntryRoomDisplay.setCurrentScene("/HelpFileTA.fxml");
+        }
     }
 
     /**
@@ -107,6 +120,10 @@ public class ListUsersController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/HelpFileTA(DARKMODE).fxml");
+        if (LocalData.isLecturer()) {
+            EntryRoomDisplay.setCurrentScene("/HelpFileLecturer.fxml");
+        } else {
+            EntryRoomDisplay.setCurrentScene("/HelpFileTA.fxml");
+        }
     }
 }

@@ -13,6 +13,7 @@ import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
+import nl.tudelft.oopp.g7.common.BanReason;
 import nl.tudelft.oopp.g7.common.ExportQuestion;
 import nl.tudelft.oopp.g7.common.Question;
 
@@ -109,5 +110,16 @@ public class ModeratorViewLogic {
         } catch (IOException e) {
             System.err.println("File couldn't be written!" + e);
         }
+    }
+
+    /**
+     * Ban a user.
+     * @param roomID ID of the room user is in.
+     * @param userID ID of the user that will be banned.
+     */
+    public static void banUser(String roomID, String userID) {
+        System.out.println("Get Banned!" + userID);
+        // TODO: add confirmation pop-up for reasoning
+        ModeratorServerCommunication.banUser(roomID, userID, new BanReason(""));
     }
 }

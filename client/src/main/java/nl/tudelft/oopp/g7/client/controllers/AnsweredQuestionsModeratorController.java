@@ -61,9 +61,12 @@ public class AnsweredQuestionsModeratorController {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
-        // if goBack is clicked, change Scene to LecturerViewUI
-        EntryRoomDisplay.setCurrentScene("/TAViewUI.fxml");
-//        TODO
+        // if goBack is clicked, change Scene to LecturerViewUI or TAViewUI
+        if (LocalData.isLecturer()) {
+            EntryRoomDisplay.setCurrentScene("/LecturerViewUI.fxml");
+        } else {
+            EntryRoomDisplay.setCurrentScene("/TAViewUI.fxml");
+        }
     }
 
     /**
@@ -75,10 +78,12 @@ public class AnsweredQuestionsModeratorController {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
-        // if goBack is clicked, change Scene to LecturerViewUI
-        EntryRoomDisplay.setCurrentScene("/TAViewUI(DARKMODE).fxml");
-//        TODO
-
+        // if goBack is clicked, change Scene to LecturerViewUI or TAViewUI
+        if (LocalData.isLecturer()) {
+            EntryRoomDisplay.setCurrentScene("/LecturerViewUI(DARKMODE).fxml");
+        } else {
+            EntryRoomDisplay.setCurrentScene("/TAViewUI(DARKMODE).fxml");
+        }
     }
 
     /**
@@ -117,7 +122,11 @@ public class AnsweredQuestionsModeratorController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/HelpFileTA.fxml");
+        if (LocalData.isLecturer()) {
+            EntryRoomDisplay.setCurrentScene("/HelpFileLecturer.fxml");
+        } else {
+            EntryRoomDisplay.setCurrentScene("/HelpFileTA.fxml");
+        }
     }
 
     /**
@@ -130,6 +139,10 @@ public class AnsweredQuestionsModeratorController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/HelpFileTA(DARKMODE).fxml");
+        if (LocalData.isLecturer()) {
+            EntryRoomDisplay.setCurrentScene("/HelpFileLecturer(DARKMODE).fxml");
+        } else {
+            EntryRoomDisplay.setCurrentScene("/HelpFileTA(DARKMODE).fxml");
+        }
     }
 }

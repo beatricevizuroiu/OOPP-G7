@@ -21,6 +21,8 @@ public class LocalData {
     @Setter @Getter
     private static String roomName = "";
     @Setter @Getter
+    private static boolean isLecturer = false;
+    @Setter @Getter
     private static SortingOrder sortingOrder = SortingOrder.NEW;
     public static HashMap<String, UserInfo> userMap = new HashMap<>();
 }

@@ -14,7 +14,9 @@ import nl.tudelft.oopp.g7.common.UserInfo;
 import nl.tudelft.oopp.g7.common.UserRole;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SharedLogic {
     private static boolean isNicknameChosen = false;
@@ -54,15 +56,53 @@ public class SharedLogic {
     }
 
     /**
+     * Retrieves all users from the server and puts them into the user information list.
+     * @param roomID ID of the room users belong
+     * @param userListContainer VBox containing the UI elements
+     */
+    public static void retrieveAllUsers(String roomID, VBox userListContainer, String component, String componentDarkMode) {
+        // list of questions containing the questions received from the server
+        List<UserInfo> userInfoList = ServerCommunication.retrieveAllUsers(roomID);
+        List<Node> userInfoNodes = userListContainer.getChildren();
+
+        // Sort the user list with User Role as primary and Nickname secondary keys
+        userInfoList = userInfoList.stream().sorted((o1, o2) -> {
+            // If roles are same compare alphabetically
+            if (o1.getUserRole() == o2.getUserRole()) {
+                return o1.getNickname().compareToIgnoreCase(o2.getNickname());
+            }
+
+            // MODERATOR comes before STUDENT
+            return o1.getUserRole() == UserRole.MODERATOR ? -1 : 1;
+        }).collect(Collectors.toList());
+
+        userInfoNodes.clear();
+
+        // implement dark mode
+        String componentName =  "/components/" + component;
+
+        try {
+            for (UserInfo userInfo : userInfoList) {
+                SharedLogic.addUserInfoToUI(
+                        roomID,
+                        userInfoNodes,
+                        componentName,
+                        userInfo
+                );
+            }
+        } catch (IOException ignored) {
+            System.err.println("A problem occurred");
+        }
+    }
+
+    /**
      * Create a new user information node and add it to the nodes to be displayed.
      * @param userInfoNodes A list of user info nodes the new node should be added to.
      * @param componentName The name of the FXML of that should be used to create the question node.
      * @param userInfo {@link UserInfo} object to create the user information node from.
      * @throws IOException If JavaFX cannot load the FXML file.
      */
-    public static void addUserInfoToUI(List<Node> userInfoNodes, String componentName, UserInfo userInfo) throws IOException {
-        // TODO: It can be handled better by assigning random nicknames at room join
-        // Right now, it doesn't display if someone doesn't have a nickname
+    public static void addUserInfoToUI(String roomID, List<Node> userInfoNodes, String componentName, UserInfo userInfo) throws IOException {
         if (userInfo.getNickname().isEmpty() || userInfo.getNickname() == null) {
             return;
         }
@@ -71,6 +111,13 @@ public class SharedLogic {
 
         Text userNickname = (Text) userInfoContainer.lookup("#UserNickname");
         Text userRoleInfo = (Text) userInfoContainer.lookup("#UserRoleInfo");
+
+        Button banButton = (Button) userInfoContainer.lookup("#BanButton");
+
+        // if moderator view is used add event listeners
+        if (banButton != null) {
+            banButton.setOnAction((event) -> ModeratorViewLogic.banUser(roomID, userInfo.getId()));
+        }
 
         String userRoleText = userInfo.getUserRole() == UserRole.STUDENT ? "Student" : "Moderator";
 

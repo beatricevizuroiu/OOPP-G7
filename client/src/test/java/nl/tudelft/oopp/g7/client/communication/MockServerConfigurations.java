@@ -366,4 +366,18 @@ public class MockServerConfigurations {
                                 .withBody(gson.toJson(userInfoList))
                 );
     }
+
+    public void createExpectationBanUser(String userID) {
+        new MockServerClient("localhost", 8080)
+                .when(
+                        request()
+                                .withMethod("POST")
+                                .withPath(path + "user/" + userID + "/ban")
+                                .withBody(gson.toJson(new BanReason("")))
+                )
+                .respond(
+                        response()
+                                .withStatusCode(200)
+                );
+    }
 }

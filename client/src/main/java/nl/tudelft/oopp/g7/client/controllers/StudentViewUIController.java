@@ -8,7 +8,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
@@ -16,10 +15,8 @@ import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.StudentViewLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.QuestionText;
-import nl.tudelft.oopp.g7.common.UserInfo;
 
 import java.net.http.HttpResponse;
-import java.util.HashMap;
 import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -194,7 +191,7 @@ public class StudentViewUIController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if list of Users is clicked, change to List of Users scene
-        EntryRoomDisplay.setCurrentScene("/ListUsers.fxml");
+        EntryRoomDisplay.setCurrentScene("/ListUsersStudent.fxml");
     }
 
     /**
@@ -205,7 +202,7 @@ public class StudentViewUIController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if list of Users is clicked, change to List of Users scene
-        EntryRoomDisplay.setCurrentScene("/ListUsers(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/ListUsersStudent(DARKMODE).fxml");
     }
 
     /**

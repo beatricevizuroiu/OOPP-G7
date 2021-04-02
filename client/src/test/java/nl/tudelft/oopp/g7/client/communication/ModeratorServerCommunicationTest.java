@@ -3,6 +3,7 @@ package nl.tudelft.oopp.g7.client.communication;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
+import nl.tudelft.oopp.g7.common.BanReason;
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
 import nl.tudelft.oopp.g7.common.SortingOrder;
@@ -24,6 +25,7 @@ import static org.mockserver.model.HttpRequest.request;
 public class ModeratorServerCommunicationTest {
     private static MockServerConfigurations expectations;
     private static ClientAndServer mockServer;
+    private static String userID = "TEST";
     private static String roomID = "TestRoomID";
     private static String path = "/api/v1/room/" + roomID + "/";
     private static Gson gson = new GsonBuilder().setDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz").create();
@@ -107,5 +109,26 @@ public class ModeratorServerCommunicationTest {
                 );
 
         assertEquals(404, response.statusCode());
+    }
+
+    @Test
+    void banUser() {
+        // mock the endpoint
+        expectations.createExpectationBanUser(userID);
+
+        BanReason banReason = new BanReason("");
+
+        HttpResponse<String> response = ModeratorServerCommunication.banUser(roomID, userID, banReason);
+
+        new MockServerClient("localhost", 8080)
+                .verify(
+                        request()
+                                .withMethod("POST")
+                                .withPath(path + "user/" + userID + "/ban")
+                                .withBody(gson.toJson(new BanReason(""))),
+                        VerificationTimes.atLeast(1)
+                );
+
+        assertEquals(200, response.statusCode());
     }
 }
