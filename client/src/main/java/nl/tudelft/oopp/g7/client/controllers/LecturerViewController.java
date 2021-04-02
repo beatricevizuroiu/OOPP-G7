@@ -10,7 +10,9 @@ import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.ModeratorViewLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
+import nl.tudelft.oopp.g7.common.UserInfo;
 
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -19,6 +21,7 @@ public class LecturerViewController {
     private final String nickname;
     private final String moderatorPassword;
     private final String studentPassword;
+    private HashMap<String, UserInfo> userMap = new HashMap<>();
 
     @FXML
     public ScrollPane questionList;
@@ -162,7 +165,7 @@ public class LecturerViewController {
      *
      */
     public void deleteQuestion () {
-        //TODO
+        //ModeratorViewLogic.deleteQuestion(roomID, questionId, questionContainer, questionList);
     }
 
     /**
@@ -176,7 +179,9 @@ public class LecturerViewController {
      * Handle button action for answering a question.
      */
     public void answerQuestion (){
-        //TODO
+        /*HttpResponse<String> response = ModeratorServerCommunication.answerQuestion(roomID, new QuestionText(answerBox.getText()));
+        answerBox.setText("");
+        retrieveQuestions();*/
     }
 
     /**
@@ -190,7 +195,7 @@ public class LecturerViewController {
      * Handle button action for exporting questions.
      */
     public void exportQuestions(){
-        //TODO
+        ModeratorViewLogic.exportQuestions(roomID);
     }
 
     /**

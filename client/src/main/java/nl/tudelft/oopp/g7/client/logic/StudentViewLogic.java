@@ -50,7 +50,11 @@ public class StudentViewLogic {
                 upvoteCount.setText(Integer.toString(Math.min(question.getUpvotes(), 999)));
                 body.setText(question.getText());
 
-                authorText.setText(question.getAuthorId() + " asks");
+                if (!LocalData.userMap.containsKey(question.getAuthorId())) {
+                    LocalData.userMap.put(question.getAuthorId(), ServerCommunication.retrieveUserById(roomID, question.getAuthorId()));
+                }
+
+                authorText.setText(LocalData.userMap.get(question.getAuthorId()).getNickname() + " asks");
 
                 questionNodes.add(questionNode);
             }
@@ -71,6 +75,18 @@ public class StudentViewLogic {
      */
     public static void upvoteQuestion(String roomID, int questionId, VBox questionContainer, ScrollPane questionList) {
         ServerCommunication.upvoteQuestion(roomID, questionId);
+        retrieveAllQuestions(roomID, questionContainer, questionList);
+    }
+
+    /**
+     * Deletes a question and refreshes the question list.
+     * @param roomID ID of the room question is in.
+     * @param questionId ID of the specified question.
+     * @param questionContainer VBox containing the UI elements.
+     * @param questionList ScrollPane containing the whole list of questions.
+     */
+    public static void deleteQuestion(String roomID, int questionId, VBox questionContainer, ScrollPane questionList) {
+        ServerCommunication.deleteQuestion(roomID, questionId);
         retrieveAllQuestions(roomID, questionContainer, questionList);
     }
 }

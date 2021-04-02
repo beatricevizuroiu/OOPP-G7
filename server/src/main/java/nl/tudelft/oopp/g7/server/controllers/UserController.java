@@ -15,10 +15,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @RestController()
@@ -52,34 +55,20 @@ public class UserController {
      * @return A {@link ResponseEntity} containing a relevant Http Status and the UserInfo of the requested User.
      */
     @GetMapping("/{user_id}")
-    public ResponseEntity<UserInfo> getUserInfoById(@PathVariable("room_id") String roomId,
-                                                    @PathVariable("user_id") String userId,
-                                                    @RequestHeader("Authorization") String authorization,
+    public ResponseEntity<UserInfo> getUserInfoById(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                                    @PathVariable("user_id") @NotNull @NotEmpty String userId,
+                                                    @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
                                                     HttpServletRequest request) {
+
         logger.trace("getUserById called");
 
-        // Check if the room id field is set.
-        if (roomId == null || roomId.equals("")) {
-            // Inform that client that they did something wrong.
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        // Check if the user id field is set.
-        if (userId == null || userId.equals("")) {
-            // Inform that client that they did something wrong.
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        if (!authorizationHelper.isAuthorized(
-                roomId,
-                authorization,
-                request.getRemoteAddr(),
-                new All(
-                        new BelongsToRoom()
-                )
-        )) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        authorizationHelper.checkAuthorization(
+            roomId,
+            authorization,
+            request.getRemoteAddr(),
+            new All(
+                new BelongsToRoom()
+            ));
 
         UserInfo userInfo = userRepository.getUserInfoById(userId);
 
@@ -99,36 +88,21 @@ public class UserController {
      * @return A {@link ResponseEntity} containing a relevant Http Status and a list of the questionIds of the Questions the User has upvoted.
      */
     @GetMapping("/{user_id}/upvotes")
-    public ResponseEntity<List<Integer>> getUpvotesByUser(@PathVariable("room_id") String roomId,
-                                                          @PathVariable("user_id") String userId,
-                                                          @RequestHeader("Authorization") String authorization,
+    public ResponseEntity<List<Integer>> getUpvotesByUser(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                                          @PathVariable("user_id") @NotNull @NotEmpty String userId,
+                                                          @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
                                                           HttpServletRequest request) {
         logger.trace("getUpvotesByUser called");
 
-        // Check if the room id field is set.
-        if (roomId == null || roomId.equals("")) {
-            // Inform that client that they did something wrong.
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        authorizationHelper.checkAuthorization(
+            roomId,
+            authorization,
+            request.getRemoteAddr(),
+            new All(
+                new BelongsToRoom()
+            ));
 
-        // Check if the user id field is set.
-        if (userId == null || userId.equals("")) {
-            // Inform that client that they did something wrong.
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        if (!authorizationHelper.isAuthorized(
-                roomId,
-                authorization,
-                request.getRemoteAddr(),
-                new All(
-                        new BelongsToRoom()
-                )
-        )) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
-        return new ResponseEntity<List<Integer>>(upvoteRepository.getUpvotesForUser(roomId,userId), HttpStatus.OK);
+        return new ResponseEntity<>(upvoteRepository.getUpvotesForUser(roomId, userId), HttpStatus.OK);
     }
 
 
@@ -140,27 +114,19 @@ public class UserController {
      * @return A {@link ResponseEntity} containing a relevant Http Status and a list of UserInfo.
      */
     @GetMapping("/all")
-    public ResponseEntity<List<UserInfo>> getAllUsersInRoom(@PathVariable("room_id") String roomId,
-                                                            @RequestHeader("Authorization") String authorization,
+    public ResponseEntity<List<UserInfo>> getAllUsersInRoom(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                                            @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
                                                             HttpServletRequest request) {
+
         logger.trace("getAllUserInRoom called");
 
-        // Check if the room id field is set.
-        if (roomId == null || roomId.equals("")) {
-            // Inform that client that they did something wrong.
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        if (!authorizationHelper.isAuthorized(
-                roomId,
-                authorization,
-                request.getRemoteAddr(),
-                new All(
-                        new BelongsToRoom()
-                )
-        )) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        authorizationHelper.checkAuthorization(
+            roomId,
+            authorization,
+            request.getRemoteAddr(),
+            new All(
+                new BelongsToRoom()
+            ));
 
         List<UserInfo> users = userRepository.getAllUsersInRoom(roomId);
 
@@ -182,41 +148,30 @@ public class UserController {
      * @return A {@link ResponseEntity} containing a relevant Http Status.
      */
     @DeleteMapping("/{user_id}")
-    public ResponseEntity<Void> banUserById(@PathVariable("room_id") String roomId,
-                                            @PathVariable("user_id") String userId,
-                                            @RequestBody BanReason reason,
-                                            @RequestHeader("Authorization") String authorization,
+    public ResponseEntity<Void> banUserById(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                            @PathVariable("user_id") @NotNull @NotEmpty String userId,
+                                            @RequestBody @NotNull @Valid BanReason reason,
+                                            @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
                                             HttpServletRequest request) {
 
         logger.trace("banUserById called");
 
-        // Check if the room id field is set.
-        if (roomId == null || roomId.equals("")) {
-            // Inform that client that they did something wrong.
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        // Check if the user id field is set.
-        if (userId == null || userId.equals("")) {
-            // Inform that client that they did something wrong.
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        if (!authorizationHelper.isAuthorized(
-                roomId,
-                authorization,
-                request.getRemoteAddr(),
-                new All(
-                        new IsModerator(),
-                        new NotBanned()
-                )
-        )) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        authorizationHelper.checkAuthorization(
+            roomId,
+            authorization,
+            request.getRemoteAddr(),
+            new All(
+                new IsModerator(),
+                new NotBanned()
+            ));
 
         User user = userRepository.getUserById(userId);
 
-        if (reason.getReason() == null || reason.getReason().equalsIgnoreCase("")) {
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        if (reason.getReason().equalsIgnoreCase("")) {
             reason.setReason(DEFAULT_BAN_REASON);
         }
 
@@ -228,5 +183,4 @@ public class UserController {
 
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
 }
