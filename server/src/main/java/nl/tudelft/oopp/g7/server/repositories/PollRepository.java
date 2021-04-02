@@ -186,7 +186,7 @@ public class PollRepository {
      * WARNING: This method does not retrieve a full {@link PollInfo} object. Only the bare minimum needed for calling
      * other methods.
      * @param roomId The room id of the room to retrieve the poll from.
-     * @return
+     * @return PollInfo
      */
     public PollInfo getMostRecentPollInRoom(String roomId) {
         logger.debug("Getting most recent poll from database in room with id {}", roomId);

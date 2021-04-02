@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * The type Poll option.
+ */
 @AllArgsConstructor @NoArgsConstructor
 @Data
 public class PollOption {
@@ -14,6 +17,14 @@ public class PollOption {
     private String text;
     private int resultCount;
 
+    /**
+     * From result set poll option.
+     *
+     * @param rs     the rs
+     * @param noNext the no next
+     * @return the poll option
+     * @throws SQLException the sql exception
+     */
     public static PollOption fromResultSet(ResultSet rs, boolean noNext) throws SQLException {
         if (noNext || rs.next()) {
             return new PollOption(
