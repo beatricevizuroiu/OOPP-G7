@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane minHeight="500" minWidth="750"
+          stylesheets="@UIstyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.CreatePollController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="NEVER" minWidth="128.0" />
+        <ColumnConstraints hgrow="SOMETIMES" />
+        <ColumnConstraints hgrow="NEVER" minWidth="256.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="75.0" vgrow="NEVER" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="95.0" vgrow="SOMETIMES" />
+    </rowConstraints>
+
+    <HBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
+        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" Course Name">
+            <font>
+                <Font name="Book Antiqua Bold" size="36.0" />
+            </font>
+        </Text>
+    </HBox>
+
+    <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+
+    <VBox  GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <TextArea fx:id="questionArea" styleClass="buttons" promptText="Poll Question"/>
+        <HBox>
+            <Button fx:id="backButton" styleClass="buttons" text="Previous" onAction="#previousOption"/>
+            <TextArea fx:id="optionArea" styleClass="buttons" promptText="Poll Option"/>
+            <Button fx:id="continueButton" styleClass="buttons" text="Next" onAction="#nextOption"/>
+        </HBox>
+        <HBox>
+            <Button fx:id="Send" styleClass="buttons" text="Send Poll" onAction="#sendPoll"/>
+            <Button fx:id="Delete" styleClass="buttons" text="Delete Last Entry" onAction="#deleteLast"/>
+            <Button fx:id="publicResultsButton" styleClass="buttons" text="Results: Visible" onAction="#setResultPublicity"/>
+        </HBox>
+    </VBox>
+
+    <ScrollPane fx:id="optionWindow" styleClass="background" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
+        <VBox fx:id="optionContainer" spacing="20"/>
+    </ScrollPane>
+
+</GridPane>

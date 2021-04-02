@@ -4,25 +4,13 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import nl.tudelft.oopp.g7.client.communication.ModeratorServerCommunication;
-import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.ModeratorViewLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
-import nl.tudelft.oopp.g7.common.Question;
-import nl.tudelft.oopp.g7.common.QuestionText;
-import nl.tudelft.oopp.g7.common.UserInfo;
 
-import java.io.IOException;
-import java.net.http.HttpResponse;
-import java.util.List;
-import java.util.Optional;
-import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -197,7 +185,10 @@ public class TAViewController {
      *
      */
     public void createPoll(){
-        //TODO
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        EntryRoomDisplay.setCurrentScene("/CreatePoll.fxml");
     }
 
     /**
