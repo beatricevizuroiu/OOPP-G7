@@ -1,5 +1,5 @@
 #userInfoContainer {
-    -fx-background-color: #D8D8D8;
+    -fx-background-color: #151515;
 
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
@@ -7,15 +7,11 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.2, 0, 0);
 }
 
-#BanButton {
-    -fx-background-color: transparent;
-}
-
-#BanIcon {
-    -fx-fill: #f11717;
-}
-
 #StarIcon {
     -fx-scale-shape: 15px;
-    -fx-fill: #8D1BAA;
+    -fx-fill: #d276ec;
+}
+
+.UserInfoText {
+    -fx-fill: white;
 }

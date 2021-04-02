@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Text;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
+import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.UserInfo;
 import nl.tudelft.oopp.g7.common.UserRole;
@@ -19,8 +20,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SharedLogic {
-    private static boolean isNicknameChosen = false;
-
     public static void addQuestionToUI(String roomID, List<Node> questionNodes, String componentName, Question question, VBox questionContainer, ScrollPane questionList) throws IOException {
         HBox questionNode = FXMLLoader.load(ModeratorViewLogic.class.getResource(componentName));
 
@@ -79,8 +78,9 @@ public class SharedLogic {
         userInfoNodes.clear();
 
         // implement dark mode
-        String componentName =  "/components/" + component;
+        String componentName =  "/components/" + (userListContainer.getStyleClass().contains("DarkUsersContainer") ? componentDarkMode : component);
 
+        System.out.println(componentName);
         try {
             for (UserInfo userInfo : userInfoList) {
                 SharedLogic.addUserInfoToUI(
@@ -129,9 +129,10 @@ public class SharedLogic {
         }
 
         // if the user is current current user, add a little icon
-        if (!isNicknameChosen && userInfo.getNickname().equals(LocalData.getNickname())) {
-            // first of identical nicknames is taken as local nickname
-            isNicknameChosen = true;
+        if (userInfo.getId().equals(LocalData.getUserID())) {
+            if (banButton != null) {
+                banButton.setVisible(false);
+            }
 
             SVGPath star = (SVGPath) userInfoContainer.lookup("#StarIcon");
             star.setContent("M 8.5 12.234375 L 12.878906 14.875 L 11.714844 9.894531 L 15.582031 6.546875 L 10.492188 6.113281 L 8.5 1.417969 L 6.507812 6.113281 L 1.417969 6.546875 L 5.285156 9.894531 L 4.121094 14.875 Z M 8.5 12.234375");

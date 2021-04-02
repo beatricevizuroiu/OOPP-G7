@@ -13,6 +13,8 @@ public class LocalData {
     @Setter @Getter
     private static String roomID = null;
     @Setter @Getter
+    private static String userID = null;
+    @Setter @Getter
     private static String studentPassword = "";
     @Setter @Getter
     private static String moderatorPassword = null;

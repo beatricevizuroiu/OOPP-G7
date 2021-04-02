@@ -51,6 +51,6 @@ public class JoinRoomLogic {
         LocalData.setRoomID(roomId.getText());
         LocalData.setToken(roomJoinInfo.getAuthorization());
         LocalData.setSortingOrder(SortingOrder.NEW);
-
+        LocalData.setUserID(roomJoinInfo.getUserId());
     }
 }

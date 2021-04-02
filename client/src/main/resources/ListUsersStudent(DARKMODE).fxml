@@ -49,7 +49,7 @@
                 <left>10</left>
             </Insets>
         </padding>
-        <VBox fx:id="listUsersContainer" spacing="10">
+        <VBox fx:id="listUsersContainer" spacing="10" styleClass="DarkUsersContainer">
             <padding>
                 <Insets>
                     <top>5</top>
