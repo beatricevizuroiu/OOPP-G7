@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -11,12 +13,17 @@ import java.util.Date;
 @AllArgsConstructor @NoArgsConstructor
 @Data
 public class Room {
+    @NotNull @NotEmpty
     private String id;
+    @NotNull
     private String studentPassword;
+    @NotNull
     private String moderatorPassword;
+    @NotNull @NotEmpty
     private String name;
     private boolean isOpen;
     private boolean isOver;
+    @NotNull
     private Date startDate;
 
     /**

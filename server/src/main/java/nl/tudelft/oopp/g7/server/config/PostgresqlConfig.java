@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 @PropertySource("application-dev.properties")
 @EnableTransactionManagement
 public class PostgresqlConfig {
-
+    // Generate database connection from our configuration (application-dev.properties)
     private final Environment environment;
 
     public PostgresqlConfig(Environment environment) {

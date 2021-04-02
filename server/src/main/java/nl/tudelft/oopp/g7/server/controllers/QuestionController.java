@@ -17,6 +17,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 
@@ -51,20 +56,18 @@ public class QuestionController {
      *         if there is no question found it will return an empty {@link ResponseEntity} with Http Status 404 (NOT_FOUND).
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Question> getQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
-        if (roomId == null || roomId.equals("")) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Question> getQuestion(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                                @PathVariable("id") @Positive int id,
+                                                @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
+                                                HttpServletRequest request) {
 
-        if (!authorizationHelper.isAuthorized(
-                roomId,
-                authorization,
-                request.getRemoteAddr(),
-                new All(
-                        new BelongsToRoom()
-                ))) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        authorizationHelper.checkAuthorization(
+            roomId,
+            authorization,
+            request.getRemoteAddr(),
+            new All(
+                new BelongsToRoom()
+            ));
 
         // Log question request
         logger.debug("Question with id {} in room with id {} requested", id, roomId);
@@ -89,20 +92,17 @@ public class QuestionController {
      *          and a Http Status of 200 (OK).
      */
     @GetMapping("/all")
-    public ResponseEntity<List<Question>> getAllQuestions(@PathVariable("room_id") String roomId, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
-        if (roomId == null || roomId.equals("")) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<List<Question>> getAllQuestions(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                                          @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
+                                                          HttpServletRequest request) {
 
-        if (!authorizationHelper.isAuthorized(
-                roomId,
-                authorization,
-                request.getRemoteAddr(),
-                new All(
-                        new BelongsToRoom()
-                ))) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        authorizationHelper.checkAuthorization(
+            roomId,
+            authorization,
+            request.getRemoteAddr(),
+            new All(
+                new BelongsToRoom()
+            ));
 
         // Log questions request
         logger.debug("All questions requested.");
@@ -117,28 +117,24 @@ public class QuestionController {
      *       if not all requirements for upvoting are met and 404 (NOT_FOUND) if no Question was upvoted.
      */
     @PostMapping("/{id}/upvote")
-    public ResponseEntity<Void> upvoteQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
-        if (roomId == null || roomId.equals("")) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Void> upvoteQuestion(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                               @PathVariable("id") int id,
+                                               @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
+                                               HttpServletRequest request) {
 
-        if (!authorizationHelper.isAuthorized(
-                roomId,
-                authorization,
-                request.getRemoteAddr(),
-                new All(
-                        new BelongsToRoom(),
-                        new IsStudent(),
-                        new NotBanned()
-                ))) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        authorizationHelper.checkAuthorization(
+            roomId,
+            authorization,
+            request.getRemoteAddr(),
+            new All(
+                new BelongsToRoom(),
+                new IsStudent(),
+                new NotBanned()
+            ));
 
         User user = authorizationHelper.getUserFromAuthorizationHeader(authorization);
-        if (user == null)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        // Try to increase the upvote number by 1 and store the number of effected rows.
+        // Try to upvote the question as the user.
         int rowsChanged = upvoteRepository.addUpvote(roomId, user.getId(), id);
 
         if (rowsChanged == 1) {
@@ -157,28 +153,24 @@ public class QuestionController {
      *       if not all requirements for un-upvoting are met and 404 (NOT_FOUND) if no Question was un-upvoted.
      */
     @DeleteMapping("/{id}/upvote")
-    public ResponseEntity<Void> removeUpvoteQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
-        if (roomId == null || roomId.equals("")) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Void> removeUpvoteQuestion(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                                     @PathVariable("id") int id,
+                                                     @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
+                                                     HttpServletRequest request) {
 
-        if (!authorizationHelper.isAuthorized(
-                roomId,
-                authorization,
-                request.getRemoteAddr(),
-                new All(
-                        new BelongsToRoom(),
-                        new IsStudent(),
-                        new NotBanned()
-                ))) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        authorizationHelper.checkAuthorization(
+            roomId,
+            authorization,
+            request.getRemoteAddr(),
+            new All(
+                new BelongsToRoom(),
+                new IsStudent(),
+                new NotBanned()
+            ));
 
         User user = authorizationHelper.getUserFromAuthorizationHeader(authorization);
-        if (user == null)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        // Try to increase the upvote number by 1 and store the number of effected rows.
+        // Try to remove the upvote by the user.
         int rowsChanged = upvoteRepository.removeUpvote(roomId, user.getId(), id);
 
         if (rowsChanged == 1) {
@@ -198,25 +190,24 @@ public class QuestionController {
      *       (NOT_FOUND) if no Question was edited.
      */
     @PostMapping("/{id}")
-    public ResponseEntity<Void> editQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestBody QuestionText question, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
-        if (roomId == null || roomId.equals("")) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Void> editQuestion(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                             @PathVariable("id") int id,
+                                             @RequestBody @NotNull @Valid QuestionText question,
+                                             @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
+                                             HttpServletRequest request) {
 
-        if (!authorizationHelper.isAuthorized(
-                roomId,
-                authorization,
-                request.getRemoteAddr(),
-                new All(
-                        new BelongsToRoom(),
-                        new NotBanned(),
-                        new OneOf(
-                                new IsModerator(),
-                                new OwnsQuestion(id)
-                        )
-                ))) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        authorizationHelper.checkAuthorization(
+            roomId,
+            authorization,
+            request.getRemoteAddr(),
+            new All(
+                new BelongsToRoom(),
+                new NotBanned(),
+                new OneOf(
+                    new IsModerator(),
+                    new OwnsQuestion(id)
+                )
+            ));
 
 
         // Try to edit the question body and store the number of effected rows.
@@ -238,25 +229,23 @@ public class QuestionController {
      *      (NOT_FOUND) if no Question was deleted.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteQuestion(@PathVariable("room_id") String roomId, @PathVariable("id") int id, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
-        if (roomId == null || roomId.equals("")) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Void> deleteQuestion(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                               @PathVariable("id") int id,
+                                               @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
+                                               HttpServletRequest request) {
 
-        if (!authorizationHelper.isAuthorized(
-                roomId,
-                authorization,
-                request.getRemoteAddr(),
-                new All(
-                        new BelongsToRoom(),
-                        new NotBanned(),
-                        new OneOf(
-                                new IsModerator(),
-                                new OwnsQuestion(id)
-                        )
-                ))) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        authorizationHelper.checkAuthorization(
+            roomId,
+            authorization,
+            request.getRemoteAddr(),
+            new All(
+                new BelongsToRoom(),
+                new NotBanned(),
+                new OneOf(
+                    new IsModerator(),
+                    new OwnsQuestion(id)
+                )
+            ));
 
         // Log the deletion request
         logger.debug("Question " + id + " is being deleted.");
@@ -283,27 +272,21 @@ public class QuestionController {
      *       (INTERNAL_SERVER_ERROR) if no new Question could be made.
      */
     @PostMapping("/new")
-    public ResponseEntity<Void> newQuestion(@PathVariable("room_id") String roomId, @RequestBody QuestionText newQuestion, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
-        if (roomId == null || roomId.equals("")) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Void> newQuestion(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                            @RequestBody @NotNull @Valid QuestionText newQuestion,
+                                            @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
+                                            HttpServletRequest request) {
 
-        if (!authorizationHelper.isAuthorized(
-                roomId,
-                authorization,
-                request.getRemoteAddr(),
-                new All(
-                        new BelongsToRoom(),
-                        new NotBanned()
-                ))) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        authorizationHelper.checkAuthorization(
+            roomId,
+            authorization,
+            request.getRemoteAddr(),
+            new All(
+                new BelongsToRoom(),
+                new NotBanned()
+            ));
 
         User user = authorizationHelper.getUserFromAuthorizationHeader(authorization);
-
-        if (user == null || newQuestion == null || newQuestion.getText() == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
 
         long lastQuestionAsked = questionRepository.timeSinceLastQuestionByUser(roomId, user.getId());
         if (Config.RATE_LIMIT > lastQuestionAsked) {
@@ -337,21 +320,20 @@ public class QuestionController {
      *       if no Question could be edited.
      */
     @PostMapping("/{id}/answer")
-    public ResponseEntity<Void> answerQuestion(@PathVariable("room_id") String roomId, @PathVariable int id, @RequestBody QuestionText answer, @RequestHeader("Authorization") String authorization, HttpServletRequest request) {
-        if (roomId == null || roomId.equals("")) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Void> answerQuestion(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                               @PathVariable int id,
+                                               @RequestBody @NotNull @Valid QuestionText answer,
+                                               @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
+                                               HttpServletRequest request) {
 
-        if (!authorizationHelper.isAuthorized(
-                roomId,
-                authorization,
-                request.getRemoteAddr(),
-                new All(
-                        new IsModerator(),
-                        new NotBanned()
-                ))) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        authorizationHelper.checkAuthorization(
+            roomId,
+            authorization,
+            request.getRemoteAddr(),
+            new All(
+                new IsModerator(),
+                new NotBanned()
+            ));
 
         if (answer.getText() == null) {
             answer.setText("");

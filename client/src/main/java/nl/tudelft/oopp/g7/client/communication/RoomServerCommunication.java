@@ -2,6 +2,7 @@ package nl.tudelft.oopp.g7.client.communication;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.common.NewRoom;
 import nl.tudelft.oopp.g7.common.Room;
 import nl.tudelft.oopp.g7.common.RoomJoinInfo;
@@ -49,8 +50,16 @@ public class RoomServerCommunication {
 
         // send the request and store the response
         HttpResponse<String> response = HttpMethods.post(uri, jsonRoomJoinRequest);
+        if (response.statusCode() != 200)
+            return null;
 
-        //return the RoomJoinInfo object
-        return gson.fromJson(response.body(), RoomJoinInfo.class);
+        // extract the RoomJoinInfo object
+        RoomJoinInfo roomJoinInfo = gson.fromJson(response.body(), RoomJoinInfo.class);
+
+        // store the roomName
+        LocalData.setRoomName(roomJoinInfo.getRoomName());
+
+        // return the roomJoinInfo
+        return roomJoinInfo;
     }
 }

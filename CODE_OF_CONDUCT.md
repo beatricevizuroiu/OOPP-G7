@@ -1,7 +1,9 @@
 # CODE OF CONDUCT
 
 ## OVERVIEW
-At OOP Project Group 7 ("the Team") we require that all of our team members conduct themselves according to the highest standards of ethics, integrity, and behaviour when dealing with our clients, colleagues, and other stakeholders. This includes, but is not necessarily limited to, full compliance with all legal obligations imposed by statute or any other source of law. This Code establishes the standards of behaviour that must be met by all team members. Where these standards are not met, appropriate disciplinary action will be taken. In cases where the breach involves serious misconduct, this will be handled by the responsible TA.
+At OOP Project Group 7 ("the Team") we require that all of our team members conduct themselves according to the highest standards of ethics, integrity, and behaviour when dealing with our clients, colleagues, and other stakeholders. 
+This includes, but is not necessarily limited to, full compliance with all legal obligations imposed by statute or any other source of law. This Code establishes the standards of behaviour that must be met by all team members. 
+Where these standards are not met, appropriate disciplinary action will be taken. In cases where the breach involves serious misconduct, this will be handled by the responsible TA.
 
 ## OPERATION
 The purpose of this policy is to make it clear what the Team expects from team members, and team members are required to be familiar with and comply with the terms of this policy at all times. Failure to do so may result in disciplinary action, handled by the responsible TA.
@@ -17,7 +19,7 @@ The standards expected of team members include:
 - To be honest and fair in dealings with TAs, clients, co-workers, lecturers, and the general public, and to treat them with courtesy and respect;
 - To be faithful and diligent, and actively pursue the Team’s best interests at all times;
 - To work in a safe and compliant manner, and to observe all workplace health and safety rules and responsibilities;
-- In case of major changes or wanting to use something else than recommended by the course staff, 4/5 members have to agree to this decision besides the responsible TA;
+- In case of major changes or wanting to use something other than recommended by the course staff, 4/5 members have to agree to this decision besides the responsible TA;
 - Refraining from any discriminatory, bullying, or harassing behaviour toward TAs, clients, co-workers, lecturers, and the general public;
 - To not make any statements to other teams about the Team’s business, unless expressly authorized to do so by the responsible TA and the Team;
 - To not make any statements about the Team on social media or any other public platform, that may harm the Team’s reputation;
@@ -28,22 +30,22 @@ The standards expected of team members include:
 - To not engage in conduct, whether during or after work hours, that in the opinion of the Team causes damage or potential damage to the Team’s property or reputation;
 - To not use, or come to work while affected by use of prohibited drugs or alcohol;
 - To not discriminate on the basis of personal characteristics including (but not limited to) sex, race, disability, nationality, pregnancy, age, marital status, or sexual orientation;
-- To ensure and maintain punctuality; 
+- To ensure and maintain punctuality for all scheduled meetings (with a 15 minute leeway); 
 - To respect the Team’s property;
 - To dress appropriately and to ensure that appearance is presentable, clean, neat, and tidy;
 - To not use TU Delft’s email or Gitlab account associated with the Team to send sexually explicit or suggestive material, or other offensive or harassing material;
 - To maintain both during employment and after the termination of collaboration with the Team, the confidentiality of any confidential information, records or other materials acquired during the course of collaboration;
 - At all times, behave in a way that upholds the Team’s core values and the integrity and good reputation of the Team;
 - The group members shall strive to obtain atleast an 8.5;
-- You can use GitLab editor only in-cases where it makes sense;
+- You can use GitLab editor only in-cases where it makes sense (e.g. changing a line);
 - If you want to change the code of conduct you should put it into the agenda for a TA meeting. In this meeting we will vote on the changes and if a 4/5 majority agrees those changes will be made;
 
 Reporting any conduct of other workplace participants which is in breach of any of the above, or potentially in breach of any of the above, without delay.
 
 ## CODE STANDARDS
 - The code has to pass checkstyle.
-- Dont use overly complex oneliners.
+- Don't use overly complex oneliners.
 - Use descriptive comments.
 - Use descriptive variable names.
-- Adequetly test your code.
+- Adequately test your code.
 - Try to keep method length down.
