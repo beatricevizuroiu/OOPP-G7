@@ -42,11 +42,7 @@
                                 <left>5</left>
                         </Insets>
                 </padding>
-                <Text text="User asks" id="QuestionAuthor" styleClass="questionAsks">
-                        <font>
-                                <Font name="System"/>
-                        </font>
-                </Text>
+                <Text text="User asks" id="QuestionAuthor" styleClass="questionAsks" />
                 <VBox spacing="20">
                         <Text id="QuestionText" styleClass="questionText" >
                                 <font>

@@ -1,38 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" styleClass="background" stylesheets="@Entry.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.EntryPageController">
-   <children>
-      <Button fx:id="createRoomButton" layoutX="112.0" layoutY="205.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="124.0" prefWidth="203.0" styleClass="buttonEntry" stylesheets="@Entry.css" text="Create Room" textFill="WHITE">
-         <font>
-            <Font name="Book Antiqua Bold" size="27.0" />
-         </font></Button>
-      <Button fx:id="joinRoomButton" layoutX="492.0" layoutY="205.0" mnemonicParsing="false" onAction="#handleButtonAction2" prefHeight="124.0" prefWidth="203.0" styleClass="buttonEntry" stylesheets="@Entry.css" text="Join Room" textFill="#faf6f6">
-         <font>
-            <Font name="Book Antiqua Bold" size="27.0" />
-         </font></Button>
-      <AnchorPane prefHeight="62.0" prefWidth="800.0" styleClass="backgroundTitlePnale">
-         <children>
-            <Text fill="WHITE" layoutX="14.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Application Name (ex. QA7)">
-               <font>
-                  <Font name="Book Antiqua Bold" size="36.0" />
-               </font>
-            </Text>
-         </children>
-      </AnchorPane>
-      <Button layoutX="14.0" layoutY="72.0" mnemonicParsing="false" onAction="#handleButtonMode" styleClass="parent" text="Mode">
-         <graphic>
-            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@sun (1).png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-   </children>
-</AnchorPane>
+<?import javafx.geometry.Insets?>
+<GridPane prefHeight="500.0" prefWidth="800.0" styleClass="background" stylesheets="@Entry.css"
+          xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="nl.tudelft.oopp.g7.client.controllers.EntryPageController">
+
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" />
+      <ColumnConstraints minWidth="250" maxWidth="250" hgrow="NEVER" />
+      <ColumnConstraints hgrow="SOMETIMES" />
+      <ColumnConstraints minWidth="250" maxWidth="250" hgrow="NEVER" />
+      <ColumnConstraints hgrow="SOMETIMES" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="75.0" maxHeight="75.0" vgrow="NEVER" />
+      <RowConstraints vgrow="SOMETIMES" />
+      <RowConstraints minHeight="128.0" maxHeight="128.0" vgrow="NEVER" />
+      <RowConstraints vgrow="SOMETIMES" />
+   </rowConstraints>
+
+   <Button minWidth="250" maxWidth="250" styleClass="buttonEntry"
+           minHeight="128" maxHeight="128" text="Create Room"
+           onAction="#handleButtonAction"
+           GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+   <Button minWidth="250" maxWidth="250" styleClass="buttonEntry"
+           minHeight="128" maxHeight="128" text="Join Room"
+           onAction="#handleButtonAction2"
+           GridPane.columnIndex="3" GridPane.rowIndex="2" />
+
+   <HBox styleClass="backgroundTitlePanel"
+         GridPane.columnIndex="0" GridPane.columnSpan="5" GridPane.rowIndex="0" >
+      <padding>
+         <Insets>
+            <left>15</left>
+            <right>15</right>
+         </Insets>
+      </padding>
+      <VBox>
+         <Region VBox.vgrow="ALWAYS" />
+         <Text text="Raised Hand" styleClass="applicationName" />
+         <Region VBox.vgrow="ALWAYS" />
+      </VBox>
+      <Region HBox.hgrow="ALWAYS"/>
+      <VBox>
+         <Region VBox.vgrow="ALWAYS" />
+         <Button onAction="#handleButtonMode" text="Mode"
+                 styleClass="buttonMode" GridPane.columnIndex="0" GridPane.rowIndex="1">
+            <graphic>
+               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@sun (1).png"/>
+               </ImageView>
+            </graphic>
+         </Button>
+         <Region VBox.vgrow="ALWAYS" />
+      </VBox>
+   </HBox>
+</GridPane>

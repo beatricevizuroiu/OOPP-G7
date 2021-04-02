@@ -28,6 +28,8 @@ public class EntryRoomDisplay extends Application {
 
         currentScene = new Scene(root);
 
+        currentScene.getStylesheets().add("/fonts/fonts.css");
+
         currentStage.setScene(currentScene);
         currentStage.show();
     }
@@ -49,10 +51,11 @@ public class EntryRoomDisplay extends Application {
     public static void setCurrentScene(String newSceneName){
         try{
             Parent parent = FXMLLoader.load(EntryRoomDisplay.class.getResource(newSceneName));
-            Scene newScene = new Scene(parent);
+            currentScene = new Scene(parent);
 
-            currentStage.setScene((newScene));
-            EntryRoomDisplay.currentScene = newScene;
+            currentStage.setScene(currentScene);
+
+            currentScene.getStylesheets().add("/fonts/fonts.css");
 
             currentStage.show();
 
