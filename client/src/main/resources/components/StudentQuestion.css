@@ -3,6 +3,8 @@
 
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
+
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.2, 0, 0);
 }
 
 .upvoteArea {
@@ -16,6 +18,7 @@
 }
 
 .questionAsks {
+    -fx-font-family: "Book Antiqua";
     -fx-font-style: italic;
     -fx-font-size: 16px;
     -fx-fill: #222222;

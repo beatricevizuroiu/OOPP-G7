@@ -44,21 +44,14 @@ public class ModeratorViewLogic {
 
         try {
             for (Question question : questions) {
-                HBox questionNode = FXMLLoader.load(ModeratorViewLogic.class.getResource(componentName));
-
-                Text upvoteCount = (Text) questionNode.lookup("#QuestionUpvoteCount");
-                Text body = (Text) questionNode.lookup("#QuestionText");
-                Text authorText = (Text) questionNode.lookup("#QuestionAuthor");
-
-                upvoteCount.setText(Integer.toString(Math.min(question.getUpvotes(), 999)));
-                body.setText(question.getText());
-
-                if (!LocalData.userMap.containsKey(question.getAuthorId())) {
-                    LocalData.userMap.put(question.getAuthorId(), ServerCommunication.retrieveUserById(roomID, question.getAuthorId()));
-                }
-                authorText.setText(LocalData.userMap.get(question.getAuthorId()).getNickname() + " asks");
-
-                questionNodes.add(questionNode);
+                SharedLogic.addQuestionToUI(
+                        roomID,
+                        questionNodes,
+                        componentName,
+                        question,
+                        questionContainer,
+                        questionList
+                );
             }
         } catch (IOException ignored) {
             System.err.println("A problem occurred while retrieving questions.");

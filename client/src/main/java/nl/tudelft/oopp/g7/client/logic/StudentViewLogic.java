@@ -33,30 +33,16 @@ public class StudentViewLogic {
 
         String componentName = EntryRoomDisplay.isDarkMode() ? "/components/StudentQuestion(DARKMODE).fxml" : "/components/StudentQuestion.fxml";
 
-
         try {
             for (Question question : questions) {
-                HBox questionNode = FXMLLoader.load(StudentViewLogic.class.getResource(componentName));
-
-                Button upvoteBtn = (Button) questionNode.lookup("#QuestionUpvoteBtn");
-                Text upvoteCount = (Text) questionNode.lookup("#QuestionUpvoteCount");
-                Text body = (Text) questionNode.lookup("#QuestionText");
-                Text authorText = (Text) questionNode.lookup("#QuestionAuthor");
-
-                // add event listeners for upvoting buttons
-                upvoteBtn.setOnAction((event) -> upvoteQuestion(roomID, question.getId(), questionContainer, questionList));
-
-                // cap the number of upvotes at 999
-                upvoteCount.setText(Integer.toString(Math.min(question.getUpvotes(), 999)));
-                body.setText(question.getText());
-
-                if (!LocalData.userMap.containsKey(question.getAuthorId())) {
-                    LocalData.userMap.put(question.getAuthorId(), ServerCommunication.retrieveUserById(roomID, question.getAuthorId()));
-                }
-
-                authorText.setText(LocalData.userMap.get(question.getAuthorId()).getNickname() + " asks");
-
-                questionNodes.add(questionNode);
+                SharedLogic.addQuestionToUI(
+                        roomID,
+                        questionNodes,
+                        componentName,
+                        question,
+                        questionContainer,
+                        questionList
+                );
             }
         } catch (IOException ignored) {
             System.err.println("A problem occurred.");

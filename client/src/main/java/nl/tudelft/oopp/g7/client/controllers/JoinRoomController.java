@@ -49,7 +49,6 @@ public class JoinRoomController {
      * Handles clicking the button Join from Light.
      */
     public void buttonClicked() {
-
         // if the user presses OK, the go to Student View
         if (JoinRoomLogic.joinRoomConfirmation(nickname, roomId)) {
 
