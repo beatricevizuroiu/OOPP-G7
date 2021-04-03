@@ -147,7 +147,7 @@ public class UserController {
      * @param request The HttpServletRequest containing the Ip of the one who sent the request.
      * @return A {@link ResponseEntity} containing a relevant Http Status.
      */
-    @DeleteMapping("/{user_id}")
+    @PostMapping("/{user_id}/ban")
     public ResponseEntity<Void> banUserById(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
                                             @PathVariable("user_id") @NotNull @NotEmpty String userId,
                                             @RequestBody @NotNull @Valid BanReason reason,

@@ -429,4 +429,35 @@ public class MockServerConfigurations {
                                 .withBody("")
                 );
     }
+
+    public void createExpectationRetrieveUserInfo() {
+        List<UserInfo> userInfoList = new ArrayList<>();
+        userInfoList.add(new UserInfo("1", "TestRoomID", "test", UserRole.STUDENT));
+
+        new MockServerClient("localhost", 8080)
+                .when(
+                        request()
+                                .withMethod("GET")
+                                .withPath(path + "user/all")
+                )
+                .respond(
+                        response()
+                                .withStatusCode(200)
+                                .withBody(gson.toJson(userInfoList))
+                );
+    }
+
+    public void createExpectationBanUser(String userID) {
+        new MockServerClient("localhost", 8080)
+                .when(
+                        request()
+                                .withMethod("POST")
+                                .withPath(path + "user/" + userID + "/ban")
+                                .withBody(gson.toJson(new BanReason("")))
+                )
+                .respond(
+                        response()
+                                .withStatusCode(200)
+                );
+    }
 }

@@ -11,9 +11,13 @@ import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.Question;
+import nl.tudelft.oopp.g7.common.UserInfo;
+import nl.tudelft.oopp.g7.common.UserRole;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class StudentViewLogic {
     /**

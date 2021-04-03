@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -13,6 +14,7 @@ import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
+import nl.tudelft.oopp.g7.common.BanReason;
 import nl.tudelft.oopp.g7.common.ExportQuestion;
 import nl.tudelft.oopp.g7.common.Question;
 
@@ -109,5 +111,35 @@ public class ModeratorViewLogic {
         } catch (IOException e) {
             System.err.println("File couldn't be written!" + e);
         }
+    }
+
+    /**
+     * Ban a user.
+     * @param roomID ID of the room user is in.
+     * @param userID ID of the user that will be banned.
+     */
+    public static void banUser(String roomID, String userID) {
+        ModeratorServerCommunication.banUser(roomID, userID, banReasonDialog());
+    }
+
+    /**
+     * Create a pop-up window that asks for banning reason. Leaving blank will result in an empty response.
+     * @return a ban reason
+     */
+    public static BanReason banReasonDialog() {
+        String defaultValue = "Leave blank for default reason.";
+
+        TextInputDialog textInputDialog = new TextInputDialog(defaultValue);
+        textInputDialog.setHeaderText("Please provide a reason for banning.");
+        textInputDialog.showAndWait();
+
+        String reason = textInputDialog.getEditor().getText();
+
+        // check for defaulting
+        if (reason.equals(defaultValue)) {
+            reason = "";
+        }
+
+        return new BanReason(reason);
     }
 }
