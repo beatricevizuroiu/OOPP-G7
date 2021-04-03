@@ -24,3 +24,18 @@
 .questionText {
     -fx-font-size: 19px;
 }
+
+#MenuButton {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.menuItem {
+    -fx-background-color: #B0B0B0;
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+}
+
+.context-menu {
+    -fx-background-color: transparent;
+}
