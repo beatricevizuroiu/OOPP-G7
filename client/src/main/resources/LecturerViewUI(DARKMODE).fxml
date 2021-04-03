@@ -72,6 +72,8 @@
 
     <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonDark" styleClass="help-button" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
 
+    <FlowPane alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.columnSpan="2">
+
     <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionListDark" styleClass="answered-question-button" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="0" />
 
     <Button fx:id="userList" mnemonicParsing="false" onAction="#listofUsersDark" styleClass="upvoteBtn" GridPane.columnIndex="1" GridPane.rowIndex="0">
@@ -106,5 +108,5 @@
         </graphic>
     </Button>
     <!--TODO: speed indicator -->
-<!--    TODO: put buttons in hbox-->
+    </FlowPane>
 </GridPane>
