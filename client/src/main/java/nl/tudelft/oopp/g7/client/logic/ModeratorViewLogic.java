@@ -15,6 +15,7 @@ import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.ExportQuestion;
 import nl.tudelft.oopp.g7.common.Question;
+import nl.tudelft.oopp.g7.common.QuestionText;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -77,6 +78,18 @@ public class ModeratorViewLogic {
      */
     public static void deleteQuestion(String roomID, int questionId, VBox questionContainer, ScrollPane questionList) {
         ServerCommunication.deleteQuestion(roomID, questionId);
+        retrieveAllQuestions(roomID, questionContainer, questionList);
+    }
+
+    /**
+     * Edits a question and refreshes the question list.
+     * @param roomID ID of the room question is in.
+     * @param questionId ID of the specified question.
+     * @param questionContainer VBox containing the UI elements.
+     * @param questionList ScrollPane containing the whole list of questions.
+     */
+    public static void editQuestion(String roomID, int questionId,QuestionText questionText, VBox questionContainer, ScrollPane questionList) {
+        ServerCommunication.editQuestion(roomID, questionId, questionText);
         retrieveAllQuestions(roomID, questionContainer, questionList);
     }
 
