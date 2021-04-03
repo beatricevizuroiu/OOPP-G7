@@ -165,14 +165,14 @@ public class LecturerViewController {
      *
      */
     public void deleteQuestion () {
-        ModeratorViewLogic.deleteQuestion(roomID, questionId, questionContainer, questionList);
+//        ModeratorViewLogic.deleteQuestion(roomID, questionId, questionContainer, questionList);
     }
 
     /**
      * Handle button action for editing a question.
      */
     public void editQuestion (){
-        ModeratorViewLogic.editQuestion(roomID, questionId, questionContainer, questionList);
+//        ModeratorViewLogic.editQuestion(roomID, questionId, questionContainer, questionList);
     }
 
     /**

@@ -172,14 +172,14 @@ public class TAViewController {
      * Handle button action for deleting a question.
      */
     public void deleteQuestion () {
-        ModeratorViewLogic.deleteQuestion(roomID, questionID, questionContainer, questionList);
+//        ModeratorViewLogic.deleteQuestion(roomID, questionID, questionContainer, questionList);
     }
 
     /**
      * Handle button action for editing a question.
      */
     public void editQuestion (){
-        ModeratorViewLogic.editQuestion(roomID, questionID, questionContainer, questionList);
+//        ModeratorViewLogic.editQuestion(roomID, questionID, questionContainer, questionList);
     }
 
     /**

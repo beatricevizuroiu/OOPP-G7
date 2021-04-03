@@ -212,7 +212,7 @@ public class StudentViewUIController {
      * Handle button action for deleting a question.
      */
     public void deleteQuestion () {
-        StudentViewLogic.deleteQuestion(roomID, questionId, questionContainer, questionList);
+//        StudentViewLogic.deleteQuestion(roomID, questionId, questionContainer, questionList);
     }
 
 
