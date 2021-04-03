@@ -93,6 +93,10 @@ public class ModeratorViewLogic {
         retrieveAllQuestions(roomID, questionContainer, questionList);
     }
 
+    public static void answerQuestion (String roomID, int questionId,QuestionText questionText, VBox questionContainer, ScrollPane questionList){
+        ServerCommunication.answerQuestion(roomID, questionId, questionText);
+        retrieveAllQuestions(roomID, questionContainer, questionList);
+    }
     /**
      * Export all Questions in a Room to a JSON formatted text file.
      * @param roomID the roomID of the Room to export the Questions from.

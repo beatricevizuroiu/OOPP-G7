@@ -183,6 +183,13 @@ public class TAViewController {
     }
 
     /**
+     * Handle button action for banning a user.
+     */
+    public void banUser (){
+        //TODO
+    }
+
+    /**
      * Handle button action for answering a question.
      *
      */

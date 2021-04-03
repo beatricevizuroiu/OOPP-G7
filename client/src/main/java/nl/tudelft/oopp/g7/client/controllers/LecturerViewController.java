@@ -172,7 +172,7 @@ public class LecturerViewController {
      * Handle button action for editing a question.
      */
     public void editQuestion (){
-        //TODO
+        ModeratorViewLogic.editQuestion(roomID, questionId, questionContainer, questionList);
     }
 
     /**
@@ -181,7 +181,6 @@ public class LecturerViewController {
     public void banUser (){
         //TODO
     }
-
 
 
     /**
