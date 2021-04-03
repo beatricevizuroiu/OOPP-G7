@@ -16,8 +16,9 @@
     </columnConstraints>
     <rowConstraints>
         <RowConstraints minHeight="75.0" vgrow="NEVER" />
-        <RowConstraints vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="95.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="325.0" minHeight="239.0" prefHeight="313.6" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="95.0" minHeight="4.199999999999989" prefHeight="21.600000000000023" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="91.19999999999999" minHeight="76.19999999999999" prefHeight="91.19999999999999" />
     </rowConstraints>
 
     <HBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
@@ -28,14 +29,9 @@
         </Text>
     </HBox>
 
-    <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+    <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="3" />
 
-    <ScrollPane fx:id="questionList"
-                GridPane.columnIndex="1"
-                GridPane.columnSpan="3"
-                GridPane.rowIndex="1"
-                fitToWidth="true"
-                fitToHeight="true">
+    <ScrollPane fx:id="questionList" fitToHeight="true" fitToWidth="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
         <padding>
             <Insets>
                 <top>5</top>
@@ -44,23 +40,23 @@
                 <left>20</left>
             </Insets>
         </padding>
-        <VBox fx:id="questionContainer" spacing="20" />
+        <VBox fx:id="questionContainer" prefWidth="962.0" spacing="20" />
     </ScrollPane>
 
-    <TextArea fx:id="answerBox" prefHeight="95.0" prefWidth="885.0" promptText="Type your question here" GridPane.columnIndex="1" GridPane.rowIndex="2">
+    <TextArea fx:id="answerBox" prefHeight="95.0" prefWidth="885.0" promptText="Type your question here" GridPane.columnIndex="1" GridPane.rowIndex="3">
         <font>
             <Font name="Book Antiqua" size="21.0" />
         </font>
     </TextArea>
 
-    <Button fx:id="postQuestionButton" mnemonicParsing="false" onAction="#sendQuestion" styleClass="button" text="Post Question" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2">
+    <Button fx:id="postQuestionButton" mnemonicParsing="false" onAction="#sendQuestion" styleClass="button" text="Post Question" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="3">
         <font>
             <Font name="Book Antiqua Bold" size="15.0" />
         </font>
     </Button>
 
     <!--    Main Buttons    -->
-    <Button mnemonicParsing="false" onAction="#handleButtonMode2" text="Mode" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+    <Button mnemonicParsing="false" onAction="#handleButtonMode2" text="Mode" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
         <graphic>
             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                 <image>
@@ -70,11 +66,45 @@
         </graphic>
     </Button>
 
-    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonDark" styleClass="upvoteBtn" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" >
+    <Button fx:id="whiteSlow" mnemonicParsing="false" onAction="#goSlower" style="-fx-background-color: #15041A" visible="true" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
         <graphic>
-            <SVGPath content="M36.7994 13C28.9767 13 23.9098 16.1937 19.9319 21.8893C19.2102 22.9225 19.4327 24.3391 20.4393 25.0996L24.6671 28.2938C25.6838 29.0619 27.1302 28.8823 27.9261 27.8888C30.3811 24.8242 32.2021 23.0598 36.0368 23.0598C39.0519 23.0598 42.7812 24.9933 42.7812 27.9065C42.7812 30.1089 40.9567 31.2399 37.9796 32.903C34.5079 34.8425 29.9138 37.2562 29.9138 43.2941V44.25C29.9138 45.5444 30.9669 46.5938 32.266 46.5938H39.3686C40.6676 46.5938 41.7207 45.5444 41.7207 44.25V43.6862C41.7207 39.5007 53.9978 39.3264 53.9978 28C53.9979 19.4703 45.1183 13 36.7994 13ZM35.8173 49.4706C32.0739 49.4706 29.0283 52.5053 29.0283 56.2354C29.0283 59.9653 32.0739 63 35.8173 63C39.5608 63 42.6063 59.9653 42.6063 56.2353C42.6063 52.5052 39.5608 49.4706 35.8173 49.4706Z" fill="WHITE" styleClass="link-button" />
+            <ImageView fitHeight="60.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@slower.png" />
+                </image>
+            </ImageView>
         </graphic>
     </Button>
+    <Button fx:id="colorSlow" mnemonicParsing="false" style="-fx-background-color: #15041A" visible="false" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+        <graphic>
+            <ImageView fitHeight="61.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@slowerColored.png" />
+                </image>
+            </ImageView>
+        </graphic>
+    </Button>
+
+    <Button fx:id="whiteFast" mnemonicParsing="false" onAction="#goFaster" style="-fx-background-color: #15041A" visible="true" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+        <graphic>
+            <ImageView fitHeight="67.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@faster.png" />
+                </image>
+            </ImageView>
+        </graphic>
+    </Button>
+    <Button fx:id="colorFast" mnemonicParsing="false" style="-fx-background-color: #15041A" visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+        <graphic>
+            <ImageView fitHeight="64.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@fasterColored.png" />
+                </image>
+            </ImageView>
+        </graphic>
+    </Button>
+
+    <Button fx:id="helpButtonD" mnemonicParsing="false" onAction="#handleHelpButtonDark" styleClass="upvoteBtn" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
 
     <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionListDark" styleClass="upvoteBtn" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="0">
         <graphic>
@@ -90,7 +120,10 @@
             <Insets left="790.0" />
         </GridPane.margin>
     </Button>
+    
 
+
+    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonLight" styleClass="help-button" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
     <!--    <Button fx:id="mode" mnemonicParsing="false" onAction="#handleButtonMode" styleClass="mode-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />-->
 
 

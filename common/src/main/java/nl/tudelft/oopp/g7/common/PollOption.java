@@ -11,6 +11,9 @@ import javax.validation.constraints.PositiveOrZero;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * The type Poll option.
+ */
 @AllArgsConstructor @NoArgsConstructor
 @Data
 public class PollOption {
