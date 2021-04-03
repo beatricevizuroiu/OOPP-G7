@@ -145,7 +145,7 @@ public class LecturerViewController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if list of Users is clicked, change to List of Users scene
-        EntryRoomDisplay.setCurrentScene("/ListUsers.fxml");
+        EntryRoomDisplay.setCurrentScene("/ListUsersModerator.fxml");
     }
 
     /**
@@ -157,7 +157,7 @@ public class LecturerViewController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if list of Users is clicked, change to List of Users scene
-        EntryRoomDisplay.setCurrentScene("/ListUsers(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/ListUsersModerator(DARKMODE).fxml");
     }
 
     /**

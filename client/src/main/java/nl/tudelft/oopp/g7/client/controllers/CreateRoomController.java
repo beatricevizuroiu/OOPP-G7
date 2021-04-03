@@ -69,6 +69,7 @@ public class CreateRoomController {
             if (true /* TODO: Check if the lecture is not scheduled */) {
                 RoomJoinInfo roomJoinInfo = RoomServerCommunication.joinRoom(room.getId(), room.getModeratorPassword(), lecturerName.getText());
 
+                LocalData.setUserID(roomJoinInfo.getUserId());
                 LocalData.setToken(roomJoinInfo.getAuthorization());
 
                 // Proceed to Lecturer View
@@ -100,6 +101,7 @@ public class CreateRoomController {
             if (true /* TODO: Check if the lecture is not scheduled */) {
                 RoomJoinInfo roomJoinInfo = RoomServerCommunication.joinRoom(room.getId(), room.getModeratorPassword(), lecturerName.getText());
 
+                LocalData.setUserID(roomJoinInfo.getUserId());
                 LocalData.setToken(roomJoinInfo.getAuthorization());
 
                 // Proceed to Lecturer View

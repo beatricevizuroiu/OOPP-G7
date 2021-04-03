@@ -7,8 +7,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane minHeight="500" minWidth="750"
-          stylesheets="@UIstyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.StudentViewUIController">
+<GridPane minHeight="500" minWidth="750" stylesheets="@UIstyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.StudentViewUIController">
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" minWidth="128.0" />
         <ColumnConstraints hgrow="SOMETIMES" />
@@ -19,6 +18,7 @@
         <RowConstraints minHeight="75.0" vgrow="NEVER" />
         <RowConstraints vgrow="SOMETIMES" />
         <RowConstraints maxHeight="95.0" vgrow="SOMETIMES" />
+      <RowConstraints />
     </rowConstraints>
 
     <HBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
@@ -29,32 +29,34 @@
         </Text>
     </HBox>
 
-    <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+    <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="3" />
 
-    <ScrollPane fx:id="questionList"
-                GridPane.columnIndex="1"
-                GridPane.columnSpan="3"
-                GridPane.rowIndex="1"
-                fitToWidth="true"
-                fitToHeight="true">
+    <ScrollPane fx:id="questionList" fitToHeight="true" fitToWidth="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
         <padding>
             <Insets>
-                <top>5</top>
-                <right>20</right>
-                <bottom>5</bottom>
-                <left>20</left>
+                <right>10</right>
+                <left>10</left>
             </Insets>
         </padding>
-        <VBox fx:id="questionContainer" spacing="20" />
+        <VBox fx:id="questionContainer" spacing="20">
+            <padding>
+                <Insets>
+                    <top>5</top>
+                    <right>5</right>
+                    <bottom>5</bottom>
+                    <left>5</left>
+                </Insets>
+            </padding>
+        </VBox>
     </ScrollPane>
 
-    <TextArea fx:id="answerBox" prefHeight="95.0" prefWidth="885.0" promptText="Type your question here" GridPane.columnIndex="1" GridPane.rowIndex="2">
+    <TextArea fx:id="answerBox" prefHeight="91.0" prefWidth="886.0" promptText="Type your question here" GridPane.columnIndex="1" GridPane.rowIndex="3">
         <font>
             <Font name="Book Antiqua" size="21.0" />
         </font>
     </TextArea>
 
-    <Button fx:id="postQuestionButton" mnemonicParsing="false" onAction="#sendQuestion" styleClass="post-button" text="Post Question" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2">
+    <Button fx:id="postQuestionButton" mnemonicParsing="false" onAction="#sendQuestion" styleClass="post-button" text="Post Question" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="3">
         <font>
             <Font name="Book Antiqua Bold" size="15.0" />
         </font>
@@ -66,6 +68,44 @@
             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                 <image>
                     <Image url="@sun (1).png" />
+                </image>
+            </ImageView>
+        </graphic>
+    </Button>
+
+    <Button fx:id="whiteSlow" mnemonicParsing="false" onAction="#goSlower" style="-fx-background-color: #15041A" visible="true" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+        <graphic>
+            <ImageView fitHeight="60.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@slower.png" />
+                </image>
+            </ImageView>
+        </graphic>
+    </Button>
+    <Button fx:id="colorSlow" mnemonicParsing="false" style="-fx-background-color: #15041A" visible="false" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+        <graphic>
+            <ImageView fitHeight="61.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@slowerColored.png" />
+                </image>
+            </ImageView>
+        </graphic>
+    </Button>
+
+    <Button fx:id="whiteFast" mnemonicParsing="false" onAction="#goFaster" style="-fx-background-color: #15041A" visible="true" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+        <graphic>
+            <ImageView fitHeight="67.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@faster.png" />
+                </image>
+            </ImageView>
+        </graphic>
+    </Button>
+    <Button fx:id="colorFast" mnemonicParsing="false" style="-fx-background-color: #15041A" visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+        <graphic>
+            <ImageView fitHeight="64.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@fasterColored.png" />
                 </image>
             </ImageView>
         </graphic>

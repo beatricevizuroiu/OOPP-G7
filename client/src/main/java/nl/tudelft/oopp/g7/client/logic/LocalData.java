@@ -13,6 +13,8 @@ public class LocalData {
     @Setter @Getter
     private static String roomID = null;
     @Setter @Getter
+    private static String userID = null;
+    @Setter @Getter
     private static String studentPassword = "";
     @Setter @Getter
     private static String moderatorPassword = null;
@@ -20,6 +22,8 @@ public class LocalData {
     private static String token = "";
     @Setter @Getter
     private static String roomName = "";
+    @Setter @Getter
+    private static boolean isLecturer = false;
     @Setter @Getter
     private static SortingOrder sortingOrder = SortingOrder.NEW;
     public static HashMap<String, UserInfo> userMap = new HashMap<>();

@@ -7,11 +7,18 @@
 <?import javafx.scene.text.*?>
 
 <HBox id="question"
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.TextFlow?>
+<?import javafx.geometry.Insets?>
+<HBox xmlns="http://javafx.com/javafx"
       stylesheets="@StudentQuestion(DARKMODE).css"
-      xmlns="http://javafx.com/javafx/11.0.1"
+      id="question"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="nl.tudelft.oopp.g7.client.controllers.StudentViewUIController">
-        
         <padding>
                 <Insets>
                         <top>15</top>
@@ -27,11 +34,7 @@
                         </graphic>
                 </Button>
                 <TextFlow textAlignment="CENTER">
-                        <Text id="QuestionUpvoteCount">
-                                <font>
-                                        <Font name="Book Antiqua" size="21.0" />
-                                </font>
-                        </Text>
+                        <Text id="QuestionUpvoteCount" />
                 </TextFlow>
         </VBox>
         <VBox>
@@ -43,18 +46,14 @@
                                 <left>5</left>
                         </Insets>
                 </padding>
-                <Text id="QuestionAuthor" styleClass="questionAsks" text="User asks">
-                        <font>
-                                <Font name="System" />
-                        </font>
-                </Text>
-                <HBox>
-                        <Text id="QuestionText" styleClass="questionText">
-                                <font>
-                                        <Font name="System" />
-                                </font>
-                        </Text>
-                </HBox>
+                <Text text="User asks" id="QuestionAuthor" styleClass="questionAsks" />
+                <VBox spacing="20">
+                        <Text id="QuestionText" styleClass="questionText" />
+                        <VBox id="QuestionAnswerBox">
+                                <Text text="Answer:" />
+                                <Text id="QuestionAnswer" styleClass="questionAnswer" />
+                        </VBox>
+                </VBox>
         </VBox>
         <FlowPane alignment="BOTTOM_RIGHT" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@StudentQuestion.css">
                 <VBox>

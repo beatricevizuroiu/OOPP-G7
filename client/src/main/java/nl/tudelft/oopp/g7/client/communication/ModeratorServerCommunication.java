@@ -66,6 +66,25 @@ public class ModeratorServerCommunication {
     }
 
     /**
+     * Bans the user with specified id.
+     * @param roomID ID of the room student belongs.
+     * @param userID ID of the student that will be banned.
+     * @param banReason {@link BanReason} object that contains the reason for ban.
+     * @return A HttpResponse containing the response received from server.
+     */
+    public static HttpResponse<String> banUser(String roomID, String userID, BanReason banReason) {
+        // convert the body to JSON
+        String body = gson.toJson(banReason);
+
+        // add the appropriate end-point
+        URI uri = URI.create(uriBody + roomID + "/user/" + userID + "/ban");
+
+        // send the ban request and return the response
+        return HttpMethods.post(uri, body);
+    }
+
+
+    /**
      * Create a Poll.
      * @param roomID The roomId of the Room to create a Poll in.
      * @param question The question text of the Poll.

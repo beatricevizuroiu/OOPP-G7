@@ -51,5 +51,6 @@ public class CreateRoomLogic {
         LocalData.setStudentPassword(room.getStudentPassword());
         LocalData.setModeratorPassword(room.getModeratorPassword());
         LocalData.setSortingOrder(SortingOrder.UPVOTES);
+        LocalData.setLecturer(true);
     }
 }

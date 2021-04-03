@@ -3,8 +3,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
-
-<?import javafx.scene.text.Font?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.TextFlow?>
 <?import javafx.scene.control.MenuButton?>
@@ -36,18 +34,10 @@
             </Insets>
         </padding>
         <TextFlow textAlignment="CENTER">
-            <Text id="QuestionUpvoteCount" >
-                <font>
-                    <Font name="System" size="21.0"/>
-                </font>
-            </Text>
+            <Text id="QuestionUpvoteCount" />
         </TextFlow>
         <TextFlow textAlignment="CENTER">
-            <Text text="Upvotes">
-                <font>
-                    <Font name="System" size="12.0" />
-                </font>
-            </Text>
+            <Text text="Upvotes" />
         </TextFlow>
     </VBox>
     <VBox>
@@ -59,18 +49,14 @@
                 <left>5</left>
             </Insets>
         </padding>
-        <Text text="User asks" id="QuestionAuthor" styleClass="questionAsks">
-            <font>
-                <Font name="System"/>
-            </font>
-        </Text>
-        <HBox>
-            <Text id="QuestionText" styleClass="questionText" >
-                <font>
-                    <Font name="System"/>
-                </font>
-            </Text>
-        </HBox>
+        <Text text="User asks" id="QuestionAuthor" styleClass="questionAsks" />
+        <VBox spacing="20">
+            <Text id="QuestionText" styleClass="questionText" />
+            <VBox id="QuestionAnswerBox">
+                <Text text="Answer:" />
+                <Text id="QuestionAnswer" styleClass="questionAnswer" />
+            </VBox>
+        </VBox>
     </VBox>
     <FlowPane alignment="TOP_RIGHT" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@LecturerQuestion.css">
         <VBox>
