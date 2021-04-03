@@ -4,7 +4,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.text.Font?>
 
 <?import javafx.scene.text.TextFlow?>
 <?import javafx.scene.shape.SVGPath?>
@@ -21,18 +20,10 @@
     </padding>
 
     <TextFlow minWidth="200">
-        <Text id="UserNickname" text="User">
-            <font>
-                <Font name="System" size="17"/>
-            </font>
-        </Text>
+        <Text id="UserNickname" text="User" styleClass="UserInfoText"/>
         <SVGPath id="StarIcon"/>
     </TextFlow>
 
     <Region HBox.hgrow="ALWAYS" />
-    <Text id="UserRoleInfo" text="student" >
-        <font>
-            <Font name="System" size="17"/>
-        </font>
-    </Text>
+    <Text id="UserRoleInfo" text="student" styleClass="UserInfoText"/>
 </HBox>

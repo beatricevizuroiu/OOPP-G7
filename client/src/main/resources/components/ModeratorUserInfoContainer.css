@@ -19,3 +19,7 @@
     -fx-scale-shape: 15px;
     -fx-fill: #8D1BAA;
 }
+
+.UserInfoText {
+    -fx-font-size: 17px;
+}

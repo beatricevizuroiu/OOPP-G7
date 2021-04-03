@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -118,8 +119,27 @@ public class ModeratorViewLogic {
      * @param userID ID of the user that will be banned.
      */
     public static void banUser(String roomID, String userID) {
-        System.out.println("Get Banned!" + userID);
-        // TODO: add confirmation pop-up for reasoning
-        ModeratorServerCommunication.banUser(roomID, userID, new BanReason(""));
+        ModeratorServerCommunication.banUser(roomID, userID, banReasonDialog());
+    }
+
+    /**
+     * Create a pop-up window that asks for banning reason. Leaving blank will result in an empty response.
+     * @return a ban reason
+     */
+    public static BanReason banReasonDialog() {
+        String defaultValue = "Leave blank for default reason.";
+
+        TextInputDialog textInputDialog = new TextInputDialog(defaultValue);
+        textInputDialog.setHeaderText("Please provide a reason for banning.");
+        textInputDialog.showAndWait();
+
+        String reason = textInputDialog.getEditor().getText();
+
+        // check for defaulting
+        if (reason.equals(defaultValue)) {
+            reason = "";
+        }
+
+        return new BanReason(reason);
     }
 }

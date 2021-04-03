@@ -22,4 +22,5 @@
 
 .UserInfoText {
     -fx-fill: white;
+    -fx-font-size: 17px;
 }

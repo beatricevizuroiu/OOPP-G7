@@ -90,7 +90,6 @@ public class SharedLogic {
         // implement dark mode
         String componentName =  "/components/" + (userListContainer.getStyleClass().contains("DarkUsersContainer") ? componentDarkMode : component);
 
-        System.out.println(componentName);
         try {
             for (UserInfo userInfo : userInfoList) {
                 SharedLogic.addUserInfoToUI(

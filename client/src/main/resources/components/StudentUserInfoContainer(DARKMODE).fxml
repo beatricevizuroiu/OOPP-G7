@@ -21,18 +21,10 @@
     </padding>
 
     <TextFlow minWidth="200">
-        <Text id="UserNickname" text="User" styleClass="UserInfoText">
-            <font>
-                <Font name="System" size="17"/>
-            </font>
-        </Text>
+        <Text id="UserNickname" text="User" styleClass="UserInfoText"/>
         <SVGPath id="StarIcon"/>
     </TextFlow>
 
     <Region HBox.hgrow="ALWAYS" />
-    <Text id="UserRoleInfo" text="student" styleClass="UserInfoText">
-        <font>
-            <Font name="System" size="17"/>
-        </font>
-    </Text>
+    <Text id="UserRoleInfo" text="student" styleClass="UserInfoText"/>
 </HBox>

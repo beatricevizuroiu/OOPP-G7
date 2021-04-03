@@ -97,8 +97,4 @@
             <Insets left="790.0" />
         </GridPane.margin>
     </Button>
-
-    <!--    <Button fx:id="mode" mnemonicParsing="false" onAction="#handleButtonMode" styleClass="mode-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />-->
-
-
 </GridPane>
