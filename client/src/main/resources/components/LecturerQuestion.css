@@ -25,9 +25,26 @@
     -fx-font-size: 19px;
 }
 
+#QuestionReplyBtn {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+#QuestionReplyBtn:active {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-fill: purple;
+}
+
 #MenuButton {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
+}
+
+#MenuButton:active {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-fill: purple;
 }
 
 .menuItem {
@@ -36,10 +53,17 @@
     -fx-font-weight: bold;
 }
 
+.menuItem:active {
+    -fx-background-color: #B0B0B0;
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-fill: purple;
+
+}
+
 .context-menu {
     -fx-background-color: transparent;
 }
-
 
 
 .menu-button > .arrow-button {

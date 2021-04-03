@@ -34,21 +34,40 @@
     -fx-fill: white;
 }
 
+#QuestionReplyBtn {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-fill: white;
+}
+
+#QuestionReplyBtn:active {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-fill: purple;
+}
+
 #MenuButton {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
+    -fx-fill: white;
+}
+
+#MenuButton:active {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-fill: purple;
 }
 
 .menuItem {
     -fx-background-color: #B0B0B0;
     -fx-font-size: 17px;
     -fx-font-weight: bold;
+    -fx-fill: white;
 }
 
 .context-menu {
     -fx-background-color: transparent;
 }
-
 
 .menu-button > .arrow-button {
     -fx-padding: 0;
