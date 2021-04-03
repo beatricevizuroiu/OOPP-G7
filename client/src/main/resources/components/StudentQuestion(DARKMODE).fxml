@@ -55,7 +55,7 @@
                         </VBox>
                 </VBox>
         </VBox>
-        <FlowPane alignment="BOTTOM_RIGHT" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@StudentQuestion.css">
+        <FlowPane alignment="BOTTOM_RIGHT" xmlns:fx="http://javafx.com/fxml/1" >
                 <VBox>
                         <Button id="StudentDeleteBtn" styleClass="delete" onAction="#deleteQuestion">
                                 <graphic>

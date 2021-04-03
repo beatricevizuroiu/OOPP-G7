@@ -58,7 +58,7 @@
             </VBox>
         </VBox>
     </VBox>
-    <FlowPane alignment="TOP_RIGHT" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@LecturerQuestion.css">
+    <FlowPane alignment="TOP_RIGHT" xmlns:fx="http://javafx.com/fxml/1" >
         <VBox>
             <Button id="QuestionReplyBtn" onAction="#answerQuestion" >
                 <graphic>
