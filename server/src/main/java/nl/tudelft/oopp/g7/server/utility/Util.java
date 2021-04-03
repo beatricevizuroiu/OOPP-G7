@@ -1,5 +1,7 @@
 package nl.tudelft.oopp.g7.server.utility;
 
+import nl.tudelft.oopp.g7.server.DemoApplication;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -9,6 +11,7 @@ public class Util {
 
     /**
      * Method to export a file from the jar to an external folder.
+     *
      * @param resourceName the name of the resource
      * @param output file that will be outputted to
      */

@@ -10,6 +10,9 @@ import javax.validation.constraints.Positive;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * The type Poll info.
+ */
 @AllArgsConstructor @NoArgsConstructor
 @Data
 public class PollInfo {

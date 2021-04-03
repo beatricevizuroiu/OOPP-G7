@@ -18,6 +18,8 @@ public class HelpFileController {
 
         // if goBack is clicked, change Scene to LecturerViewUI
         EntryRoomDisplay.setCurrentScene("/LecturerViewUi.fxml");
+//        TODO (change the fact that it goes to it's doesn't go to lecturer View but to it's previous scene)
+
     }
 
     /**
@@ -31,6 +33,8 @@ public class HelpFileController {
 
         // if goBack is clicked, change Scene to LecturerViewUI
         EntryRoomDisplay.setCurrentScene("/LecturerViewUi(DARKMODE).fxml");
+//        TODO (change the fact that it goes to it's doesn't go to lecturer View but to it's previous scene)
+
     }
 
     /**
