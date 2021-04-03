@@ -165,7 +165,7 @@ public class LecturerViewController {
      *
      */
     public void deleteQuestion () {
-        //ModeratorViewLogic.deleteQuestion(roomID, questionId, questionContainer, questionList);
+        ModeratorViewLogic.deleteQuestion(roomID, questionId, questionContainer, questionList);
     }
 
     /**
@@ -174,6 +174,15 @@ public class LecturerViewController {
     public void editQuestion (){
         //TODO
     }
+
+    /**
+     * Handle button action for banning a user.
+     */
+    public void banUser (){
+        //TODO
+    }
+
+
 
     /**
      * Handle button action for answering a question.
