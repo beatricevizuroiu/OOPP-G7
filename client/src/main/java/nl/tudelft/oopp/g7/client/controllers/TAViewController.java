@@ -174,7 +174,7 @@ public class TAViewController {
      * Handle button action for banning a user.
      */
     public void banUser (){
-        //TODO
+//        ModeratorViewLogic.banUser(roomID, userID);
     }
 
     /**

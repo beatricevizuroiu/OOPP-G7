@@ -179,7 +179,7 @@ public class LecturerViewController {
      * Handle button action for banning a user.
      */
     public void banUser (){
-        //TODO
+//        ModeratorViewLogic.banUser(roomID, userID);
     }
 
 
