@@ -174,5 +174,6 @@ public class ServerCommunication {
 
     public static HttpResponse<String> answerQuestion(String roomID, int questionID, QuestionText answer) {
         //TODO
+        return null;
     }
 }

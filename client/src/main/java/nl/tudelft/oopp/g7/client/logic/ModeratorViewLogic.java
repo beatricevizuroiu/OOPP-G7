@@ -72,29 +72,29 @@ public class ModeratorViewLogic {
     /**
      * Deletes a question and refreshes the question list.
      * @param roomID ID of the room question is in.
-     * @param questionId ID of the specified question.
+     * @param questionID ID of the specified question.
      * @param questionContainer VBox containing the UI elements.
      * @param questionList ScrollPane containing the whole list of questions.
      */
-    public static void deleteQuestion(String roomID, int questionId, VBox questionContainer, ScrollPane questionList) {
-        ServerCommunication.deleteQuestion(roomID, questionId);
+    public static void deleteQuestion(String roomID, int questionID, VBox questionContainer, ScrollPane questionList) {
+        ServerCommunication.deleteQuestion(roomID, questionID);
         retrieveAllQuestions(roomID, questionContainer, questionList);
     }
 
     /**
      * Edits a question and refreshes the question list.
      * @param roomID ID of the room question is in.
-     * @param questionId ID of the specified question.
+     * @param questionID ID of the specified question.
      * @param questionContainer VBox containing the UI elements.
      * @param questionList ScrollPane containing the whole list of questions.
      */
-    public static void editQuestion(String roomID, int questionId,QuestionText questionText, VBox questionContainer, ScrollPane questionList) {
-        ServerCommunication.editQuestion(roomID, questionId, questionText);
+    public static void editQuestion(String roomID, int questionID,QuestionText questionText, VBox questionContainer, ScrollPane questionList) {
+        ServerCommunication.editQuestion(roomID, questionID, questionText);
         retrieveAllQuestions(roomID, questionContainer, questionList);
     }
 
-    public static void answerQuestion (String roomID, int questionId,QuestionText questionText, VBox questionContainer, ScrollPane questionList){
-        ServerCommunication.answerQuestion(roomID, questionId, questionText);
+    public static void answerQuestion (String roomID, int questionID,QuestionText questionText, VBox questionContainer, ScrollPane questionList){
+        ServerCommunication.answerQuestion(roomID, questionID, questionText);
         retrieveAllQuestions(roomID, questionContainer, questionList);
     }
     /**
