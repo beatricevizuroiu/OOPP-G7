@@ -1,103 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane minHeight="640" minWidth="750" stylesheets="@UIstyle(DARKMODE).css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.HelpFileController">
+<GridPane minHeight="500" minWidth="750" stylesheets="@UIstyle(DARKMODE).css" xmlns="http://javafx.com/javafx/11.0.1"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.HelpFileController">
     <columnConstraints>
-        <ColumnConstraints hgrow="NEVER" minWidth="128.0" />
-        <ColumnConstraints hgrow="SOMETIMES" />
-        <ColumnConstraints />
-        <ColumnConstraints />
+        <ColumnConstraints hgrow="NEVER" minWidth="128.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="814.8" minWidth="73.20001525878905"
+                           prefWidth="73.20001525878905"/>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="790.7999847412109" minWidth="48.39999999999998"
+                           prefWidth="790.7999847412109"/>
+        <ColumnConstraints/>
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints minHeight="75.0" vgrow="NEVER" />
-        <RowConstraints vgrow="SOMETIMES" />
-        <RowConstraints />
+        <RowConstraints minHeight="75.0" vgrow="NEVER"/>
+        <RowConstraints vgrow="SOMETIMES"/>
+        <RowConstraints/>
     </rowConstraints>
 
     <HBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
-        <Button layoutX="14.0" layoutY="72.0" mnemonicParsing="false" onAction="#handleBackButtonDarkLect">
-            <graphic>
-                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@back.png" />
-                    </image>
-                </ImageView>
-            </graphic>
-        </Button>
-        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" Course Name">
+        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" RaisedHand">
             <font>
-                <Font name="Book Antiqua Bold" size="36.0" />
+                <Font name="Book Antiqua Bold" size="45.0"/>
             </font>
         </Text>
     </HBox>
 
-    <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2">
-        <items>
-            <Button layoutX="14.0" layoutY="72.0" mnemonicParsing="false" onAction="#handleButtonModeLecturerDark" text="Mode">
-                <graphic>
-                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                            <Image url="@sun (1).png" />
-                        </image>
-                    </ImageView>
-                </graphic>
-            </Button>
-        </items></SplitPane>
+    <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2"/>
 
-    <ScrollPane fx:id="questionList" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
-        <VBox fx:id="questionContainer" prefHeight="350.0" prefWidth="653.0">
+    <ScrollPane fx:id="questionList" fitToHeight="true" fitToWidth="true" GridPane.columnIndex="1"
+                GridPane.columnSpan="3" GridPane.rowIndex="1">
+        <padding>
+            <Insets>
+                <top>5</top>
+                <right>20</right>
+                <bottom>5</bottom>
+                <left>20</left>
+            </Insets>
+        </padding>
+        <VBox fx:id="questionContainer" prefWidth="823.0" spacing="20">
             <children>
-                <Text fill="#15041a" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello Lecturer," wrappingWidth="170.13670349121094">
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                      text="RaisedHand is an application for Students to ask questions during the lecture and upvote other Students' questions so that the Lecturer can answer those that are most relevant."
+                      wrappingWidth="816.13671875">
                     <font>
-                        <Font name="Book Antiqua" size="20.0" />
-                    </font></Text>
-                <Text fill="#15041a" strokeType="OUTSIDE" strokeWidth="0.0" text="This is an application for students to ask questions during lectures. A simple process of how this application works is the following: Students ask questions, other students upvote questions that they find relevant and the Lecturer will answer them live. You, as  Moderator can give a short answer to questions that do not require an in depth one. You can also mark questions as answered and they will automatically move to a separate list of answered questions. As a Moderator, you should answer questions in text from the answered questions list so that at the end of the lecture it will be easier for the Lecturer to export the list of questions and answers." wrappingWidth="734.13671875">
-                    <font>
-                        <Font name="Book Antiqua" size="20.0" />
+                        <Font name="Book Antiqua" size="15.0"/>
                     </font>
                 </Text>
-                <Text fill="#15041a" strokeType="OUTSIDE" strokeWidth="0.0" text="At the end of the lecture, as the Lecturer you should export a file containing all the questions and answers for all the question asked during the lecture." wrappingWidth="734.6816558837891">
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                      text="TAs moderate questions (edit, delete, answer with text) and at the end of the lecture, the Lecturer can opt to export a file containing all the questions and answers for you to read after the lecture."
+                      wrappingWidth="816.13671875">
                     <font>
-                        <Font name="Book Antiqua" size="20.0" />
+                        <Font name="Book Antiqua" size="15.0"/>
                     </font>
                 </Text>
-                <Text fill="#15041a" strokeType="OUTSIDE" strokeWidth="0.0" text="As a Moderator, you can edit/delete questions, ban Students who ask inappropriate questions, timeout Students who spam or block suspicious users. You can also create polls by simply clicking the Poll button in the upper right corner. As a Lecturer, you can also see if you are going too slow/too fast by glancing at the 5 dots in the left part of the page." wrappingWidth="734.6816558837891">
+                <Label text="  Mode Button - change Mode from Light to Dark and vice versa." textFill="WHITE">
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                            <Image url="@sun (1).png"/>
+                        </ImageView>
+                    </graphic>
                     <font>
-                        <Font name="Book Antiqua" size="20.0" />
+                        <Font name="Book Antiqua" size="15.0"/>
                     </font>
-                </Text>
-                <Text fill="#15041a" strokeType="OUTSIDE" strokeWidth="0.0" text="In this application, you can change the mode from Light to Dark (with colors accessible to all types of color blindness as well) by simply clicking the Mode button available in the left part of the screen. In the upper part of the screen, you have a human button that when clicked will list you all the participants, a check button that when pressed will show you the list of answered questions (with no answer unless answered by the TAs)." wrappingWidth="734.6816558837891">
+                </Label>
+                <Label text="   List of Users button  - lists all participants of the lecture" textFill="WHITE">
+                    <graphic>
+                        <SVGPath
+                                content="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                                fill="WHITE"/>
+                    </graphic>
                     <font>
-                        <Font name="Book Antiqua" size="20.0" />
+                        <Font name="Book Antiqua" size="15.0"/>
                     </font>
-                </Text>
-            </children></VBox>
+                </Label>
+                <Label text=" Answered questions button  - lists all questions that have been answered during the lecture"
+                       textFill="WHITE">
+                    <graphic>
+                        <SVGPath
+                                content="M22,5.18L10.59,16.6l-4.24-4.24l1.41-1.41l2.83,2.83l10-10L22,5.18z M19.79,10.22C19.92,10.79,20,11.39,20,12 c0,4.42-3.58,8-8,8s-8-3.58-8-8c0-4.42,3.58-8,8-8c1.58,0,3.04,0.46,4.28,1.25l1.44-1.44C16.1,2.67,14.13,2,12,2C6.48,2,2,6.48,2,12 c0,5.52,4.48,10,10,10s10-4.48,10-10c0-1.19-0.22-2.33-0.6-3.39L19.79,10.22z"
+                                fill="WHITE"/>
+                    </graphic>
+                    <font>
+                        <Font name="Book Antiqua" size="15.0"/>
+                    </font>
+                </Label>
+                <Label text="  Create poll button  - create a poll (insert options and question)" textFill="WHITE">
+                    <graphic>
+                        <SVGPath
+                                content="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"
+                                fill="WHITE"/>
+                    </graphic>
+                    <font>
+                        <Font name="Book Antiqua" size="15.0"/>
+                    </font>
+                </Label>
+                <Label text="   Download list of answered questions button  - download the list of answered questions for later export"
+                       textFill="WHITE">
+                    <graphic>
+                        <SVGPath content="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" fill="WHITE"/>
+                    </graphic>
+                    <font>
+                        <Font name="Book Antiqua" size="15.0"/>
+                    </font>
+                </Label>
+                <Label text="  Link button  - get the links for joining the lecture (one for Moderators, one for Students)"
+                       textFill="WHITE">
+                    <graphic>
+                        <SVGPath
+                                content="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"
+                                fill="WHITE"/>
+                    </graphic>
+                    <font>
+                        <Font name="Book Antiqua" size="15.0"/>
+                    </font>
+                </Label>
+            </children>
+        </VBox>
     </ScrollPane>
 
-    <!--TODO: Add description of buttons-->
-
-
-
-    <!--    <TextArea fx:id="answerBox"-->
-    <!--              GridPane.columnIndex="1" GridPane.rowIndex="2"-->
-    <!--              promptText="Type your question here">-->
-    <!--        <font>-->
-    <!--            <Font name="Book Antiqua" size="21.0"/>-->
-    <!--        </font>-->
-    <!--    </TextArea>-->
-
-    <!--    <Button fx:id="postQuestionButton" styleClass="button"-->
-    <!--            GridPane.columnIndex="2" GridPane.rowIndex="2"-->
-    <!--            onAction="#sendQuestion"-->
-    <!--            mnemonicParsing="false"-->
-    <!--            text="Post Question" textFill="WHITE">-->
-    <!--        <font>-->
-    <!--            <Font name="Book Antiqua Bold" size="15.0"/>-->
-    <!--        </font>-->
-    <!--    </Button>-->
+    <!--    Main Buttons    -->
+    <Button mnemonicParsing="false" onAction="#handleButtonMode2" text="Mode" GridPane.halignment="CENTER"
+            GridPane.rowIndex="1" GridPane.valignment="CENTER">
+        <graphic>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@sun (1).png"/>
+                </image>
+            </ImageView>
+        </graphic>
+    </Button>
 
 </GridPane>
