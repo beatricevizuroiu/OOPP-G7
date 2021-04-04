@@ -115,7 +115,7 @@
     </ScrollPane>
 
     <!--    Main Buttons    -->
-    <Button mnemonicParsing="false" onAction="#handleButtonMode2" text="Mode" GridPane.halignment="CENTER"
+    <Button mnemonicParsing="false" onAction="#handleButtonModeTADark" text="Mode" GridPane.halignment="CENTER"
             GridPane.rowIndex="1" GridPane.valignment="CENTER">
         <graphic>
             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">

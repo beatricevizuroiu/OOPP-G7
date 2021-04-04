@@ -25,7 +25,7 @@
     </rowConstraints>
 
     <HBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
-        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="RaisedHand">
+        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="  RaisedHand">
             <font>
                 <Font name="Book Antiqua Bold" size="36.0"/>
             </font>
