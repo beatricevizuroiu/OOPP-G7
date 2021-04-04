@@ -112,6 +112,13 @@ public class StudentViewUIController {
         StudentViewLogic.upvoteQuestion(roomID, questionId, questionContainer, questionList);
     }
 
+    /**
+     * remove the upvote of a question
+     * @param questionId the id of the question that is being downvoted
+     */
+    public void removeUpvoteQuestion(int questionId) {
+        StudentViewLogic.removeUpvoteQuestion(roomID, questionId, questionContainer, questionList);
+    }
 
     /**
      * Handle button action for button Mode from Light to Dark.
