@@ -59,6 +59,13 @@ public class LecturerViewController {
         ModeratorViewLogic.retrieveAllQuestions(roomID, questionContainer, questionList);
     }
 
+    /**
+     * Display link and passwords.
+     */
+    public void displayLinkAndPassword() {
+        ModeratorViewLogic.displayLinkAndPasswords();
+    }
+
 
     /**
      * Handle button action for button Mode from Light to Dark.
