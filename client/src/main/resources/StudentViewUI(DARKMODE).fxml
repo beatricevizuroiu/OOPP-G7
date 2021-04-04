@@ -81,8 +81,8 @@
     </Button>
 
 
-<!--    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonDark" styleClass="upvoteBtn"-->
-<!--            textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2">-->
+    <!--    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonDark" styleClass="upvoteBtn"-->
+    <!--            textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2">-->
 
     <Button fx:id="whiteSlow" mnemonicParsing="false" onAction="#goSlower" style="-fx-background-color: #15041A"
             visible="true" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">

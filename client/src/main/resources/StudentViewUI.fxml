@@ -31,16 +31,16 @@
         </Text>
     </HBox>
 
-        <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="3"/>
+    <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="3"/>
 
-        <ScrollPane fx:id="questionList" fitToHeight="true" fitToWidth="true" GridPane.columnIndex="1"
-                    GridPane.columnSpan="3" GridPane.rowIndex="1">
-            <padding>
-                <Insets>
-                    <right>10</right>
-                    <left>10</left>
-                </Insets>
-            </padding>
+    <ScrollPane fx:id="questionList" fitToHeight="true" fitToWidth="true" GridPane.columnIndex="1"
+                GridPane.columnSpan="3" GridPane.rowIndex="1">
+        <padding>
+            <Insets>
+                <right>10</right>
+                <left>10</left>
+            </Insets>
+        </padding>
         <VBox fx:id="questionContainer" spacing="20">
             <padding>
                 <Insets>
@@ -79,8 +79,8 @@
         </graphic>
     </Button>
 
-<!--    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonLight" styleClass="help-button"-->
-<!--            textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2"/>-->
+    <!--    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonLight" styleClass="help-button"-->
+    <!--            textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2"/>-->
 
     <Button fx:id="whiteSlow" mnemonicParsing="false" onAction="#goSlower" style="-fx-background-color: #15041A"
             visible="true" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
