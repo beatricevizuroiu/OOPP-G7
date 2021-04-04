@@ -42,18 +42,16 @@ public class SharedLogic {
         Button upvoteBtn = (Button) questionNode.lookup("#QuestionUpvoteBtn");
 
         if (upvoteBtn != null) {
-            upvoteBtn.setOnAction((event) -> StudentViewLogic.upvoteQuestion(roomID, question.getId(), questionContainer, questionList));
-            LocalData.upvotedQuestions.add(question.getId());
-
-            if(LocalData.upvotedQuestions.contains(question.getId()) && upvoteBtn.isArmed()){
-                upvoteBtn.setOnAction((event) -> StudentViewLogic.removeUpvoteQuestion(roomID, question.getId(), questionContainer, questionList));
-                LocalData.upvotedQuestions.remove(question.getId());
-            }
+            upvoteBtn.setOnAction((event) -> {
+                // if the user already upvoted the question, delete the upvote when the button is clicked else simply upvote it
+                if(LocalData.upvotedQuestions.contains(question.getId())){
+                    StudentViewLogic.removeUpvoteQuestion(roomID, question.getId(), questionContainer, questionList);
+                }else{
+                    StudentViewLogic.upvoteQuestion(roomID, question.getId(), questionContainer, questionList);
+                }
+                    }
+            );
         }
-
-//        if(LocalData.upvotedQuestionsMap.containsValue(question.getAuthorId())){
-//            upvoteBtn.setOnAction((event) -> StudentViewLogic.removeUpvoteQuestion(roomID, question.getId(), questionContainer, questionList));
-//        }
 
         if(LocalData.upvotedQuestions.contains(question.getId()) && upvoteBtn.isArmed()){
             upvoteBtn.setOnAction((event) -> StudentViewLogic.removeUpvoteQuestion(roomID, question.getId(), questionContainer, questionList));

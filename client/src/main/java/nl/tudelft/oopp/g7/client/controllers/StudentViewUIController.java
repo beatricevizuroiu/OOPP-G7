@@ -113,8 +113,8 @@ public class StudentViewUIController {
     }
 
     /**
-     * remove the upvote of a question
-     * @param questionId the id of the question that is being downvoted
+     * Remove Upvote of questions.
+     * @param questionId the id of the question that is being down-voted
      */
     public void removeUpvoteQuestion(int questionId) {
         StudentViewLogic.removeUpvoteQuestion(roomID, questionId, questionContainer, questionList);

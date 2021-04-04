@@ -430,6 +430,9 @@ public class MockServerConfigurations {
                 );
     }
 
+    /**
+     * Create expectation retrieve user info.
+     */
     public void createExpectationRetrieveUserInfo() {
         List<UserInfo> userInfoList = new ArrayList<>();
         userInfoList.add(new UserInfo("1", "TestRoomID", "test", UserRole.STUDENT));
@@ -447,6 +450,11 @@ public class MockServerConfigurations {
                 );
     }
 
+    /**
+     * Create expectation ban user.
+     *
+     * @param userID the user id
+     */
     public void createExpectationBanUser(String userID) {
         new MockServerClient("localhost", 8080)
                 .when(
