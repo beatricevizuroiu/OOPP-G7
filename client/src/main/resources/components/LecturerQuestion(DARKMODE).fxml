@@ -6,12 +6,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<HBox id="lecturerQuestion"
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.text.TextFlow?>
-<?import javafx.geometry.Insets?>
+
 <HBox id="lecturerQuestion"
       stylesheets="@LecturerQuestion(DARKMODE).css"
       xmlns="http://javafx.com/javafx/11.0.1"
