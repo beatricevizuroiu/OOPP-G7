@@ -25,13 +25,22 @@
     </rowConstraints>
 
     <HBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
-        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="  RaisedHand">
+        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="    RaisedHand">
             <font>
                 <Font name="Book Antiqua Bold" size="45.0"/>
             </font>
         </Text>
     </HBox>
 
+    <Button layoutX="14.0" layoutY="72.0" mnemonicParsing="false" onAction="#handleBackButtonStudent">
+        <graphic>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@back.png" />
+                </image>
+            </ImageView>
+        </graphic>
+    </Button>
     <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2"/>
 
     <ScrollPane fx:id="questionList" fitToHeight="true" fitToWidth="true" GridPane.columnIndex="1"

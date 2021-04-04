@@ -8,8 +8,7 @@
 <?import javafx.scene.text.*?>
 
 <GridPane minHeight="500" minWidth="750" stylesheets="@UIstyle.css" xmlns="http://javafx.com/javafx/11.0.1"
-          xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="nl.tudelft.oopp.g7.client.controllers.HelpFileController">
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.HelpFileController">
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" minWidth="128.0"/>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="814.8" minWidth="73.20001525878905"
@@ -25,12 +24,22 @@
     </rowConstraints>
 
     <HBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
-        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="  RaisedHand">
+        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="    RaisedHand">
             <font>
                 <Font name="Book Antiqua Bold" size="45.0"/>
             </font>
         </Text>
     </HBox>
+
+    <Button layoutX="14.0" layoutY="72.0" mnemonicParsing="false" onAction="#handleBackButtonLect">
+        <graphic>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@back.png" />
+                </image>
+            </ImageView>
+        </graphic>
+    </Button>
 
     <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2"/>
 
@@ -44,7 +53,7 @@
                 <left>20</left>
             </Insets>
         </padding>
-        <VBox fx:id="questionContainer" prefWidth="823.0" spacing="20">
+        <VBox fx:id="questionContainer" prefWidth="823.0" spacing="20" style="-fx-background-color: transparent;">
             <children>
                 <Text fill="BLACK" strokeType="OUTSIDE" strokeWidth="0.0"
                       text="RaisedHand is an application for Students to ask questions during the lecture and upvote other Students' questions so that the Lecturer can answer those that are most relevant."
@@ -104,8 +113,7 @@
                 <Label text="   Download list of answered questions button  - download the list of answered questions for later export"
                        textFill="BLACK">
                     <graphic>
-                        <SVGPath content="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
-                                 fill="BLACK"/>
+                        <SVGPath content="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" fill="BLACK"/>
                     </graphic>
                     <font>
                         <Font name="Book Antiqua" size="15.0"/>
@@ -127,7 +135,7 @@
     </ScrollPane>
 
     <!--    Main Buttons    -->
-    <Button mnemonicParsing="false" onAction="#handleButtonMode2" text="Mode" GridPane.halignment="CENTER"
+    <Button mnemonicParsing="false" onAction="#handleButtonModeLecturerDark" text="Mode" GridPane.halignment="CENTER"
             GridPane.rowIndex="1" GridPane.valignment="CENTER">
         <graphic>
             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
