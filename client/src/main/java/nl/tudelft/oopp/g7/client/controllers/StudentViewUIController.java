@@ -1,25 +1,21 @@
 package nl.tudelft.oopp.g7.client.controllers;
 
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.StudentViewLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.QuestionText;
-import nl.tudelft.oopp.g7.common.UserInfo;
 
 import java.net.http.HttpResponse;
-import java.util.HashMap;
 import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -39,6 +35,12 @@ public class StudentViewUIController {
     // area to type the question
     @FXML
     public TextArea answerBox;
+
+    @FXML
+    public Button colorSlow;
+
+    @FXML
+    public Button colorFast;
 
     private final String roomID;
     private final String nickname;
@@ -194,7 +196,7 @@ public class StudentViewUIController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if list of Users is clicked, change to List of Users scene
-        EntryRoomDisplay.setCurrentScene("/ListUsers.fxml");
+        EntryRoomDisplay.setCurrentScene("/ListUsersStudent.fxml");
     }
 
     /**
@@ -205,7 +207,7 @@ public class StudentViewUIController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if list of Users is clicked, change to List of Users scene
-        EntryRoomDisplay.setCurrentScene("/ListUsers(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/ListUsersStudent(DARKMODE).fxml");
     }
 
     /**
@@ -215,5 +217,25 @@ public class StudentViewUIController {
         //StudentViewLogic.deleteQuestion(roomID, questionId, questionContainer, questionList);
     }
 
+    /**
+     * Handle button slower.
+     */
+    public void goSlower() {
+        colorSlow.setVisible(true);
+        PauseTransition transition = new PauseTransition(Duration.seconds(3));
+        transition.setOnFinished(event -> colorSlow.setVisible(false));
 
+        transition.play();
+    }
+
+    /**
+     * Handle button faster.
+     */
+    public void goFaster() {
+        colorFast.setVisible(true);
+        PauseTransition transition = new PauseTransition(Duration.seconds(3));
+        transition.setOnFinished(event -> colorFast.setVisible(false));
+
+        transition.play();
+    }
 }

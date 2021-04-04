@@ -5,50 +5,84 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" styleClass="parent" stylesheets="@Entry.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.CreateRoomController">
-   <children>
-      <Text fill="#15041a" layoutX="303.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Room" wrappingWidth="220.13671875">
-         <font>
-            <Font name="Book Antiqua Bold" size="35.0" />
-         </font></Text>
-      <TextField id="roomName" fx:id="roomName" alignment="CENTER" layoutX="254.0" layoutY="115.0" prefHeight="60.0" prefWidth="300.0" promptText="Enter name of Course" styleClass="buttons">
-         <font>
-            <Font name="Book Antiqua Bold Italic" size="17.0" />
-         </font></TextField>
-      <TextField id="moderatorPassword" fx:id="moderatorPassword" alignment="CENTER" layoutX="254.0" layoutY="190.0" prefHeight="60.0" prefWidth="300.0" promptText="Enter moderator password (required)" styleClass="buttons">
-         <font>
-            <Font name="Book Antiqua Bold Italic" size="17.0" />
-         </font></TextField>
-      <TextField id="studentPassword" fx:id="studentPassword" alignment="CENTER" layoutX="254.0" layoutY="265.0" prefHeight="60.0" prefWidth="300.0" promptText="Enter student password (optional)" styleClass="buttons">
-         <font>
-            <Font name="Book Antiqua Bold Italic" size="17.0" />
-         </font></TextField>
-      <TextField id="lecturerName" fx:id="lecturerName" alignment="CENTER" layoutX="254.0" layoutY="340.0" prefHeight="60.0" prefWidth="300.0" promptText="Enter name of Lecturer" styleClass="buttons">
-         <font>
-            <Font name="Book Antiqua Bold Italic" size="17.0" />
-         </font></TextField>
-      <Button fx:id="button" layoutX="349.0" layoutY="417.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="26.0" prefWidth="102.0" styleClass="buttons" text="Create">
-         <font>
-            <Font name="Book Antiqua Bold" size="17.0" />
-         </font>
-      </Button>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBackButton">
-         <graphic>
-            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@back.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button layoutX="714.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonMode" styleClass="parent" text="Mode">
-         <graphic>
-            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@sun (1).png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-   </children>
-</AnchorPane>
+<?import javafx.geometry.Insets?>
+<GridPane prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@Entry.css"
+          xmlns="http://javafx.com/javafx/11.0.1"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="nl.tudelft.oopp.g7.client.controllers.CreateRoomController">
+
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" />
+      <ColumnConstraints minWidth="300" maxWidth="300" hgrow="NEVER" />
+      <ColumnConstraints hgrow="SOMETIMES" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="75.0" maxHeight="75.0" vgrow="NEVER" />
+      <RowConstraints vgrow="ALWAYS" />
+      <RowConstraints vgrow="NEVER" />
+      <RowConstraints vgrow="ALWAYS" />
+   </rowConstraints>
+
+   <VBox spacing="10"
+      GridPane.columnIndex="1" GridPane.rowIndex="2">
+
+      <HBox>
+         <Region HBox.hgrow="ALWAYS" />
+         <Text text="Create Room" styleClass="formTitle" />
+         <Region HBox.hgrow="ALWAYS" />
+      </HBox>
+
+      <TextField id="roomName" fx:id="roomName" alignment="CENTER" prefHeight="60.0"
+                 prefWidth="300.0" promptText="Course name" styleClass="inputBox" />
+
+      <TextField id="moderatorPassword" fx:id="moderatorPassword" alignment="CENTER"
+                 prefHeight="60.0" prefWidth="300.0" promptText="Moderator password (required)" styleClass="inputBox" />
+
+      <TextField id="studentPassword" fx:id="studentPassword" alignment="CENTER"
+                 prefHeight="60.0" prefWidth="300.0" promptText="Student password (optional)" styleClass="inputBox" />
+
+      <TextField id="lecturerName" fx:id="lecturerName" alignment="CENTER"
+                 prefHeight="60.0" prefWidth="300.0" promptText="Lecturer name" styleClass="inputBox" />
+
+      <Button onAction="#buttonClicked"
+              prefHeight="60.0" prefWidth="300.0" styleClass="buttons" text="Create" />
+   </VBox>
+
+   <HBox styleClass="backgroundTitlePanel"
+         GridPane.columnIndex="0" GridPane.columnSpan="5" GridPane.rowIndex="0" >
+      <padding>
+         <Insets>
+            <left>15</left>
+            <right>15</right>
+         </Insets>
+      </padding>
+      <VBox>
+         <Region VBox.vgrow="ALWAYS" />
+         <Text text="Create Room" styleClass="applicationName" />
+         <Region VBox.vgrow="ALWAYS" />
+      </VBox>
+      <Region HBox.hgrow="ALWAYS"/>
+      <VBox>
+         <Region VBox.vgrow="ALWAYS" />
+         <HBox spacing="10">
+            <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBackButton" styleClass="buttonBack"
+                    text="Back">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <Image url="@back.png"/>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="714.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonMode" styleClass="buttonMode"
+                    text="Mode">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <Image url="@sun (1).png"/>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </HBox>
+         <Region VBox.vgrow="ALWAYS" />
+      </VBox>
+   </HBox>
+</GridPane>

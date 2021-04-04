@@ -7,6 +7,7 @@
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+<?import javafx.geometry.Insets?>
 <GridPane xmlns="http://javafx.com/javafx/11.0.1"
           xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="nl.tudelft.oopp.g7.client.controllers.AnsweredQuestionsStudentController"
@@ -38,11 +39,28 @@
                GridPane.rowSpan="2"/>
 
 
-    <ScrollPane
-            GridPane.columnIndex="1" GridPane.rowIndex="1"
-            GridPane.columnSpan="3"
-            fx:id="answeredQuestionList">
-        <VBox fx:id="answeredQuestionContainer" />
+    <ScrollPane fx:id="answeredQuestionList"
+                GridPane.columnIndex="1"
+                GridPane.columnSpan="3"
+                GridPane.rowIndex="1"
+                fitToWidth="true"
+                fitToHeight="true">
+        <padding>
+            <Insets>
+                <right>10</right>
+                <left>10</left>
+            </Insets>
+        </padding>
+        <VBox fx:id="answeredQuestionContainer" spacing="20">
+            <padding>
+                <Insets>
+                    <top>5</top>
+                    <right>5</right>
+                    <bottom>5</bottom>
+                    <left>5</left>
+                </Insets>
+            </padding>
+        </VBox>
     </ScrollPane>
 
     <!--    Main Buttons    -->

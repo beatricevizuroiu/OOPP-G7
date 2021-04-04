@@ -10,6 +10,14 @@ root {
     -fx-background-color: #3C3C3C;
 }
 
+#listUsersList {
+    -fx-background-color: #3C3C3C;
+}
+
+#listUsersContainer {
+    -fx-background-color: #3C3C3C;
+}
+
 .button{
     -fx-background-color: #FFFFFF;
 }

@@ -49,13 +49,21 @@
                 GridPane.columnSpan="3" GridPane.rowIndex="1">
         <padding>
             <Insets>
-                <top>5</top>
-                <right>20</right>
-                <bottom>5</bottom>
-                <left>20</left>
+                <right>10</right>
+                <left>10</left>
             </Insets>
         </padding>
-        <VBox fx:id="questionContainer" spacing="20"/>
+
+        <VBox fx:id="questionContainer" spacing="20">
+            <padding>
+                <Insets>
+                    <top>5</top>
+                    <right>5</right>
+                    <bottom>5</bottom>
+                    <left>5</left>
+                </Insets>
+            </padding>
+        </VBox>
     </ScrollPane>
 
     <TextArea fx:id="answerBox" prefHeight="95.0" prefWidth="885.0" promptText="Type your answer here"
