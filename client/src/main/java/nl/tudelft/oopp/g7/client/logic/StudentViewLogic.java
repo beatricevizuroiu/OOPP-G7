@@ -65,6 +65,7 @@ public class StudentViewLogic {
      */
     public static void upvoteQuestion(String roomID, int questionId, VBox questionContainer, ScrollPane questionList) {
         ServerCommunication.upvoteQuestion(roomID, questionId);
+        //LocalData.upvotedQuestions.add(questionId);
         retrieveAllQuestions(roomID, questionContainer, questionList);
     }
 
@@ -77,6 +78,7 @@ public class StudentViewLogic {
      */
     public static void removeUpvoteQuestion(String roomID, int questionId, VBox questionContainer, ScrollPane questionList) {
         ServerCommunication.removeUpvoteQuestion(roomID, questionId);
+        //LocalData.upvotedQuestions.remove(questionId);
         retrieveAllQuestions(roomID, questionContainer, questionList);
     }
 

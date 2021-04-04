@@ -98,7 +98,7 @@ public class StudentViewUIController {
                 alert.showAndWait();
                 return;
             }
-            System.err.println("A ratelimit status was returned but the rate limit header does not exist!");
+            System.err.println("A rate limit status was returned but the rate limit header does not exist!");
         }
         answerBox.setText("");
         retrieveQuestions();

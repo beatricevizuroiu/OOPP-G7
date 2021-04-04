@@ -43,6 +43,21 @@ public class SharedLogic {
 
         if (upvoteBtn != null) {
             upvoteBtn.setOnAction((event) -> StudentViewLogic.upvoteQuestion(roomID, question.getId(), questionContainer, questionList));
+            LocalData.upvotedQuestions.add(question.getId());
+
+            if(LocalData.upvotedQuestions.contains(question.getId()) && upvoteBtn.isArmed()){
+                upvoteBtn.setOnAction((event) -> StudentViewLogic.removeUpvoteQuestion(roomID, question.getId(), questionContainer, questionList));
+                LocalData.upvotedQuestions.remove(question.getId());
+            }
+        }
+
+//        if(LocalData.upvotedQuestionsMap.containsValue(question.getAuthorId())){
+//            upvoteBtn.setOnAction((event) -> StudentViewLogic.removeUpvoteQuestion(roomID, question.getId(), questionContainer, questionList));
+//        }
+
+        if(LocalData.upvotedQuestions.contains(question.getId()) && upvoteBtn.isArmed()){
+            upvoteBtn.setOnAction((event) -> StudentViewLogic.removeUpvoteQuestion(roomID, question.getId(), questionContainer, questionList));
+            LocalData.upvotedQuestions.remove(question.getId());
         }
 
         upvoteCount.setText(Integer.toString(Math.min(question.getUpvotes(), 999)));
