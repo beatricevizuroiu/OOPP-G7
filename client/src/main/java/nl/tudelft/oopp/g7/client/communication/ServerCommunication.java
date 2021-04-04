@@ -135,8 +135,8 @@ public class ServerCommunication {
         URI uri = URI.create(uriBody + roomID + "/question" + questionID + "/upvote");
 
         //send the un-upvote request and return the response
-        return HttpMethods.delete(uri);
-        //return HttpMethods.post(uri, "");
+        //return HttpMethods.delete(uri);
+        return HttpMethods.post(uri, "");
     }
 
     /**
