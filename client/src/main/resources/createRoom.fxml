@@ -6,6 +6,7 @@
 <?import javafx.scene.text.*?>
 
 <?import javafx.geometry.Insets?>
+
 <GridPane prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@Entry.css"
           xmlns="http://javafx.com/javafx/11.0.1"
           xmlns:fx="http://javafx.com/fxml/1"
@@ -43,6 +44,13 @@
 
       <TextField id="lecturerName" fx:id="lecturerName" alignment="CENTER"
                  prefHeight="60.0" prefWidth="300.0" promptText="Lecturer name" styleClass="inputBox" />
+
+      <HBox spacing="10">
+         <DatePicker fx:id="startDate" styleClass="inputBox" />
+         <TextField fx:id="startTime" styleClass="inputBox" />
+      </HBox>
+
+      <CheckBox fx:id="scheduleCheckbox" text="Scheduled?" styleClass="scheduleCheckbox" />
 
       <Button onAction="#buttonClicked"
               prefHeight="60.0" prefWidth="300.0" styleClass="buttons" text="Create" />

@@ -2,9 +2,14 @@ package nl.tudelft.oopp.g7.client.logic;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import nl.tudelft.oopp.g7.common.Room;
 import nl.tudelft.oopp.g7.common.SortingOrder;
+
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 
 public class CreateRoomLogic {
     /**
@@ -52,5 +57,42 @@ public class CreateRoomLogic {
         LocalData.setModeratorPassword(room.getModeratorPassword());
         LocalData.setSortingOrder(SortingOrder.UPVOTES);
         LocalData.setLecturer(true);
+    }
+
+    public static Date getTimeAndDateFromUI(DatePicker startDate, TextField startTime) {
+        LocalDate date = startDate.getValue();
+        Date time = parseStringToTime(startTime.getText());
+
+        if (date == null || time == null)
+            return null;
+
+        return new Date(date.getYear() - 1900, date.getMonth().ordinal(), date.getDayOfMonth(), time.getHours(), time.getMinutes(), 0);
+    }
+
+    private static Date parseStringToTime(String timeString) {
+        if (timeString == null)
+            return null;
+
+        String[] parts = timeString.split(":");
+
+        if (parts.length != 2)
+            return null;
+
+        try {
+            int hours = Integer.parseInt(parts[0]);
+            int minutes = Integer.parseInt(parts[1]);
+
+            if (hours < 0 || hours >= 24)
+                return null;
+
+            if (minutes < 0 || minutes >= 60)
+                return null;
+
+            return new Date(0, 0, 0, hours, minutes, 0);
+
+        } catch (NumberFormatException ignored) {
+            return null;
+        }
+
     }
 }

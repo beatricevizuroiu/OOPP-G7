@@ -4,8 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -141,5 +144,32 @@ public class ModeratorViewLogic {
         }
 
         return new BanReason(reason);
+    }
+
+    /**
+     * Displays an alert box that show links and passwords.
+     */
+    public static void displayLinkAndPasswords() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+        // Taken from StackOverflow to make alert box text editable
+        // https://stackoverflow.com/a/45621264/14196175
+        TextArea textArea = new TextArea(String.format("""
+                        Room ID: %s
+                        Moderator Password: %s
+                        Student Password: %s""",
+                LocalData.getRoomID(), LocalData.getModeratorPassword(), LocalData.getStudentPassword()));
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+
+        GridPane gridPane = new GridPane();
+        gridPane.add(textArea, 0, 0);
+
+        alert.setTitle("Invitations");
+        alert.setHeaderText("Room Join Information:");
+        alert.getDialogPane().setContent(gridPane);
+        alert.getDialogPane().setPrefHeight(200);
+
+        alert.showAndWait();
     }
 }
