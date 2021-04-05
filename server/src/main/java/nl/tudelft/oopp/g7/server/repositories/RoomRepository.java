@@ -28,6 +28,7 @@ public class RoomRepository {
     private static final String QUERY_COUNT_ROOMS_WITH_ID = "SELECT count(id) FROM rooms WHERE id=?";
     private static final String QUERY_CREATE_ROOM = "INSERT INTO rooms (id, studentPassword, moderatorPassword, name, open, over, startDate) VALUES (?, ?, ?, ?, ?, ?, ?);";
     private static final String QUERY_GET_ROOM_WITH_ID = "SELECT * FROM rooms WHERE id=?";
+    private static final String QUERY_END_ROOM = "UPDATE room SET isOver = TRUE WHERE id=? ;";
     private static final String QUERY_EDIT_SPEED = "UPDATE rooms SET speed = speed + ? WHERE id=?;";
     private static final String QUERY_GET_SPEED_WITH_ID = "SELECT speed FROM rooms WHERE id=?";
 
@@ -115,5 +116,16 @@ public class RoomRepository {
     public Room getRoomById(String roomId) {
         return jdbcTemplate.query(QUERY_GET_ROOM_WITH_ID,
             (ps) -> ps.setString(1, roomId), Room::fromResultSet);
+    }
+
+    /**
+     * Mark a lecture is finished in the database.
+     * @param roomId The id of the room that the poll belongs to.
+     */
+    public void endRoom(String roomId, int pollId, boolean publishResults) {
+        logger.debug("Closing room with id: {}", roomId);
+        jdbcTemplate.update(QUERY_END_ROOM, (ps) -> {
+            ps.setString(2, roomId);
+        });
     }
 }

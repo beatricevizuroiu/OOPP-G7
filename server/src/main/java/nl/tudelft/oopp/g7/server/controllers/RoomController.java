@@ -153,12 +153,49 @@ public class RoomController {
     }
 
     /**
-     * Endpoint to change the Speed of a Room.
-     * @param roomId The id of the Room to edit the Speed of.
-     * @param speedAlterRequest A request containing a Speed integer by which to edit the Speed.
-     * @return A {@link ResponseEntity} containing a {@link HttpStatus} that is one of BAD_REQUEST (400),
-     *      NOT_FOUND (404), INTERNAL_SERVER_ERROR (500) or OK (200)
+     * Close the currently running poll.
+     * @param roomId The id of the room to close the poll in.
+     * @param roomCloseRequest The {@link PollCloseRequest} to close the poll from.
+     * @param authorization The authorization header.
+     * @param request The {@link HttpServletRequest} associated with the Http request.
+     * @return A {@link ResponseEntity} containing the http status code indicating whether the request completed
+     *          successfully or if there was an error.
      */
+    @PostMapping("/{room_id}/close")
+    public ResponseEntity<Void> closeRoom(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                          @RequestBody @NotNull roomCloseRequest roomCloseRequest,
+                                          @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
+                                          HttpServletRequest request) {
+
+//        authorizationHelper.checkAuthorization(
+//                roomId,
+//                authorization,
+//                request.getRemoteAddr(),
+//                new All(
+//                        new BelongsToRoom(),
+//                        new NotBanned(),
+//                        new IsModerator()
+//                ));
+//
+//
+//        RoomJoinInfo mostRecentPoll = pollRepository.getMostRecentPollInRoom(roomId);
+//
+//        if (mostRecentPoll == null) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//
+//        pollRepository.endPoll(roomId, mostRecentPoll.getId(), pollCloseRequest.isPublishResults());
+//
+//        return new ResponseEntity<>(HttpStatus.OK);
+
+
+        /**
+         * Endpoint to change the Speed of a Room.
+         * @param roomId The id of the Room to edit the Speed of.
+         * @param speedAlterRequest A request containing a Speed integer by which to edit the Speed.
+         * @return A {@link ResponseEntity} containing a {@link HttpStatus} that is one of BAD_REQUEST (400),
+         *      NOT_FOUND (404), INTERNAL_SERVER_ERROR (500) or OK (200)
+         */
     @PostMapping("/{room_id}/speed")
     public ResponseEntity<Void> setRoomSpeed(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
                                              @RequestBody @NotNull @Valid SpeedAlterRequest speedAlterRequest,

@@ -144,6 +144,25 @@ public class RoomControllerTest {
     }
 
     @Test
+    void closeRoom() {
+        ResponseEntity<Void> response = roomController.closeRoom(TEST_ROOM_ID, new PollCloseRequest(true), AUTHORIZATION_MODERATOR, request_mod);
+
+        // Check if the request completed successfully.
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+//        RoomJoinInfo actual = roomController.getPoll(TEST_ROOM_ID, AUTHORIZATION_STUDENT, request_stud).getBody();
+//
+//        PollOption[] options = new PollOption[3];
+//        options[0] = new PollOption(1, "Option 1", 0);
+//        options[1] = new PollOption(2, "Option 2", 0);
+//        options[2] = new PollOption(3, "Option 3", 0);
+//
+//        PollInfo expected = new PollInfo(1, "Poll question", false, true, options);
+//
+//        assertEquals(expected, actual);
+//    }
+
+    @Test
     void speedUpTest() {
         ResponseEntity<Void> response = roomController.setRoomSpeed(TEST_ROOM_ID, new SpeedAlterRequest(1), AUTHORIZATION_STUDENT, request_stud);
 
