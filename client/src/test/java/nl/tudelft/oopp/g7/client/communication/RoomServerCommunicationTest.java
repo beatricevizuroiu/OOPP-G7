@@ -34,7 +34,6 @@ public class RoomServerCommunicationTest {
     @AfterAll
     static void stopServer() {
         mockServer.stop();
-        while (!mockServer.hasStopped(3,100L, TimeUnit.MILLISECONDS)){}
     }
 
     @Test
@@ -44,7 +43,7 @@ public class RoomServerCommunicationTest {
 
         NewRoom newRoom = new NewRoom("Test Room", "s", "m", new Date(0));
 
-        Room expectedRoom = new Room("1", "s", "m", "Test Room", true, false, new Date(0));
+        Room expectedRoom = new Room("1", "s", "m", "Test Room", false, new Date(0));
 
         Room room = RoomServerCommunication.createRoom(newRoom);
 
