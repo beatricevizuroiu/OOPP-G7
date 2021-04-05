@@ -15,7 +15,6 @@ CREATE TABLE IF NOT EXISTS rooms (
     studentPassword varchar(32) DEFAULT '' not NULL,
     moderatorPassword varchar(32) not NULL,
     name text not NULL,
-    open boolean DEFAULT FALSE not NULL,
     over boolean DEFAULT FALSE not NULL,
     startDate timestamp with time zone not NULL,
     speed int DEFAULT 0 not NULL
@@ -103,8 +102,8 @@ CREATE TABLE IF NOT EXISTS speeds(
 );
 
 -- Setup rooms.
-INSERT INTO rooms (id, studentPassword, moderatorPassword, name, open, over, startDate)
-VALUES ('SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH', '', 'NQj7RWvT4yQKUJsE', 'Test room', false, false, '1970-01-01 00:00:00+00:00');
+INSERT INTO rooms (id, studentPassword, moderatorPassword, name, over, startDate)
+VALUES ('SIfhfCMwN6np3WcMW27ka4hAwBtS1pRVetvH', '', 'NQj7RWvT4yQKUJsE', 'Test room', false, '1970-01-01 00:00:00+00:00');
 
 -- Setup users.
 INSERT INTO users (ID, ROOMID, NICKNAME, IP, USERROLE, TOKEN)

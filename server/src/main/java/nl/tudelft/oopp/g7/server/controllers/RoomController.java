@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
+import java.util.Date;
 
 @RestController()
 @RequestMapping("/api/v1/room")
@@ -76,8 +77,6 @@ public class RoomController {
                 moderatorPassword,
                 // Use the user supplied name for the room.
                 newRoom.getName(),
-                // Make the room closed by default.
-                false,
                 // Make the room not over by default.
                 false,
                 // Set the start date to the date provided.
@@ -116,7 +115,12 @@ public class RoomController {
         // If there are no rooms with the id.
         if (room == null) {
             // Inform the client that the room does not exist.
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        if (room.getStartDate().after(new Date())) {
+            // Inform the client that the room does not yet exist.
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         if (room.getModeratorPassword().equals(roomJoinRequest.getPassword())) {

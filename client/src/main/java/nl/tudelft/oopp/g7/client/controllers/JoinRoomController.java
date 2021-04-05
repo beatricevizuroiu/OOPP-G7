@@ -58,7 +58,8 @@ public class JoinRoomController {
             if (roomJoinInfo == null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Could not join room.");
-                alert.setContentText("Could not join room.");
+                alert.setHeaderText("Could not join room.");
+                alert.setContentText("It was not possible to join the room specified. The room might not have opened yet.");
 
                 alert.showAndWait();
                 return;
@@ -92,7 +93,8 @@ public class JoinRoomController {
             if (roomJoinInfo == null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Could not join room.");
-                alert.setContentText("Could not join room.");
+                alert.setHeaderText("Could not join room.");
+                alert.setContentText("It was not possible to join the room specified. The room might not have opened yet.");
 
                 alert.showAndWait();
                 return;
