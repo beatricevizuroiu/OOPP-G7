@@ -116,7 +116,6 @@ public class ServerCommunication {
         return questionList;
     }
 
-
     /**
      * Upvote the question with the specified ID.
      * @param roomID ID of the room student belongs
@@ -129,6 +128,20 @@ public class ServerCommunication {
 
         // send the upvote request and return the response
         return HttpMethods.post(uri, "");
+    }
+
+    /**
+     * Delete Upvote of the question with the specified ID.
+     * @param roomID ID of the room student belongs
+     * @param questionID ID of the question
+     * @return A {@link HttpResponse} containing the response received from server.
+     */
+    public static HttpResponse<String> removeUpvoteQuestion(String roomID, int questionID){
+        // add the appropriate end-point
+        URI uri = URI.create(uriBody + roomID + "/question/" + questionID + "/upvote");
+
+        //send the un-upvote request and return the response
+        return HttpMethods.delete(uri);
     }
 
     /**
