@@ -10,10 +10,7 @@ import nl.tudelft.oopp.g7.client.communication.ModeratorServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
-import nl.tudelft.oopp.g7.common.BanReason;
-import nl.tudelft.oopp.g7.common.ExportQuestion;
-import nl.tudelft.oopp.g7.common.Question;
-import nl.tudelft.oopp.g7.common.QuestionText;
+import nl.tudelft.oopp.g7.common.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -114,7 +111,7 @@ public class ModeratorViewLogic {
     public static void answerQuestion(String roomID, Question question, TextArea textArea, Button answerButton, VBox questionContainer, ScrollPane questionList){
         answerButton.setOnAction((event) -> {
             // send the edit request
-            ModeratorServerCommunication.answerQuestion(roomID, question.getId(), new QuestionText(textArea.getText()));
+            ModeratorServerCommunication.answerQuestion(roomID, question.getId(), new Answer(textArea.getText()));
 
             // de-register action to prevent accidents
             answerButton.setOnAction(null);

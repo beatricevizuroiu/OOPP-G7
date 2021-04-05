@@ -51,6 +51,62 @@ public class MockServerConfigurations {
         return questionList;
     }
 
+    public void createExpectationWithoutBody(String path, String method, int statusCode) {
+        new MockServerClient("localhost", 8080)
+                .when(
+                        request()
+                            .withMethod(method)
+                            .withPath(path)
+                )
+                .respond(
+                        response()
+                            .withStatusCode(statusCode)
+                );
+    }
+
+    public void createExpectationWithRequestBody(String path, String method, String requestBody, int statusCode) {
+        new MockServerClient("localhost", 8080)
+                .when(
+                        request()
+                                .withMethod(method)
+                                .withPath(path)
+                                .withBody(requestBody)
+                )
+                .respond(
+                        response()
+                                .withStatusCode(statusCode)
+                );
+    }
+
+    public void createExpectationWithResponseBody(String path, String method, String responseBody, int statusCode) {
+        new MockServerClient("localhost", 8080)
+                .when(
+                        request()
+                                .withMethod(method)
+                                .withPath(path)
+                )
+                .respond(
+                        response()
+                                .withStatusCode(statusCode)
+                                .withBody(responseBody)
+                );
+    }
+
+    public void createExpectationWithBothBodies(String path, String method, String requestBody, String responseBody, int statusCode) {
+        new MockServerClient("localhost", 8080)
+                .when(
+                        request()
+                                .withMethod(method)
+                                .withPath(path)
+                                .withBody(responseBody)
+                )
+                .respond(
+                        response()
+                                .withStatusCode(statusCode)
+                                .withBody(responseBody)
+                );
+    }
+
     /**
      * Create expectation all.
      */
@@ -312,7 +368,7 @@ public class MockServerConfigurations {
      * @param questionID the question id
      */
     public void createExpectationAnswerQuestionWorks(int questionID) {
-        QuestionText answer = new QuestionText("This is an answer.");
+        Answer answer = new Answer("This is an answer.");
 
         new MockServerClient("localhost", 8080)
                 .when(
@@ -331,7 +387,7 @@ public class MockServerConfigurations {
      * Create expectation answer question not works.
      */
     public void createExpectationAnswerQuestionNotWorks() {
-        QuestionText answer = new QuestionText("This is an answer.");
+        Answer answer = new Answer("This is an answer.");
 
         new MockServerClient("localhost", 8080)
                 .when(

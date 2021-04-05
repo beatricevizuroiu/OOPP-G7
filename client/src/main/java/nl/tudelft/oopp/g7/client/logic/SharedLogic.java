@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Text;
+import nl.tudelft.oopp.g7.client.communication.ModeratorServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.UserInfo;
@@ -55,6 +56,10 @@ public class SharedLogic {
                 deleteBtn.setVisible(true);
             }
         } else { // no upvoteBtn in mod view
+            // set mark as answered button
+            Button markAsAnsweredButton = (Button) questionNode.lookup("#MarkAsAnsweredBtn");
+            markAsAnsweredButton.setOnAction((event) -> ModeratorServerCommunication.markAsAnswered(roomID, question.getId()));
+
             // set reply button
             Button replyButton = (Button) questionNode.lookup("#QuestionReplyBtn");
             replyButton.setOnAction((event) -> ModeratorViewLogic.answerQuestion(roomID, question, textArea, answerButton, questionContainer, questionList));

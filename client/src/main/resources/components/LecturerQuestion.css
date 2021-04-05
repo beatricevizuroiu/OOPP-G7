@@ -27,12 +27,13 @@
     -fx-font-size: 19px;
 }
 
-#QuestionReplyBtn {
+
+.LecturerQuestionBtn {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
 }
 
-#QuestionReplyBtn:active {
+.LecturerQuestionBtn:active {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-fill: purple;
