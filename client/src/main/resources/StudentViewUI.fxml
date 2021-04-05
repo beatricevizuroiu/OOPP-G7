@@ -12,21 +12,17 @@
         <ColumnConstraints hgrow="NEVER" minWidth="128.0" />
         <ColumnConstraints hgrow="SOMETIMES" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" />
-      <ColumnConstraints />
+        <ColumnConstraints />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints minHeight="75.0" vgrow="NEVER" />
         <RowConstraints vgrow="SOMETIMES" />
         <RowConstraints maxHeight="95.0" vgrow="SOMETIMES" />
-      <RowConstraints />
+        <RowConstraints />
     </rowConstraints>
 
     <HBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
-        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" Course Name">
-            <font>
-                <Font name="Book Antiqua Bold" size="36.0" />
-            </font>
-        </Text>
+        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" Course Name"/>
     </HBox>
 
     <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="3" />
@@ -50,17 +46,9 @@
         </VBox>
     </ScrollPane>
 
-    <TextArea fx:id="answerBox" prefHeight="91.0" prefWidth="886.0" promptText="Type your question here" GridPane.columnIndex="1" GridPane.rowIndex="3">
-        <font>
-            <Font name="Book Antiqua" size="21.0" />
-        </font>
-    </TextArea>
+    <TextArea fx:id="answerBox" prefHeight="91.0" prefWidth="886.0" promptText="Type your question here" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-    <Button fx:id="postQuestionButton" mnemonicParsing="false" onAction="#sendQuestion" styleClass="post-button" text="Post Question" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="3">
-        <font>
-            <Font name="Book Antiqua Bold" size="15.0" />
-        </font>
-    </Button>
+    <Button fx:id="postQuestionButton" mnemonicParsing="false" onAction="#sendQuestion" styleClass="post-button" text="Post Question" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
 
     <!--    Main Buttons    -->
     <Button mnemonicParsing="false" onAction="#handleButtonMode" text="Mode" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
@@ -125,7 +113,7 @@
             <SVGPath content="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" styleClass="link-button" />
         </graphic>
         <GridPane.margin>
-            <Insets />
+            <Insets/>
         </GridPane.margin>
     </Button>
 

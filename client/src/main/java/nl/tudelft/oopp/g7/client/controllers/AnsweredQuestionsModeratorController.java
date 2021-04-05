@@ -32,7 +32,8 @@ public class AnsweredQuestionsModeratorController {
     /**
      * Startup routine.
      */
-    public AnsweredQuestionsModeratorController() {
+    @FXML
+    public void initialize() {
         // Start a timer and create a separate thread on it to automatically call retrieveQuestions()
         Timer timer = new Timer(true);
 

@@ -21,11 +21,7 @@
     </rowConstraints>
 
     <HBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
-        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" Course Name">
-            <font>
-                <Font name="Book Antiqua Bold" size="36.0" />
-            </font>
-        </Text>
+        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" Course Name"/>
     </HBox>
 
     <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2" />
@@ -46,6 +42,10 @@
         </padding>
         <VBox fx:id="questionContainer" spacing="20" />
     </ScrollPane>
+
+    <TextArea fx:id="answerBox" prefHeight="95.0" prefWidth="885.0" promptText="Type your answer here" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+    <Button fx:id="postAnswerButton" mnemonicParsing="false" styleClass="post-button" text="Post Answer" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
 
     <!--    Main Buttons    -->
     <Button mnemonicParsing="false" onAction="#handleButtonMode" text="Mode" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">

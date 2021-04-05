@@ -53,14 +53,6 @@ public class ModeratorServerCommunication {
         return HttpMethods.post(uri, body);
     }
 
-    public static HttpResponse<String> editQuestion(String roomID, int questionID, QuestionText questionText) {
-        return ServerCommunication.editQuestion(roomID, questionID, questionText);
-    }
-
-    public static HttpResponse<String> deleteQuestion(String roomID, int questionID) {
-        return ServerCommunication.deleteQuestion(roomID, questionID);
-    }
-
     public static HttpResponse<String> markAsAnswered(String roomID, int questionID) {
         return answerQuestion(roomID, questionID, new QuestionText(""));
     }

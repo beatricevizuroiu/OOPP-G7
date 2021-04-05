@@ -6,7 +6,6 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<HBox id="question"
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
@@ -16,9 +15,7 @@
 <?import javafx.geometry.Insets?>
 <HBox xmlns="http://javafx.com/javafx"
       stylesheets="@StudentQuestion(DARKMODE).css"
-      id="question"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="nl.tudelft.oopp.g7.client.controllers.StudentViewUIController">
+      id="question">
         <padding>
                 <Insets>
                         <top>15</top>
@@ -48,18 +45,21 @@
                 </padding>
                 <Text text="User asks" id="QuestionAuthor" styleClass="questionAsks" />
                 <VBox spacing="20">
-                        <Text id="QuestionText" styleClass="questionText" />
+                        <TextFlow>
+                            <Text id="QuestionText" styleClass="questionText"/>
+                        </TextFlow>
                         <VBox id="QuestionAnswerBox">
                                 <Text text="Answer:" />
                                 <Text id="QuestionAnswer" styleClass="questionAnswer" />
                         </VBox>
                 </VBox>
         </VBox>
-        <FlowPane alignment="BOTTOM_RIGHT" xmlns:fx="http://javafx.com/fxml/1" >
+        <Region HBox.hgrow="ALWAYS"/>
+        <FlowPane alignment="BOTTOM_RIGHT">
                 <VBox>
-                        <Button id="StudentDeleteBtn" styleClass="delete" onAction="#deleteQuestion">
+                        <Button id="StudentDeleteBtn" styleClass="delete">
                                 <graphic>
-                                        <SVGPath content="M20.25 1.49983H14.625L14.1844 0.623263C14.091 0.435863 13.9473 0.278226 13.7692 0.168087C13.5912 0.0579474 13.3859 -0.000325041 13.1766 -0.000174887H7.81875C7.60987 -0.000977881 7.40498 0.0570773 7.22756 0.167339C7.05015 0.277601 6.90739 0.43561 6.81562 0.623263L6.375 1.49983H0.75C0.551088 1.49983 0.360322 1.57884 0.21967 1.7195C0.0790176 1.86015 0 2.05091 0 2.24983L0 3.74983C0 3.94874 0.0790176 4.1395 0.21967 4.28016C0.360322 4.42081 0.551088 4.49983 0.75 4.49983H20.25C20.4489 4.49983 20.6397 4.42081 20.7803 4.28016C20.921 4.1395 21 3.94874 21 3.74983V2.24983C21 2.05091 20.921 1.86015 20.7803 1.7195C20.6397 1.57884 20.4489 1.49983 20.25 1.49983ZM2.49375 21.8904C2.52952 22.4617 2.78164 22.9978 3.19878 23.3897C3.61591 23.7816 4.16672 23.9998 4.73906 23.9998H16.2609C16.8333 23.9998 17.3841 23.7816 17.8012 23.3897C18.2184 22.9978 18.4705 22.4617 18.5062 21.8904L19.5 5.99982H1.5L2.49375 21.8904Z"  />
+                                        <SVGPath content="M20.25 1.49983H14.625L14.1844 0.623263C14.091 0.435863 13.9473 0.278226 13.7692 0.168087C13.5912 0.0579474 13.3859 -0.000325041 13.1766 -0.000174887H7.81875C7.60987 -0.000977881 7.40498 0.0570773 7.22756 0.167339C7.05015 0.277601 6.90739 0.43561 6.81562 0.623263L6.375 1.49983H0.75C0.551088 1.49983 0.360322 1.57884 0.21967 1.7195C0.0790176 1.86015 0 2.05091 0 2.24983L0 3.74983C0 3.94874 0.0790176 4.1395 0.21967 4.28016C0.360322 4.42081 0.551088 4.49983 0.75 4.49983H20.25C20.4489 4.49983 20.6397 4.42081 20.7803 4.28016C20.921 4.1395 21 3.94874 21 3.74983V2.24983C21 2.05091 20.921 1.86015 20.7803 1.7195C20.6397 1.57884 20.4489 1.49983 20.25 1.49983ZM2.49375 21.8904C2.52952 22.4617 2.78164 22.9978 3.19878 23.3897C3.61591 23.7816 4.16672 23.9998 4.73906 23.9998H16.2609C16.8333 23.9998 17.3841 23.7816 17.8012 23.3897C18.2184 22.9978 18.4705 22.4617 18.5062 21.8904L19.5 5.99982H1.5L2.49375 21.8904Z"/>
                                 </graphic>
                         </Button>
                 </VBox>

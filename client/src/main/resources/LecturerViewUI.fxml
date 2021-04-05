@@ -62,19 +62,11 @@
         </VBox>
     </ScrollPane>
 
-    <TextArea fx:id="answerBox" prefHeight="95.0" prefWidth="885.0" promptText="Type your answer here" GridPane.columnIndex="1" GridPane.rowIndex="2">
-        <font>
-            <Font name="Book Antiqua" size="21.0" />
-        </font>
-    </TextArea>
+    <TextArea fx:id="answerBox" prefHeight="95.0" prefWidth="885.0" promptText="Type your answer here" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-    <Button fx:id="postAnswerButton" mnemonicParsing="false" styleClass="post-button" text="Post Answer" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2">
-        <font>
-            <Font name="Book Antiqua Bold" size="15.0" />
-        </font>
-    </Button>
+    <Button fx:id="postAnswerButton" mnemonicParsing="false" styleClass="post-button" text="Post Answer" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
 
-<!--    Main Buttons    -->
+    <!--    Main Buttons    -->
       <Button mnemonicParsing="false" onAction="#handleButtonMode" text="Mode" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
           <graphic>
               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">

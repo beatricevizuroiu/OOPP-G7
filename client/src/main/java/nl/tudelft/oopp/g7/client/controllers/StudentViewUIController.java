@@ -51,7 +51,12 @@ public class StudentViewUIController {
     public StudentViewUIController() {
         roomID = LocalData.getRoomID();
         nickname = LocalData.getNickname();
+    }
 
+    /**
+     * Start-up routine.
+     */
+    public void initialize() {
         // Start a timer and create a separate thread on it to automatically call retrieveQuestions()
         Timer timer = new Timer(true);
 
@@ -61,7 +66,7 @@ public class StudentViewUIController {
             public void run() {
                 Platform.runLater(reference::retrieveQuestions);
             }
-        }, 0L, 500L);
+        }, 0L, 5000L);
     }
 
     /**

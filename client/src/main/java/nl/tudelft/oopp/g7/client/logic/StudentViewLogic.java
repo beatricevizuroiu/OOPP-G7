@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -44,6 +45,8 @@ public class StudentViewLogic {
                         questionNodes,
                         componentName,
                         question,
+                        null,
+                        null,
                         questionContainer,
                         questionList
                 );
@@ -75,8 +78,8 @@ public class StudentViewLogic {
      * @param questionContainer VBox containing the UI elements.
      * @param questionList ScrollPane containing the whole list of questions.
      */
-    public static void deleteQuestion(String roomID, int questionId, VBox questionContainer, ScrollPane questionList) {
+    public static void deleteQuestionStudent(String roomID, int questionId, VBox questionContainer, ScrollPane questionList) {
         ServerCommunication.deleteQuestion(roomID, questionId);
-        retrieveAllQuestions(roomID, questionContainer, questionList);
+        StudentViewLogic.retrieveAllQuestions(roomID, questionContainer, questionList);
     }
 }
