@@ -146,7 +146,7 @@ public class HelpFileController {
      *
      * @param event the event
      */
-    public void handleButtonModeLecturer(ActionEvent event) {
+    public void handleButtonModeLecturerDark(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -159,7 +159,7 @@ public class HelpFileController {
      *
      * @param event the event
      */
-    public void handleButtonModeLecturerDark(ActionEvent event) {
+    public void handleButtonModeLecturer(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
