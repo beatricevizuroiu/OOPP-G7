@@ -28,7 +28,7 @@
     -fx-font-size: 19px;
 }
 
-#delete {
+#StudentDeleteBtn {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
 }
@@ -37,3 +37,4 @@
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-fill: purple;
+}

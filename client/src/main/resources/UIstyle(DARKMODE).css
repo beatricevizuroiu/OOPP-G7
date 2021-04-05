@@ -42,6 +42,7 @@ root {
 .course-panel {
     -fx-background-color: #360A41;
     -fx-pref-height: 75;
+    -fx-font-size: 36;
 }
 
 .side-panel {

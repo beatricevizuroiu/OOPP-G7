@@ -203,13 +203,6 @@ public class ServerCommunication {
         URI uri = URI.create(uriBody + roomID + "/question/" + questionID);
 
         // delete the question and store the response
-        // appropriate code handling is done within the method
-        // FIXME: we could do the code handling in these methods
         return HttpMethods.delete(uri);
-    }
-
-    public static HttpResponse<String> answerQuestion(String roomID, int questionID, QuestionText answer) {
-        //TODO
-        return null;
     }
 }

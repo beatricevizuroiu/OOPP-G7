@@ -4,7 +4,9 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
@@ -27,6 +29,10 @@ public class LecturerViewController {
     public ScrollPane questionList;
     @FXML
     private VBox questionContainer;
+    @FXML
+    private TextArea answerBox;
+    @FXML
+    private Button postAnswerButton;
 
     /**
      * The constructor for LecturerViewController.
@@ -36,9 +42,12 @@ public class LecturerViewController {
         nickname = LocalData.getNickname();
         moderatorPassword = LocalData.getModeratorPassword();
         studentPassword = LocalData.getStudentPassword();
+    }
 
-        System.out.println(roomID);
-
+    /**
+     * Start-up routine.
+     */
+    public void initialize(){
         // Start a timer and create a separate thread on it to automatically call retrieveQuestions()
         Timer timer = new Timer(true);
 
@@ -48,7 +57,7 @@ public class LecturerViewController {
             public void run() {
                 Platform.runLater(reference::retrieveQuestions);
             }
-        }, 0L, 500L);
+        }, 0L, 5000L);
     }
 
     /**
@@ -56,7 +65,14 @@ public class LecturerViewController {
      */
     public void retrieveQuestions() {
         // Retrieve all of the questions and then put them into question pane
-        ModeratorViewLogic.retrieveAllQuestions(roomID, questionContainer, questionList);
+        ModeratorViewLogic.retrieveAllQuestions(roomID, answerBox, postAnswerButton, questionContainer, questionList);
+    }
+
+    /**
+     * Display link and passwords.
+     */
+    public void displayLinkAndPassword() {
+        ModeratorViewLogic.displayLinkAndPasswords();
     }
 
 

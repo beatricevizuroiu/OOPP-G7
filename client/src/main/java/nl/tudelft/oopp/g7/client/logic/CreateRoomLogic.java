@@ -26,11 +26,13 @@ public class CreateRoomLogic {
         alert.setTitle("Create Room");
         alert.setHeaderText(null);
 
-        // body of pop-up with what the user entered
-        alert.setContentText("You are creating the room for Course: " + roomName.getText()
-                + " held by lecturer: "
-                + lecturerName.getText()
-                + ".");
+//      body of pop-up with what the user entered
+        alert.setContentText(String.format("""
+                        You are creating the room for the Course: "%s"
+                        This course is held by the lecturer: "%s".""",
+                roomName.getText(), lecturerName.getText()));
+
+        alert.getDialogPane().setPrefHeight(150);
 
         // set types of buttons for the pop-up
         ButtonType okButton = new ButtonType ("OK");

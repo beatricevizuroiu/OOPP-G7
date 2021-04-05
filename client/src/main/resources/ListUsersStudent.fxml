@@ -27,11 +27,7 @@
     <HBox styleClass="course-panel"
           GridPane.columnIndex="0" GridPane.rowIndex="0"
           GridPane.columnSpan="4">
-        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" Course Name">
-            <font>
-                <Font name="Book Antiqua Bold" size="36.0"/>
-            </font>
-        </Text>
+        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" Course Name"/>
     </HBox>
 
     <SplitPane styleClass="side-panel"

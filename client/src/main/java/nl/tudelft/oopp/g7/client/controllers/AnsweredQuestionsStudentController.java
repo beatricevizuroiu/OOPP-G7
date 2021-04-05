@@ -33,7 +33,8 @@ public class AnsweredQuestionsStudentController {
     /**
      * Start a timer and create a separate thread on it to automatically refresh answered question list.
      */
-    public AnsweredQuestionsStudentController() {
+    @FXML
+    public void initialize() {
         Timer timer = new Timer(true);
 
         AnsweredQuestionsStudentController reference = this;
@@ -46,6 +47,9 @@ public class AnsweredQuestionsStudentController {
     }
 
 
+    /**
+     * Retrieves all questions.
+     */
     public void retrieveQuestions() {
         AnsweredQuestionsLogic.retrieveAllAnsweredQuestions(answeredQuestionContainer, answeredQuestionList);
     }

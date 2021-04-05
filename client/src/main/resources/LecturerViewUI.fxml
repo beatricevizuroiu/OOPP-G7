@@ -66,31 +66,20 @@
         </VBox>
     </ScrollPane>
 
-    <TextArea fx:id="answerBox" prefHeight="95.0" prefWidth="885.0" promptText="Type your answer here"
-              GridPane.columnIndex="1" GridPane.rowIndex="2">
-        <font>
-            <Font name="Book Antiqua" size="21.0"/>
-        </font>
-    </TextArea>
+    <TextArea fx:id="answerBox" prefHeight="95.0" prefWidth="885.0" promptText="Type your answer here" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-    <Button fx:id="postAnswerButton" mnemonicParsing="false" styleClass="post-button" text="Post Answer"
-            textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2">
-        <font>
-            <Font name="Book Antiqua Bold" size="15.0"/>
-        </font>
-    </Button>
+    <Button fx:id="postAnswerButton" mnemonicParsing="false" styleClass="post-button" text="Post Answer" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
 
     <!--    Main Buttons    -->
-    <Button mnemonicParsing="false" onAction="#handleButtonMode" text="Mode" GridPane.halignment="CENTER"
-            GridPane.rowIndex="1" GridPane.valignment="CENTER">
-        <graphic>
-            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@sun (1).png"/>
-                </image>
-            </ImageView>
-        </graphic>
-    </Button>
+      <Button mnemonicParsing="false" onAction="#handleButtonMode" text="Mode" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+          <graphic>
+              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                      <Image url="@sun (1).png" />
+                  </image>
+              </ImageView>
+          </graphic>
+      </Button>
 
     <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonLight" styleClass="help-button"
             textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2"/>
@@ -131,8 +120,12 @@
         </graphic>
     </Button>
 
+<<<<<<< HEAD
     <Button id="link" mnemonicParsing="false" onAction="#createLink" styleClass="upvoteBtn" GridPane.columnIndex="2"
             GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+=======
+    <Button id="link" mnemonicParsing="false" onAction="#displayLinkAndPassword" styleClass="upvoteBtn" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+>>>>>>> update/last_week_Mehmet_edits
         <graphic>
             <SVGPath
                     content="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"

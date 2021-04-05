@@ -11,24 +11,20 @@
           xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="nl.tudelft.oopp.g7.client.controllers.StudentViewUIController">
     <columnConstraints>
-        <ColumnConstraints hgrow="NEVER" minWidth="128.0"/>
-        <ColumnConstraints hgrow="SOMETIMES"/>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0"/>
-        <ColumnConstraints/>
+        <ColumnConstraints hgrow="NEVER" minWidth="128.0" />
+        <ColumnConstraints hgrow="SOMETIMES" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" />
+        <ColumnConstraints />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints minHeight="75.0" vgrow="NEVER"/>
-        <RowConstraints vgrow="SOMETIMES"/>
-        <RowConstraints maxHeight="95.0" vgrow="SOMETIMES"/>
-        <RowConstraints/>
+        <RowConstraints minHeight="75.0" vgrow="NEVER" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="95.0" vgrow="SOMETIMES" />
+        <RowConstraints />
     </rowConstraints>
 
     <HBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
-        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="  RaisedHand">
-            <font>
-                <Font name="Book Antiqua Bold" size="36.0"/>
-            </font>
-        </Text>
+        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" Course Name"/>
     </HBox>
 
     <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="3"/>
@@ -53,6 +49,7 @@
         </VBox>
     </ScrollPane>
 
+<<<<<<< HEAD
     <TextArea fx:id="answerBox" prefHeight="91.0" prefWidth="886.0" promptText="Type your question here"
               GridPane.columnIndex="1" GridPane.rowIndex="3">
         <font>
@@ -66,6 +63,11 @@
             <Font name="Book Antiqua Bold" size="15.0"/>
         </font>
     </Button>
+=======
+    <TextArea fx:id="answerBox" prefHeight="91.0" prefWidth="886.0" promptText="Type your question here" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+    <Button fx:id="postQuestionButton" mnemonicParsing="false" onAction="#sendQuestion" styleClass="post-button" text="Post Question" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+>>>>>>> update/last_week_Mehmet_edits
 
     <!--    Main Buttons    -->
     <Button mnemonicParsing="false" onAction="#handleButtonMode" text="Mode" GridPane.halignment="CENTER"
