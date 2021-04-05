@@ -22,7 +22,7 @@ public class ModeratorServerCommunication {
      */
     public static List<Question> retrieveAllQuestions(String roomID) {
         // retrieve the question list from server
-        List<Question> questions = ServerCommunication.retrieveAllQuestions(roomID);
+        List<Question> questions = ServerCommunication.retrieveAllUnansweredQuestions(roomID);
 
         if (LocalData.getSortingOrder() == SortingOrder.UPVOTES) {
             // sort the questions based on number of upvotes and return the list

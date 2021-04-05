@@ -50,7 +50,7 @@ public class AnsweredQuestionsModeratorController {
      * Retrieve Questions.
      */
     public void retrieveQuestions() {
-        AnsweredQuestionsLogic.retrieveAllAnsweredQuestions(answeredQuestionContainer, answeredQuestionList);
+        AnsweredQuestionsLogic.retrieveAllAnsweredQuestions(false, answeredQuestionContainer, answeredQuestionList);
     }
 
     /**

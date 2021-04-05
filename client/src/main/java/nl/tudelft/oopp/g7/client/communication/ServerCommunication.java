@@ -9,6 +9,7 @@ import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.stream.Collectors;
 
 // Class for generalizing methods.
 public class ServerCommunication {
@@ -75,6 +76,17 @@ public class ServerCommunication {
 
         // parse JSON array into Question List
         return gson.fromJson(questions, questionListType);
+    }
+
+    /**
+     * Retrieves all unanswered questions from the server.
+     * @param roomID ID of the room student belongs
+     * @return a {@link List} of Questions that includes all unanswered questions on server
+     */
+    public static List<Question> retrieveAllUnansweredQuestions(String roomID) {
+        List<Question> questionList = retrieveAllQuestions(roomID);
+
+        return questionList.stream().filter((question) -> !question.isAnswered()).collect(Collectors.toList());
     }
 
     /**

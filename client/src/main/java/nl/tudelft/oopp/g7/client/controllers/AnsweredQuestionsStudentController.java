@@ -51,7 +51,7 @@ public class AnsweredQuestionsStudentController {
      * Retrieves all questions.
      */
     public void retrieveQuestions() {
-        AnsweredQuestionsLogic.retrieveAllAnsweredQuestions(answeredQuestionContainer, answeredQuestionList);
+        AnsweredQuestionsLogic.retrieveAllAnsweredQuestions(true, answeredQuestionContainer, answeredQuestionList);
     }
 
     /**

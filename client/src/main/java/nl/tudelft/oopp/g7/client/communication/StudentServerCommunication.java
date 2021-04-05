@@ -39,7 +39,7 @@ public class StudentServerCommunication {
      */
     public static List<Question> retrieveAllQuestions(String roomID) {
         // retrieve the question list from server
-        List<Question> questions = ServerCommunication.retrieveAllQuestions(roomID);
+        List<Question> questions = ServerCommunication.retrieveAllUnansweredQuestions(roomID);
 
         if (LocalData.getSortingOrder() == SortingOrder.NEW) {
             // sort the questions based on most recent and return the list

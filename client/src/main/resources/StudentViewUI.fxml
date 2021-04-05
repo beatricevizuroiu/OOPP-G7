@@ -49,25 +49,9 @@
         </VBox>
     </ScrollPane>
 
-<<<<<<< HEAD
-    <TextArea fx:id="answerBox" prefHeight="91.0" prefWidth="886.0" promptText="Type your question here"
-              GridPane.columnIndex="1" GridPane.rowIndex="3">
-        <font>
-            <Font name="Book Antiqua" size="21.0"/>
-        </font>
-    </TextArea>
-
-    <Button fx:id="postQuestionButton" mnemonicParsing="false" onAction="#sendQuestion" styleClass="post-button"
-            text="Post Question" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="3">
-        <font>
-            <Font name="Book Antiqua Bold" size="15.0"/>
-        </font>
-    </Button>
-=======
     <TextArea fx:id="answerBox" prefHeight="91.0" prefWidth="886.0" promptText="Type your question here" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
     <Button fx:id="postQuestionButton" mnemonicParsing="false" onAction="#sendQuestion" styleClass="post-button" text="Post Question" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
->>>>>>> update/last_week_Mehmet_edits
 
     <!--    Main Buttons    -->
     <Button mnemonicParsing="false" onAction="#handleButtonMode" text="Mode" GridPane.halignment="CENTER"
