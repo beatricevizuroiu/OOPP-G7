@@ -53,11 +53,6 @@ public class SharedLogic {
             );
         }
 
-        if(LocalData.upvotedQuestions.contains(question.getId()) && upvoteBtn.isArmed()){
-            upvoteBtn.setOnAction((event) -> StudentViewLogic.removeUpvoteQuestion(roomID, question.getId(), questionContainer, questionList));
-            LocalData.upvotedQuestions.remove(question.getId());
-        }
-
         upvoteCount.setText(Integer.toString(Math.min(question.getUpvotes(), 999)));
         body.setText(question.getText());
 
