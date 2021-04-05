@@ -27,3 +27,13 @@
 .questionText {
     -fx-font-size: 19px;
 }
+
+#delete {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+#delete:active {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-fill: purple;

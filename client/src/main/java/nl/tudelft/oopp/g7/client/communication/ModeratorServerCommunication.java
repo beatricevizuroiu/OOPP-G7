@@ -57,6 +57,10 @@ public class ModeratorServerCommunication {
         return ServerCommunication.editQuestion(roomID, questionID, questionText);
     }
 
+    public static HttpResponse<String> deleteQuestion(String roomID, int questionID) {
+        return ServerCommunication.deleteQuestion(roomID, questionID);
+    }
+
     public static HttpResponse<String> markAsAnswered(String roomID, int questionID) {
         return answerQuestion(roomID, questionID, new QuestionText(""));
     }

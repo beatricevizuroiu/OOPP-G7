@@ -69,6 +69,10 @@ public class StudentServerCommunication {
         return HttpMethods.post(uri, body);
     }
 
+    public static HttpResponse<String> deleteQuestion(String roomID, int questionID) {
+        return ServerCommunication.deleteQuestion(roomID, questionID);
+    }
+
     /**
      * Try to retrieve a poll.
      * @param roomId The roomId to retrieve a Poll from.

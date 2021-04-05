@@ -126,6 +126,11 @@
         </graphic>
     </Button>
 
+    <Button fx:id="helpButtonD" mnemonicParsing="false" onAction="#handleHelpButtonDark" styleClass="upvoteBtn"
+            textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2"/>
+
+    <FlowPane alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.columnSpan="2">
+
     <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionListDark" styleClass="upvoteBtn" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="0">
         <graphic>
             <SVGPath
@@ -146,6 +151,10 @@
         </GridPane.margin>
     </Button>
 
-    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonLight" styleClass="help-button" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+
+    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonLight" styleClass="help-button"
+            textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2"/>
+    <!--    <Button fx:id="mode" mnemonicParsing="false" onAction="#handleButtonMode" styleClass="mode-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />-->
+
 
 </GridPane>

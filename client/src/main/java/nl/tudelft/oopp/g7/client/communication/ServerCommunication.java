@@ -207,4 +207,9 @@ public class ServerCommunication {
         // FIXME: we could do the code handling in these methods
         return HttpMethods.delete(uri);
     }
+
+    public static HttpResponse<String> answerQuestion(String roomID, int questionID, QuestionText answer) {
+        //TODO
+        return null;
+    }
 }

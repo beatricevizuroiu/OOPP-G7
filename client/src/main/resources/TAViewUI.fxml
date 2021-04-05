@@ -59,8 +59,9 @@
     <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonLight" styleClass="help-button"
             textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2"/>
 
-    <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionList"
-            styleClass="answered-question-button" GridPane.columnIndex="1" GridPane.rowIndex="0">
+    <FlowPane alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.columnSpan="2">
+
+    <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionList" styleClass="answered-question-button" GridPane.columnIndex="1" GridPane.rowIndex="0">
         <GridPane.margin>
             <Insets left="740.0"/>
         </GridPane.margin>
@@ -101,6 +102,9 @@
             <Insets left="590.0"/>
         </GridPane.margin>
     </Button>
+
+    </FlowPane>
+
 
 
     <!--    <TextArea fx:id="answerBox"-->
