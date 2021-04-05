@@ -7,28 +7,30 @@
 <?import javafx.scene.text.*?>
 
 <?import javafx.geometry.Insets?>
-<GridPane minHeight="500" minWidth="750" stylesheets="@UIstyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.AnsweredQuestionsStudentController">
+<GridPane minHeight="500" minWidth="750" stylesheets="@UIstyle.css" xmlns="http://javafx.com/javafx/11.0.1"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="nl.tudelft.oopp.g7.client.controllers.AnsweredQuestionsStudentController">
     <columnConstraints>
-        <ColumnConstraints hgrow="NEVER" minWidth="128.0" />
-        <ColumnConstraints hgrow="SOMETIMES" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" />
-        <ColumnConstraints />
+        <ColumnConstraints hgrow="NEVER" minWidth="128.0"/>
+        <ColumnConstraints hgrow="SOMETIMES"/>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0"/>
+        <ColumnConstraints/>
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints minHeight="75.0" vgrow="NEVER" />
-        <RowConstraints vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="95.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="75.0" vgrow="NEVER"/>
+        <RowConstraints vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="95.0" vgrow="SOMETIMES"/>
     </rowConstraints>
 
     <HBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" Course Name">
             <font>
-                <Font name="Book Antiqua Bold" size="36.0" />
+                <Font name="Book Antiqua Bold" size="36.0"/>
             </font>
         </Text>
     </HBox>
 
-    <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+    <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2"/>
 
     <ScrollPane fx:id="answeredQuestionList"
                 GridPane.columnIndex="1"
@@ -56,21 +58,25 @@
 
 
     <!--    Main Buttons    -->
-    <Button mnemonicParsing="false" onAction="#handleButtonMode" text="Mode" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+    <Button mnemonicParsing="false" onAction="#handleButtonMode" text="Mode" GridPane.halignment="CENTER"
+            GridPane.rowIndex="1" GridPane.valignment="CENTER">
         <graphic>
             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                 <image>
-                    <Image url="@sun (1).png" />
+                    <Image url="@sun (1).png"/>
                 </image>
             </ImageView>
         </graphic>
     </Button>
 
-    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonLight" styleClass="help-button" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonLight" styleClass="help-button"
+            textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2"/>
 
-    <Button fx:id="goBack" mnemonicParsing="false" onAction="#goBackButtonLight" styleClass="upvoteBtn" GridPane.columnIndex="2" GridPane.rowIndex="0">
+    <Button fx:id="goBack" mnemonicParsing="false" onAction="#goBackButtonLight" styleClass="upvoteBtn"
+            GridPane.columnIndex="2" GridPane.rowIndex="0">
         <graphic>
-            <SVGPath content="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" styleClass="link-button" />
+            <SVGPath content="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                     styleClass="link-button"/>
         </graphic>
     </Button>
 
