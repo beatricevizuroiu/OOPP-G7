@@ -33,18 +33,23 @@
         </HBox>
 
         <TextField id="roomName" fx:id="roomName" alignment="CENTER" prefHeight="60.0"
-                   prefWidth="300.0" promptText="Enter name of Course" styleClass="inputBox"/>
+                   prefWidth="300.0" promptText="Course name" styleClass="inputBox" />
 
         <TextField id="moderatorPassword" fx:id="moderatorPassword" alignment="CENTER"
-                   prefHeight="60.0" prefWidth="300.0" promptText="Enter moderator password (required)"
-                   styleClass="inputBox"/>
+                   prefHeight="60.0" prefWidth="300.0" promptText="Moderator password (required)" styleClass="inputBox" />
 
         <TextField id="studentPassword" fx:id="studentPassword" alignment="CENTER"
-                   prefHeight="60.0" prefWidth="300.0" promptText="Enter student password (optional)"
-                   styleClass="inputBox"/>
+                   prefHeight="60.0" prefWidth="300.0" promptText="Student password (optional)" styleClass="inputBox" />
 
         <TextField id="lecturerName" fx:id="lecturerName" alignment="CENTER"
-                   prefHeight="60.0" prefWidth="300.0" promptText="Enter name of Lecturer" styleClass="inputBox"/>
+                   prefHeight="60.0" prefWidth="300.0" promptText="Lecturer name" styleClass="inputBox" />
+
+        <HBox spacing="10">
+            <DatePicker fx:id="startDate" styleClass="inputBox" />
+            <TextField fx:id="startTime" styleClass="inputBox" />
+        </HBox>
+
+        <CheckBox fx:id="scheduleCheckbox" text="Scheduled?" styleClass="scheduleCheckbox" />
 
         <Button onAction="#buttonClicked2"
                 prefHeight="60.0" prefWidth="300.0" styleClass="buttons" text="Create"/>

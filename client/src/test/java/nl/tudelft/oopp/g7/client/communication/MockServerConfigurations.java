@@ -351,7 +351,7 @@ public class MockServerConfigurations {
      */
     public void createExpectationCreateRoomWorks() {
         NewRoom newRoom = new NewRoom("Test Room", "s", "m", new Date(0));
-        Room room = new Room("1", "s", "m", "Test Room", true, false, new Date(0));
+        Room room = new Room("1", "s", "m", "Test Room", false, new Date(0));
 
         new MockServerClient("localhost", 8080)
                 .when(

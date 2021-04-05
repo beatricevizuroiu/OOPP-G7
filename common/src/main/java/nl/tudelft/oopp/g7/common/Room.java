@@ -21,7 +21,6 @@ public class Room {
     private String moderatorPassword;
     @NotNull @NotEmpty
     private String name;
-    private boolean isOpen;
     private boolean isOver;
     @NotNull
     private Date startDate;
@@ -39,7 +38,6 @@ public class Room {
                     rs.getString("studentPassword"),
                     rs.getString("moderatorPassword"),
                     rs.getString("name"),
-                    rs.getBoolean("open"),
                     rs.getBoolean("over"),
                     new Date(rs.getTimestamp("startDate").getTime())
             );

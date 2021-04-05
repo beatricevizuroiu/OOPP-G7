@@ -3,6 +3,7 @@ package nl.tudelft.oopp.g7.client.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.communication.RoomServerCommunication;
@@ -54,6 +55,16 @@ public class JoinRoomController {
 
             RoomJoinInfo roomJoinInfo = RoomServerCommunication.joinRoom(roomId.getText(), roomPassword.getText(), nickname.getText());
 
+            if (roomJoinInfo == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Could not join room.");
+                alert.setHeaderText("Could not join room.");
+                alert.setContentText("It was not possible to join the room specified. The room might not have opened yet.");
+
+                alert.showAndWait();
+                return;
+            }
+
             // Store all the entered information
             JoinRoomLogic.joinRoomStoreLocalData(nickname, roomId, roomJoinInfo);
 
@@ -79,8 +90,19 @@ public class JoinRoomController {
 
             RoomJoinInfo roomJoinInfo = RoomServerCommunication.joinRoom(roomId.getText(), roomPassword.getText(), nickname.getText());
 
+            if (roomJoinInfo == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Could not join room.");
+                alert.setHeaderText("Could not join room.");
+                alert.setContentText("It was not possible to join the room specified. The room might not have opened yet.");
+
+                alert.showAndWait();
+                return;
+            }
+
             // Store all the entered information
             JoinRoomLogic.joinRoomStoreLocalData(nickname, roomId, roomJoinInfo);
+
 
             Scene scene = EntryRoomDisplay.getCurrentScene();
             Stage stage = EntryRoomDisplay.getCurrentStage();
