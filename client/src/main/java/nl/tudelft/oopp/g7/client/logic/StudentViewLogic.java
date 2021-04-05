@@ -65,6 +65,20 @@ public class StudentViewLogic {
      */
     public static void upvoteQuestion(String roomID, int questionId, VBox questionContainer, ScrollPane questionList) {
         ServerCommunication.upvoteQuestion(roomID, questionId);
+        LocalData.upvotedQuestions.add(questionId);
+        retrieveAllQuestions(roomID, questionContainer, questionList);
+    }
+
+    /**
+     * removes the upvote of a question and refreshes the question list.
+     * @param roomID ID of the room question is in.
+     * @param questionId ID of the specified question.
+     * @param questionContainer VBox containing the UI elements.
+     * @param questionList ScrollPane containing the whole list of questions.
+     */
+    public static void removeUpvoteQuestion(String roomID, int questionId, VBox questionContainer, ScrollPane questionList) {
+        ServerCommunication.removeUpvoteQuestion(roomID, questionId);
+        LocalData.upvotedQuestions.remove(questionId);
         retrieveAllQuestions(roomID, questionContainer, questionList);
     }
 
