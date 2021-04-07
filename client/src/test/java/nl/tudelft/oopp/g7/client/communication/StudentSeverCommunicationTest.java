@@ -3,9 +3,7 @@ package nl.tudelft.oopp.g7.client.communication;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
-import nl.tudelft.oopp.g7.common.QuestionText;
-import nl.tudelft.oopp.g7.common.Question;
-import nl.tudelft.oopp.g7.common.SortingOrder;
+import nl.tudelft.oopp.g7.common.*;
 import org.junit.jupiter.api.*;
 import org.mockserver.client.MockServerClient;
 import org.mockserver.integration.ClientAndServer;
@@ -26,6 +24,7 @@ import static org.mockserver.model.HttpRequest.request;
  * The server must be online for the tests to pass
  */
 public class StudentSeverCommunicationTest {
+    private static List<Question> questionList;
     private static MockServerConfigurations expectations;
     private static ClientAndServer mockServer;
     private static String roomID = "TestRoomID";
@@ -37,6 +36,8 @@ public class StudentSeverCommunicationTest {
         // initialize the expectation class
         expectations = new MockServerConfigurations();
         mockServer = ClientAndServer.startClientAndServer(8080);
+
+        questionList = expectations.getQuestionList();
     }
 
     @AfterAll
@@ -46,10 +47,12 @@ public class StudentSeverCommunicationTest {
 
     @Test
     void retrieveAllQuestions() {
-        // mock the endpoint
-        expectations.createExpectationAll();
-
         LocalData.setSortingOrder(SortingOrder.NEW);
+        List<Question> expectedQuestionList = questionList.stream().filter(q -> !q.isAnswered()).collect(Collectors.toList());
+
+        // mock the endpoint
+        expectations.createExpectationWithResponseBody(path + "question/all", "GET", gson.toJson(expectedQuestionList), 200);
+
 
         List<Question> questionList = StudentServerCommunication.retrieveAllQuestions(roomID);
 
@@ -62,20 +65,18 @@ public class StudentSeverCommunicationTest {
                         VerificationTimes.atLeast(1)
                 );
 
-        // get a sorted list
-        List<Question> expectedList = expectations.getQuestionList();
-        expectedList = expectedList.stream().sorted(Comparator.comparing(Question::getPostedAt).reversed())
+        expectedQuestionList = expectedQuestionList.stream().sorted(Comparator.comparing(Question::getPostedAt).reversed())
                 .collect(Collectors.toList());
 
-        assertEquals(expectedList, questionList);
+        assertEquals(expectedQuestionList, questionList);
     }
 
     @Test
     void testAskQuestion() {
-        // mock the endpoint
-        expectations.createExpectationAskQuestion();
-
         QuestionText text = new QuestionText("New Question");
+
+        // mock the endpoint
+        expectations.createExpectationWithRequestBody(path + "question/new", "POST", gson.toJson(text), 200);
 
         HttpResponse<String> response = StudentServerCommunication.askQuestion(roomID, text);
 
@@ -94,10 +95,10 @@ public class StudentSeverCommunicationTest {
 
     @Test
     void testAskQuestionServerError() {
-        // mock the endpoint
-        expectations.createExpectationAskQuestionServerError();
-
         QuestionText text = new QuestionText("Problematic");
+
+        // mock the endpoint
+        expectations.createExpectationWithRequestBody(path + "question/new", "POST", gson.toJson(text), 500);
 
         HttpResponse<String> response = StudentServerCommunication.askQuestion(roomID, text);
 
@@ -112,5 +113,52 @@ public class StudentSeverCommunicationTest {
                 );
 
         assertEquals(500, response.statusCode());
+    }
+
+    @Test
+    void getPoll() {
+        PollOption[] pollOptions = new PollOption[1];
+        PollOption option = new PollOption(1, "Hello", 0);
+        pollOptions[0] = option;
+
+        PollInfo expectedPollInfo = new PollInfo(1, "Question", true, false, pollOptions);
+
+        // mock the endpoint
+        expectations.createExpectationWithResponseBody(path + "poll", "GET", gson.toJson(expectedPollInfo), 200);
+
+        PollInfo pollInfo = StudentServerCommunication.getPoll(roomID);
+
+        // check whether the request has been received by the server
+        new MockServerClient("localhost", 8080)
+                .verify(
+                        request()
+                                .withMethod("GET")
+                                .withPath("/api/v1/room/TestRoomID/poll"),
+                        VerificationTimes.atLeast(1)
+                );
+
+        assertEquals(expectedPollInfo, pollInfo);
+    }
+
+    @Test
+    void answerPoll() {
+        PollAnswerRequest pollAnswerRequest = new PollAnswerRequest(1);
+
+        // mock the endpoint
+        expectations.createExpectationWithRequestBody(path + "poll/answer", "POST", gson.toJson(pollAnswerRequest), 200);
+
+        HttpResponse<String> response = StudentServerCommunication.answerPoll(roomID, 1);
+
+        // check whether the request has been received by the server
+        new MockServerClient("localhost", 8080)
+                .verify(
+                        request()
+                                .withMethod("POST")
+                                .withPath("/api/v1/room/TestRoomID/poll/answer")
+                                .withBody(gson.toJson(pollAnswerRequest)),
+                        VerificationTimes.atLeast(1)
+                );
+
+        assertEquals(200, response.statusCode());
     }
 }
