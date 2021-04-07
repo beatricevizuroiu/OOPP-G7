@@ -1,17 +1,21 @@
 package nl.tudelft.oopp.g7.client.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.logic.CreatePollLogic;
+import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.OptionsPosition;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CreatePollController {
     @FXML
@@ -25,40 +29,180 @@ public class CreatePollController {
     public List<String> pollOptions;
 
     public OptionsPosition optionsPosition;
-    public boolean publicResults = true;
+    public AtomicBoolean publicResults = new AtomicBoolean(true);
 
     public CreatePollController() {
         pollOptions = new ArrayList<>();
         optionsPosition = new OptionsPosition();
-    }
 
-    public void nextOption() {
-        CreatePollLogic.nextOption(pollOptions, optionsPosition, optionContainer, optionArea);
-    }
-
-    public void previousOption() {
-        CreatePollLogic.previousOption(pollOptions, optionsPosition, optionContainer, optionArea);
+        CreatePollLogic.reset();
     }
 
     public void sendPoll() {
         CreatePollLogic.sendPoll(pollOptions, questionArea, publicResults);
     }
 
-    public void deleteLast() {
-        CreatePollLogic.deleteLast(pollOptions, optionsPosition, optionContainer);
-    }
-
     public void setResultPublicity() {
-        publicResults = CreatePollLogic.setResultPublicity(publicResults, publicResultsButton);
+        CreatePollLogic.setResultPublicity(publicResults, publicResultsButton);
     }
 
     public void back() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
-        //TODO: Uncomment when variable gets merged
-        String targetFile = /*LocalData.isLecturer ? "/LecturerViewUI.fxml" : */ "/TAViewUI.fxml";
+        String targetFile = LocalData.isLecturer() ? "/LecturerViewUI.fxml" :  "/TAViewUI.fxml";
         EntryRoomDisplay.setCurrentScene(targetFile);
     }
 
+    public void addOption(ActionEvent actionEvent) {
+        CreatePollLogic.addOption(pollOptions, optionArea, optionContainer);
+
+    }
+
+    public void presetABC(MouseEvent mouseEvent) {
+        pollOptions.clear();
+        pollOptions.add("A");
+        pollOptions.add("B");
+        pollOptions.add("C");
+        CreatePollLogic.reDrawOptionList(optionContainer, pollOptions, optionArea);
+    }
+
+    public void presetABCD(MouseEvent mouseEvent) {
+        pollOptions.clear();
+        pollOptions.add("A");
+        pollOptions.add("B");
+        pollOptions.add("C");
+        pollOptions.add("D");
+        CreatePollLogic.reDrawOptionList(optionContainer, pollOptions, optionArea);
+    }
+
+    public void presetABCDE(MouseEvent mouseEvent) {
+        pollOptions.clear();
+        pollOptions.add("A");
+        pollOptions.add("B");
+        pollOptions.add("C");
+        pollOptions.add("D");
+        pollOptions.add("E");
+        CreatePollLogic.reDrawOptionList(optionContainer, pollOptions, optionArea);
+    }
+
+    public void presetABCDEF(MouseEvent mouseEvent) {
+        pollOptions.clear();
+        pollOptions.add("A");
+        pollOptions.add("B");
+        pollOptions.add("C");
+        pollOptions.add("D");
+        pollOptions.add("E");
+        pollOptions.add("F");
+        CreatePollLogic.reDrawOptionList(optionContainer, pollOptions, optionArea);
+    }
+
+    public void presetYesNo(MouseEvent mouseEvent) {
+        pollOptions.clear();
+        pollOptions.add("Yes");
+        pollOptions.add("No");
+        CreatePollLogic.reDrawOptionList(optionContainer, pollOptions, optionArea);
+    }
+
+    public void presetTrueFalse(MouseEvent mouseEvent) {
+        pollOptions.clear();
+        pollOptions.add("True");
+        pollOptions.add("False");
+        CreatePollLogic.reDrawOptionList(optionContainer, pollOptions, optionArea);
+    }
+
+
+    /**
+     * Handle button action for going back to lecturer view (light).
+     *
+     * @param event the event
+     */
+    public void goBackButtonLight(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if goBack is clicked, change Scene to LecturerViewUI or TAViewUI
+        if (LocalData.isLecturer()) {
+            EntryRoomDisplay.setCurrentScene("/LecturerViewUI.fxml");
+        } else {
+            EntryRoomDisplay.setCurrentScene("/TAViewUI.fxml");
+        }
+    }
+
+    /**
+     * Handle button action for going back to lecturer view (dark).
+     *
+     * @param event the event
+     */
+    public void goBackButtonDark(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if goBack is clicked, change Scene to LecturerViewUI or TAViewUI
+        if (LocalData.isLecturer()) {
+            EntryRoomDisplay.setCurrentScene("/LecturerViewUI(DARKMODE).fxml");
+        } else {
+            EntryRoomDisplay.setCurrentScene("/TAViewUI(DARKMODE).fxml");
+        }
+    }
+
+    /**
+     * Handle button action for button Mode from Light to Dark.
+     *
+     * @param event the event
+     */
+    public void handleButtonMode(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Mode is clicked, change Scene to Join Room
+        EntryRoomDisplay.setCurrentScene("/CreatePoll(DARKMODE).fxml");
+    }
+
+    /**
+     * Handle button action for button Mode from Dark to Light.
+     *
+     * @param event the event
+     */
+    public void handleButtonMode2(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Mode is clicked, change Scene to Join Room
+        EntryRoomDisplay.setCurrentScene("/CreatePoll.fxml");
+    }
+
+    /**
+     * Handle button action for Help Button Light Mode.
+     *
+     * @param event the event
+     */
+    public void handleHelpButtonLight(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Help is clicked, change to Help scene
+        if (LocalData.isLecturer()) {
+            EntryRoomDisplay.setCurrentScene("/HelpFileLecturer.fxml");
+        } else {
+            EntryRoomDisplay.setCurrentScene("/HelpFileTA.fxml");
+        }
+    }
+
+    /**
+     * Handle button action for Help Button Dark Mode.
+     *
+     * @param event the event
+     */
+    public void handleHelpButtonDark(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Help is clicked, change to Help scene
+        if (LocalData.isLecturer()) {
+            EntryRoomDisplay.setCurrentScene("/HelpFileLecturer.fxml");
+        } else {
+            EntryRoomDisplay.setCurrentScene("/HelpFileTA.fxml");
+        }
+    }
 }

@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class StudentViewLogic {
-    private static HashMap<Integer, Integer> selectedPollOptions = new HashMap<>();
+    private static final HashMap<Integer, Integer> selectedPollOptions = new HashMap<>();
 
     public static void retrieveServerData(String roomID, VBox questionContainer, ScrollPane questionList, VBox pollWindow) {
         retrieveAllQuestions(roomID, questionContainer, questionList);
@@ -40,6 +40,8 @@ public class StudentViewLogic {
         try {
             String pollWindowComponentName = EntryRoomDisplay.isDarkMode() ? "/components/PollWindow(DARKMODE).fxml" : "/components/PollWindow.fxml";
             HBox pollWindow = FXMLLoader.load(StudentViewLogic.class.getResource(pollWindowComponentName));
+
+            pollWindow.lookup("#deleteButton").setVisible(false);
 
             HBox optionContainer = (HBox) pollWindow.lookup("#PollWindowOptionContainer");
             List<Node> optionNodes = optionContainer.getChildren();

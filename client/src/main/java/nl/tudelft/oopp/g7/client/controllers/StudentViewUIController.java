@@ -242,6 +242,9 @@ public class StudentViewUIController {
     }
 
     public void retrievePoll () {
+
+    }
+
     /**
      * Handle button slower.
      */
@@ -253,7 +256,7 @@ public class StudentViewUIController {
         transition.play();
     }
 
-    }
+
     /**
      * Handle button faster.
      */

@@ -2,6 +2,7 @@ package nl.tudelft.oopp.g7.client.logic;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
@@ -13,103 +14,110 @@ import nl.tudelft.oopp.g7.common.OptionsPosition;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CreatePollLogic {
+    private static String editing = "";
 
-    public static void nextOption(List<String> pollOptions, OptionsPosition optionsPosition, VBox optionContainer, TextArea optionTextBox) {
+    public static void setResultPublicity(AtomicBoolean publicResults, Button publicResultsButton) {
+        publicResults.set(!publicResults.get());
 
-        List<Node> optionList = optionContainer.getChildren();
-
-        try {
-            String componentName = EntryRoomDisplay.isDarkMode() ? "/components/PollOptionExample(DARKMODE).fxml" : "/components/PollOptionExample.fxml";
-            HBox optionNode = FXMLLoader.load(CreatePollLogic.class.getResource(componentName));
-
-            Text pollOptionText = (Text) optionNode.lookup("#PollOptionLabel");
-            pollOptionText.setText(optionTextBox.getText());
-
-            if (!(optionsPosition.getPosition() >= optionList.size())) {
-                optionList.remove(optionsPosition.getPosition());
-            }
-
-            optionList.add(optionsPosition.getPosition(), optionNode);
-
-            if (optionsPosition.getPosition() >= pollOptions.size()) {
-                pollOptions.add(optionTextBox.getText());
-            } else {
-                pollOptions.set(optionsPosition.getPosition(), optionTextBox.getText());
-            }
-
-        } catch (IOException ignored) {
-            System.err.println("A problem occurred");
-        }
-
-        optionsPosition.increment();
-        if (optionsPosition.getPosition() < pollOptions.size()) {
-            optionTextBox.setText(pollOptions.get(optionsPosition.getPosition()));
-        } else {
-            optionTextBox.setText("");
-        }
-    }
-
-    public static void previousOption(List<String> pollOptions, OptionsPosition optionsPosition, VBox optionContainer, TextArea optionTextBox) {
-
-        if(optionsPosition.getPosition() == 0) {
+        if(publicResults.get()) {
+            publicResultsButton.setText("Results: Visible");
             return;
         }
 
-        if (optionsPosition.getPosition() == pollOptions.size()) {
-            nextOption(pollOptions, optionsPosition, optionContainer, optionTextBox);
-        }
-
-        List<Node> optionList = optionContainer.getChildren();
-
-        if (optionTextBox.getText() != "")
-        try {
-            String componentName = EntryRoomDisplay.isDarkMode() ? "/components/PollOptionExample(DARKMODE).fxml" : "/components/PollOptionExample.fxml";
-            HBox optionNode = FXMLLoader.load(CreatePollLogic.class.getResource(componentName));
-
-            if (optionsPosition.getPosition() == pollOptions.size()) {
-                pollOptions.add(optionTextBox.getText());
-            } else {
-                pollOptions.set(optionsPosition.getPosition(), optionTextBox.getText());
-            }
-            Text pollOptionText = (Text) optionNode.lookup("#PollOptionLabel");
-            pollOptionText.setText(optionTextBox.getText());
-
-            optionList.remove(optionsPosition.getPosition());
-            optionList.add(optionsPosition.getPosition(), optionNode);
-
-        } catch (IOException ignored) {
-            System.err.println("A problem occurred");
-        }
-
-        optionsPosition.decrement();
-        optionTextBox.setText(pollOptions.get(optionsPosition.getPosition()));
-    }
-
-    public static void deleteLast(List<String> pollOptions, OptionsPosition optionsPosition, VBox optionContainer) {
-
-        while (optionsPosition.getPosition() >= (pollOptions.size())) {
-            optionsPosition.decrement();
-        }
-        List<Node> optionList = optionContainer.getChildren();
-        optionList.remove(optionList.size() - 1);
-        pollOptions.remove(pollOptions.size() - 1);
-
-
-    }
-
-    public static boolean setResultPublicity(boolean publicResults, Button publicResultsButton) {
-        publicResults = !publicResults;
-        if(publicResults) {
-            publicResultsButton.setText("Results: Visible");
-            return true;
-        }
         publicResultsButton.setText("Results: Invisible");
-        return false;
     }
 
-    public static void sendPoll(List<String> pollOptions, TextArea questionArea, boolean publicResults) {
-        ModeratorServerCommunication.createPoll(LocalData.getRoomID(), questionArea.getText(), pollOptions.toArray(new String[0]), publicResults);
+    public static void reset() {
+        editing = "";
+    }
+
+    public static void sendPoll(List<String> pollOptions, TextArea questionArea, AtomicBoolean publicResults) {
+        String question = questionArea.getText();
+        if ("".equals(question)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Enter question");
+            alert.setHeaderText("Enter question");
+            alert.setContentText("Please enter a question to create a poll.");
+
+            alert.showAndWait();
+            return;
+        }
+
+        ModeratorServerCommunication.createPoll(LocalData.getRoomID(), question, pollOptions.toArray(new String[0]), publicResults.get());
+
+        EntryRoomDisplay.setCurrentScene(EntryRoomDisplay.isDarkMode() ? "/TAViewUI(DARKMODE).fxml" : "/TAViewUI.fxml");
+    }
+
+    public static void addOption(List<String> pollOptions, TextArea optionArea, VBox optionContainer) {
+        String text = optionArea.getText();
+
+        if (text == null || "".equals(text))
+            return;
+
+        if (pollOptions.contains(text) && !editing.equals(text))
+            return;
+
+        optionArea.clear();
+
+        if (!"".equals(editing)) {
+            int index = pollOptions.indexOf(editing);
+            pollOptions.set(index, text);
+            editing = "";
+        } else {
+            pollOptions.add(text);
+        }
+
+        reDrawOptionList(optionContainer, pollOptions, optionArea);
+    }
+
+    private static void deleteOption(String option, List<String> pollOptions, VBox optionContainer, TextArea optionArea) {
+        pollOptions.remove(option);
+
+        if (editing.equals(option))
+            editing = "";
+
+        reDrawOptionList(optionContainer, pollOptions, optionArea);
+    }
+
+    private static void editOption(String option, VBox optionContainer, List<String> pollOptions, TextArea optionArea) {
+        editing = option;
+        optionArea.setText(option);
+        reDrawOptionList(optionContainer, pollOptions, optionArea);
+    }
+
+    public static void reDrawOptionList(VBox optionContainer, List<String> pollOptions, TextArea optionArea) {
+        List<Node> optionList = optionContainer.getChildren();
+
+        optionList.clear();
+
+        try {
+            for (String option : pollOptions) {
+                String optionText = option.substring(0, Math.min(option.length(), 20));
+
+                String componentName = EntryRoomDisplay.isDarkMode() ? "/components/PollOptionExample(DARKMODE).fxml" : "/components/PollOptionExample.fxml";
+                HBox optionNode = FXMLLoader.load(CreatePollLogic.class.getResource(componentName));
+
+                Text pollOptionText = (Text) optionNode.lookup("#PollOptionLabel");
+                pollOptionText.setText(optionText);
+
+                Button pollOptionDeleteBtn = (Button) optionNode.lookup("#DeleteButton");
+                pollOptionDeleteBtn.setOnAction((event) -> deleteOption(option, pollOptions, optionContainer, optionArea));
+
+                optionNode.setOnMouseClicked((event) -> editOption(option, optionContainer, pollOptions, optionArea));
+
+                if (option.equals(editing)) {
+                    optionNode.getStyleClass().add("selected");
+                }
+
+                optionNode.setPrefWidth(328);
+
+                optionList.add(optionNode);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

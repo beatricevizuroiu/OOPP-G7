@@ -9,7 +9,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.shape.SVGPath?>
 <GridPane minHeight="500" minWidth="750"
-          stylesheets="@UIstyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+          stylesheets="@UIstyle(DARKMODE).css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="nl.tudelft.oopp.g7.client.controllers.CreatePollController">
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" minWidth="128.0"/>
@@ -30,7 +30,7 @@
 
     <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" />
 
-    <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+    <VBox GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="pollCreateView">
         <HBox spacing="20">
             <TextArea fx:id="questionArea" styleClass="buttons" promptText="Poll Question" maxHeight="24" HBox.hgrow="ALWAYS" />
         </HBox>
@@ -40,7 +40,7 @@
                     <TextArea fx:id="optionArea" styleClass="buttons" promptText="Poll Option" maxHeight="24"/>
                     <Button styleClass="buttons" text="+" onAction="#addOption"/>
                 </HBox>
-                <VBox VBox.vgrow="ALWAYS" stylesheets="components/PollWindow.css" spacing="10">
+                <VBox VBox.vgrow="ALWAYS" stylesheets="components/PollWindow(DARKMODE).css" spacing="10">
                     <padding>
                         <Insets>
                             <top>10</top>
@@ -327,8 +327,10 @@
                 </HBox>
             </VBox>
             <ScrollPane fx:id="optionWindow" styleClass="background" GridPane.columnIndex="2" GridPane.rowIndex="1"
-                        GridPane.rowSpan="2" minWidth="360" maxWidth="360">
-                <VBox fx:id="optionContainer" spacing="20">
+                        GridPane.rowSpan="2" minWidth="360" maxWidth="360" style="-fx-background-color: #3C3C3C;"
+                        fitToWidth="true"
+                        fitToHeight="true">
+                <VBox fx:id="optionContainer" styleClass="background" spacing="20" style="-fx-background-color: #3C3C3C;">
                     <padding>
                         <Insets>
                             <top>5</top>
@@ -343,7 +345,7 @@
     </VBox>
 
     <!--    Main Buttons    -->
-    <Button mnemonicParsing="false" onAction="#handleButtonMode" text="Mode" GridPane.halignment="CENTER"
+    <Button mnemonicParsing="false" onAction="#handleButtonMode2" text="Mode" GridPane.halignment="CENTER"
             GridPane.rowIndex="1" GridPane.valignment="CENTER">
         <graphic>
             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
@@ -352,11 +354,11 @@
         </graphic>
     </Button>
 
-    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonLight" styleClass="help-button"
+    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonDark" styleClass="help-button"
             textAlignment="CENTER" GridPane.columnIndex="0" GridPane.valignment="BOTTOM" GridPane.halignment="CENTER"
             GridPane.rowIndex="1"/>
 
-    <Button fx:id="goBack" mnemonicParsing="false" onAction="#goBackButtonLight" styleClass="upvoteBtn"
+    <Button fx:id="goBack" mnemonicParsing="false" onAction="#goBackButtonDark" styleClass="upvoteBtn"
             GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="RIGHT">
         <graphic>
             <SVGPath content="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" styleClass="link-button" />

@@ -33,6 +33,8 @@ public class LecturerViewController {
     private TextArea answerBox;
     @FXML
     private Button postAnswerButton;
+    @FXML
+    public VBox pollWindow;
 
     /**
      * The constructor for LecturerViewController.
@@ -65,7 +67,7 @@ public class LecturerViewController {
      */
     public void retrieveQuestions() {
         // Retrieve all of the questions and then put them into question pane
-        ModeratorViewLogic.retrieveAllQuestions(roomID, answerBox, postAnswerButton, questionContainer, questionList);
+        ModeratorViewLogic.retrieveServerData(roomID, answerBox, postAnswerButton, questionContainer, questionList, pollWindow);
     }
 
     /**
@@ -210,9 +212,25 @@ public class LecturerViewController {
 
     /**
      * Handle button action for creating a poll.
+     *
      */
     public void createPoll(){
-        //TODO
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        EntryRoomDisplay.setCurrentScene("/CreatePoll.fxml");
+    }
+
+
+    /**
+     * Handle button action for creating a poll.
+     *
+     */
+    public void createPoll2(){
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        EntryRoomDisplay.setCurrentScene("/CreatePoll(DARKMODE).fxml");
     }
 
     /**

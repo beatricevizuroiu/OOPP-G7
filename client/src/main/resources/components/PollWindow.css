@@ -21,6 +21,12 @@
     -fx-padding: 1px 6px 3px 6px;
 }
 
+.pollPreset {
+    -fx-border-color: black;
+    -fx-border-radius: 3px;
+    -fx-padding: 5px;
+}
+
 .pollText {
     -fx-font-size: 21px;
     -fx-font-weight: bold;
