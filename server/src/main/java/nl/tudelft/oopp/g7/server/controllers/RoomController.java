@@ -133,11 +133,11 @@ public class RoomController {
         }
 
         if (room.getModeratorPassword().equals(roomJoinRequest.getPassword())) {
-            return joinRoomHelper(room, roomJoinRequest, request, UserRole.STUDENT);
+            return joinRoomHelper(room, roomJoinRequest, request, UserRole.MODERATOR);
         }
 
         if (room.getStudentPassword().equals(roomJoinRequest.getPassword())) {
-            return joinRoomHelper(room, roomJoinRequest, request, UserRole.MODERATOR);
+            return joinRoomHelper(room, roomJoinRequest, request, UserRole.STUDENT);
         }
 
         // Otherwise you get an unauthorized
