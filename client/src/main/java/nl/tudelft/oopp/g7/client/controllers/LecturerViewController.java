@@ -8,7 +8,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import nl.tudelft.oopp.g7.client.communication.ModeratorServerCommunication;
+import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.ModeratorViewLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
@@ -33,6 +38,16 @@ public class LecturerViewController {
     private TextArea answerBox;
     @FXML
     private Button postAnswerButton;
+    @FXML
+    private Circle circle1;
+    @FXML
+    private Circle circle2;
+    @FXML
+    private Circle circle3;
+    @FXML
+    private Circle circle4;
+    @FXML
+    private Circle circle5;
 
     /**
      * The constructor for LecturerViewController.
@@ -47,7 +62,7 @@ public class LecturerViewController {
     /**
      * Start-up routine.
      */
-    public void initialize(){
+    public void initialize() {
         // Start a timer and create a separate thread on it to automatically call retrieveQuestions()
         Timer timer = new Timer(true);
 
@@ -130,9 +145,8 @@ public class LecturerViewController {
 
     /**
      * Handle button action for Answered Questions Button light Mode.
-     *
      */
-    public void answeredQuestionList(){
+    public void answeredQuestionList() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -142,9 +156,8 @@ public class LecturerViewController {
 
     /**
      * Handle button action for Answered Questions Button Dark Mode.
-     *
      */
-    public void answeredQuestionListDark(){
+    public void answeredQuestionListDark() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -154,9 +167,8 @@ public class LecturerViewController {
 
     /**
      * Handle button action for List Users Button light Mode.
-     *
      */
-    public void listofUsers () {
+    public void listofUsers() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -166,9 +178,8 @@ public class LecturerViewController {
 
     /**
      * Handle button action for List Users Button dark Mode.
-     *
      */
-    public void listofUsersDark () {
+    public void listofUsersDark() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -178,23 +189,22 @@ public class LecturerViewController {
 
     /**
      * Handle button action for deleting a question.
-     *
      */
-    public void deleteQuestion () {
+    public void deleteQuestion() {
 //        ModeratorViewLogic.deleteQuestion(roomID, questionId, questionContainer, questionList);
     }
 
     /**
      * Handle button action for editing a question.
      */
-    public void editQuestion (){
+    public void editQuestion() {
 //        ModeratorViewLogic.editQuestion(roomID, questionId, questionContainer, questionList);
     }
 
     /**
      * Handle button action for banning a user.
      */
-    public void banUser (){
+    public void banUser() {
 //        ModeratorViewLogic.banUser(roomID, userID);
     }
 
@@ -202,7 +212,7 @@ public class LecturerViewController {
     /**
      * Handle button action for answering a question.
      */
-    public void answerQuestion (){
+    public void answerQuestion() {
         /*HttpResponse<String> response = ModeratorServerCommunication.answerQuestion(roomID, new QuestionText(answerBox.getText()));
         answerBox.setText("");
         retrieveQuestions();*/
@@ -211,25 +221,51 @@ public class LecturerViewController {
     /**
      * Handle button action for creating a poll.
      */
-    public void createPoll(){
+    public void createPoll() {
         //TODO
     }
 
     /**
      * Handle button action for exporting questions.
      */
-    public void exportQuestions(){
+    public void exportQuestions() {
         ModeratorViewLogic.exportQuestions(roomID);
     }
 
     /**
      * Handle button action for creating a  link.
      */
-    public void createLink(){
+    public void createLink() {
         //TODO
     }
 
-//    public void speedIndicator(){
-//        //TODO
-//    }
+    public void speedIndicator() {
+        int speedInRoom = ServerCommunication.getSpeed(roomID);
+
+        if (speedInRoom <= 20) {
+            circle1.setFill(Color.valueOf("#8D1BAA"));
+        }
+        if (speedInRoom <= 40 && speedInRoom > 20) {
+            circle1.setFill(Color.valueOf("#8D1BAA"));
+            circle2.setFill(Color.valueOf("#8D1BAA"));
+        }
+        if (speedInRoom <= 60 && speedInRoom > 40) {
+            circle1.setFill(Color.valueOf("#8D1BAA"));
+            circle2.setFill(Color.valueOf("#8D1BAA"));
+            circle3.setFill(Color.valueOf("#8D1BAA"));
+        }
+        if (speedInRoom <= 80 && speedInRoom > 60) {
+            circle1.setFill(Color.valueOf("#8D1BAA"));
+            circle2.setFill(Color.valueOf("#8D1BAA"));
+            circle3.setFill(Color.valueOf("#8D1BAA"));
+            circle4.setFill(Color.valueOf("#8D1BAA"));
+        }
+        if (speedInRoom <= 100 && speedInRoom > 80) {
+            circle1.setFill(Color.valueOf("#8D1BAA"));
+            circle2.setFill(Color.valueOf("#8D1BAA"));
+            circle3.setFill(Color.valueOf("#8D1BAA"));
+            circle4.setFill(Color.valueOf("#8D1BAA"));
+            circle5.setFill(Color.valueOf("#8D1BAA"));
+        }
+    }
 }
