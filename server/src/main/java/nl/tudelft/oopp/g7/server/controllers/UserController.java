@@ -187,7 +187,8 @@ public class UserController {
 
         if (linesChanged == 1) {
 
-            eventLogger.info("\"{}\" banned user \"{}\", \"{}\" in room \"{}\"", request.getRemoteAddr(), userId, user.getNickname(), roomId);
+            eventLogger.info("\"{}\" banned user \"{}\", \"{}\" for reason \"{}\" in room \"{}\"",
+                    request.getRemoteAddr(), userId, user.getNickname(), reason, roomId);
 
             return new ResponseEntity<>(HttpStatus.OK);
         }
