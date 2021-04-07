@@ -39,7 +39,7 @@ public class StudentServerCommunication {
      */
     public static List<Question> retrieveAllQuestions(String roomID) {
         // retrieve the question list from server
-        List<Question> questions = ServerCommunication.retrieveAllQuestions(roomID);
+        List<Question> questions = ServerCommunication.retrieveAllUnansweredQuestions(roomID);
 
         if (LocalData.getSortingOrder() == SortingOrder.NEW) {
             // sort the questions based on most recent and return the list
@@ -67,6 +67,10 @@ public class StudentServerCommunication {
 
         // send the request to the server
         return HttpMethods.post(uri, body);
+    }
+
+    public static HttpResponse<String> deleteQuestion(String roomID, int questionID) {
+        return ServerCommunication.deleteQuestion(roomID, questionID);
     }
 
     /**

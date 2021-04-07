@@ -43,9 +43,45 @@
 }
 
 .inputBox {
-    -fx-background-color: #360A41;
-    -fx-font-style: italic;
-    -fx-font-weight: bold;
+    -fx-background-color: #151515;
     -fx-font-size: 17;
     -fx-text-fill: white;
+
+    -fx-base: black;
+}
+
+.date-picker > .text-field,
+.date-picker:focused > .text-field{
+    -fx-background-color: #151515;
+    -fx-font-size: 17;
+    -fx-text-fill: white;
+}
+
+.date-picker > .arrow-button {
+    -fx-background-color: #360A41;
+}
+
+.date-picker-popup > .calendar-grid {
+    -fx-background-color: black;
+}
+
+.date-picker-popup > * > .day-name-cell {
+    -fx-text-fill: white;
+}
+
+.date-picker-popup > * > .spinner > .button > .right-arrow,
+.date-picker-popup > * > .spinner > .button > .left-arrow {
+    -fx-background-color: white;
+}
+
+.scheduleCheckbox {
+    -fx-text-fill: white;
+}
+
+.scheduleCheckbox > .box {
+    -fx-background-color: #151515;
+}
+
+.scheduleCheckbox:selected > .box > .mark {
+    -fx-background-color: #360A41;
 }

@@ -9,6 +9,7 @@ import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.stream.Collectors;
 
 // Class for generalizing methods.
 public class ServerCommunication {
@@ -78,6 +79,17 @@ public class ServerCommunication {
     }
 
     /**
+     * Retrieves all unanswered questions from the server.
+     * @param roomID ID of the room student belongs
+     * @return a {@link List} of Questions that includes all unanswered questions on server
+     */
+    public static List<Question> retrieveAllUnansweredQuestions(String roomID) {
+        List<Question> questionList = retrieveAllQuestions(roomID);
+
+        return questionList.stream().filter((question) -> !question.isAnswered()).collect(Collectors.toList());
+    }
+
+    /**
      * Retrieves all users' information from server.
      * @param roomID ID of the room student belongs
      * @return a {@link List} of UserInfo that includes all users on server
@@ -116,7 +128,6 @@ public class ServerCommunication {
         return questionList;
     }
 
-
     /**
      * Upvote the question with the specified ID.
      * @param roomID ID of the room student belongs
@@ -129,6 +140,20 @@ public class ServerCommunication {
 
         // send the upvote request and return the response
         return HttpMethods.post(uri, "");
+    }
+
+    /**
+     * Delete Upvote of the question with the specified ID.
+     * @param roomID ID of the room student belongs
+     * @param questionID ID of the question
+     * @return A {@link HttpResponse} containing the response received from server.
+     */
+    public static HttpResponse<String> removeUpvoteQuestion(String roomID, int questionID){
+        // add the appropriate end-point
+        URI uri = URI.create(uriBody + roomID + "/question/" + questionID + "/upvote");
+
+        //send the un-upvote request and return the response
+        return HttpMethods.delete(uri);
     }
 
     /**
@@ -190,8 +215,6 @@ public class ServerCommunication {
         URI uri = URI.create(uriBody + roomID + "/question/" + questionID);
 
         // delete the question and store the response
-        // appropriate code handling is done within the method
-        // FIXME: we could do the code handling in these methods
         return HttpMethods.delete(uri);
     }
 }

@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.g7.server.controllers;
 
+import nl.tudelft.oopp.g7.common.Answer;
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
 import nl.tudelft.oopp.g7.common.User;
@@ -14,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,9 +26,9 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import java.util.List;
 
-
 @RestController()
 @RequestMapping("/api/v1/room/{room_id}/question")
+@Validated
 public class QuestionController {
 
     private static final Logger logger = LogManager.getLogger("serverLog");
@@ -340,7 +342,7 @@ public class QuestionController {
     @PostMapping("/{id}/answer")
     public ResponseEntity<Void> answerQuestion(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
                                                @PathVariable int id,
-                                               @RequestBody @NotNull @Valid QuestionText answer,
+                                               @RequestBody @NotNull @Valid Answer answer,
                                                @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
                                                HttpServletRequest request) {
 
@@ -353,15 +355,15 @@ public class QuestionController {
                 new NotBanned()
             ));
 
-        if (answer.getText() == null) {
-            answer.setText("");
+        if (answer.getAnswer() == null) {
+            answer.setAnswer("");
         }
 
         // Log the answering of a question
         logger.debug("Question " + id + " is being answered");
         
         // Update the question with the answer and store the amount of rows changed in a variable.
-        int rowsChanged = questionRepository.answerQuestionWithId(roomId, id, answer.getText());
+        int rowsChanged = questionRepository.answerQuestionWithId(roomId, id, answer.getAnswer());
 
         // Check if there where no rows updated.
         if (rowsChanged == 0) {

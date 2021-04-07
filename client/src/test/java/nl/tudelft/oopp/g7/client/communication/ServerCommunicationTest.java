@@ -33,7 +33,6 @@ public class ServerCommunicationTest {
     @AfterAll
     static void stopServer() {
         mockServer.stop();
-        while (!mockServer.hasStopped(3,100L, TimeUnit.MILLISECONDS)){}
     }
 
     @Test

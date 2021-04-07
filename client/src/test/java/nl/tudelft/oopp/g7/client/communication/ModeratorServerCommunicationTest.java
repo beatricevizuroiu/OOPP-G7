@@ -3,10 +3,7 @@ package nl.tudelft.oopp.g7.client.communication;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
-import nl.tudelft.oopp.g7.common.BanReason;
-import nl.tudelft.oopp.g7.common.Question;
-import nl.tudelft.oopp.g7.common.QuestionText;
-import nl.tudelft.oopp.g7.common.SortingOrder;
+import nl.tudelft.oopp.g7.common.*;
 import org.junit.jupiter.api.*;
 import org.mockserver.client.MockServerClient;
 import org.mockserver.integration.ClientAndServer;
@@ -40,7 +37,6 @@ public class ModeratorServerCommunicationTest {
     @AfterAll
     static void stopServer() {
         mockServer.stop();
-        while (!mockServer.hasStopped(3,100L, TimeUnit.MILLISECONDS)){}
     }
 
     @Test
@@ -74,7 +70,7 @@ public class ModeratorServerCommunicationTest {
         // mock the endpoint
         expectations.createExpectationAnswerQuestionWorks(1);
 
-        QuestionText answer = new QuestionText("This is an answer.");
+        Answer answer = new Answer("This is an answer.");
 
         HttpResponse<String> response = ModeratorServerCommunication.answerQuestion(roomID, 1, answer);
 
@@ -95,7 +91,7 @@ public class ModeratorServerCommunicationTest {
         // mock the endpoint
         expectations.createExpectationAnswerQuestionNotWorks();
 
-        QuestionText answer = new QuestionText("This is an answer.");
+        Answer answer = new Answer("This is an answer.");
 
         HttpResponse<String> response = ModeratorServerCommunication.answerQuestion(roomID, 5, answer);
 
