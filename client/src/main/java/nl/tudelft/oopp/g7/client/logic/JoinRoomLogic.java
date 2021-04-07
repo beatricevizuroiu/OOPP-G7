@@ -25,7 +25,7 @@ public class JoinRoomLogic {
         if(nickname.getText() == null || nickname.getText().equals("")){
             alert.setContentText("You are joining room: " + roomId.getText());
         }else {
-            alert.setContentText("You are joining room: " + roomId.getText() + " as: " + nickname.getText());
+            alert.setContentText("You are joining room: " + roomId.getText() + ".\nAs: " + nickname.getText());
         }
 
         // set types of buttons for the pop-up
@@ -51,6 +51,6 @@ public class JoinRoomLogic {
         LocalData.setRoomID(roomId.getText());
         LocalData.setToken(roomJoinInfo.getAuthorization());
         LocalData.setSortingOrder(SortingOrder.NEW);
-
+        LocalData.setUserID(roomJoinInfo.getUserId());
     }
 }

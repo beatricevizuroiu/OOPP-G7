@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,7 @@ import java.util.List;
 
 @RestController()
 @RequestMapping("/api/v1/room/{room_id}/user")
+@Validated
 public class UserController {
     Logger logger = LoggerFactory.getLogger(RoomController.class);
 
@@ -147,7 +149,7 @@ public class UserController {
      * @param request The HttpServletRequest containing the Ip of the one who sent the request.
      * @return A {@link ResponseEntity} containing a relevant Http Status.
      */
-    @DeleteMapping("/{user_id}")
+    @PostMapping("/{user_id}/ban")
     public ResponseEntity<Void> banUserById(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
                                             @PathVariable("user_id") @NotNull @NotEmpty String userId,
                                             @RequestBody @NotNull @Valid BanReason reason,

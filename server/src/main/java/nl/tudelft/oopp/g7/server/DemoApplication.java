@@ -51,15 +51,16 @@ public class DemoApplication {
         return new PollRepository(jdbcTemplate);
     }
 
-    @Bean("upvoteRepository")
+    @Bean("voteRepository")
     @DependsOn({"userRepository", "roomRepository", "questionRepository"})
     public UpvoteRepository upvoteRepository(JdbcTemplate jdbcTemplate) {
         return new UpvoteRepository(jdbcTemplate);
     }
 
     /**
-     * Entry point for application.
-     * @param args The command line arguments to the application.
+     * The entry point of application.
+     *
+     * @param args the input arguments
      */
     public static void main(String[] args) {
         new Config(new File("./config.yml"));

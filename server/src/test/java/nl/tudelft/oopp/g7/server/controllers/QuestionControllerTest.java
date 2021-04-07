@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.g7.server.controllers;
 
+import nl.tudelft.oopp.g7.common.Answer;
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
 import nl.tudelft.oopp.g7.server.repositories.BanRepository;
@@ -172,7 +173,7 @@ class QuestionControllerTest {
     @Test
     void answerQuestion() {
         // Answer question 1.
-        questionController.answerQuestion(TEST_ROOM_ID, 1, new QuestionText("This an answer"), AUTHORIZATION_MODERATOR, request_mod);
+        questionController.answerQuestion(TEST_ROOM_ID, 1, new Answer("This an answer"), AUTHORIZATION_MODERATOR, request_mod);
 
         // Get the question with id 1.
         Question actual = questionController.getQuestion(TEST_ROOM_ID, 1, AUTHORIZATION_STUDENT, request_stud).getBody();

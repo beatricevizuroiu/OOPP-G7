@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -14,10 +15,14 @@ import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.PollInfo;
 import nl.tudelft.oopp.g7.common.PollOption;
 import nl.tudelft.oopp.g7.common.Question;
+import nl.tudelft.oopp.g7.common.UserInfo;
+import nl.tudelft.oopp.g7.common.UserRole;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class StudentViewLogic {
     private static HashMap<Integer, Integer> selectedPollOptions = new HashMap<>();
@@ -118,30 +123,18 @@ public class StudentViewLogic {
 
         String componentName = EntryRoomDisplay.isDarkMode() ? "/components/StudentQuestion(DARKMODE).fxml" : "/components/StudentQuestion.fxml";
 
-
         try {
             for (Question question : questions) {
-                HBox questionNode = FXMLLoader.load(StudentViewLogic.class.getResource(componentName));
-
-                Button upvoteBtn = (Button) questionNode.lookup("#QuestionUpvoteBtn");
-                Text upvoteCount = (Text) questionNode.lookup("#QuestionUpvoteCount");
-                Text body = (Text) questionNode.lookup("#QuestionText");
-                Text authorText = (Text) questionNode.lookup("#QuestionAuthor");
-
-                // add event listeners for upvoting buttons
-                upvoteBtn.setOnAction((event) -> upvoteQuestion(roomID, question.getId(), questionContainer, questionList));
-
-                // cap the number of upvotes at 999
-                upvoteCount.setText(Integer.toString(Math.min(question.getUpvotes(), 999)));
-                body.setText(question.getText());
-
-                if (!LocalData.userMap.containsKey(question.getAuthorId())) {
-                    LocalData.userMap.put(question.getAuthorId(), ServerCommunication.retrieveUserById(roomID, question.getAuthorId()));
-                }
-
-                authorText.setText(LocalData.userMap.get(question.getAuthorId()).getNickname() + " asks");
-
-                questionNodes.add(questionNode);
+                SharedLogic.addQuestionToUI(
+                        roomID,
+                        questionNodes,
+                        componentName,
+                        question,
+                        null,
+                        null,
+                        questionContainer,
+                        questionList
+                );
             }
         } catch (IOException ignored) {
             System.err.println("A problem occurred.");
@@ -160,6 +153,20 @@ public class StudentViewLogic {
      */
     public static void upvoteQuestion(String roomID, int questionId, VBox questionContainer, ScrollPane questionList) {
         ServerCommunication.upvoteQuestion(roomID, questionId);
+        LocalData.upvotedQuestions.add(questionId);
+        retrieveAllQuestions(roomID, questionContainer, questionList);
+    }
+
+    /**
+     * removes the upvote of a question and refreshes the question list.
+     * @param roomID ID of the room question is in.
+     * @param questionId ID of the specified question.
+     * @param questionContainer VBox containing the UI elements.
+     * @param questionList ScrollPane containing the whole list of questions.
+     */
+    public static void removeUpvoteQuestion(String roomID, int questionId, VBox questionContainer, ScrollPane questionList) {
+        ServerCommunication.removeUpvoteQuestion(roomID, questionId);
+        LocalData.upvotedQuestions.remove(questionId);
         retrieveAllQuestions(roomID, questionContainer, questionList);
     }
 
@@ -170,8 +177,8 @@ public class StudentViewLogic {
      * @param questionContainer VBox containing the UI elements.
      * @param questionList ScrollPane containing the whole list of questions.
      */
-    public static void deleteQuestion(String roomID, int questionId, VBox questionContainer, ScrollPane questionList) {
+    public static void deleteQuestionStudent(String roomID, int questionId, VBox questionContainer, ScrollPane questionList) {
         ServerCommunication.deleteQuestion(roomID, questionId);
-        retrieveAllQuestions(roomID, questionContainer, questionList);
+        StudentViewLogic.retrieveAllQuestions(roomID, questionContainer, questionList);
     }
 }

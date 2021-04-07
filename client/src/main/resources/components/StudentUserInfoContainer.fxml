@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+
+<?import javafx.scene.text.TextFlow?>
+<?import javafx.scene.shape.SVGPath?>
+<HBox xmlns="http://javafx.com/javafx"
+      id="userInfoContainer"
+      stylesheets="@StudentUserInfoContainer.css">
+    <padding>
+        <Insets>
+            <top>5</top>
+            <right>5</right>
+            <bottom>5</bottom>
+            <left>5</left>
+        </Insets>
+    </padding>
+
+    <TextFlow minWidth="200">
+        <Text id="UserNickname" text="User" styleClass="UserInfoText"/>
+        <SVGPath id="StarIcon"/>
+    </TextFlow>
+
+    <Region HBox.hgrow="ALWAYS" />
+    <Text id="UserRoleInfo" text="student" styleClass="UserInfoText"/>
+</HBox>

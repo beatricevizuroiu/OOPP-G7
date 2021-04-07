@@ -1,9 +1,11 @@
 package nl.tudelft.oopp.g7.client.controllers;
 
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ScrollPane;
@@ -11,6 +13,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.StudentViewLogic;
@@ -44,6 +47,12 @@ public class StudentViewUIController {
     @FXML
     public VBox pollWindow;
 
+    @FXML
+    public Button colorSlow;
+
+    @FXML
+    public Button colorFast;
+
     private final String roomID;
     private final String nickname;
 
@@ -53,7 +62,12 @@ public class StudentViewUIController {
     public StudentViewUIController() {
         roomID = LocalData.getRoomID();
         nickname = LocalData.getNickname();
+    }
 
+    /**
+     * Start-up routine.
+     */
+    public void initialize() {
         // Start a timer and create a separate thread on it to automatically call retrieveQuestions()
         Timer timer = new Timer(true);
 
@@ -63,7 +77,7 @@ public class StudentViewUIController {
             public void run() {
                 Platform.runLater(reference::retrieveQuestions);
             }
-        }, 0L, 2500L);
+        }, 0L, 5000L);
     }
 
     /**
@@ -101,20 +115,27 @@ public class StudentViewUIController {
                 alert.showAndWait();
                 return;
             }
-            System.err.println("A ratelimit status was returned but the rate limit header does not exist!");
+            System.err.println("A rate limit status was returned but the rate limit header does not exist!");
         }
         answerBox.setText("");
         retrieveQuestions();
     }
 
-//    /**
-//     * Upvote questions.
-//     * @param questionId the id of the question that is being upvoted
-//     */
-//    public void upvoteQuestion(int questionId) {
-//        StudentViewLogic.upvoteQuestion(roomID, questionId, questionContainer, questionList);
-//    }
+    /**
+     * Upvote questions.
+     * @param questionId the id of the question that is being upvoted
+     */
+    public void upvoteQuestion(int questionId) {
+        StudentViewLogic.upvoteQuestion(roomID, questionId, questionContainer, questionList);
+    }
 
+    /**
+     * Remove Upvote of questions.
+     * @param questionId the id of the question that is being down-voted
+     */
+    public void removeUpvoteQuestion(int questionId) {
+        StudentViewLogic.removeUpvoteQuestion(roomID, questionId, questionContainer, questionList);
+    }
 
     /**
      * Handle button action for button Mode from Light to Dark.
@@ -199,7 +220,7 @@ public class StudentViewUIController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if list of Users is clicked, change to List of Users scene
-        EntryRoomDisplay.setCurrentScene("/ListUsers.fxml");
+        EntryRoomDisplay.setCurrentScene("/ListUsersStudent.fxml");
     }
 
     /**
@@ -210,17 +231,37 @@ public class StudentViewUIController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if list of Users is clicked, change to List of Users scene
-        EntryRoomDisplay.setCurrentScene("/ListUsers(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/ListUsersStudent(DARKMODE).fxml");
     }
 
     /**
      * Handle button action for deleting a question.
      */
     public void deleteQuestion () {
-        //StudentViewLogic.deleteQuestion(roomID, questionId, questionContainer, questionList);
+//        StudentViewLogic.deleteQuestion(roomID, questionId, questionContainer, questionList);
     }
 
     public void retrievePoll () {
+    /**
+     * Handle button slower.
+     */
+    public void goSlower() {
+        colorSlow.setVisible(true);
+        PauseTransition transition = new PauseTransition(Duration.seconds(3));
+        transition.setOnFinished(event -> colorSlow.setVisible(false));
 
+        transition.play();
+    }
+
+    }
+    /**
+     * Handle button faster.
+     */
+    public void goFaster() {
+        colorFast.setVisible(true);
+        PauseTransition transition = new PauseTransition(Duration.seconds(3));
+        transition.setOnFinished(event -> colorFast.setVisible(false));
+
+        transition.play();
     }
 }

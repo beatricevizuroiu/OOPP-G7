@@ -1,23 +1,87 @@
-.parent{
-    -fx-background-color: transparent;
-}
-.backgroundTitlePnale{
+.backgroundTitlePanel {
     -fx-background-color: #360A41;
 }
 
-.buttonEntry{
+.buttonEntry {
+    -fx-background-color: #360A41;
+    -fx-font-weight: bold;
+    -fx-font-size: 27px;
+    -fx-text-fill: white;
+}
+
+.buttonMode {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+.buttonBack {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+.applicationName {
+    -fx-font-weight: bold;
+    -fx-font-size: 36px;
+    -fx-fill: white;
+}
+
+.formTitle {
+    -fx-font-size: 35;
+    -fx-font-weight: bold;
+    -fx-fill: white;
+}
+
+.background {
+    -fx-background-color: black;
+}
+
+.buttons {
+    -fx-background-color: #360A41;
+    -fx-font-weight: bold;
+    -fx-font-size: 17;
+    -fx-text-fill: white;
+}
+
+.inputBox {
+    -fx-background-color: #151515;
+    -fx-font-size: 17;
+    -fx-text-fill: white;
+
+    -fx-base: black;
+}
+
+.date-picker > .text-field,
+.date-picker:focused > .text-field{
+    -fx-background-color: #151515;
+    -fx-font-size: 17;
+    -fx-text-fill: white;
+}
+
+.date-picker > .arrow-button {
     -fx-background-color: #360A41;
 }
 
-.background{
-    -fx-background-color: #15041A;
+.date-picker-popup > .calendar-grid {
+    -fx-background-color: black;
 }
 
-.buttons{
+.date-picker-popup > * > .day-name-cell {
+    -fx-text-fill: white;
+}
+
+.date-picker-popup > * > .spinner > .button > .right-arrow,
+.date-picker-popup > * > .spinner > .button > .left-arrow {
+    -fx-background-color: white;
+}
+
+.scheduleCheckbox {
+    -fx-text-fill: white;
+}
+
+.scheduleCheckbox > .box {
+    -fx-background-color: #151515;
+}
+
+.scheduleCheckbox:selected > .box > .mark {
     -fx-background-color: #360A41;
 }
-
-.textColor{
-    -fx-text-inner-color: #FFFFFF;
-}
-

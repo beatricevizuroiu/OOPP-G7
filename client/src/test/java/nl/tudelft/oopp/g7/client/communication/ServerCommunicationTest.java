@@ -2,15 +2,14 @@ package nl.tudelft.oopp.g7.client.communication;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import nl.tudelft.oopp.g7.common.Question;
-import nl.tudelft.oopp.g7.common.QuestionText;
-import nl.tudelft.oopp.g7.common.SpeedAlterRequest;
+import nl.tudelft.oopp.g7.common.*;
 import org.junit.jupiter.api.*;
 import org.mockserver.client.MockServerClient;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.verify.VerificationTimes;
 
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -34,7 +33,6 @@ public class ServerCommunicationTest {
     @AfterAll
     static void stopServer() {
         mockServer.stop();
-        while (!mockServer.hasStopped(3,100L, TimeUnit.MILLISECONDS)){}
     }
 
     @Test
@@ -63,7 +61,7 @@ public class ServerCommunicationTest {
         // mock the endpoint
         expectations.createExpectationQuestionID(1);
 
-        // retrieve all answered questions
+        // retrieve the question
         Question question = ServerCommunication.retrieveQuestionById(roomID, 1);
 
         // check whether the request has been received by the server
@@ -83,7 +81,7 @@ public class ServerCommunicationTest {
         // mock the endpoint
         expectations.createExpectationQuestionIDNotWorks();
 
-        // retrieve all answered questions
+        // retrieve the question
         Question question = ServerCommunication.retrieveQuestionById(roomID, 5);
 
         // check whether the request has been received by the server
@@ -96,8 +94,31 @@ public class ServerCommunicationTest {
                 );
 
         assertNull(question);
-     }
+    }
 
+    @Test
+    void testRetrieveAllUsers() {
+        // mock the endpoint
+        expectations.createExpectationRetrieveUserInfo();
+
+        // create the expected list
+        List<UserInfo> expectedUserInfoList = new ArrayList<>();
+        expectedUserInfoList.add(new UserInfo("1", "TestRoomID", "test", UserRole.STUDENT));
+
+        // retrieve all user information
+        List<UserInfo> userInfoList = ServerCommunication.retrieveAllUsers(roomID);
+
+        // check whether the request has been received by the server
+        new MockServerClient("localhost", 8080)
+                .verify(
+                        request()
+                                .withMethod("GET")
+                                .withPath("/api/v1/room/TestRoomID/user/all"),
+                        VerificationTimes.atLeast(1)
+                );
+
+        assertEquals(expectedUserInfoList, userInfoList);
+    }
 
     @Test
     void testRetrieveAllAnsweredQuestions() {
