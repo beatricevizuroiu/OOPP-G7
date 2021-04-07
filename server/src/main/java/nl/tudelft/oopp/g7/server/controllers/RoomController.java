@@ -83,8 +83,6 @@ public class RoomController {
                 moderatorPassword,
                 // Use the user supplied name for the room.
                 newRoom.getName(),
-                // Make the room closed by default.
-                false,
                 // Make the room not over by default.
                 false,
                 // Set the start date to the date provided.
