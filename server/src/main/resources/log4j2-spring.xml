@@ -2,18 +2,25 @@
 <Configuration>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout           pattern="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"/>
         </Console>
-        <File name="MyFile" fileName="logs/app.log">
+        <File name="serverLog" fileName="logs/app.log">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"/>
         </File>
+        <File name="eventLog" fileName="logs/events.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} -%msg%n"/>
+        </File>
     </Appenders>
+
     <Loggers>     <!-- LOG everything at INFO level -->
-        <Root level="info">
-            <AppenderRef ref="Console" />
-            <AppenderRef ref="MyFile" />
-        </Root>     <!-- LOG "com.example" at TRACE level -->
-        <Logger name="com.example" level="trace">
+        <Logger name="eventLog">
+            <AppenderRef ref="eventLog"/>
         </Logger>
+        <Root level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="serverLog"/>
+        </Root>
+
+
     </Loggers>
 </Configuration>
