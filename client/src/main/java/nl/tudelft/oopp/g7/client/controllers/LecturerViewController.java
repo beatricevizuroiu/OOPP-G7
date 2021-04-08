@@ -241,31 +241,11 @@ public class LecturerViewController {
 
     public void speedIndicator() {
         int speedInRoom = ServerCommunication.getSpeed(roomID);
+        //circle1.setFill(Color.valueOf("#8D1BAA"));
+        int percentageOfPeopleInRoom = ServerCommunication.retrieveAllUsers(roomID).size() / 100;
 
-        if (speedInRoom <= 20) {
-            circle1.setFill(Color.valueOf("#8D1BAA"));
-        }
-        if (speedInRoom <= 40 && speedInRoom > 20) {
-            circle1.setFill(Color.valueOf("#8D1BAA"));
+        if(speedInRoom <= 1 && speedInRoom >= 0){
             circle2.setFill(Color.valueOf("#8D1BAA"));
-        }
-        if (speedInRoom <= 60 && speedInRoom > 40) {
-            circle1.setFill(Color.valueOf("#8D1BAA"));
-            circle2.setFill(Color.valueOf("#8D1BAA"));
-            circle3.setFill(Color.valueOf("#8D1BAA"));
-        }
-        if (speedInRoom <= 80 && speedInRoom > 60) {
-            circle1.setFill(Color.valueOf("#8D1BAA"));
-            circle2.setFill(Color.valueOf("#8D1BAA"));
-            circle3.setFill(Color.valueOf("#8D1BAA"));
-            circle4.setFill(Color.valueOf("#8D1BAA"));
-        }
-        if (speedInRoom <= 100 && speedInRoom > 80) {
-            circle1.setFill(Color.valueOf("#8D1BAA"));
-            circle2.setFill(Color.valueOf("#8D1BAA"));
-            circle3.setFill(Color.valueOf("#8D1BAA"));
-            circle4.setFill(Color.valueOf("#8D1BAA"));
-            circle5.setFill(Color.valueOf("#8D1BAA"));
         }
     }
 }
