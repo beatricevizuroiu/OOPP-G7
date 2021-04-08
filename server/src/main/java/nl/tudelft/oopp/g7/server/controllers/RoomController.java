@@ -155,7 +155,7 @@ public class RoomController {
     /**
      * Close the currently running poll.
      * @param roomId The id of the room to close the poll in.
-     * @param roomCloseRequest The {@link PollCloseRequest} to close the poll from.
+     * @param RoomCloseRequest The {@link PollCloseRequest} to close the poll from.
      * @param authorization The authorization header.
      * @param request The {@link HttpServletRequest} associated with the Http request.
      * @return A {@link ResponseEntity} containing the http status code indicating whether the request completed
@@ -163,7 +163,7 @@ public class RoomController {
      */
     @PostMapping("/{room_id}/close")
     public ResponseEntity<Void> closeRoom(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
-                                          @RequestBody @NotNull roomCloseRequest roomCloseRequest,
+                                          @RequestBody @NotNull RoomCloseRequest RoomCloseRequest,
                                           @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
                                           HttpServletRequest request) {
 
