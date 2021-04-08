@@ -174,7 +174,7 @@ public class RoomController {
     /**
      * Close the currently running poll.
      * @param roomId The id of the room to close the poll in.
-     * @param RoomCloseRequest The {@link PollCloseRequest} to close the poll from.
+     * @param RoomCloseRequest The {@link RoomCloseRequest} to close the room from.
      * @param authorization The authorization header.
      * @param request The {@link HttpServletRequest} associated with the Http request.
      * @return A {@link ResponseEntity} containing the http status code indicating whether the request completed
@@ -200,7 +200,7 @@ public class RoomController {
         roomRepository.endRoom(roomId);
 
         return new ResponseEntity<>(HttpStatus.OK);
-
+    }
 
         /**
          * Endpoint to change the Speed of a Room.
