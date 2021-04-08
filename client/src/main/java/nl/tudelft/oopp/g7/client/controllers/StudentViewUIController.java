@@ -122,7 +122,6 @@ public class StudentViewUIController {
         retrieveQuestions();
     }
 
-<<<<<<< HEAD
     /**
      * Upvote questions.
      *
@@ -140,23 +139,6 @@ public class StudentViewUIController {
     public void removeUpvoteQuestion(int questionId) {
         StudentViewLogic.removeUpvoteQuestion(roomID, questionId, questionContainer, questionList);
     }
-=======
-//    /**
-//     * Upvote questions.
-//     * @param questionId the id of the question that is being upvoted
-//     */
-//    public void upvoteQuestion(int questionId) {
-//        StudentViewLogic.upvoteQuestion(roomID, questionId, questionContainer, questionList);
-//    }
-//
-//    /**
-//     * Remove Upvote of questions.
-//     * @param questionId the id of the question that is being down-voted
-//     */
-//    public void removeUpvoteQuestion(int questionId) {
-//        StudentViewLogic.removeUpvoteQuestion(roomID, questionId, questionContainer, questionList);
-//    }
->>>>>>> development
 
     /**
      * Handle button action for button Mode from Light to Dark.

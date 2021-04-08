@@ -41,7 +41,6 @@ public class LecturerViewController {
     @FXML
     private Button postAnswerButton;
     @FXML
-<<<<<<< HEAD
     private Circle circle1;
     @FXML
     private Circle circle2;
@@ -49,9 +48,7 @@ public class LecturerViewController {
     private Circle circle3;
     @FXML
     private Circle circle4;
-=======
     public VBox pollWindow;
->>>>>>> development
 
     /**
      * The constructor for LecturerViewController.
