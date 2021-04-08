@@ -25,6 +25,9 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * The type Lecturer view controller.
+ */
 public class LecturerViewController {
     private final String roomID;
     private final String nickname;
@@ -32,6 +35,9 @@ public class LecturerViewController {
     private final String studentPassword;
     private HashMap<String, UserInfo> userMap = new HashMap<>();
 
+    /**
+     * The Question list.
+     */
     @FXML
     public ScrollPane questionList;
     @FXML
@@ -48,6 +54,9 @@ public class LecturerViewController {
     private Circle circle3;
     @FXML
     private Circle circle4;
+    /**
+     * The Poll window.
+     */
     public VBox pollWindow;
 
     /**
@@ -255,6 +264,9 @@ public class LecturerViewController {
         //TODO
     }
 
+    /**
+     * Speed indicator to show the lecturer if he is going too fast.
+     */
     public void speedIndicator() {
         double speedInRoom = ServerCommunication.getSpeed(roomID);
         double peopleInRoom = ServerCommunication.retrieveAllUsers(roomID).size();

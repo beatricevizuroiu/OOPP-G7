@@ -51,6 +51,13 @@ public class MockServerConfigurations {
         return questionList;
     }
 
+    /**
+     * Create expectation without body.
+     *
+     * @param path       the path
+     * @param method     the method
+     * @param statusCode the status code
+     */
     public void createExpectationWithoutBody(String path, String method, int statusCode) {
         new MockServerClient("localhost", 8080)
                 .when(
@@ -64,6 +71,14 @@ public class MockServerConfigurations {
                 );
     }
 
+    /**
+     * Create expectation with request body.
+     *
+     * @param path        the path
+     * @param method      the method
+     * @param requestBody the request body
+     * @param statusCode  the status code
+     */
     public void createExpectationWithRequestBody(String path, String method, String requestBody, int statusCode) {
         new MockServerClient("localhost", 8080)
                 .when(
@@ -78,6 +93,14 @@ public class MockServerConfigurations {
                 );
     }
 
+    /**
+     * Create expectation with response body.
+     *
+     * @param path         the path
+     * @param method       the method
+     * @param responseBody the response body
+     * @param statusCode   the status code
+     */
     public void createExpectationWithResponseBody(String path, String method, String responseBody, int statusCode) {
         new MockServerClient("localhost", 8080)
                 .when(
@@ -92,6 +115,15 @@ public class MockServerConfigurations {
                 );
     }
 
+    /**
+     * Create expectation with both bodies.
+     *
+     * @param path         the path
+     * @param method       the method
+     * @param requestBody  the request body
+     * @param responseBody the response body
+     * @param statusCode   the status code
+     */
     public void createExpectationWithBothBodies(String path, String method, String requestBody, String responseBody, int statusCode) {
         new MockServerClient("localhost", 8080)
                 .when(
