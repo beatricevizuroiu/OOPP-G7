@@ -110,4 +110,15 @@ public class ModeratorServerCommunication {
         // send the request to the server
         return HttpMethods.post(uri, body);
     }
+
+    /**
+     * Closes the room for students.
+     * @param roomID ID of the room student belongs.
+     * @param userID ID of the student that will be banned.
+     * @param banReason {@link BanReason} object that contains the reason for ban.
+     * @return A HttpResponse containing the response received from server.
+     */
+    public static HttpResponse<String> closeRoom(String roomID) {
+        //TODO
+    }
 }

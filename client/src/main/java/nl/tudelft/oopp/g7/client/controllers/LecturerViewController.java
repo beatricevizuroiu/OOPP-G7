@@ -229,6 +229,14 @@ public class LecturerViewController {
         //TODO
     }
 
+    /**
+     * Handle button action for closing a room.
+     */
+    public void closeRoom(){
+        ModeratorViewLogic.closeRoom(roomID);
+    }
+
+
 //    public void speedIndicator(){
 //        //TODO
 //    }

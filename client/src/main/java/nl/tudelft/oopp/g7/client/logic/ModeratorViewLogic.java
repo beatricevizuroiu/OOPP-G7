@@ -222,4 +222,11 @@ public class ModeratorViewLogic {
 
         alert.showAndWait();
     }
+
+    /**
+     * Close the room for the students.
+     */
+    public static void closeRoom (String roomID){
+        ModeratorServerCommunication.closeRoom(roomID);
+    }
 }
