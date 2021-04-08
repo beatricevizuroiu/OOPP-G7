@@ -211,7 +211,7 @@ public class RoomController {
          */
     @PostMapping("/{room_id}/speed")
     public ResponseEntity<Void> setRoomSpeed(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
-                                             @RequestBody @NotNull @Valid SpeedAlterRequest speedAlterRequest,
+                                             @RequestBody @NotNull @Valid SpeedAlterRequest SpeedAlterRequest,
                                              @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
                                              HttpServletRequest request) {
 
