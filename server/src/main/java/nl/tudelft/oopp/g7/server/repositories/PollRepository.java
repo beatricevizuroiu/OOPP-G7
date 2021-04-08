@@ -37,7 +37,7 @@ public class PollRepository {
             + "roomID varchar(36) not NULL,"
             + "userID varchar(36) not NULL,"
             + "optionID int not NULL,"
-            + "PRIMARY KEY (pollID, roomID, optionID),"
+            + "PRIMARY KEY (pollID, roomID, userID),"
             + "FOREIGN KEY (pollID) REFERENCES polls(id) ON DELETE CASCADE,"
             + "FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE,"
             + "FOREIGN KEY (roomID) REFERENCES rooms(id) ON DELETE CASCADE,"

@@ -2,7 +2,23 @@ root {
     display: block;
 }
 
+.pollCreateView {
+    -fx-background-color: #3C3C3C;
+}
+
+.background {
+    -fx-background-color: #3C3C3C;
+}
+
 #questionList {
+    -fx-background-color: #3C3C3C;
+}
+
+#pollWindow {
+    -fx-background-color: #3C3C3C;
+}
+
+#pollWindowBox {
     -fx-background-color: #3C3C3C;
 }
 
