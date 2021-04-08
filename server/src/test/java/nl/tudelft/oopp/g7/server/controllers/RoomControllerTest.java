@@ -144,7 +144,14 @@ public class RoomControllerTest {
         // Check if the request completed successfully.
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
-        //TODO finish this test
+        RoomCloseRequest actual = roomController.closePoll(TEST_ROOM_ID, new RoomCloseRequest(0), AUTHORIZATION_STUDENT, request_stud).getBody();
+
+        RoomCloseRequest expected = new RoomCloseRequest();
+
+        assertEquals(expected, actual);
+
+        // Check if the actual is not null.
+        assertNotNull(actual);
     }
 
     @Test
