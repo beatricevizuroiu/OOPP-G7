@@ -34,6 +34,7 @@ public class PollInfo {
      * Construct PollInfo from a resultSet.
      * @param rs The resultSet.
      * @return PollInfo.
+     * @throws SQLException when SQL query fails.
      */
     public static PollInfo fromResultSet(ResultSet rs, boolean noNext) throws SQLException {
         if (noNext || rs.next()) {

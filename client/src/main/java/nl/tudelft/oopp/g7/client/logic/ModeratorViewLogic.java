@@ -300,10 +300,10 @@ public class ModeratorViewLogic {
 
         // Taken from StackOverflow to make alert box text editable
         // https://stackoverflow.com/a/45621264/14196175
-        TextArea textArea = new TextArea(String.format("""
-                        Room ID: %s
-                        Moderator Password: %s
-                        Student Password: %s""",
+        TextArea textArea = new TextArea(String.format(
+                        "Room ID: %s\n"
+                        + "Moderator Password: %s\n"
+                        + "Student Password: %s",
                 LocalData.getRoomID(), LocalData.getModeratorPassword(), LocalData.getStudentPassword()));
         textArea.setEditable(false);
         textArea.setWrapText(true);
