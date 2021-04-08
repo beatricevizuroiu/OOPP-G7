@@ -22,18 +22,26 @@ public class RandomUserName {
     public RandomUserName() {
         animalList = new ArrayList<>();
         colorList = new ArrayList<>();
-        loadUserNameFiles(new File("./animals.txt"), animalList);
-        loadUserNameFiles(new File("./colors.txt"), colorList);
+
+        loadUserNameFiles("./animals.txt", animalList);
+        loadUserNameFiles("./colors.txt", colorList);
     }
 
     /**
      * Loads the contents of the file to a list.
-     * @param nameFile The file whose contents will be read.
+     * @param filePath The path of the file whose contents will be read.
      * @param nameList The list that will be filled.
      */
-    public void loadUserNameFiles(File nameFile, List<String> nameList) {
+    public void loadUserNameFiles(String filePath, List<String> nameList) {
         try {
-            Scanner scanner = new Scanner(nameFile);
+            File file = new File(filePath);
+
+            if (!file.getParentFile().exists())
+                file.getParentFile().mkdirs();
+            if (!file.exists())
+                Util.exportResource(filePath.substring(1), file);
+
+            Scanner scanner = new Scanner(file);
 
             while (scanner.hasNextLine()) {
                 nameList.add(scanner.nextLine());
@@ -52,8 +60,8 @@ public class RandomUserName {
     public static String getRandomUserName() {
         Random random = new Random();
 
-        String randomAnimal = animalList.get(random.nextInt(593));
-        String randomColor = colorList.get(random.nextInt(22));
+        String randomAnimal = animalList.get(random.nextInt(animalList.size() - 1));
+        String randomColor = colorList.get(random.nextInt(colorList.size() - 1));
 
         return String.format("Anonymous %s %s", randomColor, randomAnimal);
     }

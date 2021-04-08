@@ -39,8 +39,10 @@ public class AnsweredQuestionsLogic {
                 Text body = (Text) questionNode.lookup("#QuestionText");
                 Text questionAnswer = (Text) questionNode.lookup("#QuestionAnswer");
 
-                if (questionAnswer.getText().equals("")) {
+                if (question.getAnswer().isBlank()) {
                     questionAnswer.setText("Marked as answered.");
+                } else {
+                    questionAnswer.setText(question.getAnswer());
                 }
 
                 if (isStudent) {
