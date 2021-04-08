@@ -139,7 +139,7 @@ public class RoomControllerTest {
 
     @Test
     void closeRoom() {
-        ResponseEntity<Void> response = roomController.closeRoom(TEST_ROOM_ID, new RoomCloseRequest(true), AUTHORIZATION_MODERATOR, request_mod);
+        ResponseEntity<Void> response = roomController.closeRoom(TEST_ROOM_ID, new RoomCloseRequest, AUTHORIZATION_MODERATOR, request_mod);
 
         // Check if the request completed successfully.
         assertEquals(HttpStatus.OK, response.getStatusCode());
