@@ -54,15 +54,27 @@
             </Insets>
         </padding>
 
-        <VBox fx:id="questionContainer" spacing="20">
-            <padding>
-                <Insets>
-                    <top>5</top>
-                    <right>5</right>
-                    <bottom>5</bottom>
-                    <left>5</left>
-                </Insets>
-            </padding>
+        <VBox spacing="20" styleClass="background">
+            <VBox fx:id="pollWindow">
+                <padding>
+                    <Insets>
+                        <top>5</top>
+                        <right>5</right>
+                        <bottom>5</bottom>
+                        <left>5</left>
+                    </Insets>
+                </padding>
+            </VBox>
+            <VBox fx:id="questionContainer" spacing="20">
+                <padding>
+                    <Insets>
+                        <top>5</top>
+                        <right>5</right>
+                        <bottom>5</bottom>
+                        <left>5</left>
+                    </Insets>
+                </padding>
+            </VBox>
         </VBox>
     </ScrollPane>
 

@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.ModeratorViewLogic;
@@ -29,7 +30,11 @@ public class TAViewController {
     @FXML
     private TextArea answerBox;
     @FXML
+    private Text courseName;
+    @FXML
     private Button postAnswerButton;
+    @FXML
+    public VBox pollWindow;
 
     /**
      * The constructor for TAViewController.
@@ -62,8 +67,9 @@ public class TAViewController {
      * Retrieve all questions to List sorted by new.
      */
     public void retrieveQuestions() {
+        courseName.setText(LocalData.getRoomName());
         // Retrieve all of the questions and then put them into question pane
-        ModeratorViewLogic.retrieveAllQuestions(roomID, answerBox, postAnswerButton, questionContainer, questionList);
+        ModeratorViewLogic.retrieveServerData(roomID, answerBox, postAnswerButton, questionContainer, questionList, pollWindow);
     }
 
     /**
@@ -181,7 +187,22 @@ public class TAViewController {
      *
      */
     public void createPoll(){
-        //TODO
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        EntryRoomDisplay.setCurrentScene("/CreatePoll.fxml");
+    }
+
+
+    /**
+     * Handle button action for creating a poll.
+     *
+     */
+    public void createPoll2(){
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        EntryRoomDisplay.setCurrentScene("/CreatePoll(DARKMODE).fxml");
     }
 
     /**

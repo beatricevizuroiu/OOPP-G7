@@ -44,15 +44,27 @@
                 <left>10</left>
             </Insets>
         </padding>
-        <VBox fx:id="questionContainer" spacing="20">
-            <padding>
-                <Insets>
-                    <top>5</top>
-                    <right>5</right>
-                    <bottom>5</bottom>
-                    <left>5</left>
-                </Insets>
-            </padding>
+        <VBox spacing="20" styleClass="background">
+            <VBox fx:id="pollWindow">
+                <padding>
+                    <Insets>
+                        <top>5</top>
+                        <right>5</right>
+                        <bottom>5</bottom>
+                        <left>5</left>
+                    </Insets>
+                </padding>
+            </VBox>
+            <VBox fx:id="questionContainer" spacing="20">
+                <padding>
+                    <Insets>
+                        <top>5</top>
+                        <right>5</right>
+                        <bottom>5</bottom>
+                        <left>5</left>
+                    </Insets>
+                </padding>
+            </VBox>
         </VBox>
     </ScrollPane>
 
@@ -103,8 +115,8 @@
 
     <!--    <Button fx:id="mode" mnemonicParsing="false" onAction="#handleButtonMode" styleClass="mode-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />-->
 
-        <Button fx:id="poll" mnemonicParsing="false" onAction="#createPoll" styleClass="upvoteBtn" GridPane.columnIndex="1"
-                GridPane.rowIndex="0">
+        <Button fx:id="poll" mnemonicParsing="false" onAction="#createPoll2" styleClass="upvoteBtn" GridPane.columnIndex="1"
+            GridPane.rowIndex="0">
             <graphic>
                 <SVGPath
                     content="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"
