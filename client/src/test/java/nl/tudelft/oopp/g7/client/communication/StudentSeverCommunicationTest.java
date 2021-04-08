@@ -3,8 +3,13 @@ package nl.tudelft.oopp.g7.client.communication;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
-import nl.tudelft.oopp.g7.common.*;
-import org.junit.jupiter.api.*;
+import nl.tudelft.oopp.g7.common.PollAnswerRequest;
+import nl.tudelft.oopp.g7.common.Question;
+import nl.tudelft.oopp.g7.common.QuestionText;
+import nl.tudelft.oopp.g7.common.SortingOrder;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.mockserver.client.MockServerClient;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.verify.VerificationTimes;
@@ -12,11 +17,9 @@ import org.mockserver.verify.VerificationTimes;
 import java.net.http.HttpResponse;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockserver.model.HttpRequest.request;
 
 /**
@@ -113,31 +116,6 @@ public class StudentSeverCommunicationTest {
                 );
 
         assertEquals(500, response.statusCode());
-    }
-
-    @Test
-    void getPoll() {
-        PollOption[] pollOptions = new PollOption[1];
-        PollOption option = new PollOption(1, "Hello", 0);
-        pollOptions[0] = option;
-
-        PollInfo expectedPollInfo = new PollInfo(1, "Question", true, false, pollOptions);
-
-        // mock the endpoint
-        expectations.createExpectationWithResponseBody(path + "poll", "GET", gson.toJson(expectedPollInfo), 200);
-
-        PollInfo pollInfo = StudentServerCommunication.getPoll(roomID);
-
-        // check whether the request has been received by the server
-        new MockServerClient("localhost", 8080)
-                .verify(
-                        request()
-                                .withMethod("GET")
-                                .withPath("/api/v1/room/TestRoomID/poll"),
-                        VerificationTimes.atLeast(1)
-                );
-
-        assertEquals(expectedPollInfo, pollInfo);
     }
 
     @Test

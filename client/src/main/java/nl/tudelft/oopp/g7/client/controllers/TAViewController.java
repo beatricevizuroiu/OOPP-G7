@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.ModeratorViewLogic;
@@ -28,6 +29,8 @@ public class TAViewController {
     private VBox questionContainer;
     @FXML
     private TextArea answerBox;
+    @FXML
+    private Text courseName;
     @FXML
     private Button postAnswerButton;
     @FXML
@@ -64,6 +67,7 @@ public class TAViewController {
      * Retrieve all questions to List sorted by new.
      */
     public void retrieveQuestions() {
+        courseName.setText(LocalData.getRoomName());
         // Retrieve all of the questions and then put them into question pane
         ModeratorViewLogic.retrieveServerData(roomID, answerBox, postAnswerButton, questionContainer, questionList, pollWindow);
     }
