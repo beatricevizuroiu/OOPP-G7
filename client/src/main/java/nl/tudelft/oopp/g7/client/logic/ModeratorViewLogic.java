@@ -37,6 +37,11 @@ public class ModeratorViewLogic {
         retrievePolls(roomID, pollWindow);
     }
 
+    /**
+     * Retrieve any active Poll in a Room.
+     * @param roomId The roomId of the Room to get the Poll from.
+     * @param pollWindowContainer The UI element to put the Poll in.
+     */
     public static void retrievePolls(String roomId, VBox pollWindowContainer) {
         PollInfo poll = ServerCommunication.getPoll(roomId);
         if (poll == null) {
@@ -110,6 +115,9 @@ public class ModeratorViewLogic {
 
     }
 
+    /**
+     * Close any open Poll in a Room.
+     */
     private static void closePoll() {
         ModeratorServerCommunication.closePoll(LocalData.getRoomID(), true);
     }

@@ -31,6 +31,9 @@ public class CreatePollController {
     public OptionsPosition optionsPosition;
     public AtomicBoolean publicResults = new AtomicBoolean(true);
 
+    /**
+     * Construct CreatePollController.
+     */
     public CreatePollController() {
         pollOptions = new ArrayList<>();
         optionsPosition = new OptionsPosition();
@@ -38,14 +41,23 @@ public class CreatePollController {
         CreatePollLogic.reset();
     }
 
+    /**
+     * Send the Poll that has been made.
+     */
     public void sendPoll() {
         CreatePollLogic.sendPoll(pollOptions, questionArea, publicResults);
     }
 
+    /**
+     * Toggle whether students can see the results of a Poll while it is active.
+     */
     public void setResultPublicity() {
         CreatePollLogic.setResultPublicity(publicResults, publicResultsButton);
     }
 
+    /**
+     * Go to the previous window.
+     */
     public void back() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
@@ -54,11 +66,19 @@ public class CreatePollController {
         EntryRoomDisplay.setCurrentScene(targetFile);
     }
 
+    /**
+     * Add an option to the current Poll.
+     * @param actionEvent Unused.
+     */
     public void addOption(ActionEvent actionEvent) {
         CreatePollLogic.addOption(pollOptions, optionArea, optionContainer);
 
     }
 
+    /**
+     * Use the preset as Poll options for the current Poll.
+     * @param mouseEvent Unused.
+     */
     public void presetABC(MouseEvent mouseEvent) {
         pollOptions.clear();
         pollOptions.add("A");
@@ -67,6 +87,10 @@ public class CreatePollController {
         CreatePollLogic.reDrawOptionList(optionContainer, pollOptions, optionArea);
     }
 
+    /**
+     * Use the preset as Poll options for the current Poll.
+     * @param mouseEvent Unused.
+     */
     public void presetABCD(MouseEvent mouseEvent) {
         pollOptions.clear();
         pollOptions.add("A");
@@ -76,6 +100,10 @@ public class CreatePollController {
         CreatePollLogic.reDrawOptionList(optionContainer, pollOptions, optionArea);
     }
 
+    /**
+     * Use the preset as Poll options for the current Poll.
+     * @param mouseEvent Unused.
+     */
     public void presetABCDE(MouseEvent mouseEvent) {
         pollOptions.clear();
         pollOptions.add("A");
@@ -86,6 +114,10 @@ public class CreatePollController {
         CreatePollLogic.reDrawOptionList(optionContainer, pollOptions, optionArea);
     }
 
+    /**
+     * Use the preset as Poll options for the current Poll.
+     * @param mouseEvent Unused.
+     */
     public void presetABCDEF(MouseEvent mouseEvent) {
         pollOptions.clear();
         pollOptions.add("A");
@@ -97,6 +129,10 @@ public class CreatePollController {
         CreatePollLogic.reDrawOptionList(optionContainer, pollOptions, optionArea);
     }
 
+    /**
+     * Use the preset as Poll options for the current Poll.
+     * @param mouseEvent Unused.
+     */
     public void presetYesNo(MouseEvent mouseEvent) {
         pollOptions.clear();
         pollOptions.add("Yes");
@@ -104,6 +140,10 @@ public class CreatePollController {
         CreatePollLogic.reDrawOptionList(optionContainer, pollOptions, optionArea);
     }
 
+    /**
+     * Use the preset as Poll options for the current Poll.
+     * @param mouseEvent Unused.
+     */
     public void presetTrueFalse(MouseEvent mouseEvent) {
         pollOptions.clear();
         pollOptions.add("True");
@@ -114,8 +154,7 @@ public class CreatePollController {
 
     /**
      * Handle button action for going back to lecturer view (light).
-     *
-     * @param event the event
+     * @param event the event.
      */
     public void goBackButtonLight(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();
@@ -131,8 +170,7 @@ public class CreatePollController {
 
     /**
      * Handle button action for going back to lecturer view (dark).
-     *
-     * @param event the event
+     * @param event the event.
      */
     public void goBackButtonDark(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();
@@ -148,8 +186,7 @@ public class CreatePollController {
 
     /**
      * Handle button action for button Mode from Light to Dark.
-     *
-     * @param event the event
+     * @param event the event.
      */
     public void handleButtonMode(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();
@@ -161,8 +198,7 @@ public class CreatePollController {
 
     /**
      * Handle button action for button Mode from Dark to Light.
-     *
-     * @param event the event
+     * @param event the event.
      */
     public void handleButtonMode2(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();
@@ -174,8 +210,7 @@ public class CreatePollController {
 
     /**
      * Handle button action for Help Button Light Mode.
-     *
-     * @param event the event
+     * @param event the event.
      */
     public void handleHelpButtonLight(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();
@@ -191,8 +226,7 @@ public class CreatePollController {
 
     /**
      * Handle button action for Help Button Dark Mode.
-     *
-     * @param event the event
+     * @param event the event.
      */
     public void handleHelpButtonDark(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();

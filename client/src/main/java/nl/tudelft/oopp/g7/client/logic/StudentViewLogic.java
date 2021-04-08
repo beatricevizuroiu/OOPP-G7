@@ -2,9 +2,7 @@ package nl.tudelft.oopp.g7.client.logic;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -15,14 +13,10 @@ import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.PollInfo;
 import nl.tudelft.oopp.g7.common.PollOption;
 import nl.tudelft.oopp.g7.common.Question;
-import nl.tudelft.oopp.g7.common.UserInfo;
-import nl.tudelft.oopp.g7.common.UserRole;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class StudentViewLogic {
     private static final HashMap<Integer, Integer> selectedPollOptions = new HashMap<>();
@@ -32,6 +26,11 @@ public class StudentViewLogic {
         retrievePolls(roomID, pollWindow);
     }
 
+    /**
+     * Retrieve any active Poll in a Room.
+     * @param roomId The roomId of the Room to get the Poll from.
+     * @param pollWindowContainer The UI element to put the Poll in.
+     */
     public static void retrievePolls(String roomId, VBox pollWindowContainer) {
         PollInfo poll = ServerCommunication.getPoll(roomId);
         if (poll == null) {
