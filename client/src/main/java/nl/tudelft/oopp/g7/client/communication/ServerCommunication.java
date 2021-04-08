@@ -235,7 +235,10 @@ public class ServerCommunication {
             return null;
         }
 
-        // parse and return the PollInfo
-        return gson.fromJson(response.body(), PollInfo.class);
+        // Get gson nonsense.
+        PollInfo result = gson.fromJson(response.body(), PollInfo.class);
+
+        // return the PollInfo
+        return result;
     }
 }

@@ -23,8 +23,8 @@
             </Insets>
         </padding>
         <HBox id="pollText">
-            <HBox styleClass="pollTextBox">
-                <Text text="POLL" styleClass="pollText">
+            <HBox id="pollTextBox" styleClass="pollTextBox">
+                <Text id="pollLabelText" text="POLL" styleClass="pollText">
                     <font>
                         <Font name="System" />
                     </font>

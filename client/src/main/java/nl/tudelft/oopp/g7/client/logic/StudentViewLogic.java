@@ -40,6 +40,17 @@ public class StudentViewLogic {
             String pollWindowComponentName = EntryRoomDisplay.isDarkMode() ? "/components/PollWindow(DARKMODE).fxml" : "/components/PollWindow.fxml";
             HBox pollWindow = FXMLLoader.load(StudentViewLogic.class.getResource(pollWindowComponentName));
 
+            Text pollLabel = (Text) pollWindow.lookup("#pollLabelText");
+            HBox pollTextBox = (HBox) pollWindow.lookup("#pollTextBox");
+
+            if (!poll.isAcceptingAnswers()) {
+                pollTextBox.setStyle("-fx-background-color: #cf5454");
+                pollLabel.setText("CLOSED POLL");
+            } else {
+                pollTextBox.setStyle("-fx-background-color: #9251ba");
+                pollLabel.setText("POLL");
+            }
+
             pollWindow.lookup("#deleteButton").setVisible(false);
 
             HBox optionContainer = (HBox) pollWindow.lookup("#PollWindowOptionContainer");
@@ -89,8 +100,10 @@ public class StudentViewLogic {
                 }
 
                 optionNode.setOnMouseClicked((event) -> {
-                    StudentServerCommunication.answerPoll(roomId, pollOption.getId());
-                    selectedPollOptions.put(poll.getId(), pollOption.getId());
+                    if (poll.isAcceptingAnswers()){
+                        StudentServerCommunication.answerPoll(roomId, pollOption.getId());
+                        selectedPollOptions.put(poll.getId(), pollOption.getId());
+                    }
                 });
 
                 currContainer.getChildren().add(optionNode);
@@ -101,6 +114,7 @@ public class StudentViewLogic {
             List<Node> children = pollWindowContainer.getChildren();
             children.clear();
             children.add(pollWindow);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

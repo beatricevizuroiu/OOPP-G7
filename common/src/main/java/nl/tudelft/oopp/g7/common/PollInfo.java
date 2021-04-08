@@ -23,7 +23,7 @@ public class PollInfo {
     @NotNull @NotEmpty
     private String question;
     // Whether the poll is currently accepting answers.
-    private boolean isAcceptingAnswers;
+    private boolean acceptingAnswers;
     // Whether the poll info has result information.
     private boolean hasResults;
     // The options the user can select and possibly their results.

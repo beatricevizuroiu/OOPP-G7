@@ -50,10 +50,24 @@ public class ModeratorViewLogic {
         try {
             String pollWindowComponentName = EntryRoomDisplay.isDarkMode() ? "/components/PollWindow(DARKMODE).fxml" : "/components/PollWindow.fxml";
             HBox pollWindow = FXMLLoader.load(StudentViewLogic.class.getResource(pollWindowComponentName));
+            Button closeButton = (Button) pollWindow.lookup("#deleteButton");
 
-            ((Button) pollWindow.lookup("#deleteButton")).setOnAction((event) -> {
+            closeButton.setOnAction((event) -> {
                 closePoll();
             });
+
+            Text pollLabel = (Text) pollWindow.lookup("#pollLabelText");
+            HBox pollTextBox = (HBox) pollWindow.lookup("#pollTextBox");
+
+            if (!poll.isAcceptingAnswers()) {
+                pollTextBox.setStyle("-fx-background-color: #cf5454");
+                pollLabel.setText("CLOSED POLL");
+                closeButton.setVisible(false);
+            } else {
+                pollTextBox.setStyle("-fx-background-color: #9251ba");
+                pollLabel.setText("POLL");
+                closeButton.setVisible(true);
+            }
 
             HBox optionContainer = (HBox) pollWindow.lookup("#PollWindowOptionContainer");
             List<Node> optionNodes = optionContainer.getChildren();
@@ -109,6 +123,7 @@ public class ModeratorViewLogic {
             List<Node> children = pollWindowContainer.getChildren();
             children.clear();
             children.add(pollWindow);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
