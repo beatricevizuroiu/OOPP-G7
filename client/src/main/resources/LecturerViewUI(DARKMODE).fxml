@@ -87,49 +87,57 @@
 
     <FlowPane alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.columnSpan="2">
 
-    <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionListDark" styleClass="answered-question-button" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="0" />
+        <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionListDark" styleClass="answered-question-button" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="0" />
 
-    <Button fx:id="userList" mnemonicParsing="false" onAction="#listofUsersDark" styleClass="upvoteBtn"
-            GridPane.columnIndex="1" GridPane.rowIndex="0">
-        <graphic>
-            <SVGPath
+        <Button fx:id="userList" mnemonicParsing="false" onAction="#listofUsersDark" styleClass="upvoteBtn"
+                GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <graphic>
+                <SVGPath
                     content="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
                     fill="WHITE" styleClass="link-button"/>
-        </graphic>
-        <GridPane.margin>
-            <Insets left="790.0"/>
-        </GridPane.margin>
-    </Button>
+            </graphic>
+            <GridPane.margin>
+                <Insets left="790.0"/>
+            </GridPane.margin>
+        </Button>
 
     <!--    <Button fx:id="mode" mnemonicParsing="false" onAction="#handleButtonMode" styleClass="mode-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />-->
 
-    <Button fx:id="poll" mnemonicParsing="false" onAction="#createPoll" styleClass="upvoteBtn" GridPane.columnIndex="1"
-            GridPane.rowIndex="0">
-        <graphic>
-            <SVGPath
+        <Button fx:id="poll" mnemonicParsing="false" onAction="#createPoll" styleClass="upvoteBtn" GridPane.columnIndex="1"
+                GridPane.rowIndex="0">
+            <graphic>
+                <SVGPath
                     content="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"
                     fill="WHITE" styleClass="link-button"/>
-        </graphic>
-        <GridPane.margin>
-            <Insets left="840.0"/>
-        </GridPane.margin>
-    </Button>
+            </graphic>
+            <GridPane.margin>
+                <Insets left="840.0"/>
+            </GridPane.margin>
+        </Button>
 
-    <Button fx:id="export" mnemonicParsing="false" onAction="#exportQuestions" styleClass="upvoteBtn"
+        <Button fx:id="export" mnemonicParsing="false" onAction="#exportQuestions" styleClass="upvoteBtn"
             GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="0">
-        <graphic>
-            <SVGPath content="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" fill="WHITE" styleClass="link-button"/>
-        </graphic>
-    </Button>
+            <graphic>
+                <SVGPath content="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" fill="WHITE" styleClass="link-button"/>
+            </graphic>
+        </Button>
 
-    <Button id="link" mnemonicParsing="false" onAction="#createLink" styleClass="upvoteBtn" GridPane.columnIndex="2"
-            GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
-        <graphic>
-            <SVGPath
+        <Button id="link" mnemonicParsing="false" onAction="#createLink" styleClass="upvoteBtn" GridPane.columnIndex="2"
+                GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+            <graphic>
+                <SVGPath
                     content="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"
                     fill="WHITE" styleClass="link-button"/>
-        </graphic>
-    </Button>
+            </graphic>
+        </Button>
+
+        <Button id="closeRoom" mnemonicParsing="false" onAction="#closeRoom" styleClass="upvoteBtn" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+            <graphic>
+                <SVGPath
+                        content="M14.59 8L12 10.59 9.41 8 8 9.41 10.59 12 8 14.59 9.41 16 12 13.41 14.59 16 16 14.59 13.41 12 16 9.41 14.59 8zM12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                        styleClass="link-button"/>
+            </graphic>
+        </Button>
     <!--TODO: speed indicator -->
     </FlowPane>
 </GridPane>
