@@ -8,7 +8,6 @@ import nl.tudelft.oopp.g7.common.Room;
 import nl.tudelft.oopp.g7.common.SortingOrder;
 
 import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.Date;
 
 public class CreateRoomLogic {
@@ -26,10 +25,10 @@ public class CreateRoomLogic {
         alert.setTitle("Create Room");
         alert.setHeaderText(null);
 
-//      body of pop-up with what the user entered
-        alert.setContentText(String.format("""
-                        You are creating the room for the Course: "%s"
-                        This course is held by the lecturer: "%s".""",
+        // body of pop-up with what the user entered
+        alert.setContentText(String.format(
+                        "You are creating the room for the Course: %s\n"
+                        + "This course is held by the lecturer: %s.",
                 roomName.getText(), lecturerName.getText()));
 
         alert.getDialogPane().setPrefHeight(150);
@@ -61,6 +60,12 @@ public class CreateRoomLogic {
         LocalData.setLecturer(true);
     }
 
+    /**
+     * Get the Date and Time from the datepicker.
+     * @param startDate Date the Room should open at.
+     * @param startTime Time the Room should open at.
+     * @return The {@link Date} the Room should open at.
+     */
     public static Date getTimeAndDateFromUI(DatePicker startDate, TextField startTime) {
         LocalDate date = startDate.getValue();
         Date time = parseStringToTime(startTime.getText());

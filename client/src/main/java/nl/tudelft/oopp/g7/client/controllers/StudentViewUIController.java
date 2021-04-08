@@ -6,7 +6,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
@@ -36,6 +41,12 @@ public class StudentViewUIController {
     // area to type the question
     @FXML
     public TextArea answerBox;
+
+    @FXML
+    private Text courseName;
+
+    @FXML
+    public VBox pollWindow;
 
     @FXML
     public Button colorSlow;
@@ -74,7 +85,8 @@ public class StudentViewUIController {
      * Retrieve all questions to List sorted by new.
      */
     public void retrieveQuestions() {
-        StudentViewLogic.retrieveAllQuestions(roomID, questionContainer, questionList);
+        courseName.setText(LocalData.getRoomName());
+        StudentViewLogic.retrieveServerData(roomID, questionContainer, questionList, pollWindow);
     }
 
     /**
@@ -110,6 +122,7 @@ public class StudentViewUIController {
         retrieveQuestions();
     }
 
+<<<<<<< HEAD
     /**
      * Upvote questions.
      *
@@ -127,6 +140,23 @@ public class StudentViewUIController {
     public void removeUpvoteQuestion(int questionId) {
         StudentViewLogic.removeUpvoteQuestion(roomID, questionId, questionContainer, questionList);
     }
+=======
+//    /**
+//     * Upvote questions.
+//     * @param questionId the id of the question that is being upvoted
+//     */
+//    public void upvoteQuestion(int questionId) {
+//        StudentViewLogic.upvoteQuestion(roomID, questionId, questionContainer, questionList);
+//    }
+//
+//    /**
+//     * Remove Upvote of questions.
+//     * @param questionId the id of the question that is being down-voted
+//     */
+//    public void removeUpvoteQuestion(int questionId) {
+//        StudentViewLogic.removeUpvoteQuestion(roomID, questionId, questionContainer, questionList);
+//    }
+>>>>>>> development
 
     /**
      * Handle button action for button Mode from Light to Dark.

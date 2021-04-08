@@ -22,7 +22,7 @@
     </rowConstraints>
 
     <HBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
-        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" Course Name"/>
+        <Text  fx:id="courseName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" Course Name"/>
     </HBox>
 
     <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2"/>
@@ -37,7 +37,28 @@
                 <left>20</left>
             </Insets>
         </padding>
-        <VBox fx:id="questionContainer" spacing="20"/>
+        <VBox spacing="20" styleClass="background">
+            <VBox fx:id="pollWindow">
+                <padding>
+                    <Insets>
+                        <top>5</top>
+                        <right>5</right>
+                        <bottom>5</bottom>
+                        <left>5</left>
+                    </Insets>
+                </padding>
+            </VBox>
+            <VBox fx:id="questionContainer" spacing="20">
+                <padding>
+                    <Insets>
+                        <top>5</top>
+                        <right>5</right>
+                        <bottom>5</bottom>
+                        <left>5</left>
+                    </Insets>
+                </padding>
+            </VBox>
+        </VBox>
     </ScrollPane>
 
     <TextArea fx:id="answerBox" prefHeight="95.0" prefWidth="885.0" promptText="Type your answer here" GridPane.columnIndex="1" GridPane.rowIndex="2"/>

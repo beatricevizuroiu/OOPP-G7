@@ -25,7 +25,7 @@
     </rowConstraints>
 
     <HBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
-        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" Course Name"/>
+        <Text fx:id="courseName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" Course Name"/>
     </HBox>
 
     <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="3"/>
@@ -38,37 +38,33 @@
                 <left>10</left>
             </Insets>
         </padding>
-        <VBox fx:id="questionContainer" spacing="20">
-            <padding>
-                <Insets>
-                    <top>5</top>
-                    <right>5</right>
-                    <bottom>5</bottom>
-                    <left>5</left>
-                </Insets>
-            </padding>
+        <VBox spacing="20" styleClass="background">
+            <VBox fx:id="pollWindow">
+                <padding>
+                    <Insets>
+                        <top>5</top>
+                        <right>5</right>
+                        <bottom>5</bottom>
+                        <left>5</left>
+                    </Insets>
+                </padding>
+            </VBox>
+            <VBox fx:id="questionContainer" spacing="20">
+                <padding>
+                    <Insets>
+                        <top>5</top>
+                        <right>5</right>
+                        <bottom>5</bottom>
+                        <left>5</left>
+                    </Insets>
+                </padding>
+            </VBox>
         </VBox>
     </ScrollPane>
 
-<<<<<<< HEAD
-    <TextArea fx:id="answerBox" prefHeight="95.0" prefWidth="885.0" promptText="Type your question here"
-              GridPane.columnIndex="1" GridPane.rowIndex="3">
-        <font>
-            <Font name="Book Antiqua" size="21.0"/>
-        </font>
-    </TextArea>
-
-    <Button fx:id="postQuestionButton" mnemonicParsing="false" onAction="#sendQuestion" styleClass="button"
-            text="Post Question" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="3">
-        <font>
-            <Font name="Book Antiqua Bold" size="15.0"/>
-        </font>
-    </Button>
-=======
     <TextArea fx:id="answerBox" prefHeight="95.0" prefWidth="885.0" promptText="Type your question here" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
     <Button fx:id="postQuestionButton" mnemonicParsing="false" onAction="#sendQuestion" styleClass="button" text="Post Question" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
->>>>>>> update/last_week_Mehmet_edits
 
     <!--    Main Buttons    -->
     <Button mnemonicParsing="false" onAction="#handleButtonMode2" text="Mode" GridPane.halignment="CENTER"
@@ -152,17 +148,8 @@
             <Insets left="790.0"/>
         </GridPane.margin>
     </Button>
-<<<<<<< HEAD
 
-
-    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonLight" styleClass="help-button"
-            textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2"/>
-    <!--    <Button fx:id="mode" mnemonicParsing="false" onAction="#handleButtonMode" styleClass="mode-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />-->
-
-
-=======
     <!--    <Button fx:id="mode" mnemonicParsing="false" onAction="#handleButtonMode" styleClass="mode-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />-->
     </FlowPane>
     <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonLight" styleClass="help-button" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
->>>>>>> update/last_week_Mehmet_edits
 </GridPane>

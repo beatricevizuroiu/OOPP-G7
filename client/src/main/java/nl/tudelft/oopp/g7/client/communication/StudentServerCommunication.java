@@ -68,29 +68,4 @@ public class StudentServerCommunication {
         // send the request to the server
         return HttpMethods.post(uri, body);
     }
-
-    public static HttpResponse<String> deleteQuestion(String roomID, int questionID) {
-        return ServerCommunication.deleteQuestion(roomID, questionID);
-    }
-
-    /**
-     * Try to retrieve a poll.
-     * @param roomId The roomId to retrieve a Poll from.
-     * @return PollInfo if successful, null if not.
-     */
-    public static PollInfo getPoll(String roomId) {
-        // add the appropriate end-point
-        URI uri = URI.create(uriBody + roomId + "/poll");
-
-        // send the request to the server
-        HttpResponse<String> response = HttpMethods.get(uri);
-
-        // check if a Poll was successfully retrieved
-        if (response.statusCode() != 200) {
-            return null;
-        }
-
-        // parse and return the PollInfo
-        return gson.fromJson(response.body(), PollInfo.class);
-    }
 }

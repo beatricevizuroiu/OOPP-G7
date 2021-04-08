@@ -46,15 +46,9 @@ public class HttpMethods {
     public static HttpResponse<String> get(URI uri) {
         // create the GET request
         HttpRequest.Builder request =  HttpRequest.newBuilder().GET().uri(uri);
+
         // send the request through the http client and store the response
-        HttpResponse<String> response = send(request);
-
-        // if the status is anything other than 200 (OK), a problem should've occurred
-        if (response.statusCode() != 200) {
-            System.out.println("A problem occurred.");
-        }
-
-        return response;
+        return send(request);
     }
 
     /**
@@ -67,14 +61,9 @@ public class HttpMethods {
         // create a POST request object with a body of JSON
         HttpRequest.Builder request = HttpRequest.newBuilder().POST(HttpRequest.BodyPublishers.ofString(body))
                                          .uri(uri).header("Content-Type", "application/json");
+
         // send the request through the http client and store the response
-        HttpResponse<String> response = send(request);
-
-        if (response.statusCode() != 200) {
-            System.out.println("A problem occurred.");
-        }
-
-        return response;
+        return send(request);
     }
 
     /**
@@ -86,15 +75,8 @@ public class HttpMethods {
         // create a DELETE request object, the deleted resource will have a JSON body
         HttpRequest.Builder request = HttpRequest.newBuilder().DELETE()
                                          .uri(uri).header("Content-Type", "application/json");
+
         // send the request through the http client and store the response
-        HttpResponse<String> response = send(request);
-
-        if (response.statusCode() == 404) { // in the case of (NOT FOUND)
-            System.out.println("Resource doesn't exist.");
-        } else if (response.statusCode() != 200) {
-            System.out.println("A problem occurred.");
-        }
-
-        return response;
+        return send(request);
     }
 }

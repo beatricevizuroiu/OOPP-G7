@@ -4,8 +4,10 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lombok.Getter;
+import nl.tudelft.oopp.g7.client.logic.LocalData;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,8 +25,12 @@ public class EntryRoomDisplay extends Application {
         FXMLLoader loader = new FXMLLoader();
 
         URL xmlUrl = getClass().getResource("/entryPage.fxml");
+
         loader.setLocation(xmlUrl);
         Parent root = loader.load();
+
+        primaryStage.setTitle("RaisedHand");
+        currentStage.getIcons().add(new Image("/icons/hand.png"));
 
         currentScene = new Scene(root);
 
@@ -56,6 +62,12 @@ public class EntryRoomDisplay extends Application {
             currentStage.setScene(currentScene);
 
             currentScene.getStylesheets().add("/fonts/fonts.css");
+
+            if (LocalData.getRoomName() != null && !"".equals(LocalData.getRoomName())) {
+                currentStage.setTitle("RaisedHand: " + LocalData.getRoomName());
+            } else {
+                currentStage.setTitle("RaisedHand");
+            }
 
             currentStage.show();
 

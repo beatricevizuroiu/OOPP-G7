@@ -36,6 +36,9 @@ public class CreateRoomController {
     @FXML
     CheckBox scheduleCheckbox;
 
+    /**
+     * Create the current date.
+     */
     @FXML
     public void initialize() {
         Date currentDate = new Date();
@@ -45,7 +48,6 @@ public class CreateRoomController {
 
     /**
      * Handle button action for button Mode from Light.
-     *
      * @param event the event
      */
     public void handleButtonMode(ActionEvent event) {
@@ -58,8 +60,7 @@ public class CreateRoomController {
 
     /**
      * Handle button action for button Mode from Dark.
-     *
-     * @param event the event
+     * @param event the event.
      */
     public void handleButtonMode2(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();

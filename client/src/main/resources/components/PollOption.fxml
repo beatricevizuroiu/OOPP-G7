@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.text.Text?>
+<HBox xmlns="http://javafx.com/javafx"
+      stylesheets="@PollWindow.css"
+      xmlns:fx="http://javafx.com/fxml"
+      styleClass="pollOption">
+    <padding>
+        <Insets>
+            <right>10</right>
+            <bottom>5</bottom>
+            <left>10</left>
+        </Insets>
+    </padding>
+    <Text text="Option" id="PollOptionLabel" styleClass="pollOptionLabel" />
+    <Region HBox.hgrow="ALWAYS" />
+    <Text id="PollOptionCount" styleClass="pollOptionCount" />
+</HBox>
