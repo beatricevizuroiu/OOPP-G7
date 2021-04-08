@@ -238,7 +238,7 @@ public class StudentViewUIController {
         colorSlow.setVisible(true);
         PauseTransition transition = new PauseTransition(Duration.seconds(3));
         transition.setOnFinished(event -> colorSlow.setVisible(false));
-        ServerCommunication.setSpeed(roomID, -1);
+        ServerCommunication.setSpeed(roomID, 1);
 
         transition.play();
     }
@@ -250,7 +250,7 @@ public class StudentViewUIController {
         colorFast.setVisible(true);
         PauseTransition transition = new PauseTransition(Duration.seconds(3));
         transition.setOnFinished(event -> colorFast.setVisible(false));
-        ServerCommunication.setSpeed(roomID, 1);
+        ServerCommunication.setSpeed(roomID, -1);
 
         transition.play();
     }

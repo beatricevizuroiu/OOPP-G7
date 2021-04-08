@@ -57,15 +57,13 @@
                     </graphic>
                 </Button>
 
-                <Circle fx:id="circle1" fill="WHITE" layoutX="63.0" layoutY="109.0" radius="22.0" stroke="BLACK"
+                <Circle fx:id="circle1" fill="WHITE" layoutX="63.0" layoutY="142.0" radius="22.0" stroke="BLACK"
                         strokeType="INSIDE" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                <Circle fx:id="circle2" fill="WHITE" layoutX="63.0" layoutY="156.0" radius="22.0" stroke="BLACK"
+                <Circle fx:id="circle2" fill="WHITE" layoutX="63.0" layoutY="189.0" radius="22.0" stroke="BLACK"
                         strokeType="INSIDE" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                <Circle fx:id="circle3" fill="WHITE" layoutX="63.0" layoutY="204.0" radius="22.0" stroke="BLACK"
+                <Circle fx:id="circle3" fill="WHITE" layoutX="63.0" layoutY="236.0" radius="22.0" stroke="BLACK"
                         strokeType="INSIDE" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                <Circle fx:id="circle4" fill="WHITE" layoutX="63.0" layoutY="251.0" radius="22.0" stroke="BLACK"
-                        strokeType="INSIDE" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                <Circle fx:id="circle5" fill="WHITE" layoutX="63.0" layoutY="298.0" radius="22.0" stroke="BLACK"
+                <Circle fx:id="circle4" fill="WHITE" layoutX="63.0" layoutY="282.0" radius="22.0" stroke="BLACK"
                         strokeType="INSIDE" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
 
             </AnchorPane>
