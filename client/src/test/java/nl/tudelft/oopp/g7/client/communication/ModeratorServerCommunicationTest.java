@@ -3,10 +3,7 @@ package nl.tudelft.oopp.g7.client.communication;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
-import nl.tudelft.oopp.g7.common.BanReason;
-import nl.tudelft.oopp.g7.common.Question;
-import nl.tudelft.oopp.g7.common.QuestionText;
-import nl.tudelft.oopp.g7.common.SortingOrder;
+import nl.tudelft.oopp.g7.common.*;
 import org.junit.jupiter.api.*;
 import org.mockserver.client.MockServerClient;
 import org.mockserver.integration.ClientAndServer;
@@ -23,6 +20,7 @@ import static org.mockserver.model.HttpRequest.request;
 
 
 public class ModeratorServerCommunicationTest {
+    private static List<Question> questionList;
     private static MockServerConfigurations expectations;
     private static ClientAndServer mockServer;
     private static String userID = "TEST";
@@ -35,20 +33,22 @@ public class ModeratorServerCommunicationTest {
         // initialize the expectation class
         expectations = new MockServerConfigurations();
         mockServer = ClientAndServer.startClientAndServer(8080);
+
+        questionList = expectations.getQuestionList();
     }
 
     @AfterAll
     static void stopServer() {
         mockServer.stop();
-        while (!mockServer.hasStopped(3,100L, TimeUnit.MILLISECONDS)){}
     }
 
     @Test
     void retrieveAllQuestions() {
-        // mock the endpoint
-        expectations.createExpectationAll();
-
         LocalData.setSortingOrder(SortingOrder.UPVOTES);
+        List<Question> expectedQuestionList = questionList.stream().filter(q -> !q.isAnswered()).collect(Collectors.toList());
+
+        // mock the endpoint
+        expectations.createExpectationWithResponseBody(path + "question/all", "GET", gson.toJson(expectedQuestionList), 200);
 
         List<Question> questionList = ModeratorServerCommunication.retrieveAllQuestions(roomID);
 
@@ -62,19 +62,18 @@ public class ModeratorServerCommunicationTest {
                 );
 
         // get a sorted list
-        List<Question> expectedList = expectations.getQuestionList();
-        expectedList = expectedList.stream().sorted(Comparator.comparing(Question::getUpvotes).reversed())
+        expectedQuestionList = expectedQuestionList.stream().sorted(Comparator.comparing(Question::getUpvotes).reversed())
                 .collect(Collectors.toList());
 
-        assertEquals(expectedList, questionList);
+        assertEquals(expectedQuestionList, questionList);
     }
 
     @Test
     void answerQuestionWorks() {
-        // mock the endpoint
-        expectations.createExpectationAnswerQuestionWorks(1);
+        Answer answer = new Answer("This is an answer.");
 
-        QuestionText answer = new QuestionText("This is an answer.");
+        // mock the endpoint
+        expectations.createExpectationWithRequestBody(path + "question/" + 1 + "/answer", "POST", gson.toJson(answer), 200);
 
         HttpResponse<String> response = ModeratorServerCommunication.answerQuestion(roomID, 1, answer);
 
@@ -92,10 +91,10 @@ public class ModeratorServerCommunicationTest {
 
     @Test
     void answerQuestionsNotWorks() {
-        // mock the endpoint
-        expectations.createExpectationAnswerQuestionNotWorks();
+        Answer answer = new Answer("This is an answer.");
 
-        QuestionText answer = new QuestionText("This is an answer.");
+        // mock the endpoint
+        expectations.createExpectationWithRequestBody(path + "question/" + 5 + "/answer", "POST", gson.toJson(answer), 404);
 
         HttpResponse<String> response = ModeratorServerCommunication.answerQuestion(roomID, 5, answer);
 
@@ -112,11 +111,30 @@ public class ModeratorServerCommunicationTest {
     }
 
     @Test
-    void banUser() {
+    void markAsAnswered() {
         // mock the endpoint
-        expectations.createExpectationBanUser(userID);
+        expectations.createExpectationWithoutBody(path + "question/" + 1 + "/answer", "POST", 200);
 
+        HttpResponse<String> response = ModeratorServerCommunication.markAsAnswered(roomID, 1);
+
+        new MockServerClient("localhost", 8080)
+                .verify(
+                        request()
+                                .withMethod("POST")
+                                .withPath(path + "question/" + 1 + "/answer")
+                                .withBody(""),
+                        VerificationTimes.atLeast(1)
+                );
+
+        assertEquals(200, response.statusCode());
+    }
+
+    @Test
+    void banUser() {
         BanReason banReason = new BanReason("");
+
+        // mock the endpoint
+        expectations.createExpectationWithRequestBody(path + "user/" + userID + "/ban", "POST", gson.toJson(banReason), 200);
 
         HttpResponse<String> response = ModeratorServerCommunication.banUser(roomID, userID, banReason);
 
@@ -125,7 +143,53 @@ public class ModeratorServerCommunicationTest {
                         request()
                                 .withMethod("POST")
                                 .withPath(path + "user/" + userID + "/ban")
-                                .withBody(gson.toJson(new BanReason(""))),
+                                .withBody(gson.toJson(banReason)),
+                        VerificationTimes.atLeast(1)
+                );
+
+        assertEquals(200, response.statusCode());
+    }
+
+    @Test
+    void createPoll() {
+        String[] options = new String[1];
+        options[0] = "Option 1";
+
+        PollCreateRequest pollCreateRequest = new PollCreateRequest("Question", options, true);
+
+        // mock the endpoint
+        expectations.createExpectationWithRequestBody(path + "poll", "POST", gson.toJson(pollCreateRequest), 200);
+
+        HttpResponse<String> response = ModeratorServerCommunication.createPoll(roomID, "Question", options, true);
+
+        // check whether the request has been received by the server
+        new MockServerClient("localhost", 8080)
+                .verify(
+                        request()
+                                .withMethod("POST")
+                                .withPath("/api/v1/room/TestRoomID/poll")
+                                .withBody(gson.toJson(pollCreateRequest)),
+                        VerificationTimes.atLeast(1)
+                );
+
+        assertEquals(200, response.statusCode());
+    }
+
+    @Test
+    void closePoll() {
+        PollCloseRequest pollCloseRequest = new PollCloseRequest(true);
+
+        // mock the endpoint
+        expectations.createExpectationWithRequestBody(path + "poll/close", "POST", gson.toJson(pollCloseRequest), 200);
+
+        HttpResponse<String> response = ModeratorServerCommunication.closePoll(roomID, true);
+
+        // check whether the request has been received by the server
+        new MockServerClient("localhost", 8080)
+                .verify(
+                        request()
+                                .withMethod("POST")
+                                .withPath("/api/v1/room/TestRoomID/poll/close"),
                         VerificationTimes.atLeast(1)
                 );
 

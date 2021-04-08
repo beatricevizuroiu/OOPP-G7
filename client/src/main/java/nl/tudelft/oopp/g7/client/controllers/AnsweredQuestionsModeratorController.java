@@ -32,7 +32,8 @@ public class AnsweredQuestionsModeratorController {
     /**
      * Startup routine.
      */
-    public AnsweredQuestionsModeratorController() {
+    @FXML
+    public void initialize() {
         // Start a timer and create a separate thread on it to automatically call retrieveQuestions()
         Timer timer = new Timer(true);
 
@@ -49,7 +50,7 @@ public class AnsweredQuestionsModeratorController {
      * Retrieve Questions.
      */
     public void retrieveQuestions() {
-        AnsweredQuestionsLogic.retrieveAllAnsweredQuestions(answeredQuestionContainer, answeredQuestionList);
+        AnsweredQuestionsLogic.retrieveAllAnsweredQuestions(false, answeredQuestionContainer, answeredQuestionList);
     }
 
     /**

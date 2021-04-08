@@ -51,7 +51,12 @@ public class StudentViewUIController {
     public StudentViewUIController() {
         roomID = LocalData.getRoomID();
         nickname = LocalData.getNickname();
+    }
 
+    /**
+     * Start-up routine.
+     */
+    public void initialize() {
         // Start a timer and create a separate thread on it to automatically call retrieveQuestions()
         Timer timer = new Timer(true);
 
@@ -61,7 +66,7 @@ public class StudentViewUIController {
             public void run() {
                 Platform.runLater(reference::retrieveQuestions);
             }
-        }, 0L, 500L);
+        }, 0L, 5000L);
     }
 
     /**
@@ -98,7 +103,7 @@ public class StudentViewUIController {
                 alert.showAndWait();
                 return;
             }
-            System.err.println("A ratelimit status was returned but the rate limit header does not exist!");
+            System.err.println("A rate limit status was returned but the rate limit header does not exist!");
         }
         answerBox.setText("");
         retrieveQuestions();
@@ -112,6 +117,13 @@ public class StudentViewUIController {
         StudentViewLogic.upvoteQuestion(roomID, questionId, questionContainer, questionList);
     }
 
+    /**
+     * Remove Upvote of questions.
+     * @param questionId the id of the question that is being down-voted
+     */
+    public void removeUpvoteQuestion(int questionId) {
+        StudentViewLogic.removeUpvoteQuestion(roomID, questionId, questionContainer, questionList);
+    }
 
     /**
      * Handle button action for button Mode from Light to Dark.
@@ -214,7 +226,7 @@ public class StudentViewUIController {
      * Handle button action for deleting a question.
      */
     public void deleteQuestion () {
-        //StudentViewLogic.deleteQuestion(roomID, questionId, questionContainer, questionList);
+//        StudentViewLogic.deleteQuestion(roomID, questionId, questionContainer, questionList);
     }
 
     /**

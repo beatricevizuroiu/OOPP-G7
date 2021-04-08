@@ -3,19 +3,20 @@ package nl.tudelft.oopp.g7.client.logic;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Text;
+import nl.tudelft.oopp.g7.client.communication.ModeratorServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
-import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.UserInfo;
 import nl.tudelft.oopp.g7.common.UserRole;
 
 import java.io.IOException;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,12 +26,15 @@ public class SharedLogic {
      * @param roomID The room ID that the questions belong to.
      * @param questionNodes The list of questions nodes that the new question node should be added to.
      * @param componentName The name of the FXML of that should be used to create the question node.
-     * @param question The {@link Question} object to create the question node from.
+     * @param question The {@link Question} object to create the question node from
+     * @param textArea TextArea representing answerBox
+     * @param answerButton post answer button
      * @param questionContainer The container that contains the list of questions.
      * @param questionList The javaFX {@link ScrollPane} that wraps the list of questions to add scrolling.
      * @throws IOException If JavaFX can not load the FXML file.
      */
-    public static void addQuestionToUI(String roomID, List<Node> questionNodes, String componentName, Question question, VBox questionContainer, ScrollPane questionList) throws IOException {
+    public static void addQuestionToUI(String roomID, List<Node> questionNodes, String componentName, Question question, TextArea textArea, Button answerButton,
+                                       VBox questionContainer, ScrollPane questionList) throws IOException{
         HBox questionNode = FXMLLoader.load(ModeratorViewLogic.class.getResource(componentName));
 
         Text upvoteCount = (Text) questionNode.lookup("#QuestionUpvoteCount");
@@ -41,8 +45,31 @@ public class SharedLogic {
 
         Button upvoteBtn = (Button) questionNode.lookup("#QuestionUpvoteBtn");
 
-        if (upvoteBtn != null) {
+        if (upvoteBtn != null) { // upvoteBtn means student view
             upvoteBtn.setOnAction((event) -> StudentViewLogic.upvoteQuestion(roomID, question.getId(), questionContainer, questionList));
+
+            // set delete button for student
+            if (question.getAuthorId().equals(LocalData.getUserID())) {
+                Button deleteBtn = (Button) questionNode.lookup("#StudentDeleteBtn");
+                deleteBtn.setOnAction((event) -> StudentViewLogic.deleteQuestionStudent(roomID, question.getId(), questionContainer, questionList));
+                deleteBtn.setVisible(true);
+            }
+        } else { // no upvoteBtn in mod view
+            // set mark as answered button
+            Button markAsAnsweredButton = (Button) questionNode.lookup("#MarkAsAnsweredBtn");
+            markAsAnsweredButton.setOnAction((event) -> ModeratorServerCommunication.markAsAnswered(roomID, question.getId()));
+
+            // set reply button
+            Button replyButton = (Button) questionNode.lookup("#QuestionReplyBtn");
+            replyButton.setOnAction((event) -> ModeratorViewLogic.answerQuestion(roomID, question, textArea, answerButton, questionContainer, questionList));
+
+            MenuButton menuButton = (MenuButton) questionNode.lookup("#MenuButton");
+            // set edit button
+            menuButton.getItems().get(0).setOnAction((event) -> ModeratorViewLogic.editQuestion(roomID, question, textArea, answerButton, questionContainer, questionList));
+            // set delete button
+            menuButton.getItems().get(1).setOnAction((event) -> ModeratorViewLogic.deleteQuestionMod(roomID, question.getId(), textArea, answerButton, questionContainer, questionList));
+            // set ban button
+            menuButton.getItems().get(2).setOnAction((event) -> ModeratorViewLogic.banUser(roomID, question.getAuthorId()));
         }
 
         upvoteCount.setText(Integer.toString(Math.min(question.getUpvotes(), 999)));

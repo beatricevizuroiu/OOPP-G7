@@ -22,7 +22,7 @@ public class ModeratorServerCommunication {
      */
     public static List<Question> retrieveAllQuestions(String roomID) {
         // retrieve the question list from server
-        List<Question> questions = ServerCommunication.retrieveAllQuestions(roomID);
+        List<Question> questions = ServerCommunication.retrieveAllUnansweredQuestions(roomID);
 
         if (LocalData.getSortingOrder() == SortingOrder.UPVOTES) {
             // sort the questions based on number of upvotes and return the list
@@ -39,12 +39,11 @@ public class ModeratorServerCommunication {
      * Answer the question with the specified ID.
      * @param roomID ID of the room student belongs
      * @param questionID ID of the question
-     * @param questionText answer TA wants to give
      * @return A {@link HttpResponse} containing the response received from server.
      */
-    public static HttpResponse<String> answerQuestion(String roomID, int questionID, QuestionText questionText) {
+    public static HttpResponse<String> answerQuestion(String roomID, int questionID, Answer answer) {
         // convert the body to JSON
-        String body = gson.toJson(questionText);
+        String body = gson.toJson(answer);
 
         // add the appropriate end-point
         URI uri = URI.create(uriBody + roomID + "/question/" + questionID + "/answer");
@@ -53,12 +52,8 @@ public class ModeratorServerCommunication {
         return HttpMethods.post(uri, body);
     }
 
-    public static HttpResponse<String> editQuestion(String roomID, int questionID, QuestionText questionText) {
-        return ServerCommunication.editQuestion(roomID, questionID, questionText);
-    }
-
     public static HttpResponse<String> markAsAnswered(String roomID, int questionID) {
-        return answerQuestion(roomID, questionID, new QuestionText(""));
+        return answerQuestion(roomID, questionID, new Answer(""));
     }
 
     /**

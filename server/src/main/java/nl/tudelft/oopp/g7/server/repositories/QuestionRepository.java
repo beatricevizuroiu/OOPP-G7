@@ -150,7 +150,6 @@ public class QuestionRepository {
         return jdbcTemplate.update(QUERY_CREATE_QUESTION,
             (ps) -> {
                 // Set the first variable in the PreparedStatement to the user id.
-                // TODO: This is currently just a placeholder user ID.
                 ps.setString(1, userId);
                 // Set the second variable in the PreparedStatement to the room id.
                 ps.setString(2, roomId);

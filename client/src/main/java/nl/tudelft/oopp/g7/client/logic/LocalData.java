@@ -2,10 +2,12 @@ package nl.tudelft.oopp.g7.client.logic;
 
 import lombok.Getter;
 import lombok.Setter;
+import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.SortingOrder;
 import nl.tudelft.oopp.g7.common.UserInfo;
 
 import java.util.HashMap;
+import java.util.*;
 
 public class LocalData {
     @Setter @Getter
@@ -27,4 +29,6 @@ public class LocalData {
     @Setter @Getter
     private static SortingOrder sortingOrder = SortingOrder.NEW;
     public static HashMap<String, UserInfo> userMap = new HashMap<>();
+    public static HashMap<Integer, String> upvotedQuestionsMap = new HashMap<>();
+    public static Set<Integer> upvotedQuestions = new HashSet<>();
 }

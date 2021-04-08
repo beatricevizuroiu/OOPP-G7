@@ -11,10 +11,11 @@ import nl.tudelft.oopp.g7.server.utility.authorization.conditions.All;
 import nl.tudelft.oopp.g7.server.utility.authorization.conditions.BelongsToRoom;
 import nl.tudelft.oopp.g7.server.utility.authorization.conditions.IsModerator;
 import nl.tudelft.oopp.g7.server.utility.authorization.conditions.NotBanned;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,8 +27,11 @@ import java.util.List;
 
 @RestController()
 @RequestMapping("/api/v1/room/{room_id}/user")
+@Validated
 public class UserController {
-    Logger logger = LoggerFactory.getLogger(RoomController.class);
+
+    private static final Logger logger = LogManager.getLogger("serverLog");
+    private static final Logger eventLogger = LogManager.getLogger("eventLog");
 
     private static final String DEFAULT_BAN_REASON = "You have been banned from this room!";
 
@@ -76,6 +80,8 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+        eventLogger.info("\"{}\" requested info of user \"{}\", \"{}\" in room \"{}\"", request.getRemoteAddr(), userId, userInfo.getNickname(), roomId);
+
         return new ResponseEntity<>(userInfo, HttpStatus.OK);
     }
 
@@ -101,6 +107,8 @@ public class UserController {
             new All(
                 new BelongsToRoom()
             ));
+
+        eventLogger.info("\"{}\" requested the upvotes of user \"{}\" in room \"{}\"", request.getRemoteAddr(), userId, roomId);
 
         return new ResponseEntity<>(upvoteRepository.getUpvotesForUser(roomId, userId), HttpStatus.OK);
     }
@@ -133,6 +141,8 @@ public class UserController {
         if (users == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
+        eventLogger.info("\"{}\" requested all users in room \"{}\"", request.getRemoteAddr(), roomId);
 
         return new ResponseEntity<>(users, HttpStatus.OK);
 
@@ -178,6 +188,10 @@ public class UserController {
         int linesChanged = banRepository.banUser(roomId, user.getIp(), reason.getReason());
 
         if (linesChanged == 1) {
+
+            eventLogger.info("\"{}\" banned user \"{}\", \"{}\" for reason \"{}\" in room \"{}\"",
+                    request.getRemoteAddr(), userId, user.getNickname(), reason, roomId);
+
             return new ResponseEntity<>(HttpStatus.OK);
         }
 
