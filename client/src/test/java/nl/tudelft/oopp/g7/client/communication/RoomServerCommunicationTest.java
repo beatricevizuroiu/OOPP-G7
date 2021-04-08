@@ -38,12 +38,12 @@ public class RoomServerCommunicationTest {
 
     @Test
     void createRoomWorks() {
-        // mock the endpoint
-        expectations.createExpectationCreateRoomWorks();
-
         NewRoom newRoom = new NewRoom("Test Room", "s", "m", new Date(0));
 
         Room expectedRoom = new Room("1", "s", "m", "Test Room", false, new Date(0));
+
+        // mock the endpoint
+        expectations.createExpectationWithBothBodies(path + "create", "POST", gson.toJson(newRoom), gson.toJson(expectedRoom), 200);
 
         Room room = RoomServerCommunication.createRoom(newRoom);
 
@@ -61,10 +61,10 @@ public class RoomServerCommunicationTest {
 
     @Test
     void createRoomWorksBadRequest() {
-        // mock the endpoint
-        expectations.createExpectationCreateRoomBadRequest();
-
         NewRoom newRoom = new NewRoom("Test Room", "s", "s", new Date(0));
+
+        // mock the endpoint
+        expectations.createExpectationWithBothBodies(path + "create", "POST", gson.toJson(newRoom), "", 400);
 
         Room room = RoomServerCommunication.createRoom(newRoom);
 
@@ -82,12 +82,13 @@ public class RoomServerCommunicationTest {
 
     @Test
     void joinRoomWorks() {
-        // mock the endpoint
-        expectations.createExpectationJoinRoomWorks();
-
         RoomJoinRequest request = new RoomJoinRequest("s", "test");
 
         RoomJoinInfo expectedInfo = new RoomJoinInfo(roomID, "id", "name", "auth", "test", UserRole.STUDENT);
+
+        // mock the endpoint
+        expectations.createExpectationWithBothBodies(path + roomID + "/join", "POST", gson.toJson(request), gson.toJson(expectedInfo), 200);
+
         RoomJoinInfo info = RoomServerCommunication.joinRoom(roomID, "s", "test");
 
         new MockServerClient("localhost", 8080)
@@ -104,10 +105,10 @@ public class RoomServerCommunicationTest {
 
     @Test
     void joinRoomUnauthorized() {
-        // mock the endpoint
-        expectations.createExpectationJoinRoomUnauthorized();
-
         RoomJoinRequest request = new RoomJoinRequest("notModPass", "test");
+
+        // mock the endpoint
+        expectations.createExpectationWithBothBodies(path + roomID + "/join", "POST", gson.toJson(request), "", 401);
 
         RoomJoinInfo info = RoomServerCommunication.joinRoom(roomID, "notModPass", "test");
         new MockServerClient("localhost", 8080)

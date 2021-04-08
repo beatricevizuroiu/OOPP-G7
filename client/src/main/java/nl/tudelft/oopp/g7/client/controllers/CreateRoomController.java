@@ -36,6 +36,9 @@ public class CreateRoomController {
     @FXML
     CheckBox scheduleCheckbox;
 
+    /**
+     * Create the current date.
+     */
     @FXML
     public void initialize() {
         Date currentDate = new Date();
