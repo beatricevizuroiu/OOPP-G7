@@ -10,8 +10,8 @@ import nl.tudelft.oopp.g7.server.repositories.UserRepository;
 import nl.tudelft.oopp.g7.server.utility.Config;
 import nl.tudelft.oopp.g7.server.utility.authorization.AuthorizationHelper;
 import nl.tudelft.oopp.g7.server.utility.authorization.conditions.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +31,8 @@ import java.util.List;
 @Validated
 public class QuestionController {
 
-    Logger logger = LoggerFactory.getLogger(QuestionController.class);
+    private static final Logger logger = LogManager.getLogger("serverLog");
+    private static final Logger eventLogger = LogManager.getLogger("eventLog");
 
     private final QuestionRepository questionRepository;
     private final UserRepository userRepository;
@@ -85,6 +86,8 @@ public class QuestionController {
 
         // Otherwise log a success and return the question with http status code 200 (OK).
         logger.debug("Question " + id + " successfully returned.");
+        eventLogger.info("\"{}\" requested question with id \"{}\" in room \"{}\"", request.getRemoteAddr(), id, roomId);
+
         return new ResponseEntity<>(question, HttpStatus.OK);
     }
 
@@ -108,6 +111,8 @@ public class QuestionController {
 
         // Log questions request
         logger.debug("All questions requested.");
+        eventLogger.info("\"{}\" requested all questions in room \"{}\"", request.getRemoteAddr(), roomId);
+
         // Return every question in the database.
         return new ResponseEntity<>(questionRepository.getAllQuestionsInRoom(roomId), HttpStatus.OK);
     }
@@ -140,6 +145,9 @@ public class QuestionController {
         int rowsChanged = upvoteRepository.addUpvote(roomId, user.getId(), id);
 
         if (rowsChanged == 1) {
+
+            eventLogger.info("\"{}\" upvoted question with id \"{}\" in room \"{}\"", request.getRemoteAddr(), id, roomId);
+
             // If there was return http status code 200 (OK)
             return new ResponseEntity<>(null, HttpStatus.OK);
         }
@@ -176,6 +184,9 @@ public class QuestionController {
         int rowsChanged = upvoteRepository.removeUpvote(roomId, user.getId(), id);
 
         if (rowsChanged == 1) {
+
+            eventLogger.info("\"{}\" undid their upvote to question \"{}\" in room \"{}\"", request.getRemoteAddr(), id, roomId);
+
             // If there was return http status code 200 (OK)
             return new ResponseEntity<>(null, HttpStatus.OK);
         }
@@ -216,6 +227,9 @@ public class QuestionController {
         int rowsChanged = questionRepository.editQuestionWithId(roomId, id, question.getText());
 
         if (rowsChanged == 1) {
+
+            eventLogger.info("\"{}\" edited question with id \"{}\" in room \"{}\"", request.getRemoteAddr(), id, roomId);
+
             // If there was return http status code 200 (OK)
             return new ResponseEntity<>(null, HttpStatus.OK);
         }
@@ -256,6 +270,9 @@ public class QuestionController {
 
         // Check if there was a question deleted.
         if (rowsChanged == 1) {
+
+            eventLogger.info("\"{}\" deleted question with id \"{}\" in room \"{}\"", request.getRemoteAddr(), id, roomId);
+
             // If there was log the deletion and return http status code 200 (OK)
             logger.info("Question " + id + " has successfully been deleted.");
             return new ResponseEntity<>(null, HttpStatus.OK);
@@ -309,6 +326,7 @@ public class QuestionController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+        eventLogger.info("\"{}\" asked a new question in room \"{}\"", request.getRemoteAddr(), roomId);
         logger.info("A question was successfully made.");
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -353,6 +371,8 @@ public class QuestionController {
             logger.debug("Question " + id + " was requested to be answered but could not be edited!");
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+
+        eventLogger.info("\"{}\" answered question with id \"{}\" in room \"{}\"", request.getRemoteAddr(), id, roomId);
 
         // Otherwise log a success and respond with http status code 200 (OK).
         logger.debug("Question " + id + " answered successfully.");

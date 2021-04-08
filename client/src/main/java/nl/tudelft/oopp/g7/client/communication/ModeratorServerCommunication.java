@@ -39,7 +39,6 @@ public class ModeratorServerCommunication {
      * Answer the question with the specified ID.
      * @param roomID ID of the room student belongs
      * @param questionID ID of the question
-     * @param questionText answer TA wants to give
      * @return A {@link HttpResponse} containing the response received from server.
      */
     public static HttpResponse<String> answerQuestion(String roomID, int questionID, Answer answer) {
