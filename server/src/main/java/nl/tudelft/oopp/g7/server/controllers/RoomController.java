@@ -167,26 +167,20 @@ public class RoomController {
                                           @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
                                           HttpServletRequest request) {
 
-//        authorizationHelper.checkAuthorization(
-//                roomId,
-//                authorization,
-//                request.getRemoteAddr(),
-//                new All(
-//                        new BelongsToRoom(),
-//                        new NotBanned(),
-//                        new IsModerator()
-//                ));
-//
-//
-//        RoomJoinInfo mostRecentPoll = pollRepository.getMostRecentPollInRoom(roomId);
-//
-//        if (mostRecentPoll == null) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//
-//        pollRepository.endPoll(roomId, mostRecentPoll.getId(), pollCloseRequest.isPublishResults());
-//
-//        return new ResponseEntity<>(HttpStatus.OK);
+        authorizationHelper.checkAuthorization(
+                roomId,
+                authorization,
+                request.getRemoteAddr(),
+                new All(
+                        new BelongsToRoom(),
+                        new NotBanned(),
+                        new IsModerator()
+                ));
+
+
+        roomRepository.endRoom(roomId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
 
 
         /**

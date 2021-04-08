@@ -122,7 +122,7 @@ public class RoomRepository {
      * Mark a lecture is finished in the database.
      * @param roomId The id of the room that the poll belongs to.
      */
-    public void endRoom(String roomId, int pollId, boolean publishResults) {
+    public void endRoom(String roomId) {
         logger.debug("Closing room with id: {}", roomId);
         jdbcTemplate.update(QUERY_END_ROOM, (ps) -> {
             ps.setString(2, roomId);
