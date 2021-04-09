@@ -15,11 +15,8 @@ public class LecturerViewLogic {
         double speedInRoom = ServerCommunication.getSpeed(roomID);
         double peopleInRoom = ServerCommunication.retrieveAllUsers(roomID).size();
 
-        if(peopleInRoom <= 150) {
-            speedInRoom = (speedInRoom * 13.43 / peopleInRoom) / 100;
-        } else{
-            speedInRoom = (speedInRoom / 13.43 / peopleInRoom) * 100;
-        }
+        speedInRoom = speedInRoom / peopleInRoom * 100 / 1.0F;
+
 
         // lecturer is going normal
         if (speedInRoom == 0) {
@@ -30,7 +27,7 @@ public class LecturerViewLogic {
         }
 
         // lecturer is too slow
-        if (speedInRoom == -1) {
+        if (speedInRoom <= -75) {
             circle1.setFill(Color.valueOf("#ffffff"));
             circle2.setFill(Color.valueOf("#ffffff"));
             circle3.setFill(Color.valueOf("#8D1BAA"));
@@ -44,7 +41,7 @@ public class LecturerViewLogic {
         }
 
 
-        if (speedInRoom > -1 && speedInRoom < 0) {
+        if (speedInRoom > -75 && speedInRoom < -25) {
             circle1.setFill(Color.valueOf("#ffffff"));
             circle2.setFill(Color.valueOf("#ffffff"));
             circle3.setFill(Color.valueOf("#8D1BAA"));
@@ -56,7 +53,7 @@ public class LecturerViewLogic {
             );
         }
 
-        if (speedInRoom > 0 && speedInRoom < 1) {
+        if (speedInRoom >= 25 && speedInRoom < 75) {
             circle1.setFill(Color.valueOf("#ffffff"));
             circle2.setFill(Color.valueOf("#8D1BAA"));
             circle3.setFill(Color.valueOf("#ffffff"));
@@ -69,7 +66,7 @@ public class LecturerViewLogic {
         }
 
         // lecturer is too fast
-        if (speedInRoom == 1) {
+        if (speedInRoom >= 75) {
             circle1.setFill(Color.valueOf("#8D1BAA"));
             circle2.setFill(Color.valueOf("#8D1BAA"));
             circle3.setFill(Color.valueOf("#ffffff"));
