@@ -11,6 +11,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import nl.tudelft.oopp.g7.client.communication.ModeratorServerCommunication;
+import nl.tudelft.oopp.g7.client.communication.RoomServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
@@ -326,5 +327,12 @@ public class ModeratorViewLogic {
         alert.getDialogPane().setPrefHeight(200);
 
         alert.showAndWait();
+    }
+
+    /**
+     * Close the room for the students.
+     */
+    public static void closeRoom (String roomID){
+        RoomServerCommunication.closeRoom(roomID);
     }
 }

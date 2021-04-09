@@ -3,6 +3,7 @@ package nl.tudelft.oopp.g7.server.controllers;
 import nl.tudelft.oopp.g7.common.*;
 import nl.tudelft.oopp.g7.server.repositories.*;
 import nl.tudelft.oopp.g7.server.utility.authorization.AuthorizationHelper;
+import nl.tudelft.oopp.g7.server.utility.exceptions.UnauthorizedException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -17,8 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class RoomControllerTest {
@@ -71,7 +71,8 @@ public class RoomControllerTest {
                 new AuthorizationHelper(
                         userRepository,
                         banRepository,
-                        questionRepository)
+                        questionRepository,
+                        roomRepository)
                 );
     }
 
@@ -135,6 +136,18 @@ public class RoomControllerTest {
         assertEquals(TEST_ROOM_ID, actual.getRoomId());
         assertEquals(TEST_ROOM_NAME, actual.getRoomName());
         assertEquals(UserRole.MODERATOR, actual.getRole());
+    }
+
+    @Test
+    void closeRoom() {
+        ResponseEntity<Void> response = roomController.closeRoom(TEST_ROOM_ID, AUTHORIZATION_MODERATOR, request_mod);
+
+        // Check if the request completed successfully.
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        roomController.closeRoom(TEST_ROOM_ID, AUTHORIZATION_MODERATOR, request_mod);
+
+        assertThrows(UnauthorizedException.class, () -> roomController.joinRoom(TEST_ROOM_ID, new RoomJoinRequest("", ""), request_stud));
     }
 
     @Test
