@@ -3,6 +3,7 @@
     -fx-border-color: #c6c6c7;
     -fx-border-radius: 3px;
     -fx-border-style: solid;
+    -fx-fill: #151515;
 }
 
 .pollOption.selected {
@@ -15,7 +16,7 @@
 }
 
 .pollPreset {
-    -fx-border-color: #c6c6c7;
+    -fx-border-color: #151515;
     -fx-border-radius: 3px;
     -fx-padding: 5px;
 }
