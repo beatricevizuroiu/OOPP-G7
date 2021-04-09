@@ -76,6 +76,7 @@ public class StudentViewUIController {
      * Start-up routine.
      */
     public void initialize() {
+        courseName.setText(LocalData.getRoomName());
         // Start a timer and create a separate thread on it to automatically call retrieveQuestions()
         Timer timer = new Timer(true);
 
@@ -92,7 +93,6 @@ public class StudentViewUIController {
      * Retrieve all questions to List sorted by new.
      */
     public void retrieveQuestions() {
-        courseName.setText(LocalData.getRoomName());
         StudentViewLogic.retrieveServerData(roomID, questionContainer, questionList, pollWindow);
     }
 

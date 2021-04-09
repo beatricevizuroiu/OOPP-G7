@@ -24,15 +24,11 @@
         <RowConstraints vgrow="SOMETIMES" maxHeight="95.0"/>
     </rowConstraints>
 
-    <HBox styleClass="course-panel"
-          GridPane.columnIndex="0" GridPane.rowIndex="0"
-          GridPane.columnSpan="4">
-        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" Course Name">
-            <font>
-                <Font name="Book Antiqua Bold" size="36.0"/>
-            </font>
-        </Text>
-    </HBox>
+    <VBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
+        <Region VBox.vgrow="ALWAYS" />
+        <Text fx:id="courseName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"/>
+        <Region VBox.vgrow="ALWAYS" />
+    </VBox>
 
     <SplitPane styleClass="side-panel"
                GridPane.columnIndex="0" GridPane.rowIndex="1"
@@ -78,23 +74,5 @@
             </graphic>
         </Button>
     </HBox>
-
-    <!--    <TextArea fx:id="answerBox"-->
-    <!--              GridPane.columnIndex="1" GridPane.rowIndex="2"-->
-    <!--              promptText="Type your question here">-->
-    <!--        <font>-->
-    <!--            <Font name="Book Antiqua" size="21.0"/>-->
-    <!--        </font>-->
-    <!--    </TextArea>-->
-
-    <!--    <Button fx:id="postQuestionButton" styleClass="button"-->
-    <!--            GridPane.columnIndex="2" GridPane.rowIndex="2"-->
-    <!--            onAction="#sendQuestion"-->
-    <!--            mnemonicParsing="false"-->
-    <!--            text="Post Question" textFill="WHITE">-->
-    <!--        <font>-->
-    <!--            <Font name="Book Antiqua Bold" size="15.0"/>-->
-    <!--        </font>-->
-    <!--    </Button>-->
 
 </GridPane>

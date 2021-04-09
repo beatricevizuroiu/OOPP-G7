@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.logic.AnsweredQuestionsLogic;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
@@ -20,12 +21,15 @@ public class AnsweredQuestionsModeratorController {
     public ScrollPane answeredQuestionList;
     @FXML
     private VBox answeredQuestionContainer;
+    @FXML
+    private Text courseName;
 
     /**
      * Startup routine.
      */
     @FXML
     public void initialize() {
+        courseName.setText(LocalData.getRoomName());
         // Start a timer and create a separate thread on it to automatically call retrieveQuestions()
         Timer timer = new Timer(true);
 

@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.SharedLogic;
@@ -14,6 +15,8 @@ import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 public class ListUsersStudentController {
     @FXML
     private VBox listUsersContainer;
+    @FXML
+    private Text courseName;
 
     private final String component = "StudentUserInfoContainer.fxml";
     private final String componentDark = "StudentUserInfoContainer(DARKMODE).fxml";
@@ -23,6 +26,7 @@ public class ListUsersStudentController {
      */
     @FXML
     public void initialize() {
+        courseName.setText(LocalData.getRoomName());
         retrieveAllUsers();
     }
 

@@ -22,9 +22,11 @@
         <RowConstraints maxHeight="95.0" vgrow="SOMETIMES"/>
     </rowConstraints>
 
-    <HBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
+    <VBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
+        <Region VBox.vgrow="ALWAYS" />
         <Text fx:id="courseName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"/>
-    </HBox>
+        <Region VBox.vgrow="ALWAYS" />
+    </VBox>
 
     <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2">
         <VBox spacing="10" GridPane.halignment="CENTER">

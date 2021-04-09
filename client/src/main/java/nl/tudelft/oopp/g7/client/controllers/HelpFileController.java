@@ -1,11 +1,22 @@
 package nl.tudelft.oopp.g7.client.controllers;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 
 public class HelpFileController {
+
+    @FXML
+    private Text courseName;
+
+
+    public void initialize() {
+        courseName.setText(LocalData.getRoomName());
+    }
 
     /**
      * Handle button action for going back to lecturer view from Dark.
