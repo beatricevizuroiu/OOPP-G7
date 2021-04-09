@@ -51,6 +51,12 @@ public class MockServerConfigurations {
         return questionList;
     }
 
+    /**
+     * Create an expected server response.
+     * @param path Request path.
+     * @param method The method for the request.
+     * @param statusCode The expected status code.
+     */
     public void createExpectationWithoutBody(String path, String method, int statusCode) {
         new MockServerClient("localhost", 8080)
                 .when(
@@ -64,6 +70,13 @@ public class MockServerConfigurations {
                 );
     }
 
+    /**
+     * Create an expected server response with a request body.
+     * @param path Request path.
+     * @param method The method for the request.
+     * @param requestBody The body of the expected request.
+     * @param statusCode The expected status code.
+     */
     public void createExpectationWithRequestBody(String path, String method, String requestBody, int statusCode) {
         new MockServerClient("localhost", 8080)
                 .when(
@@ -78,6 +91,13 @@ public class MockServerConfigurations {
                 );
     }
 
+    /**
+     * Create an expected server response with a response body.
+     * @param path Request path.
+     * @param method The method for the request.
+     * @param responseBody The body of the expected response.
+     * @param statusCode The expected status code.
+     */
     public void createExpectationWithResponseBody(String path, String method, String responseBody, int statusCode) {
         new MockServerClient("localhost", 8080)
                 .when(
@@ -92,6 +112,14 @@ public class MockServerConfigurations {
                 );
     }
 
+    /**
+     * Create an expected server response with a request and response body.
+     * @param path The Request path
+     * @param method The method for the request
+     * @param requestBody The body of the request
+     * @param responseBody The body of the response
+     * @param statusCode The expected status code
+     */
     public void createExpectationWithBothBodies(String path, String method, String requestBody, String responseBody, int statusCode) {
         new MockServerClient("localhost", 8080)
                 .when(
