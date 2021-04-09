@@ -118,13 +118,13 @@ public class ModeratorServerCommunication {
      */
     public static HttpResponse<String> closeRoom(String roomID) {
         // convert the body to JSON
-        String body = gson.toJson(new RoomCloseRequest());
+        String request = gson.toJson(new RoomCloseRequest());
 
         // add the appropriate end-point
         URI uri = URI.create(uriBody + roomID);
 
         // send the request to the server
-        return HttpMethods.post(uri, body);
+        return HttpMethods.post(uri, request);
 
     }
 }
