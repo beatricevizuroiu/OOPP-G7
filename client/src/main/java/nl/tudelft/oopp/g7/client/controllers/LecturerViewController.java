@@ -101,13 +101,13 @@ public class LecturerViewController {
     public void speed(){
         LecturerViewLogic.speedIndicator(roomID, circle1, circle2, circle3, circle4);
     }
+
     /**
      * Display link and passwords.
      */
     public void displayLinkAndPassword() {
         ModeratorViewLogic.displayLinkAndPasswords();
     }
-
 
     /**
      * Handle button action for button Mode from Light to Dark.
