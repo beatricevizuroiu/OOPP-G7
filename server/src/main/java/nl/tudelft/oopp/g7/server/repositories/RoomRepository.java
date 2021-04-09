@@ -114,8 +114,8 @@ public class RoomRepository {
     }
 
     /**
-     * Mark a lecture is finished in the database.
-     * @param roomId The id of the room that the poll belongs to.
+     * Mark a lecture as finished in the database.
+     * @param roomId The id of the Room that the poll belongs to.
      */
     public int endRoom(String roomId) {
         logger.debug("Closing room with id: {}", roomId);
@@ -124,6 +124,11 @@ public class RoomRepository {
         });
     }
 
+    /**
+     * Check whether a Room is closed.
+     * @param roomId The id of the Room to check.
+     * @return Whether the Room is closed.
+     */
     public boolean isOver(String roomId) {
         return jdbcTemplate.query(QUERY_GET_IS_OPEN,
             (ps) -> ps.setString(1, roomId),
