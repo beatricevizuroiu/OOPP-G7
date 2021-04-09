@@ -10,6 +10,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -50,16 +51,10 @@ public class StudentViewUIController {
     public VBox pollWindow;
 
     @FXML
-    public Button whiteFast;
+    public Button colorSlow;
 
     @FXML
     public Button colorFast;
-
-    @FXML
-    public Button whiteSlow;
-
-    @FXML
-    public Button colorSlow;
 
     private final String roomID;
     private final String nickname;
@@ -124,6 +119,23 @@ public class StudentViewUIController {
                 return;
             }
             System.err.println("A rate limit status was returned but the rate limit header does not exist!");
+        }
+
+        if (response.statusCode() == 401) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+
+            // body of pop-up with what the user entered
+            alert.setContentText("You are not allowed to ask a Question!\n"
+                    + "The Room might be closed or you are currently banned.");
+
+            // set types of buttons for the pop-up
+            ButtonType okButton = new ButtonType ("OK");
+
+            alert.getButtonTypes().setAll(okButton);
+
+            // wait for the alert to appear
+            alert.showAndWait();
+            return;
         }
         answerBox.setText("");
         retrieveQuestions();

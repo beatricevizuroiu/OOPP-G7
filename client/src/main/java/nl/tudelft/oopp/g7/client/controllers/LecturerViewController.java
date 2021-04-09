@@ -237,10 +237,10 @@ public class LecturerViewController {
     }
 
     /**
-     * Handle button action for creating a  link.
+     * Handle button action for closing a room.
      */
-    public void createLink() {
-        //TODO
+    public void closeRoom() {
+        ModeratorViewLogic.closeRoom(roomID);
     }
 
     public void switchView(ActionEvent actionEvent) {

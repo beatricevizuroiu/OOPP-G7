@@ -9,6 +9,7 @@ import nl.tudelft.oopp.g7.server.utility.RandomString;
 import nl.tudelft.oopp.g7.server.utility.RandomUserName;
 import nl.tudelft.oopp.g7.server.utility.authorization.AuthorizationHelper;
 import nl.tudelft.oopp.g7.server.utility.authorization.conditions.*;
+import nl.tudelft.oopp.g7.server.utility.exceptions.UnauthorizedException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -154,6 +155,9 @@ public class RoomController {
      * @return an {@link HttpServletRequest} containing RoomJoinInfo and the Http Status OK (200).
      */
     private ResponseEntity<RoomJoinInfo> joinRoomHelper(Room room, RoomJoinRequest roomJoinRequest, HttpServletRequest request, UserRole userRole) {
+        if (userRole == UserRole.STUDENT && room.isOver())
+            throw new UnauthorizedException();
+
         // add a check for empty user names
         String nickname = roomJoinRequest.getNickname();
 
@@ -180,12 +184,45 @@ public class RoomController {
     }
 
     /**
-     * Endpoint to change the Speed of a Room.
-     * @param roomId The id of the Room to edit the Speed of.
-     * @param speedAlterRequest A request containing a Speed integer by which to edit the Speed.
-     * @return A {@link ResponseEntity} containing a {@link HttpStatus} that is one of BAD_REQUEST (400),
-     *      NOT_FOUND (404), INTERNAL_SERVER_ERROR (500) or OK (200).
+     * Close the currently running poll.
+     * @param roomId The id of the room to close the poll in.
+     * @param authorization The authorization header.
+     * @param request The {@link HttpServletRequest} associated with the Http request.
+     * @return A {@link ResponseEntity} containing the http status code indicating whether the request completed
+     *          successfully or if there was an error.
      */
+    @DeleteMapping("/{room_id}")
+    public ResponseEntity<Void> closeRoom(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                          @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
+                                          HttpServletRequest request) {
+
+        authorizationHelper.checkAuthorization(
+                roomId,
+                authorization,
+                request.getRemoteAddr(),
+                new All(
+                        new BelongsToRoom(),
+                        new NotBanned(),
+                        new IsModerator()
+                ));
+
+
+        int linesChanged = roomRepository.endRoom(roomId);
+
+        if (linesChanged == 1) {
+            eventLogger.info("\"{}\" closed room with id \"{}\"", request.getRemoteAddr(), roomId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+        /**
+         * Endpoint to change the Speed of a Room.
+         * @param roomId The id of the Room to edit the Speed of.
+         * @param speedAlterRequest A request containing a Speed integer by which to edit the Speed.
+         * @return A {@link ResponseEntity} containing a {@link HttpStatus} that is one of BAD_REQUEST (400),
+         *      NOT_FOUND (404), INTERNAL_SERVER_ERROR (500) or OK (200)
+         */
     @PostMapping("/{room_id}/speed")
     public ResponseEntity<Void> setRoomSpeed(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
                                              @RequestBody @NotNull @Valid SpeedAlterRequest speedAlterRequest,
@@ -199,7 +236,8 @@ public class RoomController {
             new All(
                 new NotBanned(),
                 new IsStudent(),
-                new BelongsToRoom()
+                new BelongsToRoom(),
+                new NotClosed()
             ));
 
 
@@ -239,7 +277,8 @@ public class RoomController {
             request.getRemoteAddr(),
             new All(
                 new IsModerator(),
-                new NotBanned()
+                new NotBanned(),
+                    new NotClosed()
             ));
 
         speedRepository.resetSpeedForRoom(roomId);
@@ -331,7 +370,8 @@ public class RoomController {
             new All(
                 new BelongsToRoom(),
                 new IsModerator(),
-                new NotBanned()
+                new NotBanned(),
+                    new NotClosed()
             ));
 
         pollRepository.createPoll(roomId, pollCreateRequest.getQuestion(), pollCreateRequest.isHasPublicResults(), pollCreateRequest.getOptions());
@@ -363,7 +403,8 @@ public class RoomController {
             request.getRemoteAddr(),
             new All(
                 new BelongsToRoom(),
-                new NotBanned()
+                new NotBanned(),
+                new NotClosed()
             ));
 
         User user = authorizationHelper.getUserFromAuthorizationHeader(authorization);

@@ -20,9 +20,6 @@ import java.util.TimerTask;
 
 public class TAViewController {
     private final String roomID;
-    private final String nickname;
-    private final String moderatorPassword;
-    private final String studentPassword;
 
     @FXML
     public ScrollPane questionList;
@@ -42,10 +39,6 @@ public class TAViewController {
      */
     public TAViewController() {
         roomID = LocalData.getRoomID();
-        nickname = LocalData.getNickname();
-        moderatorPassword = LocalData.getModeratorPassword();
-        studentPassword = LocalData.getStudentPassword();
-
     }
 
     /**

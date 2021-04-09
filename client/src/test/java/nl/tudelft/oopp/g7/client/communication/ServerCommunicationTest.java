@@ -11,7 +11,6 @@ import org.mockserver.verify.VerificationTimes;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -79,7 +78,7 @@ public class ServerCommunicationTest {
 
         assertEquals(expectations.getQuestion(), question);
     }
-    
+
     @Test
     void testRetrieveQuestionByIDNotWorks() {
         // mock the endpoint

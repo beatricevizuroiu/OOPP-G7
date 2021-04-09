@@ -4,19 +4,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextInputDialog;
-import javafx.scene.layout.GridPane;
-
 import javafx.scene.control.*;
-
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import nl.tudelft.oopp.g7.client.communication.ModeratorServerCommunication;
+import nl.tudelft.oopp.g7.client.communication.RoomServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
@@ -345,5 +340,12 @@ public class ModeratorViewLogic {
         alert.getDialogPane().setPrefHeight(200);
 
         alert.showAndWait();
+    }
+
+    /**
+     * Close the room for the students.
+     */
+    public static void closeRoom (String roomID){
+        RoomServerCommunication.closeRoom(roomID);
     }
 }

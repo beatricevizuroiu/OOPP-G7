@@ -3,6 +3,7 @@ package nl.tudelft.oopp.g7.server.utility.authorization;
 import nl.tudelft.oopp.g7.common.User;
 import nl.tudelft.oopp.g7.server.repositories.BanRepository;
 import nl.tudelft.oopp.g7.server.repositories.QuestionRepository;
+import nl.tudelft.oopp.g7.server.repositories.RoomRepository;
 import nl.tudelft.oopp.g7.server.repositories.UserRepository;
 import nl.tudelft.oopp.g7.server.utility.exceptions.UnauthorizedException;
 import nl.tudelft.oopp.g7.server.utility.RandomString;
@@ -14,6 +15,7 @@ public class AuthorizationHelper {
     private final UserRepository userRepository;
     private final BanRepository banRepository;
     private final QuestionRepository questionRepository;
+    private final RoomRepository roomRepository;
 
     /**
      * The constructor for the AuthorizationHelper class.
@@ -21,10 +23,11 @@ public class AuthorizationHelper {
      * @param banRepository The BanRepository instance that is currently in use.
      * @param questionRepository The QuestionRepository instance that is currently in use.
      */
-    public AuthorizationHelper(UserRepository userRepository, BanRepository banRepository, QuestionRepository questionRepository) {
+    public AuthorizationHelper(UserRepository userRepository, BanRepository banRepository, QuestionRepository questionRepository, RoomRepository roomRepository) {
         this.userRepository = userRepository;
         this.banRepository = banRepository;
         this.questionRepository = questionRepository;
+        this.roomRepository = roomRepository;
     }
 
     /**
@@ -83,6 +86,6 @@ public class AuthorizationHelper {
             throw new UnauthorizedException();
         }
 
-        condition.check(roomId, user, ip, banRepository, userRepository, questionRepository);
+        condition.check(roomId, user, ip, banRepository, userRepository, questionRepository, roomRepository);
     }
 }

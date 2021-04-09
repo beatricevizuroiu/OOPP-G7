@@ -27,6 +27,8 @@ public class LocalData {
     private static boolean isLecturer = false;
     @Setter @Getter
     private static SortingOrder sortingOrder = SortingOrder.NEW;
+    @Setter @Getter
+    private static String serverUrl = "http://localhost:8080";
     public static HashMap<String, UserInfo> userMap = new HashMap<>();
     public static Set<Integer> upvotedQuestions = new HashSet<>();
 }
