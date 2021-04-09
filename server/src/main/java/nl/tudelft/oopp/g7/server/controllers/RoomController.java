@@ -158,7 +158,6 @@ public class RoomController {
         if (userRole == UserRole.STUDENT && room.isOver())
             throw new UnauthorizedException();
 
-        User user = new User(userRepository.createNewId(), room.getId(), roomJoinRequest.getNickname(), request.getRemoteAddr(), authorizationHelper.createAuthorizationToken(), userRole);
         // add a check for empty user names
         String nickname = roomJoinRequest.getNickname();
 
