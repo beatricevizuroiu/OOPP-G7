@@ -110,21 +110,4 @@ public class ModeratorServerCommunication {
         // send the request to the server
         return HttpMethods.post(uri, body);
     }
-
-    /**
-     * Closes the room for students.
-     * @param roomID ID of the room student belongs.
-     * @return A HttpResponse containing the response received from server.
-     */
-    public static HttpResponse<String> closeRoom(String roomID) {
-        // convert the body to JSON
-        String request = gson.toJson(new RoomCloseRequest());
-
-        // add the appropriate end-point
-        URI uri = URI.create(uriBody + roomID);
-
-        // send the request to the server
-        return HttpMethods.post(uri, request);
-
-    }
 }

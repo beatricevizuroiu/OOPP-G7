@@ -1,14 +1,12 @@
 package nl.tudelft.oopp.g7.server.repositories;
 
 import nl.tudelft.oopp.g7.common.Room;
-import nl.tudelft.oopp.g7.common.SpeedAlterRequest;
 import nl.tudelft.oopp.g7.server.utility.RandomString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 public class RoomRepository {
@@ -28,9 +26,8 @@ public class RoomRepository {
     private static final String QUERY_COUNT_ROOMS_WITH_ID = "SELECT count(id) FROM rooms WHERE id=?";
     private static final String QUERY_CREATE_ROOM = "INSERT INTO rooms (id, studentPassword, moderatorPassword, name, over, startDate) VALUES (?, ?, ?, ?, ?, ?);";
     private static final String QUERY_GET_ROOM_WITH_ID = "SELECT * FROM rooms WHERE id=?";
-    private static final String QUERY_END_ROOM = "UPDATE room SET isOver = TRUE WHERE id=? ;";
-    private static final String QUERY_EDIT_SPEED = "UPDATE rooms SET speed = speed + ? WHERE id=?;";
-    private static final String QUERY_GET_SPEED_WITH_ID = "SELECT speed FROM rooms WHERE id=?";
+    private static final String QUERY_END_ROOM = "UPDATE rooms SET over = TRUE WHERE id=? ;";
+    private static final String QUERY_GET_IS_OPEN = "SELECT over FROM rooms WHERE id=?;";
 
     /**
      * Primary constructor for the RoomRepository class.
@@ -120,10 +117,19 @@ public class RoomRepository {
      * Mark a lecture is finished in the database.
      * @param roomId The id of the room that the poll belongs to.
      */
-    public void endRoom(String roomId) {
+    public int endRoom(String roomId) {
         logger.debug("Closing room with id: {}", roomId);
-        jdbcTemplate.update(QUERY_END_ROOM, (ps) -> {
-            ps.setString(2, roomId);
+        return jdbcTemplate.update(QUERY_END_ROOM, (ps) -> {
+            ps.setString(1, roomId);
         });
+    }
+
+    public boolean isOver(String roomId) {
+        return jdbcTemplate.query(QUERY_GET_IS_OPEN,
+            (ps) -> ps.setString(1, roomId),
+            (rs) -> {
+                rs.next();
+                return rs.getBoolean(1);
+            });
     }
 }

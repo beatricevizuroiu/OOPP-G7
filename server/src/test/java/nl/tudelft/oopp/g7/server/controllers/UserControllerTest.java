@@ -3,18 +3,13 @@ package nl.tudelft.oopp.g7.server.controllers;
 import nl.tudelft.oopp.g7.common.BanReason;
 import nl.tudelft.oopp.g7.common.UserInfo;
 import nl.tudelft.oopp.g7.common.UserRole;
-import nl.tudelft.oopp.g7.server.repositories.BanRepository;
-import nl.tudelft.oopp.g7.server.repositories.QuestionRepository;
-import nl.tudelft.oopp.g7.server.repositories.UpvoteRepository;
-import nl.tudelft.oopp.g7.server.repositories.UserRepository;
+import nl.tudelft.oopp.g7.server.repositories.*;
 import nl.tudelft.oopp.g7.server.utility.authorization.AuthorizationHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -23,12 +18,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class UserControllerTest {
     private DriverManagerDataSource dataSource;
@@ -62,6 +54,7 @@ class UserControllerTest {
         UserRepository userRepository = new UserRepository(jdbcTemplate);
         BanRepository banRepository = new BanRepository(jdbcTemplate);
         UpvoteRepository upvoteRepository = new UpvoteRepository(jdbcTemplate);
+        RoomRepository roomRepository = new RoomRepository(jdbcTemplate);
 
         // Create our questionController with our in memory datasource.
         userController = new UserController(
@@ -70,7 +63,8 @@ class UserControllerTest {
                 new AuthorizationHelper(
                         userRepository,
                         banRepository,
-                        questionRepository),
+                        questionRepository,
+                        roomRepository),
                 upvoteRepository);
 
         request_stud = new MockHttpServletRequest();

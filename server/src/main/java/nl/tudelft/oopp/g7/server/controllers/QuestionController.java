@@ -136,7 +136,8 @@ public class QuestionController {
             new All(
                 new BelongsToRoom(),
                 new IsStudent(),
-                new NotBanned()
+                new NotBanned(),
+                    new NotClosed()
             ));
 
         User user = authorizationHelper.getUserFromAuthorizationHeader(authorization);
@@ -175,7 +176,8 @@ public class QuestionController {
             new All(
                 new BelongsToRoom(),
                 new IsStudent(),
-                new NotBanned()
+                new NotBanned(),
+                    new NotClosed()
             ));
 
         User user = authorizationHelper.getUserFromAuthorizationHeader(authorization);
@@ -304,7 +306,8 @@ public class QuestionController {
             request.getRemoteAddr(),
             new All(
                 new BelongsToRoom(),
-                new NotBanned()
+                new NotBanned(),
+                    new NotClosed()
             ));
 
         User user = authorizationHelper.getUserFromAuthorizationHeader(authorization);

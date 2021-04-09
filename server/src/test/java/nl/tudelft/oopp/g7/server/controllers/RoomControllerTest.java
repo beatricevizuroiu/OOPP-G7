@@ -71,7 +71,8 @@ public class RoomControllerTest {
                 new AuthorizationHelper(
                         userRepository,
                         banRepository,
-                        questionRepository)
+                        questionRepository,
+                        roomRepository)
                 );
     }
 

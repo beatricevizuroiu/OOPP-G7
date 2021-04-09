@@ -174,15 +174,13 @@ public class RoomController {
     /**
      * Close the currently running poll.
      * @param roomId The id of the room to close the poll in.
-     * @param roomCloseRequest The {@link RoomCloseRequest} to close the room from.
      * @param authorization The authorization header.
      * @param request The {@link HttpServletRequest} associated with the Http request.
      * @return A {@link ResponseEntity} containing the http status code indicating whether the request completed
      *          successfully or if there was an error.
      */
-    @PostMapping("/{room_id}/close")
+    @DeleteMapping("/{room_id}")
     public ResponseEntity<Void> closeRoom(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
-                                          @RequestBody @NotNull RoomCloseRequest roomCloseRequest,
                                           @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
                                           HttpServletRequest request) {
 
@@ -197,9 +195,13 @@ public class RoomController {
                 ));
 
 
-        roomRepository.endRoom(roomId);
+        int linesChanged = roomRepository.endRoom(roomId);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        if (linesChanged == 1) {
+            eventLogger.info("\"{}\" closed room with id \"{}\"", request.getRemoteAddr(), roomId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
         /**
@@ -222,7 +224,8 @@ public class RoomController {
             new All(
                 new NotBanned(),
                 new IsStudent(),
-                new BelongsToRoom()
+                new BelongsToRoom(),
+                new NotClosed()
             ));
 
 
@@ -262,7 +265,8 @@ public class RoomController {
             request.getRemoteAddr(),
             new All(
                 new IsModerator(),
-                new NotBanned()
+                new NotBanned(),
+                    new NotClosed()
             ));
 
         speedRepository.resetSpeedForRoom(roomId);
@@ -354,7 +358,8 @@ public class RoomController {
             new All(
                 new BelongsToRoom(),
                 new IsModerator(),
-                new NotBanned()
+                new NotBanned(),
+                    new NotClosed()
             ));
 
         pollRepository.createPoll(roomId, pollCreateRequest.getQuestion(), pollCreateRequest.isHasPublicResults(), pollCreateRequest.getOptions());
@@ -386,7 +391,8 @@ public class RoomController {
             request.getRemoteAddr(),
             new All(
                 new BelongsToRoom(),
-                new NotBanned()
+                new NotBanned(),
+                    new NotClosed()
             ));
 
         User user = authorizationHelper.getUserFromAuthorizationHeader(authorization);
