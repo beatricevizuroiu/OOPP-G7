@@ -14,7 +14,7 @@ public class CreateRoomLogic {
     /**
      * Create a pop-up for confirming creation of a room.
      * @param lecturerName TextField in which lecturer's name is written
-     * @param roomName TextField in which room's name is written
+     * @param roomName     TextField in which room's name is written
      * @return a boolean confirming whether the user pressed OK or cancel
      */
     public static boolean createRoomConfirmation(TextField lecturerName, TextField roomName) {
@@ -27,15 +27,15 @@ public class CreateRoomLogic {
 
         // body of pop-up with what the user entered
         alert.setContentText(String.format(
-                        "You are creating the room for the Course: %s\n"
+                "You are creating the room for the Course: %s\n"
                         + "This course is held by the lecturer: %s.",
                 roomName.getText(), lecturerName.getText()));
 
         alert.getDialogPane().setPrefHeight(150);
 
         // set types of buttons for the pop-up
-        ButtonType okButton = new ButtonType ("OK");
-        ButtonType cancelButton = new ButtonType ("Cancel");
+        ButtonType okButton = new ButtonType("OK");
+        ButtonType cancelButton = new ButtonType("Cancel");
 
         alert.getButtonTypes().setAll(okButton, cancelButton);
 
@@ -49,7 +49,7 @@ public class CreateRoomLogic {
     /**
      * Stores the room/user information into a local static class.
      * @param lecturerName TextField in which lecturer's name is written
-     * @param room object containing information about the newly created room
+     * @param room         object containing information about the newly created room
      */
     public static void createRoomStoreLocalData(TextField lecturerName, Room room) {
         LocalData.setNickname(lecturerName.getText());

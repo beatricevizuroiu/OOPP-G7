@@ -28,7 +28,7 @@ public class StudentViewLogic {
 
     /**
      * Retrieve any active Poll in a Room.
-     * @param roomId The roomId of the Room to get the Poll from.
+     * @param roomId              The roomId of the Room to get the Poll from.
      * @param pollWindowContainer The UI element to put the Poll in.
      */
     public static void retrievePolls(String roomId, VBox pollWindowContainer) {
@@ -100,7 +100,7 @@ public class StudentViewLogic {
                 }
 
                 optionNode.setOnMouseClicked((event) -> {
-                    if (poll.isAcceptingAnswers()){
+                    if (poll.isAcceptingAnswers()) {
                         StudentServerCommunication.answerPoll(roomId, pollOption.getId());
                         selectedPollOptions.put(poll.getId(), pollOption.getId());
                     }
@@ -123,9 +123,9 @@ public class StudentViewLogic {
 
     /**
      * Retrieves all questions from the server, puts them into the question panel and also adds events listeners to the upvote buttons.
-     * @param roomID ID of the room questions are in
+     * @param roomID            ID of the room questions are in
      * @param questionContainer VBox containing the UI elements.
-     * @param questionList ScrollPane containing the whole list of questions.
+     * @param questionList      ScrollPane containing the whole list of questions.
      */
     private static void retrieveAllQuestions(String roomID, VBox questionContainer, ScrollPane questionList) {
         // Store the current position of the user in the scroll list
@@ -161,10 +161,10 @@ public class StudentViewLogic {
 
     /**
      * Upvotes a question and refreshes the question list.
-     * @param roomID ID of the room question is in.
-     * @param questionId ID of the specified question.
+     * @param roomID            ID of the room question is in.
+     * @param questionId        ID of the specified question.
      * @param questionContainer VBox containing the UI elements.
-     * @param questionList ScrollPane containing the whole list of questions.
+     * @param questionList      ScrollPane containing the whole list of questions.
      */
     public static void upvoteQuestion(String roomID, int questionId, VBox questionContainer, ScrollPane questionList) {
         ServerCommunication.upvoteQuestion(roomID, questionId);
@@ -174,10 +174,10 @@ public class StudentViewLogic {
 
     /**
      * removes the upvote of a question and refreshes the question list.
-     * @param roomID ID of the room question is in.
-     * @param questionId ID of the specified question.
+     * @param roomID            ID of the room question is in.
+     * @param questionId        ID of the specified question.
      * @param questionContainer VBox containing the UI elements.
-     * @param questionList ScrollPane containing the whole list of questions.
+     * @param questionList      ScrollPane containing the whole list of questions.
      */
     public static void removeUpvoteQuestion(String roomID, int questionId, VBox questionContainer, ScrollPane questionList) {
         ServerCommunication.removeUpvoteQuestion(roomID, questionId);
@@ -187,10 +187,10 @@ public class StudentViewLogic {
 
     /**
      * Deletes a question and refreshes the question list.
-     * @param roomID ID of the room question is in.
-     * @param questionId ID of the specified question.
+     * @param roomID            ID of the room question is in.
+     * @param questionId        ID of the specified question.
      * @param questionContainer VBox containing the UI elements.
-     * @param questionList ScrollPane containing the whole list of questions.
+     * @param questionList      ScrollPane containing the whole list of questions.
      */
     public static void deleteQuestionStudent(String roomID, int questionId, VBox questionContainer, ScrollPane questionList) {
         ServerCommunication.deleteQuestion(roomID, questionId);

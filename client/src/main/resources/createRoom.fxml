@@ -37,11 +37,11 @@
                    prefWidth="300.0" promptText="Course name" styleClass="inputBox"/>
 
         <TextField id="moderatorPassword" fx:id="moderatorPassword" alignment="CENTER"
-                   prefHeight="60.0" prefWidth="300.0" promptText="Moderator password (required)"
+                   prefHeight="60.0" prefWidth="300.0" promptText="Moderator password"
                    styleClass="inputBox"/>
 
         <TextField id="studentPassword" fx:id="studentPassword" alignment="CENTER"
-                   prefHeight="60.0" prefWidth="300.0" promptText="Student password (optional)" styleClass="inputBox"/>
+                   prefHeight="60.0" prefWidth="300.0" promptText="Student password" styleClass="inputBox"/>
 
         <TextField id="lecturerName" fx:id="lecturerName" alignment="CENTER"
                    prefHeight="60.0" prefWidth="300.0" promptText="Lecturer name" styleClass="inputBox"/>

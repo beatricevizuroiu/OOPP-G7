@@ -35,7 +35,6 @@ public class ListUsersStudentController {
 
     /**
      * Handle button action for going back to lecturer view (light).
-     *
      * @param event the event
      */
     public void goBackButtonLight(ActionEvent event) {
@@ -48,7 +47,6 @@ public class ListUsersStudentController {
 
     /**
      * Handle button action for going back to lecturer view (dark).
-     *
      * @param event the event
      */
     public void goBackButtonDark(ActionEvent event) {
@@ -61,7 +59,6 @@ public class ListUsersStudentController {
 
     /**
      * Handle button action for button Mode from Light to Dark.
-     *
      * @param event the event
      */
     public void handleButtonMode(ActionEvent event) {
@@ -74,7 +71,6 @@ public class ListUsersStudentController {
 
     /**
      * Handle button action for button Mode from Dark to Light.
-     *
      * @param event the event
      */
     public void handleButtonMode2(ActionEvent event) {
@@ -87,7 +83,6 @@ public class ListUsersStudentController {
 
     /**
      * Handle button action for Help Button Light Mode.
-     *
      * @param event the event
      */
     public void handleHelpButtonLight(ActionEvent event) {
@@ -100,7 +95,6 @@ public class ListUsersStudentController {
 
     /**
      * Handle button action for Help Button Dark Mode.
-     *
      * @param event the event
      */
     public void handleHelpButtonDark(ActionEvent event) {

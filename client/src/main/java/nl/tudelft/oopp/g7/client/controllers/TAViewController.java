@@ -51,6 +51,7 @@ public class TAViewController {
      * Start-up routine.
      */
     public void initialize() {
+        courseName.setText(LocalData.getRoomName());
         // Start a timer and create a separate thread on it to automatically call retrieveQuestions()
         Timer timer = new Timer(true);
 
@@ -67,14 +68,12 @@ public class TAViewController {
      * Retrieve all questions to List sorted by new.
      */
     public void retrieveQuestions() {
-        courseName.setText(LocalData.getRoomName());
         // Retrieve all of the questions and then put them into question pane
         ModeratorViewLogic.retrieveServerData(roomID, answerBox, postAnswerButton, questionContainer, questionList, pollWindow);
     }
 
     /**
      * Handle button action for button Mode from Light to Dark.
-     *
      * @param event the event
      */
     public void handleButtonMode(ActionEvent event) {
@@ -87,7 +86,6 @@ public class TAViewController {
 
     /**
      * Handle button action for button Mode from Dark to Light.
-     *
      * @param event the event
      */
     public void handleButtonMode2(ActionEvent event) {
@@ -100,7 +98,6 @@ public class TAViewController {
 
     /**
      * Handle button action for Help Button Light Mode.
-     *
      * @param event the event
      */
     public void handleHelpButtonLight(ActionEvent event) {
@@ -113,7 +110,6 @@ public class TAViewController {
 
     /**
      * Handle button action for Help Button Dark Mode.
-     *
      * @param event the event
      */
     public void handleHelpButtonDark(ActionEvent event) {
@@ -126,9 +122,8 @@ public class TAViewController {
 
     /**
      * Handle button action for Answered Questions Button light Mode.
-     *
      */
-    public void answeredQuestionList(){
+    public void answeredQuestionList() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -138,9 +133,8 @@ public class TAViewController {
 
     /**
      * Handle button action for Answered Questions Button Dark Mode.
-     *
      */
-    public void answeredQuestionListDark(){
+    public void answeredQuestionListDark() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -150,9 +144,8 @@ public class TAViewController {
 
     /**
      * Handle button action for List Users Button light Mode.
-     *
      */
-    public void listofUsers () {
+    public void listofUsers() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -162,9 +155,8 @@ public class TAViewController {
 
     /**
      * Handle button action for List Users Button dark Mode.
-     *
      */
-    public void listofUsersDark () {
+    public void listofUsersDark() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -174,9 +166,8 @@ public class TAViewController {
 
     /**
      * Handle button action for answering a question.
-     *
      */
-    public void answerQuestion (){
+    public void answerQuestion() {
         /*HttpResponse<String> response = ModeratorServerCommunication.answerQuestion(roomID, new QuestionText(answerBox.getText()));
         answerBox.setText("");
         retrieveQuestions();*/
@@ -184,9 +175,8 @@ public class TAViewController {
 
     /**
      * Handle button action for creating a poll.
-     *
      */
-    public void createPoll(){
+    public void createPoll() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -196,9 +186,8 @@ public class TAViewController {
 
     /**
      * Handle button action for creating a poll.
-     *
      */
-    public void createPoll2(){
+    public void createPoll2() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -208,8 +197,15 @@ public class TAViewController {
     /**
      * Handle button action for exporting questions.
      */
-    public void exportQuestions(){
+    public void exportQuestions() {
         ModeratorViewLogic.exportQuestions(roomID);
     }
 
+    public void switchView(ActionEvent actionEvent) {
+        EntryRoomDisplay.setCurrentScene("/LecturerViewUI.fxml");
+    }
+
+    public void switchView2(ActionEvent actionEvent) {
+        EntryRoomDisplay.setCurrentScene("/LecturerViewUI(DARKMODE).fxml");
+    }
 }

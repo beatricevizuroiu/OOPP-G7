@@ -36,11 +36,7 @@
     </rowConstraints>
 
     <HBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
-        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="  RaisedHand">
-            <font>
-                <Font name="Book Antiqua Bold" size="36.0"/>
-            </font>
-        </Text>
+        <Text fx:id="courseName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"/>
     </HBox>
 
     <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2"/>
@@ -129,6 +125,12 @@
             GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="0">
         <graphic>
             <SVGPath content="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" styleClass="link-button"/>
+        </graphic>
+    </Button>
+
+    <Button onAction="#switchView" styleClass="upvoteBtn" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="0">
+        <graphic>
+            <SVGPath content="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z" styleClass="link-button" />
         </graphic>
     </Button>
 

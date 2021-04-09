@@ -44,6 +44,7 @@ public class CreatePollController {
     /**
      * Send the Poll that has been made.
      */
+
     public void sendPoll() {
         CreatePollLogic.sendPoll(pollOptions, questionArea, publicResults);
     }
@@ -62,7 +63,7 @@ public class CreatePollController {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
-        String targetFile = LocalData.isLecturer() ? "/LecturerViewUI.fxml" :  "/TAViewUI.fxml";
+        String targetFile = LocalData.isLecturer() ? "/LecturerViewUI.fxml" : "/TAViewUI.fxml";
         EntryRoomDisplay.setCurrentScene(targetFile);
     }
 

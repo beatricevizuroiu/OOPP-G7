@@ -2,7 +2,6 @@ package nl.tudelft.oopp.g7.client.logic;
 
 import lombok.Getter;
 import lombok.Setter;
-import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.SortingOrder;
 import nl.tudelft.oopp.g7.common.UserInfo;
 

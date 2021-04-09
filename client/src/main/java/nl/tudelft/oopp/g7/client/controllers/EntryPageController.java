@@ -1,26 +1,14 @@
 package nl.tudelft.oopp.g7.client.controllers;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class EntryPageController {
 
     /**
      * Handle button action for button Create.
-     *
      * @param event the event
      */
     public void handleButtonAction(ActionEvent event) {
@@ -33,7 +21,6 @@ public class EntryPageController {
 
     /**
      * Handle button action for button Join.
-     *
      * @param event the event
      */
     public void handleButtonAction2(ActionEvent event) {
@@ -46,7 +33,6 @@ public class EntryPageController {
 
     /**
      * Handle button action for button Create.
-     *
      * @param event the event
      */
     public void handleButtonActionDark(ActionEvent event) {
@@ -59,7 +45,6 @@ public class EntryPageController {
 
     /**
      * Handle button action for button Join.
-     *
      * @param event the event
      */
     public void handleButtonAction2Dark(ActionEvent event) {
@@ -72,7 +57,6 @@ public class EntryPageController {
 
     /**
      * Handle button action for button Mode from Light.
-     *
      * @param event the event
      */
     public void handleButtonMode(ActionEvent event) {
@@ -85,7 +69,6 @@ public class EntryPageController {
 
     /**
      * Handle button action for button Mode from Dark.
-     *
      * @param event the event
      */
     public void handleButtonMode2(ActionEvent event) {

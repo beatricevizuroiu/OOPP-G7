@@ -22,7 +22,7 @@
     </rowConstraints>
 
     <HBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
-        <Text fx:id="courseName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" Course Name"/>
+        <Text fx:id="courseName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"/>
     </HBox>
 
     <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2"/>
@@ -113,6 +113,13 @@
             <Insets left="640.0"/>
         </GridPane.margin>
     </Button>
+
+    <Button onAction="#switchView2" styleClass="upvoteBtn" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="0">
+        <graphic>
+            <SVGPath content="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z" styleClass="link-button" />
+        </graphic>
+    </Button>
+
 
     <Button fx:id="export" mnemonicParsing="false" onAction="#exportQuestions" styleClass="upvoteBtn"
             GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="0">

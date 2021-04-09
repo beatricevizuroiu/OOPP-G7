@@ -23,18 +23,18 @@ import java.util.stream.Collectors;
 public class SharedLogic {
     /**
      * Create a new question node and add it to the list of question nodes to be displayed.
-     * @param roomID The room ID that the questions belong to.
-     * @param questionNodes The list of questions nodes that the new question node should be added to.
-     * @param componentName The name of the FXML of that should be used to create the question node.
-     * @param question The {@link Question} object to create the question node from
-     * @param textArea TextArea representing answerBox
-     * @param answerButton post answer button
+     * @param roomID            The room ID that the questions belong to.
+     * @param questionNodes     The list of questions nodes that the new question node should be added to.
+     * @param componentName     The name of the FXML of that should be used to create the question node.
+     * @param question          The {@link Question} object to create the question node from
+     * @param textArea          TextArea representing answerBox
+     * @param answerButton      post answer button
      * @param questionContainer The container that contains the list of questions.
-     * @param questionList The javaFX {@link ScrollPane} that wraps the list of questions to add scrolling.
+     * @param questionList      The javaFX {@link ScrollPane} that wraps the list of questions to add scrolling.
      * @throws IOException If JavaFX can not load the FXML file.
      */
     public static void addQuestionToUI(String roomID, List<Node> questionNodes, String componentName, Question question, TextArea textArea, Button answerButton,
-                                       VBox questionContainer, ScrollPane questionList) throws IOException{
+                                       VBox questionContainer, ScrollPane questionList) throws IOException {
         HBox questionNode = FXMLLoader.load(ModeratorViewLogic.class.getResource(componentName));
 
         Text upvoteCount = (Text) questionNode.lookup("#QuestionUpvoteCount");
@@ -47,13 +47,13 @@ public class SharedLogic {
 
         if (upvoteBtn != null) {
             upvoteBtn.setOnAction((event) -> {
-                        // if the user already upvoted the question, delete the upvote when the button is clicked else simply upvote it
-                        if (LocalData.upvotedQuestions.contains(question.getId())) {
-                            StudentViewLogic.removeUpvoteQuestion(roomID, question.getId(), questionContainer, questionList);
-                        } else {
-                            StudentViewLogic.upvoteQuestion(roomID, question.getId(), questionContainer, questionList);
-                        }
-                    });
+                // if the user already upvoted the question, delete the upvote when the button is clicked else simply upvote it
+                if (LocalData.upvotedQuestions.contains(question.getId())) {
+                    StudentViewLogic.removeUpvoteQuestion(roomID, question.getId(), questionContainer, questionList);
+                } else {
+                    StudentViewLogic.upvoteQuestion(roomID, question.getId(), questionContainer, questionList);
+                }
+            });
 
             // set delete button for student
             if (question.getAuthorId().equals(LocalData.getUserID())) {
@@ -100,7 +100,7 @@ public class SharedLogic {
 
     /**
      * Retrieves all users from the server and puts them into the user information list.
-     * @param roomID ID of the room users belong
+     * @param roomID            ID of the room users belong
      * @param userListContainer VBox containing the UI elements
      */
     public static void retrieveAllUsers(String roomID, VBox userListContainer, String component, String componentDarkMode) {
@@ -122,7 +122,7 @@ public class SharedLogic {
         userInfoNodes.clear();
 
         // implement dark mode
-        String componentName =  "/components/" + (userListContainer.getStyleClass().contains("DarkUsersContainer") ? componentDarkMode : component);
+        String componentName = "/components/" + (userListContainer.getStyleClass().contains("DarkUsersContainer") ? componentDarkMode : component);
 
         try {
             for (UserInfo userInfo : userInfoList) {
@@ -142,7 +142,7 @@ public class SharedLogic {
      * Create a new user information node and add it to the nodes to be displayed.
      * @param userInfoNodes A list of user info nodes the new node should be added to.
      * @param componentName The name of the FXML of that should be used to create the question node.
-     * @param userInfo {@link UserInfo} object to create the user information node from.
+     * @param userInfo      {@link UserInfo} object to create the user information node from.
      * @throws IOException If JavaFX cannot load the FXML file.
      */
     public static void addUserInfoToUI(String roomID, List<Node> userInfoNodes, String componentName, UserInfo userInfo) throws IOException {

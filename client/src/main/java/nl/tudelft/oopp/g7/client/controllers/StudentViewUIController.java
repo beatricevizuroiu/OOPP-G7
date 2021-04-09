@@ -102,12 +102,12 @@ public class StudentViewUIController {
 
                 // body of pop-up with what the user entered
                 alert.setContentText("You are asking questions too fast!\n"
-                            + "Time remaining until you can ask a new question: "
-                            + timeLeft
-                            + " second(s)");
+                        + "Time remaining until you can ask a new question: "
+                        + timeLeft
+                        + " second(s)");
 
                 // set types of buttons for the pop-up
-                ButtonType okButton = new ButtonType ("OK");
+                ButtonType okButton = new ButtonType("OK");
 
                 alert.getButtonTypes().setAll(okButton);
 
@@ -139,7 +139,6 @@ public class StudentViewUIController {
 
     /**
      * Handle button action for button Mode from Light to Dark.
-     *
      * @param event the event
      */
     public void handleButtonMode(ActionEvent event) {
@@ -152,7 +151,6 @@ public class StudentViewUIController {
 
     /**
      * Handle button action for button Mode from Dark to Light.
-     *
      * @param event the event
      */
     public void handleButtonMode2(ActionEvent event) {
@@ -165,7 +163,6 @@ public class StudentViewUIController {
 
     /**
      * Handle button action for Help Button Light Mode.
-     *
      * @param event the event
      */
     public void handleHelpButtonLight(ActionEvent event) {
@@ -178,7 +175,6 @@ public class StudentViewUIController {
 
     /**
      * Handle button action for Help Button Dark Mode.
-     *
      * @param event the event
      */
     public void handleHelpButtonDark(ActionEvent event) {
@@ -192,7 +188,7 @@ public class StudentViewUIController {
     /**
      * Handle button action for Answered Questions Button light Mode.
      */
-    public void answeredQuestionList(){
+    public void answeredQuestionList() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -202,9 +198,8 @@ public class StudentViewUIController {
 
     /**
      * Handle button action for Answered Questions Button Dark Mode.
-     *
      */
-    public void answeredQuestionListDark(){
+    public void answeredQuestionListDark() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -215,7 +210,7 @@ public class StudentViewUIController {
     /**
      * Handle button action for List Users Button light Mode.
      */
-    public void listofUsers () {
+    public void listofUsers() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -226,7 +221,7 @@ public class StudentViewUIController {
     /**
      * Handle button action for List Users Button dark Mode.
      */
-    public void listofUsersDark () {
+    public void listofUsersDark() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 

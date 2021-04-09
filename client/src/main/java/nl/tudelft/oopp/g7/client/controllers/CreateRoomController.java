@@ -75,7 +75,7 @@ public class CreateRoomController {
      */
     public void buttonClicked() {
         // if the user presses OK, the go to Lecturer View
-        if (CreateRoomLogic.createRoomConfirmation(lecturerName, roomName)){
+        if (CreateRoomLogic.createRoomConfirmation(lecturerName, roomName)) {
 
             Date startDateTime = CreateRoomLogic.getTimeAndDateFromUI(startDate, startTime);
 
@@ -140,12 +140,12 @@ public class CreateRoomController {
     public void buttonClicked2() {
 
         // if the user presses OK, the go to Lecturer View
-        if (CreateRoomLogic.createRoomConfirmation(lecturerName, roomName)){
+        if (CreateRoomLogic.createRoomConfirmation(lecturerName, roomName)) {
 
             Date startDateTime = CreateRoomLogic.getTimeAndDateFromUI(startDate, startTime);
 
             if (scheduleCheckbox.isSelected()
-                && startDateTime == null) {
+                    && startDateTime == null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Invalid date/time");
                 alert.setContentText("The date and or time you have entered are invalid.");
@@ -202,7 +202,6 @@ public class CreateRoomController {
 
     /**
      * Handle button action for going back to Entry page from Light.
-     *
      * @param event the event
      */
     public void handleBackButton(ActionEvent event) {
@@ -215,7 +214,6 @@ public class CreateRoomController {
 
     /**
      * Handle button action for going back to Entry page from Dark.
-     *
      * @param event the event
      */
     public void handleBackButtonDark(ActionEvent event) {
