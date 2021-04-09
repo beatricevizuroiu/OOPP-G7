@@ -22,6 +22,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SharedLogic {
+
+    /**
+     * Helper method to set the course name on the window and to trim it to size.
+     * @param courseNameField The {@link Text} object to set the (shortened) course name on.
+     */
+    public static void displayCourseName(Text courseNameField) {
+        String courseName = LocalData.getRoomName();
+
+        courseName = courseName.substring(0, Math.min(20, courseName.length()));
+
+        courseNameField.setText(courseName);
+    }
+
     /**
      * Create a new question node and add it to the list of question nodes to be displayed.
      * @param roomID            The room ID that the questions belong to.

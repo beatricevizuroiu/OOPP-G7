@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.logic.AnsweredQuestionsLogic;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
+import nl.tudelft.oopp.g7.client.logic.SharedLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.Question;
 
@@ -37,7 +38,7 @@ public class AnsweredQuestionsStudentController {
      */
     @FXML
     public void initialize() {
-        courseName.setText(LocalData.getRoomName());
+        SharedLogic.displayCourseName(courseName);
         Timer timer = new Timer(true);
 
         AnsweredQuestionsStudentController reference = this;

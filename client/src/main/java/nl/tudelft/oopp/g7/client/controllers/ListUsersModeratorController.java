@@ -25,7 +25,7 @@ public class ListUsersModeratorController {
      */
     @FXML
     public void initialize() {
-        courseName.setText(LocalData.getRoomName());
+        SharedLogic.displayCourseName(courseName);
         retrieveAllUsers();
     }
 

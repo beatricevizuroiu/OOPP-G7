@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.logic.AnsweredQuestionsLogic;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
+import nl.tudelft.oopp.g7.client.logic.SharedLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.Question;
 
@@ -36,7 +37,7 @@ public class AnsweredQuestionsModeratorController {
      */
     @FXML
     public void initialize() {
-        courseName.setText(LocalData.getRoomName());
+        SharedLogic.displayCourseName(courseName);
         // Start a timer and create a separate thread on it to automatically call retrieveQuestions()
         Timer timer = new Timer(true);
 

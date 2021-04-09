@@ -72,7 +72,7 @@ public class LecturerViewController {
      * Start-up routine.
      */
     public void initialize() {
-        courseName.setText(LocalData.getRoomName());
+        SharedLogic.displayCourseName(courseName);
         // Start a timer and create a separate thread on it to automatically call retrieveQuestions()
         Timer timer = new Timer(true);
 

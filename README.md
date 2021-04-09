@@ -51,6 +51,9 @@ mv client/build/libs/client-0.0.1-SNAPSHOT.jar client.jar
 
 # Start the client.
 java -jar client.jar
+
+# If you want to connect to a specific server (other then the default localhost:8080) you can specify it as a command line argument to the client.
+java -jar client.jar "http://alternative.server.example.com:8080" 
 ```
 
 #### Windows
