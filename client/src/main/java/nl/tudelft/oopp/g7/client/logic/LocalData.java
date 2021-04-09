@@ -30,6 +30,5 @@ public class LocalData {
     @Setter @Getter
     private static String serverUrl = "http://localhost:8080";
     public static HashMap<String, UserInfo> userMap = new HashMap<>();
-    public static HashMap<Integer, String> upvotedQuestionsMap = new HashMap<>();
     public static Set<Integer> upvotedQuestions = new HashSet<>();
 }
