@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.StudentViewLogic;
@@ -102,12 +103,12 @@ public class StudentViewUIController {
 
                 // body of pop-up with what the user entered
                 alert.setContentText("You are asking questions too fast!\n"
-                            + "Time remaining until you can ask a new question: "
-                            + timeLeft
-                            + " second(s)");
+                        + "Time remaining until you can ask a new question: "
+                        + timeLeft
+                        + " second(s)");
 
                 // set types of buttons for the pop-up
-                ButtonType okButton = new ButtonType ("OK");
+                ButtonType okButton = new ButtonType("OK");
 
                 alert.getButtonTypes().setAll(okButton);
 
@@ -121,21 +122,23 @@ public class StudentViewUIController {
         retrieveQuestions();
     }
 
-//    /**
-//     * Upvote questions.
-//     * @param questionId the id of the question that is being upvoted
-//     */
-//    public void upvoteQuestion(int questionId) {
-//        StudentViewLogic.upvoteQuestion(roomID, questionId, questionContainer, questionList);
-//    }
-//
-//    /**
-//     * Remove Upvote of questions.
-//     * @param questionId the id of the question that is being down-voted
-//     */
-//    public void removeUpvoteQuestion(int questionId) {
-//        StudentViewLogic.removeUpvoteQuestion(roomID, questionId, questionContainer, questionList);
-//    }
+    /**
+     * Upvote questions.
+     *
+     * @param questionId the id of the question that is being upvoted
+     */
+    public void upvoteQuestion(int questionId) {
+        StudentViewLogic.upvoteQuestion(roomID, questionId, questionContainer, questionList);
+    }
+
+    /**
+     * Remove Upvote of questions.
+     *
+     * @param questionId the id of the question that is being down-voted
+     */
+    public void removeUpvoteQuestion(int questionId) {
+        StudentViewLogic.removeUpvoteQuestion(roomID, questionId, questionContainer, questionList);
+    }
 
     /**
      * Handle button action for button Mode from Light to Dark.
@@ -192,7 +195,7 @@ public class StudentViewUIController {
     /**
      * Handle button action for Answered Questions Button light Mode.
      */
-    public void answeredQuestionList(){
+    public void answeredQuestionList() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -202,9 +205,8 @@ public class StudentViewUIController {
 
     /**
      * Handle button action for Answered Questions Button Dark Mode.
-     *
      */
-    public void answeredQuestionListDark(){
+    public void answeredQuestionListDark() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -215,7 +217,7 @@ public class StudentViewUIController {
     /**
      * Handle button action for List Users Button light Mode.
      */
-    public void listofUsers () {
+    public void listofUsers() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -226,12 +228,19 @@ public class StudentViewUIController {
     /**
      * Handle button action for List Users Button dark Mode.
      */
-    public void listofUsersDark () {
+    public void listofUsersDark() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if list of Users is clicked, change to List of Users scene
         EntryRoomDisplay.setCurrentScene("/ListUsersStudent(DARKMODE).fxml");
+    }
+
+    /**
+     * Handle button action for deleting a question.
+     */
+    public void deleteQuestion() {
+//        StudentViewLogic.deleteQuestion(roomID, questionId, questionContainer, questionList);
     }
 
     /**
@@ -241,10 +250,10 @@ public class StudentViewUIController {
         colorSlow.setVisible(true);
         PauseTransition transition = new PauseTransition(Duration.seconds(3));
         transition.setOnFinished(event -> colorSlow.setVisible(false));
+        ServerCommunication.setSpeed(roomID, 1);
 
         transition.play();
     }
-
 
     /**
      * Handle button faster.
@@ -253,6 +262,7 @@ public class StudentViewUIController {
         colorFast.setVisible(true);
         PauseTransition transition = new PauseTransition(Duration.seconds(3));
         transition.setOnFinished(event -> colorFast.setVisible(false));
+        ServerCommunication.setSpeed(roomID, -1);
 
         transition.play();
     }
