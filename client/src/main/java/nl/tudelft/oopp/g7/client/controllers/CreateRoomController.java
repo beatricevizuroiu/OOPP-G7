@@ -195,7 +195,7 @@ public class CreateRoomController {
                 Scene scene = EntryRoomDisplay.getCurrentScene();
                 Stage stage = EntryRoomDisplay.getCurrentStage();
 
-                EntryRoomDisplay.setCurrentScene("/LecturerViewUI.fxml");
+                EntryRoomDisplay.setCurrentScene("/LecturerViewUI(DARKMODE).fxml");
             }
         }
     }
