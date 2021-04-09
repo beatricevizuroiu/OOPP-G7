@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.logic.CreatePollLogic;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
@@ -20,6 +21,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class CreatePollController {
     @FXML
     private TextArea questionArea;
+    @FXML
+    private Text courseName;
     @FXML
     private TextArea optionArea;
     @FXML
@@ -41,9 +44,14 @@ public class CreatePollController {
         CreatePollLogic.reset();
     }
 
+    public void initialize() {
+        courseName.setText(LocalData.getRoomName());
+    }
+
     /**
      * Send the Poll that has been made.
      */
+
     public void sendPoll() {
         CreatePollLogic.sendPoll(pollOptions, questionArea, publicResults);
     }
@@ -62,7 +70,7 @@ public class CreatePollController {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
-        String targetFile = LocalData.isLecturer() ? "/LecturerViewUI.fxml" :  "/TAViewUI.fxml";
+        String targetFile = LocalData.isLecturer() ? "/LecturerViewUI.fxml" : "/TAViewUI.fxml";
         EntryRoomDisplay.setCurrentScene(targetFile);
     }
 

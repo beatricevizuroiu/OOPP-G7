@@ -18,20 +18,21 @@
     </columnConstraints>
     <rowConstraints>
         <RowConstraints minHeight="75.0" vgrow="NEVER"/>
-        <RowConstraints maxHeight="325.0" minHeight="239.0" prefHeight="313.6" vgrow="SOMETIMES"/>
-        <RowConstraints maxHeight="95.0" minHeight="4.199999999999989" prefHeight="21.600000000000023"
-                        vgrow="SOMETIMES"/>
-        <RowConstraints maxHeight="91.19999999999999" minHeight="76.19999999999999" prefHeight="91.19999999999999"/>
+        <RowConstraints vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="95.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="95.0"/>
     </rowConstraints>
 
-    <HBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
-        <Text fx:id="courseName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" Course Name"/>
-    </HBox>
+    <VBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
+        <Region VBox.vgrow="ALWAYS" />
+        <Text fx:id="courseName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"/>
+        <Region VBox.vgrow="ALWAYS" />
+    </VBox>
 
     <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="3"/>
 
     <ScrollPane fx:id="questionList" fitToHeight="true" fitToWidth="true" GridPane.columnIndex="1"
-                GridPane.columnSpan="3" GridPane.rowIndex="1">
+                GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.rowSpan="2">
         <padding>
             <Insets>
                 <right>10</right>
@@ -62,32 +63,57 @@
         </VBox>
     </ScrollPane>
 
-    <TextArea fx:id="answerBox" prefHeight="95.0" prefWidth="885.0" promptText="Type your question here" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-
-    <Button fx:id="postQuestionButton" mnemonicParsing="false" onAction="#sendQuestion" styleClass="button" text="Post Question" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+    <HBox GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" GridPane.rowSpan="1" styleClass="answer-panel">
+        <TextArea fx:id="answerBox" minHeight="95.0" prefWidth="885.0" promptText="Type your question here" HBox.hgrow="ALWAYS"/>
+        <Region HBox.hgrow="NEVER" minWidth="10" styleClass="answer-panel"/>
+        <VBox>
+            <Region VBox.vgrow="SOMETIMES"/>
+            <Button onAction="#sendQuestion" mnemonicParsing="false" styleClass="post-button" alignment="CENTER" HBox.hgrow="NEVER"/>
+            <Region VBox.vgrow="SOMETIMES"/>
+        </VBox>
+        <Region HBox.hgrow="NEVER" minWidth="10" styleClass="answer-panel"/>
+    </HBox>
 
     <!--    Main Buttons    -->
-    <Button mnemonicParsing="false" onAction="#handleButtonMode2" text="Mode" GridPane.halignment="CENTER"
-            GridPane.rowIndex="1" GridPane.valignment="CENTER">
-        <graphic>
-            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@sun (1).png"/>
-                </image>
-            </ImageView>
-        </graphic>
-    </Button>
 
+<!--    <VBox GridPane.columnIndex="0" GridPane.rowIndex="1">-->
+<!--        <VBox VBox.vgrow="NEVER" minHeight="10"/>-->
+<!--        <HBox>-->
+<!--            <HBox HBox.hgrow="ALWAYS"/>-->
+<!--            <VBox>-->
+<!--                <Button fx:id="whiteSlow" mnemonicParsing="false" onAction="#goSlower" style="-fx-background-color: #15041A"-->
+<!--                        visible="true">-->
+<!--                    <graphic>-->
+<!--                        <ImageView fitHeight="60.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">-->
+<!--                            <image>-->
+<!--                                <Image url="@icons/slower.png"/>-->
+<!--                            </image>-->
+<!--                        </ImageView>-->
+<!--                    </graphic>-->
+<!--                </Button>-->
 
-    <!--    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonDark" styleClass="upvoteBtn"-->
-    <!--            textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2">-->
+<!--                <Button fx:id="whiteFast" mnemonicParsing="false" onAction="#goFaster" style="-fx-background-color: #15041A"-->
+<!--                        visible="true">-->
+<!--                    <graphic>-->
+<!--                        <ImageView fitHeight="67.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">-->
+<!--                            <image>-->
+<!--                                <Image url="@icons/faster.png"/>-->
+<!--                            </image>-->
+<!--                        </ImageView>-->
+<!--                    </graphic>-->
+<!--                </Button>-->
+<!--            </VBox>-->
+<!--            <HBox HBox.hgrow="ALWAYS"/>-->
+<!--        </HBox>-->
+<!--        <VBox VBox.vgrow="ALWAYS"/>-->
+<!--    </VBox>-->
 
     <Button fx:id="whiteSlow" mnemonicParsing="false" onAction="#goSlower" style="-fx-background-color: #15041A"
             visible="true" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
         <graphic>
             <ImageView fitHeight="60.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
                 <image>
-                    <Image url="@slower.png"/>
+                    <Image url="icons/slower.png"/>
                 </image>
             </ImageView>
         </graphic>
@@ -97,7 +123,7 @@
         <graphic>
             <ImageView fitHeight="61.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                 <image>
-                    <Image url="@slowerColored.png"/>
+                    <Image url="icons/slowerColored.png"/>
                 </image>
             </ImageView>
         </graphic>
@@ -108,7 +134,7 @@
         <graphic>
             <ImageView fitHeight="67.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                 <image>
-                    <Image url="@faster.png"/>
+                    <Image url="icons/faster.png"/>
                 </image>
             </ImageView>
         </graphic>
@@ -118,38 +144,36 @@
         <graphic>
             <ImageView fitHeight="64.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                 <image>
-                    <Image url="@fasterColored.png"/>
+                    <Image url="icons/fasterColored.png"/>
                 </image>
             </ImageView>
         </graphic>
     </Button>
 
-    <Button fx:id="helpButtonD" mnemonicParsing="false" onAction="#handleHelpButtonDark" styleClass="upvoteBtn"
+    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonDark" styleClass="help-button"
             textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2"/>
 
-    <FlowPane alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.columnSpan="2">
+    <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.columnSpan="2">
+        <Button fx:id="modeButton" mnemonicParsing="false" onAction="#handleButtonMode2" styleClass="mode-button"/>
 
-    <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionListDark" styleClass="upvoteBtn" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="0">
-        <graphic>
-            <SVGPath
-                    content="M22,5.18L10.59,16.6l-4.24-4.24l1.41-1.41l2.83,2.83l10-10L22,5.18z M19.79,10.22C19.92,10.79,20,11.39,20,12 c0,4.42-3.58,8-8,8s-8-3.58-8-8c0-4.42,3.58-8,8-8c1.58,0,3.04,0.46,4.28,1.25l1.44-1.44C16.1,2.67,14.13,2,12,2C6.48,2,2,6.48,2,12 c0,5.52,4.48,10,10,10s10-4.48,10-10c0-1.19-0.22-2.33-0.6-3.39L19.79,10.22z"
-                    fill="WHITE" styleClass="link-button"/>
-        </graphic>
-    </Button>
+        <Region minWidth="15"/>
 
-    <Button fx:id="userList" mnemonicParsing="false" onAction="#listofUsersDark" styleClass="upvoteBtn"
-            GridPane.columnIndex="1" GridPane.rowIndex="0">
-        <graphic>
-            <SVGPath
-                    content="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                    fill="WHITE" styleClass="link-button"/>
-        </graphic>
-        <GridPane.margin>
-            <Insets left="790.0"/>
-        </GridPane.margin>
-    </Button>
+        <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionListDark" styleClass="answered-question-button"/>
 
-    <!--    <Button fx:id="mode" mnemonicParsing="false" onAction="#handleButtonMode" styleClass="mode-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />-->
-    </FlowPane>
-    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonLight" styleClass="help-button" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+        <Region minWidth="15"/>
+
+        <Button fx:id="sortButton" text="Sort" mnemonicParsing="false" onAction="#switchSortingMode" styleClass="sort-button"/>
+
+        <Region minWidth="10"/>
+
+        <Button fx:id="userList" mnemonicParsing="false" onAction="#listofUsersDark" styleClass="upvoteBtn">
+            <graphic>
+                <SVGPath
+                        content="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                        styleClass="link-button"/>
+            </graphic>
+        </Button>
+
+        <!--    <Button fx:id="mode" mnemonicParsing="false" onAction="#handleButtonMode" styleClass="mode-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />-->
+    </HBox>
 </GridPane>

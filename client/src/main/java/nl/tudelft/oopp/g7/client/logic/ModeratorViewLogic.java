@@ -34,7 +34,7 @@ public class ModeratorViewLogic {
 
     /**
      * Retrieve any active Poll in a Room.
-     * @param roomId The roomId of the Room to get the Poll from.
+     * @param roomId              The roomId of the Room to get the Poll from.
      * @param pollWindowContainer The UI element to put the Poll in.
      */
     public static void retrievePolls(String roomId, VBox pollWindowContainer) {
@@ -48,7 +48,13 @@ public class ModeratorViewLogic {
             Button closeButton = (Button) pollWindow.lookup("#deleteButton");
 
             closeButton.setOnAction((event) -> {
-                closePoll();
+                if(poll.isAcceptingAnswers()) {
+                    closePoll();
+                    retrievePolls(roomId, pollWindowContainer);
+                } else {
+                    reopenPoll();
+                    retrievePolls(roomId, pollWindowContainer);
+                }
             });
 
             Text pollLabel = (Text) pollWindow.lookup("#pollLabelText");
@@ -57,11 +63,13 @@ public class ModeratorViewLogic {
             if (!poll.isAcceptingAnswers()) {
                 pollTextBox.setStyle("-fx-background-color: #cf5454");
                 pollLabel.setText("CLOSED POLL");
-                closeButton.setVisible(false);
+                closeButton.setText("Re-open");
+
             } else {
                 pollTextBox.setStyle("-fx-background-color: #9251ba");
                 pollLabel.setText("POLL");
-                closeButton.setVisible(true);
+                closeButton.setText("Close");
+
             }
 
             HBox optionContainer = (HBox) pollWindow.lookup("#PollWindowOptionContainer");
@@ -132,13 +140,17 @@ public class ModeratorViewLogic {
         ModeratorServerCommunication.closePoll(LocalData.getRoomID(), true);
     }
 
+    private static void reopenPoll() {
+        ModeratorServerCommunication.reopenPoll(LocalData.getRoomID());
+    }
+
     /**
      * Retrieves all questions from the server and puts them into the question panel.
-     * @param roomID ID of the room questions are in
-     * @param textArea TextArea representing answerBox
-     * @param answerButton post answer button
+     * @param roomID            ID of the room questions are in
+     * @param textArea          TextArea representing answerBox
+     * @param answerButton      post answer button
      * @param questionContainer VBox containing the UI elements.
-     * @param questionList ScrollPane containing the whole list of questions.
+     * @param questionList      ScrollPane containing the whole list of questions.
      */
     public static void retrieveAllQuestions(String roomID, TextArea textArea, Button answerButton, VBox questionContainer, ScrollPane questionList) {
         // Store the current position of the user in the scroll list
@@ -173,13 +185,14 @@ public class ModeratorViewLogic {
         questionList.setVvalue(scrollHeight + 0);
     }
 
-    /** Deletes a question and refreshes the question list.
-     * @param roomID ID of the room question is in.
-     * @param questionID ID of the specified question.
-     * @param textArea TextArea representing answerBox
-     * @param answerButton post answer button
+    /**
+     * Deletes a question and refreshes the question list.
+     * @param roomID            ID of the room question is in.
+     * @param questionID        ID of the specified question.
+     * @param textArea          TextArea representing answerBox
+     * @param answerButton      post answer button
      * @param questionContainer VBox containing the UI elements.
-     * @param questionList ScrollPane containing the whole list of questions.
+     * @param questionList      ScrollPane containing the whole list of questions.
      */
     public static void deleteQuestionMod(String roomID, int questionID, TextArea textArea, Button answerButton, VBox questionContainer, ScrollPane questionList) {
         ServerCommunication.deleteQuestion(roomID, questionID);
@@ -188,12 +201,12 @@ public class ModeratorViewLogic {
 
     /**
      * Edits a question and refreshes the question list.
-     * @param roomID ID of the room question is in.
-     * @param question Specified question
-     * @param textArea TextArea representing answerBox
-     * @param answerButton post answer button
+     * @param roomID            ID of the room question is in.
+     * @param question          Specified question
+     * @param textArea          TextArea representing answerBox
+     * @param answerButton      post answer button
      * @param questionContainer VBox containing the UI elements.
-     * @param questionList ScrollPane containing the whole list of questions.
+     * @param questionList      ScrollPane containing the whole list of questions.
      */
     public static void editQuestion(String roomID, Question question, TextArea textArea, Button answerButton, VBox questionContainer, ScrollPane questionList) {
         textArea.setText(question.getText());
@@ -213,14 +226,14 @@ public class ModeratorViewLogic {
 
     /**
      * Answers a question and refreshes the question list.
-     * @param roomID ID of the room question is in.
-     * @param question Specified question
-     * @param textArea TextArea representing answerBox
-     * @param answerButton post answer button
+     * @param roomID            ID of the room question is in.
+     * @param question          Specified question
+     * @param textArea          TextArea representing answerBox
+     * @param answerButton      post answer button
      * @param questionContainer VBox containing the UI elements.
-     * @param questionList ScrollPane containing the whole list of questions.
+     * @param questionList      ScrollPane containing the whole list of questions.
      */
-    public static void answerQuestion(String roomID, Question question, TextArea textArea, Button answerButton, VBox questionContainer, ScrollPane questionList){
+    public static void answerQuestion(String roomID, Question question, TextArea textArea, Button answerButton, VBox questionContainer, ScrollPane questionList) {
         answerButton.setOnAction((event) -> {
             // send the edit request
             ModeratorServerCommunication.answerQuestion(roomID, question.getId(), new Answer(textArea.getText()));
@@ -255,13 +268,13 @@ public class ModeratorViewLogic {
                 }
 
                 exportQuestions.add(new ExportQuestion(
-                        LocalData.userMap.get(userId).getNickname(),
-                        question.getText(),
-                        question.getAnswer(),
-                        question.getPostedAt(),
-                        question.getUpvotes(),
-                        question.isAnswered(),
-                        question.isEdited()
+                                LocalData.userMap.get(userId).getNickname(),
+                                question.getText(),
+                                question.getAnswer(),
+                                question.getPostedAt(),
+                                question.getUpvotes(),
+                                question.isAnswered(),
+                                question.isEdited()
                         )
                 );
             }
@@ -311,7 +324,7 @@ public class ModeratorViewLogic {
         // Taken from StackOverflow to make alert box text editable
         // https://stackoverflow.com/a/45621264/14196175
         TextArea textArea = new TextArea(String.format(
-                        "Room ID: %s\n"
+                "Room ID: %s\n"
                         + "Moderator Password: %s\n"
                         + "Student Password: %s",
                 LocalData.getRoomID(), LocalData.getModeratorPassword(), LocalData.getStudentPassword()));

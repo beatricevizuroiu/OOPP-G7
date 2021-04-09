@@ -10,7 +10,7 @@ public class JoinRoomLogic {
     /**
      * Create pop-up confirming joining a room.
      * @param nickname TextField in which user's name is written
-     * @param roomId TextField in which id of the room user wants to join is written
+     * @param roomId   TextField in which id of the room user wants to join is written
      * @return a boolean confirming whether the user pressed OK or cancel
      */
     public static boolean joinRoomConfirmation(TextField nickname, TextField roomId) {
@@ -22,15 +22,15 @@ public class JoinRoomLogic {
         alert.setHeaderText(null);
 
         // body of pop-up with what the user entered
-        if(nickname.getText() == null || nickname.getText().equals("")){
+        if (nickname.getText() == null || nickname.getText().equals("")) {
             alert.setContentText("You are joining room: " + roomId.getText());
-        }else {
+        } else {
             alert.setContentText("You are joining room: " + roomId.getText() + ".\nAs: " + nickname.getText());
         }
 
         // set types of buttons for the pop-up
-        ButtonType okButton = new ButtonType ("OK");
-        ButtonType cancelButton = new ButtonType ("Cancel");
+        ButtonType okButton = new ButtonType("OK");
+        ButtonType cancelButton = new ButtonType("Cancel");
 
         alert.getButtonTypes().setAll(okButton, cancelButton);
 
@@ -44,7 +44,7 @@ public class JoinRoomLogic {
     /**
      * Stores the room/user information into a local static class.
      * @param nickname TextField in which user's name is written
-     * @param roomId TextField in which id of the room user wants to join is written
+     * @param roomId   TextField in which id of the room user wants to join is written
      */
     public static void joinRoomStoreLocalData(TextField nickname, TextField roomId, RoomJoinInfo roomJoinInfo) {
         LocalData.setNickname(nickname.getText());

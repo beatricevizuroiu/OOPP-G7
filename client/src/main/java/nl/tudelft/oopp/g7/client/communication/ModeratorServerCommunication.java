@@ -39,7 +39,7 @@ public class ModeratorServerCommunication {
      * Answer the question with the specified ID.
      * @param roomID ID of the room student belongs
      * @param questionID ID of the question
-     * @return A {@link HttpResponse} containing the response received from server.
+     * @return A {@link HttpResponse} containing the response received from server
      */
     public static HttpResponse<String> answerQuestion(String roomID, int questionID, Answer answer) {
         // convert the body to JSON
@@ -58,10 +58,10 @@ public class ModeratorServerCommunication {
 
     /**
      * Bans the user with specified id.
-     * @param roomID ID of the room student belongs.
-     * @param userID ID of the student that will be banned.
-     * @param banReason {@link BanReason} object that contains the reason for ban.
-     * @return A HttpResponse containing the response received from server.
+     * @param roomID ID of the room student belongs
+     * @param userID ID of the student that will be banned
+     * @param banReason {@link BanReason} object that contains the reason for ban
+     * @return A HttpResponse containing the response received from server
      */
     public static HttpResponse<String> banUser(String roomID, String userID, BanReason banReason) {
         // convert the body to JSON
@@ -77,11 +77,11 @@ public class ModeratorServerCommunication {
 
     /**
      * Create a Poll.
-     * @param roomID The roomId of the Room to create a Poll in.
-     * @param question The question text of the Poll.
-     * @param options The answer options of the Poll.
-     * @param publicResults True if the results of the Poll should be public while it is active.
-     * @return The Http Response (No data).
+     * @param roomID The roomId of the Room to create a Poll in
+     * @param question The question text of the Poll
+     * @param options The answer options of the Poll
+     * @param publicResults True if the results of the Poll should be public while it is active
+     * @return The Http Response (No data)
      */
     public static HttpResponse<String> createPoll(String roomID, String question, String[] options, boolean publicResults) {
         // put the information in a PollCreateRequest and convert it to JSON
@@ -96,9 +96,9 @@ public class ModeratorServerCommunication {
 
     /**
      * Close the open Poll in a Room.
-     * @param roomID The roomId of the Room to close the Poll in.
-     * @param publishResults Determines whether the results should be available to Students.
-     * @return The Http Response (No data).
+     * @param roomID The roomId of the Room to close the Poll in
+     * @param publishResults Determines whether the results should be available to Students
+     * @return The Http Response (No data)
      */
     public static HttpResponse<String> closePoll(String roomID, boolean publishResults) {
         // convert the body to JSON
@@ -108,6 +108,20 @@ public class ModeratorServerCommunication {
         URI uri = URI.create(uriBody + roomID + "/poll/close");
 
         // send the request to the server
+        return HttpMethods.post(uri, body);
+    }
+
+    /**
+     * Reopen the most recent Poll in a Room.
+     * @param roomID The roomId of the Room to re-open the Poll in
+     * @return The Http Response (No data)
+     */
+    public static HttpResponse<String> reopenPoll(String roomID) {
+
+        String body = "[]";
+
+        URI uri = URI.create(uriBody + roomID + "/poll/reopen");
+
         return HttpMethods.post(uri, body);
     }
 }

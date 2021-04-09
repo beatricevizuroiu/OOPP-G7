@@ -2,7 +2,7 @@ package nl.tudelft.oopp.g7.client.logic;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -13,10 +13,13 @@ import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.PollInfo;
 import nl.tudelft.oopp.g7.common.PollOption;
 import nl.tudelft.oopp.g7.common.Question;
+import nl.tudelft.oopp.g7.common.QuestionText;
 
 import java.io.IOException;
+import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 public class StudentViewLogic {
     private static final HashMap<Integer, Integer> selectedPollOptions = new HashMap<>();
@@ -27,8 +30,59 @@ public class StudentViewLogic {
     }
 
     /**
+     * Send questions in a Room.
+     * @param roomId              The roomId of the Room to get the Poll from.
+     * @param answerBox            The answerBox to answer the questions.
+     */
+    public static void sendQuestion(String roomId, TextArea answerBox) {
+        HttpResponse<String> response = StudentServerCommunication.askQuestion(roomId, new QuestionText(answerBox.getText()));
+        if (response.statusCode() == 429) {
+            Optional<String> header = response.headers().firstValue("X-Ratelimit-Expires");
+            if (header.isPresent()) {
+                int timeLeft = Integer.parseInt(header.get());
+
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+
+                // body of pop-up with what the user entered
+                alert.setContentText("You are asking questions too fast!\n"
+                        + "Time remaining until you can ask a new question: "
+                        + timeLeft
+                        + " second(s)");
+
+                // set types of buttons for the pop-up
+                ButtonType okButton = new ButtonType("OK");
+
+                alert.getButtonTypes().setAll(okButton);
+
+                // wait for the alert to appear
+                alert.showAndWait();
+                return;
+            }
+            System.err.println("A rate limit status was returned but the rate limit header does not exist!");
+        }
+
+        if (response.statusCode() == 401) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+
+            // body of pop-up with what the user entered
+            alert.setContentText("You are not allowed to ask a Question!\n"
+                    + "The Room might be closed or you are currently banned.");
+
+            // set types of buttons for the pop-up
+            ButtonType okButton = new ButtonType ("OK");
+
+            alert.getButtonTypes().setAll(okButton);
+
+            // wait for the alert to appear
+            alert.showAndWait();
+            return;
+        }
+        answerBox.setText("");
+    }
+
+    /**
      * Retrieve any active Poll in a Room.
-     * @param roomId The roomId of the Room to get the Poll from.
+     * @param roomId              The roomId of the Room to get the Poll from.
      * @param pollWindowContainer The UI element to put the Poll in.
      */
     public static void retrievePolls(String roomId, VBox pollWindowContainer) {
@@ -100,7 +154,7 @@ public class StudentViewLogic {
                 }
 
                 optionNode.setOnMouseClicked((event) -> {
-                    if (poll.isAcceptingAnswers()){
+                    if (poll.isAcceptingAnswers()) {
                         StudentServerCommunication.answerPoll(roomId, pollOption.getId());
                         selectedPollOptions.put(poll.getId(), pollOption.getId());
                     }
@@ -123,9 +177,9 @@ public class StudentViewLogic {
 
     /**
      * Retrieves all questions from the server, puts them into the question panel and also adds events listeners to the upvote buttons.
-     * @param roomID ID of the room questions are in
+     * @param roomID            ID of the room questions are in
      * @param questionContainer VBox containing the UI elements.
-     * @param questionList ScrollPane containing the whole list of questions.
+     * @param questionList      ScrollPane containing the whole list of questions.
      */
     private static void retrieveAllQuestions(String roomID, VBox questionContainer, ScrollPane questionList) {
         // Store the current position of the user in the scroll list
@@ -161,10 +215,10 @@ public class StudentViewLogic {
 
     /**
      * Upvotes a question and refreshes the question list.
-     * @param roomID ID of the room question is in.
-     * @param questionId ID of the specified question.
+     * @param roomID            ID of the room question is in.
+     * @param questionId        ID of the specified question.
      * @param questionContainer VBox containing the UI elements.
-     * @param questionList ScrollPane containing the whole list of questions.
+     * @param questionList      ScrollPane containing the whole list of questions.
      */
     public static void upvoteQuestion(String roomID, int questionId, VBox questionContainer, ScrollPane questionList) {
         ServerCommunication.upvoteQuestion(roomID, questionId);
@@ -174,10 +228,10 @@ public class StudentViewLogic {
 
     /**
      * removes the upvote of a question and refreshes the question list.
-     * @param roomID ID of the room question is in.
-     * @param questionId ID of the specified question.
+     * @param roomID            ID of the room question is in.
+     * @param questionId        ID of the specified question.
      * @param questionContainer VBox containing the UI elements.
-     * @param questionList ScrollPane containing the whole list of questions.
+     * @param questionList      ScrollPane containing the whole list of questions.
      */
     public static void removeUpvoteQuestion(String roomID, int questionId, VBox questionContainer, ScrollPane questionList) {
         ServerCommunication.removeUpvoteQuestion(roomID, questionId);
@@ -187,10 +241,10 @@ public class StudentViewLogic {
 
     /**
      * Deletes a question and refreshes the question list.
-     * @param roomID ID of the room question is in.
-     * @param questionId ID of the specified question.
+     * @param roomID            ID of the room question is in.
+     * @param questionId        ID of the specified question.
      * @param questionContainer VBox containing the UI elements.
-     * @param questionList ScrollPane containing the whole list of questions.
+     * @param questionList      ScrollPane containing the whole list of questions.
      */
     public static void deleteQuestionStudent(String roomID, int questionId, VBox questionContainer, ScrollPane questionList) {
         ServerCommunication.deleteQuestion(roomID, questionId);

@@ -22,7 +22,7 @@ public class StudentServerCommunication {
      * Sends a post request with appropriate NewQuestion body.
      * @param roomID ID of the room students belongs
      * @param question QuestionText asked by student
-     * @return A {@link HttpResponse} containing the response received from server.
+     * @return A {@link HttpResponse} containing the response received from server
      */
     public static HttpResponse<String> askQuestion(String roomID, QuestionText question) {
         // convert the body to JSON
@@ -38,7 +38,7 @@ public class StudentServerCommunication {
     /**
      * Retrieve all questions from the server and sort them based on most recent.
      * @param roomID ID of the room students belongs
-     * @return A {@link List} of question containing all questions in sorted order.
+     * @return A {@link List} of question containing all questions in sorted order
      */
     public static List<Question> retrieveAllQuestions(String roomID) {
         // retrieve the question list from server
@@ -57,9 +57,9 @@ public class StudentServerCommunication {
 
     /**
      * Send an answer to a Poll.
-     * @param roomId The roomId of the Poll.
-     * @param optionId The optionId of the answer to send.
-     * @return The HttpResponse (No data).
+     * @param roomId The roomId of the Poll
+     * @param optionId The optionId of the answer to send
+     * @return The HttpResponse (No data)
      */
     public static HttpResponse<String> answerPoll(String roomId, int optionId) {
         // convert the option number to JSON

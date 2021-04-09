@@ -20,13 +20,13 @@ public class CreatePollLogic {
 
     /**
      * Toggle whether students can see the results of a Poll while it is active.
-     * @param publicResults The boolean that determines whether Poll Results will be public.
+     * @param publicResults       The boolean that determines whether Poll Results will be public.
      * @param publicResultsButton The button that calls this method.
      */
     public static void setResultPublicity(AtomicBoolean publicResults, Button publicResultsButton) {
         publicResults.set(!publicResults.get());
 
-        if(publicResults.get()) {
+        if (publicResults.get()) {
             publicResultsButton.setText("Results: Visible");
             return;
         }
@@ -43,8 +43,8 @@ public class CreatePollLogic {
 
     /**
      * Send the Poll that has been created to the server.
-     * @param pollOptions The List of options that have been made for the Poll.
-     * @param questionArea The TextArea containing the Poll Questions.
+     * @param pollOptions   The List of options that have been made for the Poll.
+     * @param questionArea  The TextArea containing the Poll Questions.
      * @param publicResults The Boolean that determines whether the PollResults will be public.
      */
     public static void sendPoll(List<String> pollOptions, TextArea questionArea, AtomicBoolean publicResults) {
@@ -66,8 +66,8 @@ public class CreatePollLogic {
 
     /**
      * Add an option to the Poll.
-     * @param pollOptions The List of current Poll options.
-     * @param optionArea The TextArea where the new option should be.
+     * @param pollOptions     The List of current Poll options.
+     * @param optionArea      The TextArea where the new option should be.
      * @param optionContainer The display field of all current added Poll options.
      */
     public static void addOption(List<String> pollOptions, TextArea optionArea, VBox optionContainer) {
@@ -94,10 +94,10 @@ public class CreatePollLogic {
 
     /**
      * Delete the selected Poll option.
-     * @param option Selected Poll option.
-     * @param pollOptions The List of current Poll options.
+     * @param option          Selected Poll option.
+     * @param pollOptions     The List of current Poll options.
      * @param optionContainer The display field of all current added Poll options.
-     * @param optionArea The TextArea where the new option should be.
+     * @param optionArea      The TextArea where the new option should be.
      */
     private static void deleteOption(String option, List<String> pollOptions, VBox optionContainer, TextArea optionArea) {
         pollOptions.remove(option);
@@ -110,10 +110,10 @@ public class CreatePollLogic {
 
     /**
      * Edit the selected Poll option.
-     * @param option Selected Poll option.
-     * @param pollOptions The List of current Poll options.
+     * @param option          Selected Poll option.
+     * @param pollOptions     The List of current Poll options.
      * @param optionContainer The display field of all current added Poll options.
-     * @param optionArea The TextArea where the new option should be.
+     * @param optionArea      The TextArea where the new option should be.
      */
     private static void editOption(String option, VBox optionContainer, List<String> pollOptions, TextArea optionArea) {
         editing = option;
@@ -123,9 +123,9 @@ public class CreatePollLogic {
 
     /**
      * Remake the List of current Poll options in the UI.
-     * @param pollOptions The List of current Poll options.
+     * @param pollOptions     The List of current Poll options.
      * @param optionContainer The display field of all current added Poll options.
-     * @param optionArea The TextArea where the new option should be.
+     * @param optionArea      The TextArea where the new option should be.
      */
     public static void reDrawOptionList(VBox optionContainer, List<String> pollOptions, TextArea optionArea) {
         List<Node> optionList = optionContainer.getChildren();

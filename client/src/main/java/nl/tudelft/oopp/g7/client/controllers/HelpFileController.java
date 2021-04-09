@@ -1,15 +1,25 @@
 package nl.tudelft.oopp.g7.client.controllers;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 
 public class HelpFileController {
 
+    @FXML
+    private Text courseName;
+
+
+    public void initialize() {
+        courseName.setText(LocalData.getRoomName());
+    }
+
     /**
      * Handle button action for going back to lecturer view from Dark.
-     *
      * @param event the event
      */
     public void handleBackButtonLect(ActionEvent event) {
@@ -24,7 +34,6 @@ public class HelpFileController {
 
     /**
      * Handle button action for going back to lecturer view from Light.
-     *
      * @param event the event
      */
     public void handleBackButtonDarkLect(ActionEvent event) {
@@ -39,7 +48,6 @@ public class HelpFileController {
 
     /**
      * Handle button action for going back to TA view from Dark.
-     *
      * @param event the event
      */
     public void handleBackButtonTA(ActionEvent event) {
@@ -52,7 +60,6 @@ public class HelpFileController {
 
     /**
      * Handle button action for going back to TA view from Light.
-     *
      * @param event the event
      */
     public void handleBackButtonDarkTA(ActionEvent event) {
@@ -65,7 +72,6 @@ public class HelpFileController {
 
     /**
      * Handle button action for going back to Student view from Light.
-     *
      * @param event the event
      */
     public void handleBackButtonDarkStudent(ActionEvent event) {
@@ -78,7 +84,6 @@ public class HelpFileController {
 
     /**
      * Handle button action for going back to Student view from Light.
-     *
      * @param event the event
      */
     public void handleBackButtonStudent(ActionEvent event) {
@@ -91,7 +96,6 @@ public class HelpFileController {
 
     /**
      * Handle button action for button Mode from Light.
-     *
      * @param event the event
      */
     public void handleButtonModeStudent(ActionEvent event) {
@@ -104,7 +108,6 @@ public class HelpFileController {
 
     /**
      * Handle button action for button Mode from Dark.
-     *
      * @param event the event
      */
     public void handleButtonModeStudentDark(ActionEvent event) {
@@ -117,7 +120,6 @@ public class HelpFileController {
 
     /**
      * Handle button action for button Mode in Light Mode.
-     *
      * @param event the event
      */
     public void handleButtonModeTA(ActionEvent event) {
@@ -130,7 +132,6 @@ public class HelpFileController {
 
     /**
      * Handle button action for button Mode in Dark Mode.
-     *
      * @param event the event
      */
     public void handleButtonModeTADark(ActionEvent event) {
@@ -143,7 +144,6 @@ public class HelpFileController {
 
     /**
      * Handle button action for button Mode in Light Mode.
-     *
      * @param event the event
      */
     public void handleButtonModeLecturerDark(ActionEvent event) {
@@ -156,7 +156,6 @@ public class HelpFileController {
 
     /**
      * Handle button action for button Mode in Dark Mode.
-     *
      * @param event the event
      */
     public void handleButtonModeLecturer(ActionEvent event) {

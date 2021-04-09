@@ -39,9 +39,9 @@ public class ServerCommunication {
 
     /**
      * Retrieve UserInfo by userId.
-     * @param roomId The roomId of the Room containing the User.
-     * @param userId The userId to request the User of.
-     * @return UserInfo of the requested User.
+     * @param roomId The roomId of the Room containing the User
+     * @param userId The userId to request the User of
+     * @return UserInfo of the requested User
      */
     public static UserInfo retrieveUserById(String roomId, String userId) {
         // add the appropriate end-point
@@ -133,7 +133,7 @@ public class ServerCommunication {
      * Upvote the question with the specified ID.
      * @param roomID ID of the room student belongs
      * @param questionID ID of the question
-     * @return A {@link HttpResponse} containing the response received from server.
+     * @return A {@link HttpResponse} containing the response received from server
      */
     public static HttpResponse<String> upvoteQuestion(String roomID, int questionID) {
         // add the appropriate end-point
@@ -147,7 +147,7 @@ public class ServerCommunication {
      * Delete Upvote of the question with the specified ID.
      * @param roomID ID of the room student belongs
      * @param questionID ID of the question
-     * @return A {@link HttpResponse} containing the response received from server.
+     * @return A {@link HttpResponse} containing the response received from server
      */
     public static HttpResponse<String> removeUpvoteQuestion(String roomID, int questionID){
         // add the appropriate end-point
@@ -159,8 +159,8 @@ public class ServerCommunication {
 
     /**
      * Get the current speed in a room.
-     * @param roomID The room ID of the room to get the speed from.
-     * @return The current lecturer speed in a room.
+     * @param roomID The room ID of the room to get the speed from
+     * @return The current lecturer speed in a room
      */
     public static Integer getSpeed(String roomID) {
         // add the appropriate end-point
@@ -175,9 +175,9 @@ public class ServerCommunication {
 
     /**
      * Set the speed in a room.
-     * @param roomID The room ID of the room to set the speed in.
-     * @param speed An integer value of either 1 or -1 to increment or decrement the lecturer speed.
-     * @return A {@link HttpResponse} containing the response received from the server.
+     * @param roomID The room ID of the room to set the speed in
+     * @param speed An integer value of either 1 or -1 to increment or decrement the lecturer speed
+     * @return A {@link HttpResponse} containing the response received from the server
      */
     public static HttpResponse<String> setSpeed(String roomID, int speed) {
         // add the appropriate end-point
@@ -192,7 +192,7 @@ public class ServerCommunication {
      * @param roomID ID of the room student belongs
      * @param questionID ID of the question
      * @param questionText new text body of the question
-     * @return A {@link HttpResponse} containing the response received from server.
+     * @return A {@link HttpResponse} containing the response received from server
      */
     public static HttpResponse<String> editQuestion(String roomID, int questionID, QuestionText questionText) {
         // convert the body to JSON
@@ -209,7 +209,7 @@ public class ServerCommunication {
      * Delete the question with the specified ID.
      * @param roomID ID of the room student belongs
      * @param questionID ID of the question
-     * @return A {@link HttpResponse} containing the response received from server.
+     * @return A {@link HttpResponse} containing the response received from server
      */
     public static HttpResponse<String> deleteQuestion(String roomID, int questionID) {
         // add the appropriate end-point
@@ -221,8 +221,8 @@ public class ServerCommunication {
 
     /**
      * Try to retrieve a poll.
-     * @param roomId The roomId to retrieve a Poll from.
-     * @return PollInfo if successful, null if not.
+     * @param roomId The roomId to retrieve a Poll from
+     * @return PollInfo if successful, null if not
      */
     public static PollInfo getPoll(String roomId) {
         // add the appropriate end-point

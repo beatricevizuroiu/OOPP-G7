@@ -30,20 +30,18 @@ public class LecturerViewDisplay extends Application {
 
     /**
      * Get current scene scene.
-     *
      * @return the scene
      */
-    public static Scene getCurrentScene(){
+    public static Scene getCurrentScene() {
         return currentScene;
     }
 
     /**
      * Set current scene.
-     *
      * @param newSceneName the new scene name
      */
-    public static void setCurrentScene(String newSceneName){
-        try{
+    public static void setCurrentScene(String newSceneName) {
+        try {
             Parent parent = FXMLLoader.load(LecturerViewDisplay.class.getResource(newSceneName));
             Scene newScene = new Scene(parent);
 
@@ -58,10 +56,9 @@ public class LecturerViewDisplay extends Application {
 
     /**
      * Get current stage stage.
-     *
      * @return the stage
      */
-    public static Stage getCurrentStage(){
+    public static Stage getCurrentStage() {
         return currentStage;
     }
 

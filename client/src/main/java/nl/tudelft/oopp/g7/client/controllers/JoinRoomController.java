@@ -22,7 +22,6 @@ public class JoinRoomController {
 
     /**
      * Handle button action for button Mode from Light.
-     *
      * @param event the event
      */
     public void handleButtonMode(ActionEvent event) {
@@ -35,7 +34,6 @@ public class JoinRoomController {
 
     /**
      * Handle button action for button Mode from Dark.
-     *
      * @param event the event
      */
     public void handleButtonMode2(ActionEvent event) {
@@ -59,7 +57,7 @@ public class JoinRoomController {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Could not join room.");
                 alert.setHeaderText("Could not join room.");
-                alert.setContentText("It was not possible to join the room specified. The room might not have opened yet.");
+                alert.setContentText("It was not possible to join the room specified. The room might not exist, not have opened, or your password may be incorrect.");
 
                 alert.showAndWait();
                 return;
@@ -94,7 +92,7 @@ public class JoinRoomController {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Could not join room.");
                 alert.setHeaderText("Could not join room.");
-                alert.setContentText("It was not possible to join the room specified. The room might not have opened yet.");
+                alert.setContentText("It was not possible to join the room specified. The room might not exist, not have opened, or your password may be incorrect.");
 
                 alert.showAndWait();
                 return;
@@ -118,7 +116,6 @@ public class JoinRoomController {
 
     /**
      * Handle button action for going back to Entry page from Light.
-     *
      * @param event the event
      */
     public void handleBackButton(ActionEvent event) {
@@ -131,7 +128,6 @@ public class JoinRoomController {
 
     /**
      * Handle button action for going back to Entry page from Dark.
-     *
      * @param event the event
      */
     public void handleBackButtonDark(ActionEvent event) {

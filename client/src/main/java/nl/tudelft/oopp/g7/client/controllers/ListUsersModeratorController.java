@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.SharedLogic;
@@ -13,6 +14,8 @@ import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 public class ListUsersModeratorController {
     @FXML
     private VBox listUsersContainer;
+    @FXML
+    private Text courseName;
 
     private final String component = "ModeratorUserInfoContainer.fxml";
     private final String componentDark = "ModeratorUserInfoContainer(DARKMODE).fxml";
@@ -22,6 +25,7 @@ public class ListUsersModeratorController {
      */
     @FXML
     public void initialize() {
+        courseName.setText(LocalData.getRoomName());
         retrieveAllUsers();
     }
 
@@ -34,7 +38,6 @@ public class ListUsersModeratorController {
 
     /**
      * Handle button action for going back to lecturer view (light).
-     *
      * @param event the event
      */
     public void goBackButtonLight(ActionEvent event) {
@@ -51,7 +54,6 @@ public class ListUsersModeratorController {
 
     /**
      * Handle button action for going back to lecturer view (dark).
-     *
      * @param event the event
      */
     public void goBackButtonDark(ActionEvent event) {
@@ -68,7 +70,6 @@ public class ListUsersModeratorController {
 
     /**
      * Handle button action for button Mode from Light to Dark.
-     *
      * @param event the event
      */
     public void handleButtonMode(ActionEvent event) {
@@ -81,7 +82,6 @@ public class ListUsersModeratorController {
 
     /**
      * Handle button action for button Mode from Dark to Light.
-     *
      * @param event the event
      */
     public void handleButtonMode2(ActionEvent event) {
@@ -94,7 +94,6 @@ public class ListUsersModeratorController {
 
     /**
      * Handle button action for Help Button Light Mode.
-     *
      * @param event the event
      */
     public void handleHelpButtonLight(ActionEvent event) {
@@ -111,7 +110,6 @@ public class ListUsersModeratorController {
 
     /**
      * Handle button action for Help Button Dark Mode.
-     *
      * @param event the event
      */
     public void handleHelpButtonDark(ActionEvent event) {

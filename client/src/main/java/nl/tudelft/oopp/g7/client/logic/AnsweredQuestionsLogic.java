@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.g7.client.logic;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -18,7 +19,7 @@ public class AnsweredQuestionsLogic {
     /**
      * Retrieves all answered questions from the server and displays them in a scroll pane.
      * @param answeredQuestionContainer VBox containing UI elements
-     * @param answeredQuestionList ScrollPane that will contain the questions
+     * @param answeredQuestionList      ScrollPane that will contain the questions
      */
     public static void retrieveAllAnsweredQuestions(boolean isStudent, VBox answeredQuestionContainer, ScrollPane answeredQuestionList) {
         // Store the current position of the user in the scroll list

@@ -32,6 +32,12 @@
     -fx-font-weight: bold;
 }
 
+.button {
+    -fx-background-color: #EFEFEF;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
 .pollTextBox {
     -fx-background-color: #9251ba;
 

@@ -23,23 +23,11 @@
         <RowConstraints/>
     </rowConstraints>
 
-    <HBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
-        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="    RaisedHand">
-            <font>
-                <Font name="Book Antiqua Bold" size="45.0"/>
-            </font>
-        </Text>
-    </HBox>
-
-    <Button layoutX="14.0" layoutY="72.0" mnemonicParsing="false" onAction="#handleBackButtonLect">
-        <graphic>
-            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@back.png"/>
-                </image>
-            </ImageView>
-        </graphic>
-    </Button>
+    <VBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
+        <Region VBox.vgrow="ALWAYS" />
+        <Text fx:id="courseName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"/>
+        <Region VBox.vgrow="ALWAYS" />
+    </VBox>
 
     <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2"/>
 
@@ -59,14 +47,14 @@
                       text="RaisedHand is an application for Students to ask questions during the lecture and upvote other Students' questions so that the Lecturer can answer those that are most relevant."
                       wrappingWidth="816.13671875">
                     <font>
-                        <Font name="Book Antiqua" size="15.0"/>
+                        <Font size="15.0"/>
                     </font>
                 </Text>
                 <Text fill="BLACK" strokeType="OUTSIDE" strokeWidth="0.0"
                       text="TAs moderate questions (edit, delete, answer with text) and at the end of the lecture, the Lecturer can opt to export a file containing all the questions and answers for you to read after the lecture."
                       wrappingWidth="816.13671875">
                     <font>
-                        <Font name="Book Antiqua" size="15.0"/>
+                        <Font size="15.0"/>
                     </font>
                 </Text>
                 <Label text="  Mode Button - change Mode from Light to Dark and vice versa." textFill="BLACK">
@@ -76,7 +64,7 @@
                         </ImageView>
                     </graphic>
                     <font>
-                        <Font name="Book Antiqua" size="15.0"/>
+                        <Font size="15.0"/>
                     </font>
                 </Label>
                 <Label text="   List of Users button  - lists all participants of the lecture" textFill="BLACK">
@@ -86,7 +74,7 @@
                                 fill="BLACK"/>
                     </graphic>
                     <font>
-                        <Font name="Book Antiqua" size="15.0"/>
+                        <Font size="15.0"/>
                     </font>
                 </Label>
                 <Label text=" Answered questions button  - lists all questions that have been answered during the lecture"
@@ -97,7 +85,7 @@
                                 fill="BLACK"/>
                     </graphic>
                     <font>
-                        <Font name="Book Antiqua" size="15.0"/>
+                        <Font size="15.0"/>
                     </font>
                 </Label>
                 <Label text="  Create poll button  - create a poll (insert options and question)" textFill="BLACK">
@@ -107,7 +95,7 @@
                                 fill="BLACK"/>
                     </graphic>
                     <font>
-                        <Font name="Book Antiqua" size="15.0"/>
+                        <Font size="15.0"/>
                     </font>
                 </Label>
                 <Label text="   Download list of answered questions button  - download the list of answered questions for later export"
@@ -116,7 +104,7 @@
                         <SVGPath content="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" fill="BLACK"/>
                     </graphic>
                     <font>
-                        <Font name="Book Antiqua" size="15.0"/>
+                        <Font size="15.0"/>
                     </font>
                 </Label>
                 <Label text="  Link button  - get the links for joining the lecture (one for Moderators, one for Students)"
@@ -127,7 +115,7 @@
                                 fill="BLACK"/>
                     </graphic>
                     <font>
-                        <Font name="Book Antiqua" size="15.0"/>
+                        <Font size="15.0"/>
                     </font>
                 </Label>
                 <Label text="  Close Room  - closes the room for the students "
@@ -146,15 +134,16 @@
     </ScrollPane>
 
     <!--    Main Buttons    -->
-    <Button mnemonicParsing="false" onAction="#handleButtonModeLecturerDark" text="Mode" GridPane.halignment="CENTER"
-            GridPane.rowIndex="1" GridPane.valignment="CENTER">
-        <graphic>
-            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@sun (1).png"/>
-                </image>
-            </ImageView>
-        </graphic>
-    </Button>
+    <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="0">
+        <Button fx:id="modeButton" mnemonicParsing="false" onAction="#handleButtonModeLecturer" styleClass="mode-button"/>
+
+        <Region minWidth="15"/>
+
+        <Button fx:id="goBack" mnemonicParsing="false" onAction="#handleBackButtonLect" styleClass="upvoteBtn">
+            <graphic>
+                <SVGPath content="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" styleClass="link-button"/>
+            </graphic>
+        </Button>
+    </HBox>
 
 </GridPane>
