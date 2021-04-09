@@ -226,8 +226,6 @@ public class ModeratorViewLogic {
      * @param questionList ScrollPane containing the whole list of questions.
      */
     public static void answerQuestion(String roomID, Question question, TextArea textArea, Button answerButton, VBox questionContainer, ScrollPane questionList){
-        textArea.setText("Answer Here!");
-
         answerButton.setOnAction((event) -> {
             // send the edit request
             ModeratorServerCommunication.answerQuestion(roomID, question.getId(), new Answer(textArea.getText()));
