@@ -222,9 +222,11 @@ public class QuestionController {
                 )
             ));
 
+        User user = authorizationHelper.getUserFromAuthorizationHeader(authorization);
+
 
         // Try to edit the question body and store the number of effected rows.
-        int rowsChanged = questionRepository.editQuestionWithId(roomId, id, question.getText());
+        int rowsChanged = questionRepository.editQuestionWithId(roomId, id, question.getText(), user.getId());
 
         if (rowsChanged == 1) {
 
