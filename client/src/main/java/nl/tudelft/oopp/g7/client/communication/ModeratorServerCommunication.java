@@ -111,6 +111,11 @@ public class ModeratorServerCommunication {
         return HttpMethods.post(uri, body);
     }
 
+    /**
+     * Reopen the most recent Poll in a Room.
+     * @param roomID The roomId of the Room to re-open the Poll in
+     * @return The Http Response (No data)
+     */
     public static HttpResponse<String> reopenPoll(String roomID) {
 
         String body = "[]";

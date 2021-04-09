@@ -189,7 +189,6 @@ public class SharedLogic {
 
     /**
      * Switch the sorting mode.
-     * @param event The event
      */
     public static void switchSortingMode() {
         if (LocalData.getSortingOrder() == SortingOrder.NEW) {

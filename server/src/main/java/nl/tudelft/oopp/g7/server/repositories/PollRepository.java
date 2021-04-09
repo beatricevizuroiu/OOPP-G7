@@ -117,6 +117,12 @@ public class PollRepository {
         });
     }
 
+    /**
+     * Reopen a Poll in a Room.
+     * @param roomId The roomId of the Room the Poll is in
+     * @param pollId The pollId of the Poll to re-open
+     * @return The amount of lines changed
+     */
     public int reopenPoll(String roomId, int pollId) {
         logger.debug("Closing poll in room with id: {}, and with poll id: {}", roomId, pollId);
         return jdbcTemplate.update(QUERY_REOPEN_POLL, (ps) -> {

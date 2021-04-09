@@ -483,6 +483,14 @@ public class RoomController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * Re-open the most recent Poll in a Room.
+     * @param roomId The roomId of the Room to open the Poll in
+     * @param authorization The Authoriziation Header of the one sending the request
+     * @param request The {@link HttpServletRequest} containing the Ip of the sender
+     * @return A {@link ResponseEntity} containing the http status code indicating whether the request completed
+     *          successfully or if there was an error.
+     */
     @PostMapping("/{room_id}/poll/reopen")
     public ResponseEntity<Void> reopenPoll(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
                                           @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
