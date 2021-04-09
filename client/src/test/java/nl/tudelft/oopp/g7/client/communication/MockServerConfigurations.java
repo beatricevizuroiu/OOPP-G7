@@ -52,11 +52,18 @@ public class MockServerConfigurations {
     }
 
     /**
+<<<<<<< client/src/test/java/nl/tudelft/oopp/g7/client/communication/MockServerConfigurations.java
      * Create expectation without body.
      *
      * @param path       the path
      * @param method     the method
      * @param statusCode the status code
+=======
+     * Create an expected server response.
+     * @param path Request path.
+     * @param method The method for the request.
+     * @param statusCode The expected status code.
+>>>>>>> client/src/test/java/nl/tudelft/oopp/g7/client/communication/MockServerConfigurations.java
      */
     public void createExpectationWithoutBody(String path, String method, int statusCode) {
         new MockServerClient("localhost", 8080)
@@ -72,12 +79,20 @@ public class MockServerConfigurations {
     }
 
     /**
+<<<<<<< client/src/test/java/nl/tudelft/oopp/g7/client/communication/MockServerConfigurations.java
      * Create expectation with request body.
      *
      * @param path        the path
      * @param method      the method
      * @param requestBody the request body
      * @param statusCode  the status code
+=======
+     * Create an expected server response with a request body.
+     * @param path Request path.
+     * @param method The method for the request.
+     * @param requestBody The body of the expected request.
+     * @param statusCode The expected status code.
+>>>>>>> client/src/test/java/nl/tudelft/oopp/g7/client/communication/MockServerConfigurations.java
      */
     public void createExpectationWithRequestBody(String path, String method, String requestBody, int statusCode) {
         new MockServerClient("localhost", 8080)
@@ -94,12 +109,20 @@ public class MockServerConfigurations {
     }
 
     /**
+<<<<<<< client/src/test/java/nl/tudelft/oopp/g7/client/communication/MockServerConfigurations.java
      * Create expectation with response body.
      *
      * @param path         the path
      * @param method       the method
      * @param responseBody the response body
      * @param statusCode   the status code
+=======
+     * Create an expected server response with a response body.
+     * @param path Request path.
+     * @param method The method for the request.
+     * @param responseBody The body of the expected response.
+     * @param statusCode The expected status code.
+>>>>>>> client/src/test/java/nl/tudelft/oopp/g7/client/communication/MockServerConfigurations.java
      */
     public void createExpectationWithResponseBody(String path, String method, String responseBody, int statusCode) {
         new MockServerClient("localhost", 8080)
@@ -116,6 +139,7 @@ public class MockServerConfigurations {
     }
 
     /**
+<<<<<<< client/src/test/java/nl/tudelft/oopp/g7/client/communication/MockServerConfigurations.java
      * Create expectation with both bodies.
      *
      * @param path         the path
@@ -123,6 +147,14 @@ public class MockServerConfigurations {
      * @param requestBody  the request body
      * @param responseBody the response body
      * @param statusCode   the status code
+=======
+     * Create an expected server response with a request and response body.
+     * @param path The Request path
+     * @param method The method for the request
+     * @param requestBody The body of the request
+     * @param responseBody The body of the response
+     * @param statusCode The expected status code
+>>>>>>> client/src/test/java/nl/tudelft/oopp/g7/client/communication/MockServerConfigurations.java
      */
     public void createExpectationWithBothBodies(String path, String method, String requestBody, String responseBody, int statusCode) {
         new MockServerClient("localhost", 8080)
