@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import nl.tudelft.oopp.g7.client.communication.ModeratorServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
+import nl.tudelft.oopp.g7.client.logic.LecturerViewLogic;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.ModeratorViewLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
@@ -81,7 +82,7 @@ public class LecturerViewController {
             @Override
             public void run() {
                 Platform.runLater(reference::retrieveQuestions);
-                Platform.runLater(reference::speedIndicator);
+                Platform.runLater(reference::speed);
             }
         }, 0L, 5000L);
     }
@@ -94,6 +95,12 @@ public class LecturerViewController {
         ModeratorViewLogic.retrieveServerData(roomID, answerBox, postAnswerButton, questionContainer, questionList, pollWindow);
     }
 
+    /**
+     * Speed indicator to show the lecturer if he is going too fast.
+     */
+    public void speed(){
+        LecturerViewLogic.speedIndicator(roomID, circle1, circle2, circle3, circle4);
+    }
     /**
      * Display link and passwords.
      */
@@ -264,73 +271,4 @@ public class LecturerViewController {
         //TODO
     }
 
-    /**
-     * Speed indicator to show the lecturer if he is going too fast.
-     */
-    public void speedIndicator() {
-        double speedInRoom = ServerCommunication.getSpeed(roomID);
-        double peopleInRoom = ServerCommunication.retrieveAllUsers(roomID).size();
-        speedInRoom = (speedInRoom * 13.43 * peopleInRoom) / 100;
-
-        // lecturer is going normal
-        if (speedInRoom == 0) {
-            circle1.setFill(Color.valueOf("#ffffff"));
-            circle2.setFill(Color.valueOf("#ffffff"));
-            circle3.setFill(Color.valueOf("#ffffff"));
-            circle4.setFill(Color.valueOf("#ffffff"));
-        }
-
-        // lecturer is too slow
-        if (speedInRoom == -1) {
-            circle1.setFill(Color.valueOf("#ffffff"));
-            circle2.setFill(Color.valueOf("#ffffff"));
-            circle3.setFill(Color.valueOf("#8D1BAA"));
-            circle4.setFill(Color.valueOf("#8D1BAA"));
-            PauseTransition transition = new PauseTransition(Duration.seconds(30));
-            transition.setOnFinished(event -> {
-                        circle3.setFill(Color.valueOf("#ffffff"));
-                        circle4.setFill(Color.valueOf("#ffffff"));
-            }
-            );
-        }
-
-
-        if (speedInRoom > -1 && speedInRoom < 0) {
-            circle1.setFill(Color.valueOf("#ffffff"));
-            circle2.setFill(Color.valueOf("#ffffff"));
-            circle3.setFill(Color.valueOf("#8D1BAA"));
-            circle4.setFill(Color.valueOf("#ffffff"));
-            PauseTransition transition = new PauseTransition(Duration.seconds(30));
-            transition.setOnFinished(event -> {
-                        circle3.setFill(Color.valueOf("#ffffff"));
-                    }
-            );
-        }
-
-        if (speedInRoom > 0 && speedInRoom < 1) {
-            circle1.setFill(Color.valueOf("#ffffff"));
-            circle2.setFill(Color.valueOf("#8D1BAA"));
-            circle3.setFill(Color.valueOf("#ffffff"));
-            circle4.setFill(Color.valueOf("#ffffff"));
-            PauseTransition transition = new PauseTransition(Duration.seconds(30));
-            transition.setOnFinished(event -> {
-                        circle2.setFill(Color.valueOf("#ffffff"));
-                    }
-            );
-        }
-
-        // lecturer is too fast
-        if (speedInRoom == 1) {
-            circle1.setFill(Color.valueOf("#8D1BAA"));
-            circle2.setFill(Color.valueOf("#8D1BAA"));
-            circle3.setFill(Color.valueOf("#ffffff"));
-            circle4.setFill(Color.valueOf("#ffffff"));
-            PauseTransition transition = new PauseTransition(Duration.seconds(30));
-            transition.setOnFinished(event -> {
-                        circle1.setFill(Color.valueOf("#ffffff"));
-                        circle2.setFill(Color.valueOf("#ffffff"));
-                    }
-            );
-        }
-    }
 }
