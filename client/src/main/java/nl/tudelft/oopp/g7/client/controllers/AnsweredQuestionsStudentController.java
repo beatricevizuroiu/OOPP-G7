@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.logic.AnsweredQuestionsLogic;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
+import nl.tudelft.oopp.g7.client.logic.SharedLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.Question;
 
@@ -28,12 +29,16 @@ public class AnsweredQuestionsStudentController {
     public ScrollPane answeredQuestionList;
     @FXML
     private VBox answeredQuestionContainer;
+    @FXML
+    private Text courseName;
 
 
     /**
      * Start a timer and create a separate thread on it to automatically refresh answered question list.
      */
-    public AnsweredQuestionsStudentController() {
+    @FXML
+    public void initialize() {
+        SharedLogic.displayCourseName(courseName);
         Timer timer = new Timer(true);
 
         AnsweredQuestionsStudentController reference = this;
@@ -46,13 +51,15 @@ public class AnsweredQuestionsStudentController {
     }
 
 
+    /**
+     * Retrieves all questions.
+     */
     public void retrieveQuestions() {
-        AnsweredQuestionsLogic.retrieveAllAnsweredQuestions(answeredQuestionContainer, answeredQuestionList);
+        AnsweredQuestionsLogic.retrieveAllAnsweredQuestions(true, answeredQuestionContainer, answeredQuestionList);
     }
 
     /**
      * Handle button action for going back to lecturer view (light).
-     *
      * @param event the event
      */
     public void goBackButtonLight(ActionEvent event) {
@@ -61,12 +68,10 @@ public class AnsweredQuestionsStudentController {
 
         // if goBack is clicked, change Scene to StudentViewUI
         EntryRoomDisplay.setCurrentScene("/StudentViewUI.fxml");
-//        TODO
     }
 
     /**
      * Handle button action for going back to lecturer view (dark).
-     *
      * @param event the event
      */
     public void goBackButtonDark(ActionEvent event) {
@@ -75,13 +80,10 @@ public class AnsweredQuestionsStudentController {
 
         // if goBack is clicked, change Scene to LecturerViewUI
         EntryRoomDisplay.setCurrentScene("/StudentViewUI(DARKMODE).fxml");
-//        TODO
-
     }
 
     /**
      * Handle button action for button Mode from Light to Dark.
-     *
      * @param event the event
      */
     public void handleButtonMode(ActionEvent event) {
@@ -94,7 +96,6 @@ public class AnsweredQuestionsStudentController {
 
     /**
      * Handle button action for button Mode from Dark to Light.
-     *
      * @param event the event
      */
     public void handleButtonMode2(ActionEvent event) {
@@ -107,7 +108,6 @@ public class AnsweredQuestionsStudentController {
 
     /**
      * Handle button action for Help Button Light Mode.
-     *
      * @param event the event
      */
     public void handleHelpButtonLight(ActionEvent event) {
@@ -120,7 +120,6 @@ public class AnsweredQuestionsStudentController {
 
     /**
      * Handle button action for Help Button Dark Mode.
-     *
      * @param event the event
      */
     public void handleHelpButtonDark(ActionEvent event) {

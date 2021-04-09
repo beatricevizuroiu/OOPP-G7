@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.g7.server.controllers;
 
+import nl.tudelft.oopp.g7.common.Answer;
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
 import nl.tudelft.oopp.g7.common.User;
@@ -9,11 +10,12 @@ import nl.tudelft.oopp.g7.server.repositories.UserRepository;
 import nl.tudelft.oopp.g7.server.utility.Config;
 import nl.tudelft.oopp.g7.server.utility.authorization.AuthorizationHelper;
 import nl.tudelft.oopp.g7.server.utility.authorization.conditions.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,12 +26,13 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import java.util.List;
 
-
 @RestController()
 @RequestMapping("/api/v1/room/{room_id}/question")
+@Validated
 public class QuestionController {
 
-    Logger logger = LoggerFactory.getLogger(QuestionController.class);
+    private static final Logger logger = LogManager.getLogger("serverLog");
+    private static final Logger eventLogger = LogManager.getLogger("eventLog");
 
     private final QuestionRepository questionRepository;
     private final UserRepository userRepository;
@@ -83,6 +86,8 @@ public class QuestionController {
 
         // Otherwise log a success and return the question with http status code 200 (OK).
         logger.debug("Question " + id + " successfully returned.");
+        eventLogger.info("\"{}\" requested question with id \"{}\" in room \"{}\"", request.getRemoteAddr(), id, roomId);
+
         return new ResponseEntity<>(question, HttpStatus.OK);
     }
 
@@ -106,6 +111,8 @@ public class QuestionController {
 
         // Log questions request
         logger.debug("All questions requested.");
+        eventLogger.info("\"{}\" requested all questions in room \"{}\"", request.getRemoteAddr(), roomId);
+
         // Return every question in the database.
         return new ResponseEntity<>(questionRepository.getAllQuestionsInRoom(roomId), HttpStatus.OK);
     }
@@ -129,7 +136,8 @@ public class QuestionController {
             new All(
                 new BelongsToRoom(),
                 new IsStudent(),
-                new NotBanned()
+                new NotBanned(),
+                    new NotClosed()
             ));
 
         User user = authorizationHelper.getUserFromAuthorizationHeader(authorization);
@@ -138,6 +146,9 @@ public class QuestionController {
         int rowsChanged = upvoteRepository.addUpvote(roomId, user.getId(), id);
 
         if (rowsChanged == 1) {
+
+            eventLogger.info("\"{}\" upvoted question with id \"{}\" in room \"{}\"", request.getRemoteAddr(), id, roomId);
+
             // If there was return http status code 200 (OK)
             return new ResponseEntity<>(null, HttpStatus.OK);
         }
@@ -165,7 +176,8 @@ public class QuestionController {
             new All(
                 new BelongsToRoom(),
                 new IsStudent(),
-                new NotBanned()
+                new NotBanned(),
+                    new NotClosed()
             ));
 
         User user = authorizationHelper.getUserFromAuthorizationHeader(authorization);
@@ -174,6 +186,9 @@ public class QuestionController {
         int rowsChanged = upvoteRepository.removeUpvote(roomId, user.getId(), id);
 
         if (rowsChanged == 1) {
+
+            eventLogger.info("\"{}\" undid their upvote to question \"{}\" in room \"{}\"", request.getRemoteAddr(), id, roomId);
+
             // If there was return http status code 200 (OK)
             return new ResponseEntity<>(null, HttpStatus.OK);
         }
@@ -209,11 +224,16 @@ public class QuestionController {
                 )
             ));
 
+        User user = authorizationHelper.getUserFromAuthorizationHeader(authorization);
+
 
         // Try to edit the question body and store the number of effected rows.
-        int rowsChanged = questionRepository.editQuestionWithId(roomId, id, question.getText());
+        int rowsChanged = questionRepository.editQuestionWithId(roomId, id, question.getText(), user.getId());
 
         if (rowsChanged == 1) {
+
+            eventLogger.info("\"{}\" edited question with id \"{}\" in room \"{}\"", request.getRemoteAddr(), id, roomId);
+
             // If there was return http status code 200 (OK)
             return new ResponseEntity<>(null, HttpStatus.OK);
         }
@@ -254,6 +274,9 @@ public class QuestionController {
 
         // Check if there was a question deleted.
         if (rowsChanged == 1) {
+
+            eventLogger.info("\"{}\" deleted question with id \"{}\" in room \"{}\"", request.getRemoteAddr(), id, roomId);
+
             // If there was log the deletion and return http status code 200 (OK)
             logger.info("Question " + id + " has successfully been deleted.");
             return new ResponseEntity<>(null, HttpStatus.OK);
@@ -283,7 +306,8 @@ public class QuestionController {
             request.getRemoteAddr(),
             new All(
                 new BelongsToRoom(),
-                new NotBanned()
+                new NotBanned(),
+                    new NotClosed()
             ));
 
         User user = authorizationHelper.getUserFromAuthorizationHeader(authorization);
@@ -299,7 +323,7 @@ public class QuestionController {
         logger.debug("A new question is being made.");
 
         // Create a new question in the database.
-        int rowsChanged = questionRepository.createQuestion(roomId, newQuestion.getText(), user.getId());
+        int rowsChanged = questionRepository.createQuestion(roomId, newQuestion.getText().trim(), user.getId());
 
         // Check whether the question was successfully created and log the result
         if (rowsChanged == 0) {
@@ -307,6 +331,7 @@ public class QuestionController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+        eventLogger.info("\"{}\" asked a new question in room \"{}\"", request.getRemoteAddr(), roomId);
         logger.info("A question was successfully made.");
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -322,7 +347,7 @@ public class QuestionController {
     @PostMapping("/{id}/answer")
     public ResponseEntity<Void> answerQuestion(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
                                                @PathVariable int id,
-                                               @RequestBody @NotNull @Valid QuestionText answer,
+                                               @RequestBody @NotNull @Valid Answer answer,
                                                @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
                                                HttpServletRequest request) {
 
@@ -335,15 +360,15 @@ public class QuestionController {
                 new NotBanned()
             ));
 
-        if (answer.getText() == null) {
-            answer.setText("");
+        if (answer.getAnswer() == null) {
+            answer.setAnswer("");
         }
 
         // Log the answering of a question
         logger.debug("Question " + id + " is being answered");
         
         // Update the question with the answer and store the amount of rows changed in a variable.
-        int rowsChanged = questionRepository.answerQuestionWithId(roomId, id, answer.getText());
+        int rowsChanged = questionRepository.answerQuestionWithId(roomId, id, answer.getAnswer().trim());
 
         // Check if there where no rows updated.
         if (rowsChanged == 0) {
@@ -351,6 +376,8 @@ public class QuestionController {
             logger.debug("Question " + id + " was requested to be answered but could not be edited!");
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+
+        eventLogger.info("\"{}\" answered question with id \"{}\" in room \"{}\"", request.getRemoteAddr(), id, roomId);
 
         // Otherwise log a success and respond with http status code 200 (OK).
         logger.debug("Question " + id + " answered successfully.");

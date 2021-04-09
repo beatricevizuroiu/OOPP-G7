@@ -1,11 +1,9 @@
 package nl.tudelft.oopp.g7.server.controllers;
 
+import nl.tudelft.oopp.g7.common.Answer;
 import nl.tudelft.oopp.g7.common.Question;
 import nl.tudelft.oopp.g7.common.QuestionText;
-import nl.tudelft.oopp.g7.server.repositories.BanRepository;
-import nl.tudelft.oopp.g7.server.repositories.QuestionRepository;
-import nl.tudelft.oopp.g7.server.repositories.UpvoteRepository;
-import nl.tudelft.oopp.g7.server.repositories.UserRepository;
+import nl.tudelft.oopp.g7.server.repositories.*;
 import nl.tudelft.oopp.g7.server.utility.authorization.AuthorizationHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,6 +55,7 @@ class QuestionControllerTest {
         UserRepository userRepository = new UserRepository(jdbcTemplate);
         BanRepository banRepository = new BanRepository(jdbcTemplate);
         UpvoteRepository upvoteRepository = new UpvoteRepository(jdbcTemplate);
+        RoomRepository roomRepository = new RoomRepository(jdbcTemplate);
 
         // Create our questionController with our in memory datasource.
         questionController = new QuestionController(
@@ -65,7 +64,8 @@ class QuestionControllerTest {
                 new AuthorizationHelper(
                         userRepository,
                         banRepository,
-                        questionRepository),
+                        questionRepository,
+                        roomRepository),
                 upvoteRepository);
 
         request_stud = new MockHttpServletRequest();
@@ -172,7 +172,7 @@ class QuestionControllerTest {
     @Test
     void answerQuestion() {
         // Answer question 1.
-        questionController.answerQuestion(TEST_ROOM_ID, 1, new QuestionText("This an answer"), AUTHORIZATION_MODERATOR, request_mod);
+        questionController.answerQuestion(TEST_ROOM_ID, 1, new Answer("This an answer"), AUTHORIZATION_MODERATOR, request_mod);
 
         // Get the question with id 1.
         Question actual = questionController.getQuestion(TEST_ROOM_ID, 1, AUTHORIZATION_STUDENT, request_stud).getBody();

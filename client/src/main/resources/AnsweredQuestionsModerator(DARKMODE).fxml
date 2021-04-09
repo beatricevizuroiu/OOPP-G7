@@ -7,79 +7,72 @@
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+<?import javafx.geometry.Insets?>
 <GridPane xmlns="http://javafx.com/javafx/11.0.1"
           xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="nl.tudelft.oopp.g7.client.controllers.AnsweredQuestionsModeratorController"
           stylesheets="@UIstyle(DARKMODE).css"
           minHeight="500" minWidth="750">
     <columnConstraints>
-        <ColumnConstraints hgrow="NEVER" minWidth="128.0" />
-        <ColumnConstraints hgrow="SOMETIMES" />
+        <ColumnConstraints hgrow="NEVER" minWidth="128.0"/>
+        <ColumnConstraints hgrow="SOMETIMES"/>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0"/>
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints vgrow="NEVER" minHeight="75.0" />
-        <RowConstraints vgrow="SOMETIMES" />
-        <RowConstraints vgrow="SOMETIMES" maxHeight="95.0" />
+        <RowConstraints vgrow="NEVER" minHeight="75.0"/>
+        <RowConstraints vgrow="SOMETIMES"/>
+        <RowConstraints vgrow="SOMETIMES" maxHeight="95.0"/>
     </rowConstraints>
 
-    <HBox styleClass="course-panel"
-          GridPane.columnIndex="0" GridPane.rowIndex="0"
-          GridPane.columnSpan="4">
-        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" Course Name">
-            <font>
-                <Font name="Book Antiqua Bold" size="36.0"/>
-            </font>
-        </Text>
-    </HBox>
+    <VBox styleClass="course-panel" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
+        <Region VBox.vgrow="ALWAYS" />
+        <Text fx:id="courseName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"/>
+        <Region VBox.vgrow="ALWAYS" />
+    </VBox>
 
     <SplitPane styleClass="side-panel"
                GridPane.columnIndex="0" GridPane.rowIndex="1"
                GridPane.rowSpan="2"/>
 
 
-    <ScrollPane
-            GridPane.columnIndex="1" GridPane.rowIndex="1"
-            GridPane.columnSpan="3"
-            fx:id="answeredQuestionList">
-        <VBox fx:id="answeredQuestionContainer" />
+    <ScrollPane fx:id="answeredQuestionList"
+                GridPane.columnIndex="1"
+                GridPane.columnSpan="3"
+                GridPane.rowIndex="1"
+                fitToWidth="true"
+                fitToHeight="true">
+        <padding>
+            <Insets>
+                <right>10</right>
+                <left>10</left>
+            </Insets>
+        </padding>
+        <VBox fx:id="answeredQuestionContainer" spacing="20">
+            <padding>
+                <Insets>
+                    <top>5</top>
+                    <right>5</right>
+                    <bottom>5</bottom>
+                    <left>5</left>
+                </Insets>
+            </padding>
+        </VBox>
     </ScrollPane>
 
     <!--    Main Buttons    -->
-    <Button mnemonicParsing="false" onAction="#handleButtonMode2" text="Mode" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-        <graphic>
-            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@sun (1).png" />
-                </image>
-            </ImageView>
-        </graphic>
-    </Button>
+    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonDark" styleClass="help-button"
+            textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2"/>
 
-    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonDark" styleClass="help-button" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+    <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="0">
+        <Button fx:id="modeButton" mnemonicParsing="false" onAction="#handleButtonMode2" styleClass="mode-button"/>
 
-    <Button fx:id="goBack" mnemonicParsing="false" onAction="#goBackButtonDark" styleClass="upvoteBtn" GridPane.columnIndex="2" GridPane.rowIndex="0">
-        <graphic>
-            <SVGPath content="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" styleClass="link-button" />
-        </graphic>
-    </Button>
+        <Region minWidth="15"/>
 
-    <!--    <TextArea fx:id="answerBox"-->
-    <!--              GridPane.columnIndex="1" GridPane.rowIndex="2"-->
-    <!--              promptText="Type your question here">-->
-    <!--        <font>-->
-    <!--            <Font name="Book Antiqua" size="21.0"/>-->
-    <!--        </font>-->
-    <!--    </TextArea>-->
-
-    <!--    <Button fx:id="postQuestionButton" styleClass="button"-->
-    <!--            GridPane.columnIndex="2" GridPane.rowIndex="2"-->
-    <!--            onAction="#sendQuestion"-->
-    <!--            mnemonicParsing="false"-->
-    <!--            text="Post Question" textFill="WHITE">-->
-    <!--        <font>-->
-    <!--            <Font name="Book Antiqua Bold" size="15.0"/>-->
-    <!--        </font>-->
-    <!--    </Button>-->
+        <Button fx:id="goBack" mnemonicParsing="false" onAction="#goBackButtonDark" styleClass="upvoteBtn">
+            <graphic>
+                <SVGPath content="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" styleClass="link-button"/>
+            </graphic>
+        </Button>
+    </HBox>
 
 </GridPane>

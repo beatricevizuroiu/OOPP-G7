@@ -1,15 +1,26 @@
 package nl.tudelft.oopp.g7.client.controllers;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import nl.tudelft.oopp.g7.client.logic.LocalData;
+import nl.tudelft.oopp.g7.client.logic.SharedLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 
 public class HelpFileController {
 
+    @FXML
+    private Text courseName;
+
+
+    public void initialize() {
+        SharedLogic.displayCourseName(courseName);
+    }
+
     /**
      * Handle button action for going back to lecturer view from Dark.
-     *
      * @param event the event
      */
     public void handleBackButtonLect(ActionEvent event) {
@@ -17,12 +28,13 @@ public class HelpFileController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if goBack is clicked, change Scene to LecturerViewUI
-        EntryRoomDisplay.setCurrentScene("/LecturerViewUi.fxml");
+        EntryRoomDisplay.setCurrentScene("/LecturerViewUI.fxml");
+//        TODO (change the fact that it goes to it's doesn't go to lecturer View but to it's previous scene)
+
     }
 
     /**
      * Handle button action for going back to lecturer view from Light.
-     *
      * @param event the event
      */
     public void handleBackButtonDarkLect(ActionEvent event) {
@@ -30,12 +42,13 @@ public class HelpFileController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if goBack is clicked, change Scene to LecturerViewUI
-        EntryRoomDisplay.setCurrentScene("/LecturerViewUi(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/LecturerViewUI(DARKMODE).fxml");
+//        TODO (change the fact that it goes to it's doesn't go to lecturer View but to it's previous scene)
+
     }
 
     /**
      * Handle button action for going back to TA view from Dark.
-     *
      * @param event the event
      */
     public void handleBackButtonTA(ActionEvent event) {
@@ -48,7 +61,6 @@ public class HelpFileController {
 
     /**
      * Handle button action for going back to TA view from Light.
-     *
      * @param event the event
      */
     public void handleBackButtonDarkTA(ActionEvent event) {
@@ -61,7 +73,6 @@ public class HelpFileController {
 
     /**
      * Handle button action for going back to Student view from Light.
-     *
      * @param event the event
      */
     public void handleBackButtonDarkStudent(ActionEvent event) {
@@ -74,7 +85,6 @@ public class HelpFileController {
 
     /**
      * Handle button action for going back to Student view from Light.
-     *
      * @param event the event
      */
     public void handleBackButtonStudent(ActionEvent event) {
@@ -87,7 +97,6 @@ public class HelpFileController {
 
     /**
      * Handle button action for button Mode from Light.
-     *
      * @param event the event
      */
     public void handleButtonModeStudent(ActionEvent event) {
@@ -100,7 +109,6 @@ public class HelpFileController {
 
     /**
      * Handle button action for button Mode from Dark.
-     *
      * @param event the event
      */
     public void handleButtonModeStudentDark(ActionEvent event) {
@@ -113,7 +121,6 @@ public class HelpFileController {
 
     /**
      * Handle button action for button Mode in Light Mode.
-     *
      * @param event the event
      */
     public void handleButtonModeTA(ActionEvent event) {
@@ -126,7 +133,6 @@ public class HelpFileController {
 
     /**
      * Handle button action for button Mode in Dark Mode.
-     *
      * @param event the event
      */
     public void handleButtonModeTADark(ActionEvent event) {
@@ -139,27 +145,25 @@ public class HelpFileController {
 
     /**
      * Handle button action for button Mode in Light Mode.
-     *
-     * @param event the event
-     */
-    public void handleButtonModeLecturer(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
-        // if Mode is clicked, change Scene to lecturer dark mode
-        EntryRoomDisplay.setCurrentScene("/HelpFileLecturer(DARKMODE).fxml");
-    }
-
-    /**
-     * Handle button action for button Mode in Dark Mode.
-     *
      * @param event the event
      */
     public void handleButtonModeLecturerDark(ActionEvent event) {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
-        // if Mode is clicked, change Scene to lecturer light mode
+        // if Mode is clicked, change Scene to lecturer dark mode
         EntryRoomDisplay.setCurrentScene("/HelpFileLecturer.fxml");
+    }
+
+    /**
+     * Handle button action for button Mode in Dark Mode.
+     * @param event the event
+     */
+    public void handleButtonModeLecturer(ActionEvent event) {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        // if Mode is clicked, change Scene to lecturer light mode
+        EntryRoomDisplay.setCurrentScene("/HelpFileLecturer(DARKMODE).fxml");
     }
 }

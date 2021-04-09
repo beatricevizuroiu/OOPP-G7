@@ -20,7 +20,6 @@ public class EntryPageController {
 
     /**
      * Handle button action for button Create.
-     *
      * @param event the event
      */
     public void handleButtonAction(ActionEvent event) {
@@ -33,7 +32,6 @@ public class EntryPageController {
 
     /**
      * Handle button action for button Join.
-     *
      * @param event the event
      */
     public void handleButtonAction2(ActionEvent event) {
@@ -46,7 +44,6 @@ public class EntryPageController {
 
     /**
      * Handle button action for button Create.
-     *
      * @param event the event
      */
     public void handleButtonActionDark(ActionEvent event) {
@@ -59,7 +56,6 @@ public class EntryPageController {
 
     /**
      * Handle button action for button Join.
-     *
      * @param event the event
      */
     public void handleButtonAction2Dark(ActionEvent event) {
@@ -72,7 +68,6 @@ public class EntryPageController {
 
     /**
      * Handle button action for button Mode from Light.
-     *
      * @param event the event
      */
     public void handleButtonMode(ActionEvent event) {
@@ -85,7 +80,6 @@ public class EntryPageController {
 
     /**
      * Handle button action for button Mode from Dark.
-     *
      * @param event the event
      */
     public void handleButtonMode2(ActionEvent event) {

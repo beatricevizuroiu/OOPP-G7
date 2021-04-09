@@ -3,6 +3,7 @@ package nl.tudelft.oopp.g7.client.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.communication.RoomServerCommunication;
@@ -21,7 +22,6 @@ public class JoinRoomController {
 
     /**
      * Handle button action for button Mode from Light.
-     *
      * @param event the event
      */
     public void handleButtonMode(ActionEvent event) {
@@ -34,7 +34,6 @@ public class JoinRoomController {
 
     /**
      * Handle button action for button Mode from Dark.
-     *
      * @param event the event
      */
     public void handleButtonMode2(ActionEvent event) {
@@ -49,11 +48,20 @@ public class JoinRoomController {
      * Handles clicking the button Join from Light.
      */
     public void buttonClicked() {
-
         // if the user presses OK, the go to Student View
         if (JoinRoomLogic.joinRoomConfirmation(nickname, roomId)) {
 
             RoomJoinInfo roomJoinInfo = RoomServerCommunication.joinRoom(roomId.getText(), roomPassword.getText(), nickname.getText());
+
+            if (roomJoinInfo == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Could not join room.");
+                alert.setHeaderText("Could not join room.");
+                alert.setContentText("It was not possible to join the room specified. The room might not exist, not have opened, or your password may be incorrect.");
+
+                alert.showAndWait();
+                return;
+            }
 
             // Store all the entered information
             JoinRoomLogic.joinRoomStoreLocalData(nickname, roomId, roomJoinInfo);
@@ -80,8 +88,19 @@ public class JoinRoomController {
 
             RoomJoinInfo roomJoinInfo = RoomServerCommunication.joinRoom(roomId.getText(), roomPassword.getText(), nickname.getText());
 
+            if (roomJoinInfo == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Could not join room.");
+                alert.setHeaderText("Could not join room.");
+                alert.setContentText("It was not possible to join the room specified. The room might not exist, not have opened, or your password may be incorrect.");
+
+                alert.showAndWait();
+                return;
+            }
+
             // Store all the entered information
             JoinRoomLogic.joinRoomStoreLocalData(nickname, roomId, roomJoinInfo);
+
 
             Scene scene = EntryRoomDisplay.getCurrentScene();
             Stage stage = EntryRoomDisplay.getCurrentStage();
@@ -97,7 +116,6 @@ public class JoinRoomController {
 
     /**
      * Handle button action for going back to Entry page from Light.
-     *
      * @param event the event
      */
     public void handleBackButton(ActionEvent event) {
@@ -110,7 +128,6 @@ public class JoinRoomController {
 
     /**
      * Handle button action for going back to Entry page from Dark.
-     *
      * @param event the event
      */
     public void handleBackButtonDark(ActionEvent event) {

@@ -10,6 +10,9 @@ import javax.validation.constraints.Positive;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * The type Poll info.
+ */
 @AllArgsConstructor @NoArgsConstructor
 @Data
 public class PollInfo {
@@ -20,7 +23,7 @@ public class PollInfo {
     @NotNull @NotEmpty
     private String question;
     // Whether the poll is currently accepting answers.
-    private boolean isAcceptingAnswers;
+    private boolean acceptingAnswers;
     // Whether the poll info has result information.
     private boolean hasResults;
     // The options the user can select and possibly their results.
@@ -31,6 +34,7 @@ public class PollInfo {
      * Construct PollInfo from a resultSet.
      * @param rs The resultSet.
      * @return PollInfo.
+     * @throws SQLException when SQL query fails.
      */
     public static PollInfo fromResultSet(ResultSet rs, boolean noNext) throws SQLException {
         if (noNext || rs.next()) {

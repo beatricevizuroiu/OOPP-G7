@@ -1,7 +1,10 @@
 package nl.tudelft.oopp.g7.client.logic;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -16,9 +19,9 @@ public class AnsweredQuestionsLogic {
     /**
      * Retrieves all answered questions from the server and displays them in a scroll pane.
      * @param answeredQuestionContainer VBox containing UI elements
-     * @param answeredQuestionList ScrollPane that will contain the questions
+     * @param answeredQuestionList      ScrollPane that will contain the questions
      */
-    public static void retrieveAllAnsweredQuestions(VBox answeredQuestionContainer, ScrollPane answeredQuestionList) {
+    public static void retrieveAllAnsweredQuestions(boolean isStudent, VBox answeredQuestionContainer, ScrollPane answeredQuestionList) {
         // Store the current position of the user in the scroll list
         double scrollHeight = answeredQuestionList.getVvalue();
 
@@ -34,6 +37,23 @@ public class AnsweredQuestionsLogic {
 
                 Text upvoteCount = (Text) questionNode.lookup("#QuestionUpvoteCount");
                 Text body = (Text) questionNode.lookup("#QuestionText");
+                Text questionAnswer = (Text) questionNode.lookup("#QuestionAnswer");
+
+                if (question.getAnswer().isBlank()) {
+                    questionAnswer.setText("Marked as answered.");
+                } else {
+                    questionAnswer.setText(question.getAnswer());
+                }
+
+                if (isStudent) {
+                    MenuButton menuButton = (MenuButton) questionNode.lookup("#MenuButton");
+                    Button markAsAnsweredBtn = (Button) questionNode.lookup("#MarkAsAnsweredBtn");
+                    Button questionReplyBtn = (Button) questionNode.lookup("#QuestionReplyBtn");
+
+                    menuButton.setVisible(false);
+                    markAsAnsweredBtn.setVisible(false);
+                    questionReplyBtn.setVisible(false);
+                }
 
                 upvoteCount.setText(Integer.toString(Math.min(question.getUpvotes(), 999)));
                 body.setText(question.getText());

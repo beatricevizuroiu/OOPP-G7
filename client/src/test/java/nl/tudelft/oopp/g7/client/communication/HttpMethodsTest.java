@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class HttpMethodsTest {
-    private static String endBody = "https://httpbin.org/";
-    private Gson gson = new Gson();
+    private static final String endBody = "https://httpbin.org/";
+    private final Gson gson = new Gson();
 
     @Test
     void getTest() {

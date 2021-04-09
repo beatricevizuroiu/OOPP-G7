@@ -36,7 +36,7 @@ public class QuestionRepository {
             + "WHERE q.roomID=?;";
     private static final String QUERY_CREATE_QUESTION = "INSERT INTO questions (userID, roomID, text) VALUES (?, ?, ?);";
     private static final String QUERY_ANSWER_QUESTION = "UPDATE questions SET answer=?, answered=true WHERE id=? AND roomID=?;";
-    private static final String QUERY_EDIT_QUESTION = "UPDATE questions SET text=?, edited=true WHERE id=? AND roomID=?;";
+    private static final String QUERY_EDIT_QUESTION = "UPDATE questions SET text=?, userID=?, edited=true WHERE id=? AND roomID=?;";
     private static final String QUERY_DELETE_QUESTION = "DELETE FROM questions WHERE id=? AND roomID=?;";
     private static final String QUERY_MOST_RECENT_QUESTION_FROM_USER = "SELECT * FROM questions WHERE roomID=? AND userID=? ORDER BY postedAt DESC LIMIT 1;";
 
@@ -107,18 +107,21 @@ public class QuestionRepository {
      * @param newBody The new body of the Question.
      * @return The amount of rows changed in the database.
      */
-    public int editQuestionWithId(String roomId, int id, String newBody) {
+    public int editQuestionWithId(String roomId, int id, String newBody, String by) {
         logger.debug("Changing the text of question with id: {}, to \"{}\"", id, newBody);
         return jdbcTemplate.update(QUERY_EDIT_QUESTION,
             (ps) -> {
                 // Set the first variable in the PreparedStatement to the new text body of the question.
                 ps.setString(1, newBody);
 
-                // Set the second variable in the PreparedStatement to the id of the question to update.
-                ps.setInt(2, id);
+                // Set the second variable in the PreparedStatement to the id of the user updating the question.
+                ps.setString(2, by);
 
-                // Set the third variable in the PreparedStatement to the room id.
-                ps.setString(3, roomId);
+                // Set the third variable in the PreparedStatement to the id of the question to update.
+                ps.setInt(3, id);
+
+                // Set the fourth variable in the PreparedStatement to the room id.
+                ps.setString(4, roomId);
             });
     }
 
@@ -150,7 +153,6 @@ public class QuestionRepository {
         return jdbcTemplate.update(QUERY_CREATE_QUESTION,
             (ps) -> {
                 // Set the first variable in the PreparedStatement to the user id.
-                // TODO: This is currently just a placeholder user ID.
                 ps.setString(1, userId);
                 // Set the second variable in the PreparedStatement to the room id.
                 ps.setString(2, roomId);

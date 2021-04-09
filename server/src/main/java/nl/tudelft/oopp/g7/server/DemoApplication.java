@@ -2,6 +2,7 @@ package nl.tudelft.oopp.g7.server;
 
 import nl.tudelft.oopp.g7.server.repositories.*;
 import nl.tudelft.oopp.g7.server.utility.Config;
+import nl.tudelft.oopp.g7.server.utility.RandomUserName;
 import org.hibernate.sql.ordering.antlr.OrderingSpecification;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -51,18 +52,20 @@ public class DemoApplication {
         return new PollRepository(jdbcTemplate);
     }
 
-    @Bean("upvoteRepository")
+    @Bean("voteRepository")
     @DependsOn({"userRepository", "roomRepository", "questionRepository"})
     public UpvoteRepository upvoteRepository(JdbcTemplate jdbcTemplate) {
         return new UpvoteRepository(jdbcTemplate);
     }
 
     /**
-     * Entry point for application.
-     * @param args The command line arguments to the application.
+     * The entry point of application.
+     *
+     * @param args the input arguments
      */
     public static void main(String[] args) {
         new Config(new File("./config.yml"));
+        new RandomUserName();
 
         SpringApplication.run(DemoApplication.class, args);
     }

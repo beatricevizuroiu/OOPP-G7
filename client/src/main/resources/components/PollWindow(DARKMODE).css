@@ -1,0 +1,74 @@
+.pollOption {
+    -fx-border-width: 2px;
+    -fx-border-color: #c6c6c7;
+    -fx-border-radius: 3px;
+    -fx-border-style: solid;
+    -fx-fill: #151515;
+}
+
+.pollOption.selected {
+    -fx-border-color: #8D1BAA;
+}
+
+.pollOption.selected .pollOptionLabel {
+    -fx-stroke: #c6c6c7;
+    -fx-fill: #c6c6c7;
+}
+
+.pollPreset {
+    -fx-border-color: #151515;
+    -fx-border-radius: 3px;
+    -fx-padding: 5px;
+}
+
+#PollQuestion {
+    -fx-font-size: 21px;
+    -fx-stroke: #c6c6c7;
+    -fx-fill: #c6c6c7;
+}
+
+.pollQuestionBox {
+    -fx-padding: 1px 6px 3px 6px;
+}
+
+.pollText {
+    -fx-font-size: 21px;
+    -fx-stroke: #c6c6c7;
+    -fx-fill: #c6c6c7;
+}
+
+.pollTextBox {
+    -fx-background-color: #4e0f60;
+
+    -fx-background-radius: 3px;
+    -fx-padding: 1px 6px 3px 6px;
+}
+
+#poll {
+    -fx-background-color: #151516;
+
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+
+    -fx-border-color: #360a41;
+    -fx-border-width: 3 3 3 3;
+}
+
+.pollRightBorder {
+    -fx-background-color: #360a41;
+    -fx-min-width: 7px;
+    -fx-pref-width: 7px;
+    -fx-max-width: 7px;
+}
+
+.pollOptionLabel {
+    -fx-font-size: 21px;
+    -fx-stroke: #c6c6c7;
+    -fx-fill: #c6c6c7;
+}
+
+.pollOptionCount {
+    -fx-font-size: 21px;
+    -fx-stroke: #c6c6c7;
+    -fx-fill: #c6c6c7;
+}

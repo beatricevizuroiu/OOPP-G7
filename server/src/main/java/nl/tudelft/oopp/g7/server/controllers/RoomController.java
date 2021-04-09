@@ -1,12 +1,17 @@
 package nl.tudelft.oopp.g7.server.controllers;
 
 import nl.tudelft.oopp.g7.common.*;
-import nl.tudelft.oopp.g7.server.repositories.*;
+import nl.tudelft.oopp.g7.server.repositories.PollRepository;
+import nl.tudelft.oopp.g7.server.repositories.RoomRepository;
+import nl.tudelft.oopp.g7.server.repositories.SpeedRepository;
+import nl.tudelft.oopp.g7.server.repositories.UserRepository;
 import nl.tudelft.oopp.g7.server.utility.RandomString;
+import nl.tudelft.oopp.g7.server.utility.RandomUserName;
 import nl.tudelft.oopp.g7.server.utility.authorization.AuthorizationHelper;
 import nl.tudelft.oopp.g7.server.utility.authorization.conditions.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import nl.tudelft.oopp.g7.server.utility.exceptions.UnauthorizedException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -14,14 +19,18 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import java.util.Date;
 
 @RestController()
 @RequestMapping("/api/v1/room")
 @Validated
 public class RoomController {
 
-    Logger logger = LoggerFactory.getLogger(RoomController.class);
+    private static final Logger logger = LogManager.getLogger("serverLog");
+    private static final Logger eventLogger = LogManager.getLogger("eventLog");
 
     private final RoomRepository roomRepository;
     private final UserRepository userRepository;
@@ -54,7 +63,7 @@ public class RoomController {
      *      OK (200), BAD_REQUEST (400), or INTERNAL_SERVER_ERROR (500).
      */
     @PostMapping("/create")
-    public ResponseEntity<Room> createRoom(@RequestBody @NotNull @Valid NewRoom newRoom) {
+    public ResponseEntity<Room> createRoom(@RequestBody @NotNull @Valid NewRoom newRoom, HttpServletRequest request) {
         logger.debug("A new room with name \"{}\" is being made.", newRoom.getName());
 
         String studentPassword = parseStudentPassword(newRoom.getStudentPassword());
@@ -76,8 +85,6 @@ public class RoomController {
                 moderatorPassword,
                 // Use the user supplied name for the room.
                 newRoom.getName(),
-                // Make the room closed by default.
-                false,
                 // Make the room not over by default.
                 false,
                 // Set the start date to the date provided.
@@ -93,6 +100,8 @@ public class RoomController {
             logger.error("The room with id \"{}\" could not be written to the database!", room.getId());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
+        eventLogger.info("\"{}\" created room \"{}\" with id \"{}\"", request.getRemoteAddr(), room.getName(), room.getId());
 
         // Inform the client that the room has been created and send them the room information.
         return new ResponseEntity<>(room, HttpStatus.OK);
@@ -110,55 +119,110 @@ public class RoomController {
     public ResponseEntity<RoomJoinInfo> joinRoom(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
                                                  @RequestBody @Valid @NotNull RoomJoinRequest roomJoinRequest,
                                                  HttpServletRequest request) {
+        eventLogger.info("\"{}\" called joinRoom in room \"{}\"", request.getRemoteAddr(), roomId);
 
         Room room = roomRepository.getRoomById(roomId);
 
         // If there are no rooms with the id.
         if (room == null) {
             // Inform the client that the room does not exist.
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        if (room.getStartDate().after(new Date())) {
+            // Inform the client that the room does not yet exist.
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         if (room.getModeratorPassword().equals(roomJoinRequest.getPassword())) {
-            User user = new User(userRepository.createNewId(), roomId, roomJoinRequest.getNickname(), request.getRemoteAddr(), authorizationHelper.createAuthorizationToken(), UserRole.MODERATOR);
-            userRepository.storeUser(user);
-
-            return new ResponseEntity<>(
-                    new RoomJoinInfo(
-                            room.getId(),
-                            user.getId(),
-                            room.getName(),
-                            user.getAuthorizationToken(),
-                            user.getNickname(),
-                            user.getRole()),
-                    HttpStatus.OK);
+            return joinRoomHelper(room, roomJoinRequest, request, UserRole.MODERATOR);
         }
 
         if (room.getStudentPassword().equals(roomJoinRequest.getPassword())) {
-            User user = new User(userRepository.createNewId(), roomId, roomJoinRequest.getNickname(), request.getRemoteAddr(), authorizationHelper.createAuthorizationToken(), UserRole.STUDENT);
-            userRepository.storeUser(user);
-
-            return new ResponseEntity<>(
-                    new RoomJoinInfo(
-                            room.getId(),
-                            user.getId(),
-                            room.getName(),
-                            user.getAuthorizationToken(),
-                            user.getNickname(),
-                            user.getRole()),
-                    HttpStatus.OK);
+            return joinRoomHelper(room, roomJoinRequest, request, UserRole.STUDENT);
         }
+
         // Otherwise you get an unauthorized
         return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
     }
 
     /**
-     * Endpoint to change the Speed of a Room.
-     * @param roomId The id of the Room to edit the Speed of.
-     * @param speedAlterRequest A request containing a Speed integer by which to edit the Speed.
-     * @return A {@link ResponseEntity} containing a {@link HttpStatus} that is one of BAD_REQUEST (400),
-     *      NOT_FOUND (404), INTERNAL_SERVER_ERROR (500) or OK (200)
+     * Create a new User and return relevant information in a responseEntity.
+     * @param room the Room to create the new User in.
+     * @param roomJoinRequest the information to create the new User.
+     * @param request a {@link HttpServletRequest} containing the ip of the client sending the request.
+     * @param userRole the Role of the new User.
+     * @return an {@link HttpServletRequest} containing RoomJoinInfo and the Http Status OK (200).
      */
+    private ResponseEntity<RoomJoinInfo> joinRoomHelper(Room room, RoomJoinRequest roomJoinRequest, HttpServletRequest request, UserRole userRole) {
+        if (userRole == UserRole.STUDENT && room.isOver())
+            throw new UnauthorizedException();
+
+        // add a check for empty user names
+        String nickname = roomJoinRequest.getNickname();
+
+        if (roomJoinRequest.getNickname().isBlank()) {
+            nickname = RandomUserName.getRandomUserName();
+        }
+
+        User user = new User(userRepository.createNewId(), room.getId(), nickname, request.getRemoteAddr(), authorizationHelper.createAuthorizationToken(), userRole);
+        userRepository.storeUser(user);
+
+        RoomJoinInfo roomJoinInfo = new RoomJoinInfo(
+                room.getId(),
+                user.getId(),
+                room.getName(),
+                user.getAuthorizationToken(),
+                user.getNickname(),
+                user.getRole());
+
+        eventLogger.info("\"{}\" joined room \"{}\" as \"{}\" \"{}\"", request.getRemoteAddr(), room.getId(), roomJoinInfo.getRole(), roomJoinRequest.getNickname());
+
+        return new ResponseEntity<>(
+                roomJoinInfo,
+                HttpStatus.OK);
+    }
+
+    /**
+     * Close the currently running poll.
+     * @param roomId The id of the room to close the poll in.
+     * @param authorization The authorization header.
+     * @param request The {@link HttpServletRequest} associated with the Http request.
+     * @return A {@link ResponseEntity} containing the http status code indicating whether the request completed
+     *          successfully or if there was an error.
+     */
+    @DeleteMapping("/{room_id}")
+    public ResponseEntity<Void> closeRoom(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                          @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
+                                          HttpServletRequest request) {
+
+        authorizationHelper.checkAuthorization(
+                roomId,
+                authorization,
+                request.getRemoteAddr(),
+                new All(
+                        new BelongsToRoom(),
+                        new NotBanned(),
+                        new IsModerator()
+                ));
+
+
+        int linesChanged = roomRepository.endRoom(roomId);
+
+        if (linesChanged == 1) {
+            eventLogger.info("\"{}\" closed room with id \"{}\"", request.getRemoteAddr(), roomId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+        /**
+         * Endpoint to change the Speed of a Room.
+         * @param roomId The id of the Room to edit the Speed of.
+         * @param speedAlterRequest A request containing a Speed integer by which to edit the Speed.
+         * @return A {@link ResponseEntity} containing a {@link HttpStatus} that is one of BAD_REQUEST (400),
+         *      NOT_FOUND (404), INTERNAL_SERVER_ERROR (500) or OK (200)
+         */
     @PostMapping("/{room_id}/speed")
     public ResponseEntity<Void> setRoomSpeed(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
                                              @RequestBody @NotNull @Valid SpeedAlterRequest speedAlterRequest,
@@ -172,7 +236,8 @@ public class RoomController {
             new All(
                 new NotBanned(),
                 new IsStudent(),
-                new BelongsToRoom()
+                new BelongsToRoom(),
+                new NotClosed()
             ));
 
 
@@ -189,6 +254,8 @@ public class RoomController {
             logger.debug("The speed of the room with id \"{}\" could not be edited", roomId);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
+        eventLogger.info("\"{}\" changed the speed of room \"{}\" by \"{}\"", request.getRemoteAddr(), roomId, speedAlterRequest.getSpeed());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -210,10 +277,14 @@ public class RoomController {
             request.getRemoteAddr(),
             new All(
                 new IsModerator(),
-                new NotBanned()
+                new NotBanned(),
+                    new NotClosed()
             ));
 
         speedRepository.resetSpeedForRoom(roomId);
+
+        eventLogger.info("\"{}\" reset the room speed of room \"{}\"", request.getRemoteAddr(), roomId);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -238,6 +309,9 @@ public class RoomController {
             ));
 
         RoomSpeedInfo response = new RoomSpeedInfo(speedRepository.getSpeedForRoom(roomId));
+
+        eventLogger.info("\"{}\" requested the speed of room \"{}\"", request.getRemoteAddr(), roomId);
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -269,6 +343,8 @@ public class RoomController {
         if (pollInfo == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
+        eventLogger.info("\"{}\" received the current poll in room \"{}\"", request.getRemoteAddr(), roomId);
+
         return new ResponseEntity<>(pollInfo, HttpStatus.OK);
     }
 
@@ -294,10 +370,13 @@ public class RoomController {
             new All(
                 new BelongsToRoom(),
                 new IsModerator(),
-                new NotBanned()
+                new NotBanned(),
+                    new NotClosed()
             ));
 
         pollRepository.createPoll(roomId, pollCreateRequest.getQuestion(), pollCreateRequest.isHasPublicResults(), pollCreateRequest.getOptions());
+
+        eventLogger.info("\"{}\" created a new poll in room \"{}\" with question \"{}\"", request.getRemoteAddr(), roomId, pollCreateRequest.getQuestion());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -324,7 +403,8 @@ public class RoomController {
             request.getRemoteAddr(),
             new All(
                 new BelongsToRoom(),
-                new NotBanned()
+                new NotBanned(),
+                new NotClosed()
             ));
 
         User user = authorizationHelper.getUserFromAuthorizationHeader(authorization);
@@ -353,6 +433,8 @@ public class RoomController {
         }
 
         pollRepository.updateResult(roomId, user.getId(),mostRecentPoll.getId(), pollAnswerRequest.getOptionId());
+
+        eventLogger.info("\"{}\" answered the poll in room \"{}\" with answer \"{}\"", request.getRemoteAddr(), roomId, pollAnswerRequest.getOptionId());
 
         return new ResponseEntity<>(HttpStatus.OK);
 
@@ -390,7 +472,54 @@ public class RoomController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        pollRepository.endPoll(roomId, mostRecentPoll.getId(), pollCloseRequest.isPublishResults());
+        int linesChanged = pollRepository.endPoll(roomId, mostRecentPoll.getId(), pollCloseRequest.isPublishResults());
+
+        if(linesChanged != 1) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        eventLogger.info("\"{}\" closed the poll in room \"{}\"", request.getRemoteAddr(), roomId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /**
+     * Re-open the most recent Poll in a Room.
+     * @param roomId The roomId of the Room to open the Poll in
+     * @param authorization The Authoriziation Header of the one sending the request
+     * @param request The {@link HttpServletRequest} containing the Ip of the sender
+     * @return A {@link ResponseEntity} containing the http status code indicating whether the request completed
+     *          successfully or if there was an error.
+     */
+    @PostMapping("/{room_id}/poll/reopen")
+    public ResponseEntity<Void> reopenPoll(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                          @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
+                                          HttpServletRequest request) {
+
+        authorizationHelper.checkAuthorization(
+                roomId,
+                authorization,
+                request.getRemoteAddr(),
+                new All(
+                        new BelongsToRoom(),
+                        new NotBanned(),
+                        new IsModerator()
+                ));
+
+
+        PollInfo mostRecentPoll = pollRepository.getMostRecentPollInRoom(roomId);
+
+        if (mostRecentPoll == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        int linesChanged = pollRepository.reopenPoll(roomId, mostRecentPoll.getId());
+
+        if(linesChanged != 1) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        eventLogger.info("\"{}\" reopened the poll in room \"{}\"", request.getRemoteAddr(), roomId);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -6,9 +6,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lombok.Getter;
+import nl.tudelft.oopp.g7.client.logic.LocalData;
 
 import java.io.IOException;
-import java.net.URL;
 
 public class EntryRoomDisplay extends Application {
 
@@ -18,49 +18,42 @@ public class EntryRoomDisplay extends Application {
     private static boolean isDarkMode;
 
     @Override
-    public void start(Stage primaryStage) throws IOException{
+    public void start(Stage primaryStage) throws IOException {
         currentStage = primaryStage;
-        FXMLLoader loader = new FXMLLoader();
 
-        URL xmlUrl = getClass().getResource("/entryPage.fxml");
-        loader.setLocation(xmlUrl);
-        Parent root = loader.load();
-
-        currentScene = new Scene(root);
-
-        currentStage.setScene(currentScene);
-        currentStage.show();
+        setCurrentScene("/entryPage.fxml");
     }
 
     /**
      * Get current scene scene.
-     *
      * @return the scene
      */
-    public static Scene getCurrentScene(){
+    public static Scene getCurrentScene() {
         return currentScene;
     }
 
     /**
      * Set current scene.
-     *
      * @param newSceneName the new scene name
      */
-    public static void setCurrentScene(String newSceneName){
-        try{
+    public static void setCurrentScene(String newSceneName) {
+        try {
             Parent parent = FXMLLoader.load(EntryRoomDisplay.class.getResource(newSceneName));
-            Scene newScene = new Scene(parent);
+            currentScene = new Scene(parent);
 
-            currentStage.setScene((newScene));
-            EntryRoomDisplay.currentScene = newScene;
+            currentStage.setScene(currentScene);
+
+            currentScene.getStylesheets().add(EntryRoomDisplay.class.getResource("/fonts/fonts.css").toString());
+
+            if (LocalData.getRoomName() != null && !"".equals(LocalData.getRoomName())) {
+                currentStage.setTitle("RaisedHand: " + LocalData.getRoomName());
+            } else {
+                currentStage.setTitle("RaisedHand");
+            }
 
             currentStage.show();
 
-            if (newSceneName.contains("DARKMODE")) {
-                isDarkMode = true;
-            } else {
-                isDarkMode = false;
-            }
+            isDarkMode = newSceneName.contains("DARKMODE");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -69,10 +62,9 @@ public class EntryRoomDisplay extends Application {
 
     /**
      * Get current stage stage.
-     *
      * @return the stage
      */
-    public static Stage getCurrentStage(){
+    public static Stage getCurrentStage() {
         return currentStage;
     }
 

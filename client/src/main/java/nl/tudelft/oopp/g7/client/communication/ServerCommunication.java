@@ -3,17 +3,19 @@ package nl.tudelft.oopp.g7.client.communication;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.common.*;
 
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.stream.Collectors;
 
 // Class for generalizing methods.
 public class ServerCommunication {
     private static Gson gson = new GsonBuilder().setDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz").create();
-    private static final String uriBody = "http://localhost:8080/api/v1/room/";
+    private static final String uriBody = LocalData.getServerUrl() + "/api/v1/room/";
 
     /**
      * Retrieve a question specified by ID.
@@ -37,9 +39,9 @@ public class ServerCommunication {
 
     /**
      * Retrieve UserInfo by userId.
-     * @param roomId The roomId of the Room containing the User.
-     * @param userId The userId to request the User of.
-     * @return UserInfo of the requested User.
+     * @param roomId The roomId of the Room containing the User
+     * @param userId The userId to request the User of
+     * @return UserInfo of the requested User
      */
     public static UserInfo retrieveUserById(String roomId, String userId) {
         // add the appropriate end-point
@@ -58,7 +60,7 @@ public class ServerCommunication {
     /**
      * Retrieves all questions from the server.
      * @param roomID ID of the room student belongs
-     * @return a {@link List} of Questions that include all questions on server
+     * @return a {@link List} of Questions that includes all questions on server
      */
     public static List<Question> retrieveAllQuestions(String roomID) {
         // add the appropriate end-point
@@ -78,6 +80,40 @@ public class ServerCommunication {
     }
 
     /**
+     * Retrieves all unanswered questions from the server.
+     * @param roomID ID of the room student belongs
+     * @return a {@link List} of Questions that includes all unanswered questions on server
+     */
+    public static List<Question> retrieveAllUnansweredQuestions(String roomID) {
+        List<Question> questionList = retrieveAllQuestions(roomID);
+
+        return questionList.stream().filter((question) -> !question.isAnswered()).collect(Collectors.toList());
+    }
+
+    /**
+     * Retrieves all users' information from server.
+     * @param roomID ID of the room student belongs
+     * @return a {@link List} of UserInfo that includes all users on server
+     */
+    public static List<UserInfo> retrieveAllUsers(String roomID) {
+        // add the appropriate end-point
+        URI uri = URI.create(uriBody + roomID + "/user/all");
+
+        // retrieve all of the user information
+        HttpResponse<String> response = HttpMethods.get(uri);
+
+        // extract the user information
+        String userInformation = response.body();
+
+        // create correct generic type for GSON parsing
+        Type userInfoListType = new TypeToken<List<UserInfo>>() {}.getType();
+
+        // parse JSON array into UserInfo List
+        return gson.fromJson(userInformation, userInfoListType);
+
+    }
+
+    /**
      * Retrieves all questions and filters them to only answered questions.
      * @param roomID ID of the room student belongs
      * @return a {@link List} of Questions that includes only answered questions on the server
@@ -93,12 +129,11 @@ public class ServerCommunication {
         return questionList;
     }
 
-
     /**
      * Upvote the question with the specified ID.
      * @param roomID ID of the room student belongs
      * @param questionID ID of the question
-     * @return A {@link HttpResponse} containing the response received from server.
+     * @return A {@link HttpResponse} containing the response received from server
      */
     public static HttpResponse<String> upvoteQuestion(String roomID, int questionID) {
         // add the appropriate end-point
@@ -109,9 +144,23 @@ public class ServerCommunication {
     }
 
     /**
+     * Delete Upvote of the question with the specified ID.
+     * @param roomID ID of the room student belongs
+     * @param questionID ID of the question
+     * @return A {@link HttpResponse} containing the response received from server
+     */
+    public static HttpResponse<String> removeUpvoteQuestion(String roomID, int questionID){
+        // add the appropriate end-point
+        URI uri = URI.create(uriBody + roomID + "/question/" + questionID + "/upvote");
+
+        //send the un-upvote request and return the response
+        return HttpMethods.delete(uri);
+    }
+
+    /**
      * Get the current speed in a room.
-     * @param roomID The room ID of the room to get the speed from.
-     * @return The current lecturer speed in a room.
+     * @param roomID The room ID of the room to get the speed from
+     * @return The current lecturer speed in a room
      */
     public static Integer getSpeed(String roomID) {
         // add the appropriate end-point
@@ -126,9 +175,9 @@ public class ServerCommunication {
 
     /**
      * Set the speed in a room.
-     * @param roomID The room ID of the room to set the speed in.
-     * @param speed An integer value of either 1 or -1 to increment or decrement the lecturer speed.
-     * @return A {@link HttpResponse} containing the response received from the server.
+     * @param roomID The room ID of the room to set the speed in
+     * @param speed An integer value of either 1 or -1 to increment or decrement the lecturer speed
+     * @return A {@link HttpResponse} containing the response received from the server
      */
     public static HttpResponse<String> setSpeed(String roomID, int speed) {
         // add the appropriate end-point
@@ -143,7 +192,7 @@ public class ServerCommunication {
      * @param roomID ID of the room student belongs
      * @param questionID ID of the question
      * @param questionText new text body of the question
-     * @return A {@link HttpResponse} containing the response received from server.
+     * @return A {@link HttpResponse} containing the response received from server
      */
     public static HttpResponse<String> editQuestion(String roomID, int questionID, QuestionText questionText) {
         // convert the body to JSON
@@ -160,15 +209,37 @@ public class ServerCommunication {
      * Delete the question with the specified ID.
      * @param roomID ID of the room student belongs
      * @param questionID ID of the question
-     * @return A {@link HttpResponse} containing the response received from server.
+     * @return A {@link HttpResponse} containing the response received from server
      */
     public static HttpResponse<String> deleteQuestion(String roomID, int questionID) {
         // add the appropriate end-point
         URI uri = URI.create(uriBody + roomID + "/question/" + questionID);
 
         // delete the question and store the response
-        // appropriate code handling is done within the method
-        // FIXME: we could do the code handling in these methods
         return HttpMethods.delete(uri);
+    }
+
+    /**
+     * Try to retrieve a poll.
+     * @param roomId The roomId to retrieve a Poll from
+     * @return PollInfo if successful, null if not
+     */
+    public static PollInfo getPoll(String roomId) {
+        // add the appropriate end-point
+        URI uri = URI.create(uriBody + roomId + "/poll");
+
+        // send the request to the server
+        HttpResponse<String> response = HttpMethods.get(uri);
+
+        // check if a Poll was successfully retrieved
+        if (response.statusCode() != 200) {
+            return null;
+        }
+
+        // Get gson nonsense.
+        PollInfo result = gson.fromJson(response.body(), PollInfo.class);
+
+        // return the PollInfo
+        return result;
     }
 }

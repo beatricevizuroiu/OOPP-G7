@@ -3,7 +3,7 @@ package nl.tudelft.oopp.g7.server.controllers;
 import nl.tudelft.oopp.g7.common.*;
 import nl.tudelft.oopp.g7.server.repositories.*;
 import nl.tudelft.oopp.g7.server.utility.authorization.AuthorizationHelper;
-import org.apache.tomcat.jni.Poll;
+import nl.tudelft.oopp.g7.server.utility.exceptions.UnauthorizedException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -11,18 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.test.web.servlet.MockMvc;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.security.Principal;
-import java.util.*;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -77,13 +71,14 @@ public class RoomControllerTest {
                 new AuthorizationHelper(
                         userRepository,
                         banRepository,
-                        questionRepository)
+                        questionRepository,
+                        roomRepository)
                 );
     }
 
     @Test
     void createRoom() {
-        ResponseEntity<Room> response = roomController.createRoom(new NewRoom("This room is a test", "", "Sup3rS3cr3tP4ssw0rd", new Date(10000)));
+        ResponseEntity<Room> response = roomController.createRoom(new NewRoom("This room is a test", "", "Sup3rS3cr3tP4ssw0rd", new Date(10000)), request_mod);
 
         // Check if the request completed successfully.
         assertEquals(response.getStatusCode(), HttpStatus.OK);
@@ -141,6 +136,18 @@ public class RoomControllerTest {
         assertEquals(TEST_ROOM_ID, actual.getRoomId());
         assertEquals(TEST_ROOM_NAME, actual.getRoomName());
         assertEquals(UserRole.MODERATOR, actual.getRole());
+    }
+
+    @Test
+    void closeRoom() {
+        ResponseEntity<Void> response = roomController.closeRoom(TEST_ROOM_ID, AUTHORIZATION_MODERATOR, request_mod);
+
+        // Check if the request completed successfully.
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        roomController.closeRoom(TEST_ROOM_ID, AUTHORIZATION_MODERATOR, request_mod);
+
+        assertThrows(UnauthorizedException.class, () -> roomController.joinRoom(TEST_ROOM_ID, new RoomJoinRequest("", ""), request_stud));
     }
 
     @Test

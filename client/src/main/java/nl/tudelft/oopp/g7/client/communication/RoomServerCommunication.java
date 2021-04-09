@@ -3,17 +3,14 @@ package nl.tudelft.oopp.g7.client.communication;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
-import nl.tudelft.oopp.g7.common.NewRoom;
-import nl.tudelft.oopp.g7.common.Room;
-import nl.tudelft.oopp.g7.common.RoomJoinInfo;
-import nl.tudelft.oopp.g7.common.RoomJoinRequest;
+import nl.tudelft.oopp.g7.common.*;
 
 import java.net.URI;
 import java.net.http.HttpResponse;
 
 public class RoomServerCommunication {
-    private static Gson gson = new GsonBuilder().setDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz").create();
-    private static final String uriBody = "http://localhost:8080/api/v1/room/";
+    private static final Gson gson = new GsonBuilder().setDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz").create();
+    private static final String uriBody = LocalData.getServerUrl() + "/api/v1/room/";
 
     /**
      * Send new room request to the server and retrieve the new room.
@@ -36,9 +33,9 @@ public class RoomServerCommunication {
 
     /**
      * Join a room if available.
-     * @param roomID ID of the room user wants to join.
-     * @param password The password the user wants to join with.
-     * @param nickname The nickname the user wants to use.
+     * @param roomID ID of the room user wants to join
+     * @param password The password the user wants to join with
+     * @param nickname The nickname the user wants to use
      * @return A {@link RoomJoinInfo}
      */
     public static RoomJoinInfo joinRoom(String roomID, String password, String nickname) {
@@ -61,5 +58,21 @@ public class RoomServerCommunication {
 
         // return the roomJoinInfo
         return roomJoinInfo;
+    }
+
+
+    /**
+     * Closes the room for students.
+     * @param roomID ID of the room student belongs.
+     * @return A HttpResponse containing the response received from server.
+     */
+    public static HttpResponse<String> closeRoom(String roomID) {
+
+        // add the appropriate end-point
+        URI uri = URI.create(uriBody + roomID);
+
+        // send the request to the server
+        return HttpMethods.delete(uri);
+
     }
 }

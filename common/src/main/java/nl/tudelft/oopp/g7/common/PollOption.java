@@ -11,6 +11,9 @@ import javax.validation.constraints.PositiveOrZero;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * The type Poll option.
+ */
 @AllArgsConstructor @NoArgsConstructor
 @Data
 public class PollOption {
@@ -25,6 +28,7 @@ public class PollOption {
      * Construct PollOption from a resultSet.
      * @param rs The ResultSet to use.
      * @return PollOption.
+     * @throws SQLException when SQL query fails.
      */
     public static PollOption fromResultSet(ResultSet rs, boolean noNext) throws SQLException {
         if (noNext || rs.next()) {

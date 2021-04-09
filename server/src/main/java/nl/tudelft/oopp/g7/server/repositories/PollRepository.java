@@ -37,7 +37,7 @@ public class PollRepository {
             + "roomID varchar(36) not NULL,"
             + "userID varchar(36) not NULL,"
             + "optionID int not NULL,"
-            + "PRIMARY KEY (pollID, roomID, optionID),"
+            + "PRIMARY KEY (pollID, roomID, userID),"
             + "FOREIGN KEY (pollID) REFERENCES polls(id) ON DELETE CASCADE,"
             + "FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE,"
             + "FOREIGN KEY (roomID) REFERENCES rooms(id) ON DELETE CASCADE,"
@@ -48,6 +48,7 @@ public class PollRepository {
     private static final String QUERY_DELETE_POLL_RESULT_FOR_USER = "DELETE FROM pollResults WHERE pollID=? AND roomID=? and userID=?";
     private static final String QUERY_INSERT_POLL_RESULT_FOR_USER = "INSERT INTO pollResults (pollID, roomID, userID, optionID) VALUES (?, ?, ?, ?);";
     private static final String QUERY_END_POLL = "UPDATE polls SET isOver = TRUE, publicResults = ? WHERE roomID=? and id=?;";
+    private static final String QUERY_REOPEN_POLL = "UPDATE polls SET isOver = FALSE WHERE roomID=? and id=?;";
     private static final String QUERY_GET_POLL_WITH_ID = "SELECT * FROM polls WHERE roomID=? AND id=?";
     private static final String QUERY_GET_POLL_MOST_RECENT = "SELECT * FROM polls WHERE roomID=? ORDER BY createdAt DESC LIMIT 1;";
     private static final String QUERY_GET_POLL_OPTIONS = "SELECT * FROM pollOptions WHERE roomID=? AND pollID=?";
@@ -107,12 +108,26 @@ public class PollRepository {
      * @param roomId The id of the room that the poll belongs to.
      * @param pollId The id of the poll.
      */
-    public void endPoll(String roomId, int pollId, boolean publishResults) {
+    public int endPoll(String roomId, int pollId, boolean publishResults) {
         logger.debug("Closing poll in room with id: {}, and with poll id: {}", roomId, pollId);
-        jdbcTemplate.update(QUERY_END_POLL, (ps) -> {
+        return jdbcTemplate.update(QUERY_END_POLL, (ps) -> {
             ps.setBoolean(1, publishResults);
             ps.setString(2, roomId);
             ps.setInt(3, pollId);
+        });
+    }
+
+    /**
+     * Reopen a Poll in a Room.
+     * @param roomId The roomId of the Room the Poll is in
+     * @param pollId The pollId of the Poll to re-open
+     * @return The amount of lines changed
+     */
+    public int reopenPoll(String roomId, int pollId) {
+        logger.debug("Closing poll in room with id: {}, and with poll id: {}", roomId, pollId);
+        return jdbcTemplate.update(QUERY_REOPEN_POLL, (ps) -> {
+            ps.setString(1, roomId);
+            ps.setInt(2, pollId);
         });
     }
 
@@ -186,7 +201,7 @@ public class PollRepository {
      * WARNING: This method does not retrieve a full {@link PollInfo} object. Only the bare minimum needed for calling
      * other methods.
      * @param roomId The room id of the room to retrieve the poll from.
-     * @return PollInfo.
+     * @return PollInfo
      */
     public PollInfo getMostRecentPollInRoom(String roomId) {
         logger.debug("Getting most recent poll from database in room with id {}", roomId);

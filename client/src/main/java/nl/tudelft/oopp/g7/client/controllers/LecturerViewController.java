@@ -4,11 +4,17 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import nl.tudelft.oopp.g7.client.logic.LecturerViewLogic;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.ModeratorViewLogic;
+import nl.tudelft.oopp.g7.client.logic.SharedLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.UserInfo;
 
@@ -16,6 +22,9 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * The type Lecturer view controller.
+ */
 public class LecturerViewController {
     private final String roomID;
     private final String nickname;
@@ -23,10 +32,31 @@ public class LecturerViewController {
     private final String studentPassword;
     private HashMap<String, UserInfo> userMap = new HashMap<>();
 
+    /**
+     * The Question list.
+     */
     @FXML
     public ScrollPane questionList;
     @FXML
     private VBox questionContainer;
+    @FXML
+    private TextArea answerBox;
+    @FXML
+    private Button postAnswerButton;
+    @FXML
+    private Circle circle1;
+    @FXML
+    private Circle circle2;
+    @FXML
+    private Circle circle3;
+    @FXML
+    private Circle circle4;
+    /**
+     * The Poll window.
+     */
+    public VBox pollWindow;
+    @FXML
+    public Text courseName;
 
     /**
      * The constructor for LecturerViewController.
@@ -36,9 +66,13 @@ public class LecturerViewController {
         nickname = LocalData.getNickname();
         moderatorPassword = LocalData.getModeratorPassword();
         studentPassword = LocalData.getStudentPassword();
+    }
 
-        System.out.println(roomID);
-
+    /**
+     * Start-up routine.
+     */
+    public void initialize() {
+        SharedLogic.displayCourseName(courseName);
         // Start a timer and create a separate thread on it to automatically call retrieveQuestions()
         Timer timer = new Timer(true);
 
@@ -47,8 +81,9 @@ public class LecturerViewController {
             @Override
             public void run() {
                 Platform.runLater(reference::retrieveQuestions);
+                Platform.runLater(reference::speed);
             }
-        }, 0L, 500L);
+        }, 0L, 5000L);
     }
 
     /**
@@ -56,13 +91,25 @@ public class LecturerViewController {
      */
     public void retrieveQuestions() {
         // Retrieve all of the questions and then put them into question pane
-        ModeratorViewLogic.retrieveAllQuestions(roomID, questionContainer, questionList);
+        ModeratorViewLogic.retrieveServerData(roomID, answerBox, postAnswerButton, questionContainer, questionList, pollWindow);
     }
 
+    /**
+     * Speed indicator to show the lecturer if he is going too fast.
+     */
+    public void speed(){
+        LecturerViewLogic.speedIndicator(roomID, circle1, circle2, circle3, circle4);
+    }
+
+    /**
+     * Display link and passwords.
+     */
+    public void displayLinkAndPassword() {
+        ModeratorViewLogic.displayLinkAndPasswords();
+    }
 
     /**
      * Handle button action for button Mode from Light to Dark.
-     *
      * @param event the event
      */
     public void handleButtonMode(ActionEvent event) {
@@ -75,7 +122,6 @@ public class LecturerViewController {
 
     /**
      * Handle button action for button Mode from Dark to Light.
-     *
      * @param event the event
      */
     public void handleButtonMode2(ActionEvent event) {
@@ -88,7 +134,6 @@ public class LecturerViewController {
 
     /**
      * Handle button action for Help Button Light Mode.
-     *
      * @param event the event
      */
     public void handleHelpButtonLight(ActionEvent event) {
@@ -101,7 +146,6 @@ public class LecturerViewController {
 
     /**
      * Handle button action for Help Button Dark Mode.
-     *
      * @param event the event
      */
     public void handleHelpButtonDark(ActionEvent event) {
@@ -114,9 +158,8 @@ public class LecturerViewController {
 
     /**
      * Handle button action for Answered Questions Button light Mode.
-     *
      */
-    public void answeredQuestionList(){
+    public void answeredQuestionList() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -126,9 +169,8 @@ public class LecturerViewController {
 
     /**
      * Handle button action for Answered Questions Button Dark Mode.
-     *
      */
-    public void answeredQuestionListDark(){
+    public void answeredQuestionListDark() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -138,74 +180,74 @@ public class LecturerViewController {
 
     /**
      * Handle button action for List Users Button light Mode.
-     *
      */
-    public void listofUsers () {
+    public void listofUsers() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if list of Users is clicked, change to List of Users scene
-        EntryRoomDisplay.setCurrentScene("/ListUsers.fxml");
+        EntryRoomDisplay.setCurrentScene("/ListUsersModerator.fxml");
     }
 
     /**
      * Handle button action for List Users Button dark Mode.
-     *
      */
-    public void listofUsersDark () {
+    public void listofUsersDark() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if list of Users is clicked, change to List of Users scene
-        EntryRoomDisplay.setCurrentScene("/ListUsers(DARKMODE).fxml");
-    }
-
-    /**
-     * Handle button action for deleting a question.
-     *
-     */
-    public void deleteQuestion () {
-        //ModeratorViewLogic.deleteQuestion(roomID, questionId, questionContainer, questionList);
-    }
-
-    /**
-     * Handle button action for editing a question.
-     */
-    public void editQuestion (){
-        //TODO
-    }
-
-    /**
-     * Handle button action for answering a question.
-     */
-    public void answerQuestion (){
-        /*HttpResponse<String> response = ModeratorServerCommunication.answerQuestion(roomID, new QuestionText(answerBox.getText()));
-        answerBox.setText("");
-        retrieveQuestions();*/
+        EntryRoomDisplay.setCurrentScene("/ListUsersModerator(DARKMODE).fxml");
     }
 
     /**
      * Handle button action for creating a poll.
      */
-    public void createPoll(){
-        //TODO
+    public void createPoll() {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        EntryRoomDisplay.setCurrentScene("/CreatePoll.fxml");
+    }
+
+    /**
+     * Change the sorting mode.
+     * @param event the event
+     */
+    public void switchSortingMode(ActionEvent event) {
+        SharedLogic.switchSortingMode();
+        retrieveQuestions();
+    }
+
+    /**
+     * Handle button action for creating a poll.
+     */
+    public void createPoll2() {
+        Scene scene = EntryRoomDisplay.getCurrentScene();
+        Stage stage = EntryRoomDisplay.getCurrentStage();
+
+        EntryRoomDisplay.setCurrentScene("/CreatePoll(DARKMODE).fxml");
     }
 
     /**
      * Handle button action for exporting questions.
      */
-    public void exportQuestions(){
+    public void exportQuestions() {
         ModeratorViewLogic.exportQuestions(roomID);
     }
 
     /**
-     * Handle button action for creating a  link.
+     * Handle button action for closing a room.
      */
-    public void createLink(){
-        //TODO
+    public void closeRoom() {
+        ModeratorViewLogic.closeRoom(roomID);
     }
 
-//    public void speedIndicator(){
-//        //TODO
-//    }
+    public void switchView(ActionEvent actionEvent) {
+        EntryRoomDisplay.setCurrentScene("/TAViewUI.fxml");
+    }
+
+    public void switchView2(ActionEvent actionEvent) {
+        EntryRoomDisplay.setCurrentScene("/TAViewUI(DARKMODE).fxml");
+    }
 }

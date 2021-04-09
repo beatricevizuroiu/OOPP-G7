@@ -1,14 +1,13 @@
 package nl.tudelft.oopp.g7.server.repositories;
 
 import nl.tudelft.oopp.g7.common.Room;
-import nl.tudelft.oopp.g7.common.SpeedAlterRequest;
 import nl.tudelft.oopp.g7.server.utility.RandomString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class RoomRepository {
 
@@ -20,16 +19,15 @@ public class RoomRepository {
             + "studentPassword varchar(32) DEFAULT '' not NULL,"
             + "moderatorPassword varchar(32) not NULL,"
             + "name text not NULL,"
-            + "open boolean DEFAULT FALSE not NULL,"
             + "over boolean DEFAULT FALSE not NULL,"
             + "startDate timestamp with time zone not NULL,"
             + "speed int DEFAULT 0 not NULL);";
 
     private static final String QUERY_COUNT_ROOMS_WITH_ID = "SELECT count(id) FROM rooms WHERE id=?";
-    private static final String QUERY_CREATE_ROOM = "INSERT INTO rooms (id, studentPassword, moderatorPassword, name, open, over, startDate) VALUES (?, ?, ?, ?, ?, ?, ?);";
+    private static final String QUERY_CREATE_ROOM = "INSERT INTO rooms (id, studentPassword, moderatorPassword, name, over, startDate) VALUES (?, ?, ?, ?, ?, ?);";
     private static final String QUERY_GET_ROOM_WITH_ID = "SELECT * FROM rooms WHERE id=?";
-    private static final String QUERY_EDIT_SPEED = "UPDATE rooms SET speed = speed + ? WHERE id=?;";
-    private static final String QUERY_GET_SPEED_WITH_ID = "SELECT speed FROM rooms WHERE id=?";
+    private static final String QUERY_END_ROOM = "UPDATE rooms SET over = TRUE WHERE id=? ;";
+    private static final String QUERY_GET_IS_OPEN = "SELECT over FROM rooms WHERE id=?;";
 
     /**
      * Primary constructor for the RoomRepository class.
@@ -98,12 +96,10 @@ public class RoomRepository {
                 ps.setString(3, room.getModeratorPassword());
                 // Set the name of the room in the PreparedStatement.
                 ps.setString(4, room.getName());
-                // Set whether or not the room is open in the PreparedStatement.
-                ps.setBoolean(5, room.isOpen());
                 // Set whether or not the room is over in the PreparedStatement.
-                ps.setBoolean(6, room.isOver());
+                ps.setBoolean(5, room.isOver());
                 // Set the start date of the room in the PreparedStatement.
-                ps.setDate(7, new Date(room.getStartDate().getTime()));
+                ps.setTimestamp(6, new Timestamp(room.getStartDate().getTime()));
             });
     }
 
@@ -115,5 +111,30 @@ public class RoomRepository {
     public Room getRoomById(String roomId) {
         return jdbcTemplate.query(QUERY_GET_ROOM_WITH_ID,
             (ps) -> ps.setString(1, roomId), Room::fromResultSet);
+    }
+
+    /**
+     * Mark a lecture as finished in the database.
+     * @param roomId The id of the Room that the poll belongs to.
+     */
+    public int endRoom(String roomId) {
+        logger.debug("Closing room with id: {}", roomId);
+        return jdbcTemplate.update(QUERY_END_ROOM, (ps) -> {
+            ps.setString(1, roomId);
+        });
+    }
+
+    /**
+     * Check whether a Room is closed.
+     * @param roomId The id of the Room to check.
+     * @return Whether the Room is closed.
+     */
+    public boolean isOver(String roomId) {
+        return jdbcTemplate.query(QUERY_GET_IS_OPEN,
+            (ps) -> ps.setString(1, roomId),
+            (rs) -> {
+                rs.next();
+                return rs.getBoolean(1);
+            });
     }
 }
