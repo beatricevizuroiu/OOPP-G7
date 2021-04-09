@@ -34,7 +34,7 @@ public class StudentViewLogic {
      * @param roomId              The roomId of the Room to get the Poll from.
      * @param answerBox            The answerBox to answer the questions.
      */
-    private void sendQuestion(String roomId, TextArea answerBox) {
+    public static void sendQuestion(String roomId, TextArea answerBox) {
         HttpResponse<String> response = StudentServerCommunication.askQuestion(roomId, new QuestionText(answerBox.getText()));
         if (response.statusCode() == 429) {
             Optional<String> header = response.headers().firstValue("X-Ratelimit-Expires");
