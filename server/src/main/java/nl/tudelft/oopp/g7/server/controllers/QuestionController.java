@@ -323,7 +323,7 @@ public class QuestionController {
         logger.debug("A new question is being made.");
 
         // Create a new question in the database.
-        int rowsChanged = questionRepository.createQuestion(roomId, newQuestion.getText(), user.getId());
+        int rowsChanged = questionRepository.createQuestion(roomId, newQuestion.getText().trim(), user.getId());
 
         // Check whether the question was successfully created and log the result
         if (rowsChanged == 0) {
@@ -368,7 +368,7 @@ public class QuestionController {
         logger.debug("Question " + id + " is being answered");
         
         // Update the question with the answer and store the amount of rows changed in a variable.
-        int rowsChanged = questionRepository.answerQuestionWithId(roomId, id, answer.getAnswer());
+        int rowsChanged = questionRepository.answerQuestionWithId(roomId, id, answer.getAnswer().trim());
 
         // Check if there where no rows updated.
         if (rowsChanged == 0) {

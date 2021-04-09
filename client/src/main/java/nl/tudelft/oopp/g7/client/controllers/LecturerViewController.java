@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.g7.client.controllers;
 
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,7 +9,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import nl.tudelft.oopp.g7.client.communication.ModeratorServerCommunication;
+import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
+import nl.tudelft.oopp.g7.client.logic.LecturerViewLogic;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.ModeratorViewLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
@@ -18,6 +26,9 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * The type Lecturer view controller.
+ */
 public class LecturerViewController {
     private final String roomID;
     private final String nickname;
@@ -25,6 +36,9 @@ public class LecturerViewController {
     private final String studentPassword;
     private HashMap<String, UserInfo> userMap = new HashMap<>();
 
+    /**
+     * The Question list.
+     */
     @FXML
     public ScrollPane questionList;
     @FXML
@@ -34,6 +48,16 @@ public class LecturerViewController {
     @FXML
     private Button postAnswerButton;
     @FXML
+    private Circle circle1;
+    @FXML
+    private Circle circle2;
+    @FXML
+    private Circle circle3;
+    @FXML
+    private Circle circle4;
+    /**
+     * The Poll window.
+     */
     public VBox pollWindow;
 
     /**
@@ -49,8 +73,8 @@ public class LecturerViewController {
     /**
      * Start-up routine.
      */
-    public void initialize(){
-        // Start a timer and create a separate thread on it to automatically call retrieveQuestions()
+    public void initialize() {
+        // Start a timer and create a separate thread on it to automatically call retrieveQuestions() and speedIndicator()
         Timer timer = new Timer(true);
 
         LecturerViewController reference = this;
@@ -58,6 +82,7 @@ public class LecturerViewController {
             @Override
             public void run() {
                 Platform.runLater(reference::retrieveQuestions);
+                Platform.runLater(reference::speed);
             }
         }, 0L, 5000L);
     }
@@ -71,12 +96,18 @@ public class LecturerViewController {
     }
 
     /**
+     * Speed indicator to show the lecturer if he is going too fast.
+     */
+    public void speed(){
+        LecturerViewLogic.speedIndicator(roomID, circle1, circle2, circle3, circle4);
+    }
+
+    /**
      * Display link and passwords.
      */
     public void displayLinkAndPassword() {
         ModeratorViewLogic.displayLinkAndPasswords();
     }
-
 
     /**
      * Handle button action for button Mode from Light to Dark.
@@ -132,9 +163,8 @@ public class LecturerViewController {
 
     /**
      * Handle button action for Answered Questions Button light Mode.
-     *
      */
-    public void answeredQuestionList(){
+    public void answeredQuestionList() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -144,9 +174,8 @@ public class LecturerViewController {
 
     /**
      * Handle button action for Answered Questions Button Dark Mode.
-     *
      */
-    public void answeredQuestionListDark(){
+    public void answeredQuestionListDark() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -156,9 +185,8 @@ public class LecturerViewController {
 
     /**
      * Handle button action for List Users Button light Mode.
-     *
      */
-    public void listofUsers () {
+    public void listofUsers() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -168,9 +196,8 @@ public class LecturerViewController {
 
     /**
      * Handle button action for List Users Button dark Mode.
-     *
      */
-    public void listofUsersDark () {
+    public void listofUsersDark() {
         Scene scene = EntryRoomDisplay.getCurrentScene();
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
@@ -180,23 +207,22 @@ public class LecturerViewController {
 
     /**
      * Handle button action for deleting a question.
-     *
      */
-    public void deleteQuestion () {
+    public void deleteQuestion() {
 //        ModeratorViewLogic.deleteQuestion(roomID, questionId, questionContainer, questionList);
     }
 
     /**
      * Handle button action for editing a question.
      */
-    public void editQuestion (){
+    public void editQuestion() {
 //        ModeratorViewLogic.editQuestion(roomID, questionId, questionContainer, questionList);
     }
 
     /**
      * Handle button action for banning a user.
      */
-    public void banUser (){
+    public void banUser() {
 //        ModeratorViewLogic.banUser(roomID, userID);
     }
 
@@ -204,7 +230,7 @@ public class LecturerViewController {
     /**
      * Handle button action for answering a question.
      */
-    public void answerQuestion (){
+    public void answerQuestion() {
         /*HttpResponse<String> response = ModeratorServerCommunication.answerQuestion(roomID, new QuestionText(answerBox.getText()));
         answerBox.setText("");
         retrieveQuestions();*/
@@ -212,7 +238,6 @@ public class LecturerViewController {
 
     /**
      * Handle button action for creating a poll.
-     *
      */
     public void createPoll(){
         Scene scene = EntryRoomDisplay.getCurrentScene();
@@ -224,7 +249,6 @@ public class LecturerViewController {
 
     /**
      * Handle button action for creating a poll.
-     *
      */
     public void createPoll2(){
         Scene scene = EntryRoomDisplay.getCurrentScene();
@@ -236,26 +260,21 @@ public class LecturerViewController {
     /**
      * Handle button action for exporting questions.
      */
-    public void exportQuestions(){
+    public void exportQuestions() {
         ModeratorViewLogic.exportQuestions(roomID);
     }
 
     /**
      * Handle button action for creating a  link.
      */
-    public void createLink(){
+    public void createLink() {
         //TODO
     }
 
     /**
      * Handle button action for closing a room.
      */
-    public void closeRoom(){
+    public void closeRoom() {
         ModeratorViewLogic.closeRoom(roomID);
     }
-
-
-//    public void speedIndicator(){
-//        //TODO
-//    }
 }

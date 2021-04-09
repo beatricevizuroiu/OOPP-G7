@@ -1,6 +1,5 @@
 package nl.tudelft.oopp.g7.client.logic;
 
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -39,8 +38,10 @@ public class AnsweredQuestionsLogic {
                 Text body = (Text) questionNode.lookup("#QuestionText");
                 Text questionAnswer = (Text) questionNode.lookup("#QuestionAnswer");
 
-                if (questionAnswer.getText().equals("")) {
+                if (question.getAnswer().isBlank()) {
                     questionAnswer.setText("Marked as answered.");
+                } else {
+                    questionAnswer.setText(question.getAnswer());
                 }
 
                 if (isStudent) {

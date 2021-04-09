@@ -6,6 +6,7 @@ import nl.tudelft.oopp.g7.server.repositories.RoomRepository;
 import nl.tudelft.oopp.g7.server.repositories.SpeedRepository;
 import nl.tudelft.oopp.g7.server.repositories.UserRepository;
 import nl.tudelft.oopp.g7.server.utility.RandomString;
+import nl.tudelft.oopp.g7.server.utility.RandomUserName;
 import nl.tudelft.oopp.g7.server.utility.authorization.AuthorizationHelper;
 import nl.tudelft.oopp.g7.server.utility.authorization.conditions.*;
 import nl.tudelft.oopp.g7.server.utility.exceptions.UnauthorizedException;
@@ -158,6 +159,14 @@ public class RoomController {
             throw new UnauthorizedException();
 
         User user = new User(userRepository.createNewId(), room.getId(), roomJoinRequest.getNickname(), request.getRemoteAddr(), authorizationHelper.createAuthorizationToken(), userRole);
+        // add a check for empty user names
+        String nickname = roomJoinRequest.getNickname();
+
+        if (roomJoinRequest.getNickname().isBlank()) {
+            nickname = RandomUserName.getRandomUserName();
+        }
+
+        User user = new User(userRepository.createNewId(), room.getId(), nickname, request.getRemoteAddr(), authorizationHelper.createAuthorizationToken(), userRole);
         userRepository.storeUser(user);
 
         RoomJoinInfo roomJoinInfo = new RoomJoinInfo(
@@ -396,7 +405,7 @@ public class RoomController {
             new All(
                 new BelongsToRoom(),
                 new NotBanned(),
-                    new NotClosed()
+                new NotClosed()
             ));
 
         User user = authorizationHelper.getUserFromAuthorizationHeader(authorization);

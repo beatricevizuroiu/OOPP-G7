@@ -3,7 +3,10 @@ package nl.tudelft.oopp.g7.client.communication;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
-import nl.tudelft.oopp.g7.common.*;
+import nl.tudelft.oopp.g7.common.PollAnswerRequest;
+import nl.tudelft.oopp.g7.common.Question;
+import nl.tudelft.oopp.g7.common.QuestionText;
+import nl.tudelft.oopp.g7.common.SortingOrder;
 
 import java.net.URI;
 import java.net.http.HttpResponse;
@@ -13,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class StudentServerCommunication {
     private static Gson gson = new GsonBuilder().setDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz").create();
-    private static final String uriBody = "http://localhost:8080/api/v1/room/";
+    private static final String uriBody = LocalData.getServerUrl() + "/api/v1/room/";
 
     /**
      * Sends a post request with appropriate NewQuestion body.

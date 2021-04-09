@@ -2,6 +2,7 @@ package nl.tudelft.oopp.g7.server;
 
 import nl.tudelft.oopp.g7.server.repositories.*;
 import nl.tudelft.oopp.g7.server.utility.Config;
+import nl.tudelft.oopp.g7.server.utility.RandomUserName;
 import org.hibernate.sql.ordering.antlr.OrderingSpecification;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -64,6 +65,7 @@ public class DemoApplication {
      */
     public static void main(String[] args) {
         new Config(new File("./config.yml"));
+        new RandomUserName();
 
         SpringApplication.run(DemoApplication.class, args);
     }
