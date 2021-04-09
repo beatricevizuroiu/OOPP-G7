@@ -27,7 +27,7 @@ public class HelpFileController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if goBack is clicked, change Scene to LecturerViewUI
-        EntryRoomDisplay.setCurrentScene("/LecturerViewUi.fxml");
+        EntryRoomDisplay.setCurrentScene("/LecturerViewUI.fxml");
 //        TODO (change the fact that it goes to it's doesn't go to lecturer View but to it's previous scene)
 
     }
@@ -41,7 +41,7 @@ public class HelpFileController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if goBack is clicked, change Scene to LecturerViewUI
-        EntryRoomDisplay.setCurrentScene("/LecturerViewUi(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/LecturerViewUI(DARKMODE).fxml");
 //        TODO (change the fact that it goes to it's doesn't go to lecturer View but to it's previous scene)
 
     }
@@ -151,7 +151,7 @@ public class HelpFileController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Mode is clicked, change Scene to lecturer dark mode
-        EntryRoomDisplay.setCurrentScene("/HelpFileLecturer(DARKMODE).fxml");
+        EntryRoomDisplay.setCurrentScene("/HelpFileLecturer.fxml");
     }
 
     /**
@@ -163,6 +163,6 @@ public class HelpFileController {
         Stage stage = EntryRoomDisplay.getCurrentStage();
 
         // if Mode is clicked, change Scene to lecturer light mode
-        EntryRoomDisplay.setCurrentScene("/HelpFileLecturer.fxml");
+        EntryRoomDisplay.setCurrentScene("/HelpFileLecturer(DARKMODE).fxml");
     }
 }
