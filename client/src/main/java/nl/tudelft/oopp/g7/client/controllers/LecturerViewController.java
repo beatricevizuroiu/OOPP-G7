@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.g7.client.controllers;
 
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,6 +11,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import nl.tudelft.oopp.g7.client.communication.ModeratorServerCommunication;
+import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
+import nl.tudelft.oopp.g7.client.logic.LecturerViewLogic;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.ModeratorViewLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
@@ -19,6 +24,9 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * The type Lecturer view controller.
+ */
 public class LecturerViewController {
     private final String roomID;
     private final String nickname;
@@ -26,6 +34,9 @@ public class LecturerViewController {
     private final String studentPassword;
     private HashMap<String, UserInfo> userMap = new HashMap<>();
 
+    /**
+     * The Question list.
+     */
     @FXML
     public ScrollPane questionList;
     @FXML
@@ -35,6 +46,16 @@ public class LecturerViewController {
     @FXML
     private Button postAnswerButton;
     @FXML
+    private Circle circle1;
+    @FXML
+    private Circle circle2;
+    @FXML
+    private Circle circle3;
+    @FXML
+    private Circle circle4;
+    /**
+     * The Poll window.
+     */
     public VBox pollWindow;
     @FXML
     public Text courseName;
@@ -62,6 +83,7 @@ public class LecturerViewController {
             @Override
             public void run() {
                 Platform.runLater(reference::retrieveQuestions);
+                Platform.runLater(reference::speed);
             }
         }, 0L, 5000L);
     }
@@ -75,12 +97,18 @@ public class LecturerViewController {
     }
 
     /**
+     * Speed indicator to show the lecturer if he is going too fast.
+     */
+    public void speed(){
+        LecturerViewLogic.speedIndicator(roomID, circle1, circle2, circle3, circle4);
+    }
+
+    /**
      * Display link and passwords.
      */
     public void displayLinkAndPassword() {
         ModeratorViewLogic.displayLinkAndPasswords();
     }
-
 
     /**
      * Handle button action for button Mode from Light to Dark.
@@ -216,8 +244,4 @@ public class LecturerViewController {
     public void switchView2(ActionEvent actionEvent) {
         EntryRoomDisplay.setCurrentScene("/TAViewUI(DARKMODE).fxml");
     }
-
-//    public void speedIndicator(){
-//        //TODO
-//    }
 }

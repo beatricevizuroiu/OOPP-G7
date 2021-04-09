@@ -39,10 +39,39 @@
         <Text fx:id="courseName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"/>
     </HBox>
 
-    <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2"/>
+    <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2">
+        <items>
+            <AnchorPane prefHeight="40.0" prefWidth="40.0">
+                <Button layoutX="27.0" mnemonicParsing="false" onAction="#handleButtonMode" text="Mode" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@sun (1).png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
 
-    <ScrollPane fx:id="questionList" fitToHeight="true" fitToWidth="true" GridPane.columnIndex="1"
-                GridPane.columnSpan="3" GridPane.rowIndex="1">
+                <Circle fx:id="circle1" fill="WHITE" layoutX="63.0" layoutY="142.0" radius="22.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <Circle fx:id="circle2" fill="WHITE" layoutX="63.0" layoutY="189.0" radius="22.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <Circle fx:id="circle3" fill="WHITE" layoutX="63.0" layoutY="236.0" radius="22.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <Circle fx:id="circle4" fill="WHITE" layoutX="63.0" layoutY="282.0" radius="22.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <Label layoutX="11.0" layoutY="91.0" text="TOO FAST" textFill="WHITE">
+               <font>
+                  <Font name="Book Antiqua Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="8.0" layoutY="307.0" text="TOO SLOW" textFill="WHITE">
+               <font>
+                  <Font name="Book Antiqua Bold" size="20.0" />
+               </font>
+            </Label>
+
+            </AnchorPane>
+        </items>
+    </SplitPane>
+
+    <ScrollPane fx:id="questionList" fitToHeight="true" fitToWidth="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
         <padding>
             <Insets>
                 <right>10</right>
@@ -79,15 +108,6 @@
     <Button fx:id="postAnswerButton" mnemonicParsing="false" styleClass="post-button" text="Post Answer" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
 
     <!--    Main Buttons    -->
-      <Button mnemonicParsing="false" onAction="#handleButtonMode" text="Mode" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-          <graphic>
-              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                      <Image url="@sun (1).png" />
-                  </image>
-              </ImageView>
-          </graphic>
-      </Button>
 
     <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonLight" styleClass="help-button"
             textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2"/>
@@ -121,12 +141,12 @@
         </GridPane.margin>
     </Button>
 
-    <Button fx:id="export" mnemonicParsing="false" onAction="#exportQuestions" styleClass="upvoteBtn"
-            GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="0">
+    <Button fx:id="export" mnemonicParsing="false" onAction="#exportQuestions" styleClass="upvoteBtn" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="0">
         <graphic>
-            <SVGPath content="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" styleClass="link-button"/>
+            <SVGPath content="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" styleClass="link-button" />
         </graphic>
     </Button>
+
 
     <Button onAction="#switchView" styleClass="upvoteBtn" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="0">
         <graphic>
