@@ -8,6 +8,7 @@ import nl.tudelft.oopp.g7.server.repositories.UserRepository;
 import nl.tudelft.oopp.g7.server.utility.RandomString;
 import nl.tudelft.oopp.g7.server.utility.authorization.AuthorizationHelper;
 import nl.tudelft.oopp.g7.server.utility.authorization.conditions.*;
+import nl.tudelft.oopp.g7.server.utility.exceptions.UnauthorizedException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -153,6 +154,9 @@ public class RoomController {
      * @return an {@link HttpServletRequest} containing RoomJoinInfo and the Http Status OK (200).
      */
     private ResponseEntity<RoomJoinInfo> joinRoomHelper(Room room, RoomJoinRequest roomJoinRequest, HttpServletRequest request, UserRole userRole) {
+        if (userRole == UserRole.STUDENT && room.isOver())
+            throw new UnauthorizedException();
+
         User user = new User(userRepository.createNewId(), room.getId(), roomJoinRequest.getNickname(), request.getRemoteAddr(), authorizationHelper.createAuthorizationToken(), userRole);
         userRepository.storeUser(user);
 
