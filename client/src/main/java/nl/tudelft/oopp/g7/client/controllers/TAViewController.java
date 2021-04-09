@@ -12,6 +12,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.ModeratorViewLogic;
+import nl.tudelft.oopp.g7.client.logic.SharedLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 
 import java.util.Timer;
@@ -70,6 +71,22 @@ public class TAViewController {
     public void retrieveQuestions() {
         // Retrieve all of the questions and then put them into question pane
         ModeratorViewLogic.retrieveServerData(roomID, answerBox, postAnswerButton, questionContainer, questionList, pollWindow);
+    }
+
+    /**
+     * Display link and passwords.
+     */
+    public void displayLinkAndPassword() {
+        ModeratorViewLogic.displayLinkAndPasswords();
+    }
+
+    /**
+     * Change the sorting mode.
+     * @param event the event
+     */
+    public void switchSortingMode(ActionEvent event) {
+        SharedLogic.switchSortingMode();
+        retrieveQuestions();
     }
 
     /**

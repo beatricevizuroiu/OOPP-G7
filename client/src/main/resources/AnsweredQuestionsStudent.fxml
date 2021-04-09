@@ -58,26 +58,20 @@
 
 
     <!--    Main Buttons    -->
-    <Button mnemonicParsing="false" onAction="#handleButtonMode" text="Mode" GridPane.halignment="CENTER"
-            GridPane.rowIndex="1" GridPane.valignment="CENTER">
-        <graphic>
-            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@sun (1).png"/>
-                </image>
-            </ImageView>
-        </graphic>
-    </Button>
-
     <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonLight" styleClass="help-button"
             textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2"/>
 
-    <Button fx:id="goBack" mnemonicParsing="false" onAction="#goBackButtonLight" styleClass="upvoteBtn"
-            GridPane.columnIndex="2" GridPane.rowIndex="0">
-        <graphic>
-            <SVGPath content="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" styleClass="link-button" />
-        </graphic>
-    </Button>
+    <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="0">
+        <Button fx:id="modeButton" mnemonicParsing="false" onAction="#handleButtonMode" styleClass="mode-button"/>
+
+        <Region minWidth="15"/>
+
+        <Button fx:id="goBack" mnemonicParsing="false" onAction="#goBackButtonLight" styleClass="upvoteBtn">
+            <graphic>
+                <SVGPath content="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" styleClass="link-button"/>
+            </graphic>
+        </Button>
+    </HBox>
 
 
     <!--    <Button fx:id="mode" mnemonicParsing="false" onAction="#handleButtonMode" styleClass="mode-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />-->

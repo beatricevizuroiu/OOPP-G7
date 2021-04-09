@@ -431,9 +431,46 @@ public class RoomController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        pollRepository.endPoll(roomId, mostRecentPoll.getId(), pollCloseRequest.isPublishResults());
+        int linesChanged = pollRepository.endPoll(roomId, mostRecentPoll.getId(), pollCloseRequest.isPublishResults());
+
+        if(linesChanged != 1) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
         eventLogger.info("\"{}\" closed the poll in room \"{}\"", request.getRemoteAddr(), roomId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/{room_id}/poll/reopen")
+    public ResponseEntity<Void> reopenPoll(@PathVariable("room_id") @NotNull @NotEmpty String roomId,
+                                          @RequestHeader("Authorization") @Pattern(regexp = "Bearer [a-zA-Z0-9]{128}") String authorization,
+                                          HttpServletRequest request) {
+
+        authorizationHelper.checkAuthorization(
+                roomId,
+                authorization,
+                request.getRemoteAddr(),
+                new All(
+                        new BelongsToRoom(),
+                        new NotBanned(),
+                        new IsModerator()
+                ));
+
+
+        PollInfo mostRecentPoll = pollRepository.getMostRecentPollInRoom(roomId);
+
+        if (mostRecentPoll == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        int linesChanged = pollRepository.reopenPoll(roomId, mostRecentPoll.getId());
+
+        if(linesChanged != 1) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        eventLogger.info("\"{}\" reopened the poll in room \"{}\"", request.getRemoteAddr(), roomId);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -53,7 +53,13 @@ public class ModeratorViewLogic {
             Button closeButton = (Button) pollWindow.lookup("#deleteButton");
 
             closeButton.setOnAction((event) -> {
-                closePoll();
+                if(poll.isAcceptingAnswers()) {
+                    closePoll();
+                    retrievePolls(roomId, pollWindowContainer);
+                } else {
+                    reopenPoll();
+                    retrievePolls(roomId, pollWindowContainer);
+                }
             });
 
             Text pollLabel = (Text) pollWindow.lookup("#pollLabelText");
@@ -62,11 +68,13 @@ public class ModeratorViewLogic {
             if (!poll.isAcceptingAnswers()) {
                 pollTextBox.setStyle("-fx-background-color: #cf5454");
                 pollLabel.setText("CLOSED POLL");
-                closeButton.setVisible(false);
+                closeButton.setText("Re-open");
+
             } else {
                 pollTextBox.setStyle("-fx-background-color: #9251ba");
                 pollLabel.setText("POLL");
-                closeButton.setVisible(true);
+                closeButton.setText("Close");
+
             }
 
             HBox optionContainer = (HBox) pollWindow.lookup("#PollWindowOptionContainer");
@@ -135,6 +143,10 @@ public class ModeratorViewLogic {
      */
     private static void closePoll() {
         ModeratorServerCommunication.closePoll(LocalData.getRoomID(), true);
+    }
+
+    private static void reopenPoll() {
+        ModeratorServerCommunication.reopenPoll(LocalData.getRoomID());
     }
 
     /**

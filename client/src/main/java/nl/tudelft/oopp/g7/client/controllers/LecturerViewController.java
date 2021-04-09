@@ -1,6 +1,5 @@
 package nl.tudelft.oopp.g7.client.controllers;
 
-import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,14 +8,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import nl.tudelft.oopp.g7.client.communication.ModeratorServerCommunication;
-import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.logic.LecturerViewLogic;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.ModeratorViewLogic;
+import nl.tudelft.oopp.g7.client.logic.SharedLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.UserInfo;
 
@@ -212,6 +210,14 @@ public class LecturerViewController {
         EntryRoomDisplay.setCurrentScene("/CreatePoll.fxml");
     }
 
+    /**
+     * Change the sorting mode.
+     * @param event the event
+     */
+    public void switchSortingMode(ActionEvent event) {
+        SharedLogic.switchSortingMode();
+        retrieveQuestions();
+    }
 
     /**
      * Handle button action for creating a poll.

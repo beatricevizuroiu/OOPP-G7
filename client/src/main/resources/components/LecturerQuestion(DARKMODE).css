@@ -40,6 +40,17 @@
     -fx-fill: white;
 }
 
+#MarkAsAnsweredBtn {
+    -fx-background-color: transparent;
+    -fx-fill: white;
+}
+
+#MarkAsAnsweredBtn:active {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-fill: purple;
+}
+
 #QuestionReplyBtn {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
@@ -72,7 +83,7 @@
 }
 
 .context-menu {
-    -fx-background-color: transparent;
+    /*-fx-background-color: transparent;*/
 }
 
 .menu-button > .arrow-button {

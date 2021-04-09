@@ -110,4 +110,13 @@ public class ModeratorServerCommunication {
         // send the request to the server
         return HttpMethods.post(uri, body);
     }
+
+    public static HttpResponse<String> reopenPoll(String roomID) {
+
+        String body = "[]";
+
+        URI uri = URI.create(uriBody + roomID + "/poll/reopen");
+
+        return HttpMethods.post(uri, body);
+    }
 }

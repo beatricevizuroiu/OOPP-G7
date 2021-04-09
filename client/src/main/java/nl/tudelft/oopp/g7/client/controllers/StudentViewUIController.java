@@ -5,11 +5,11 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -17,6 +17,7 @@ import javafx.util.Duration;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
+import nl.tudelft.oopp.g7.client.logic.SharedLogic;
 import nl.tudelft.oopp.g7.client.logic.StudentViewLogic;
 import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.QuestionText;
@@ -49,10 +50,16 @@ public class StudentViewUIController {
     public VBox pollWindow;
 
     @FXML
-    public Button colorSlow;
+    public Button whiteFast;
 
     @FXML
     public Button colorFast;
+
+    @FXML
+    public Button whiteSlow;
+
+    @FXML
+    public Button colorSlow;
 
     private final String roomID;
     private final String nickname;
@@ -90,7 +97,7 @@ public class StudentViewUIController {
     }
 
     /**
-     * Send question.
+     * Send question. TODO: DO THE LOGIC THING
      */
     public void sendQuestion() {
         HttpResponse<String> response = StudentServerCommunication.askQuestion(roomID, new QuestionText(answerBox.getText()));
@@ -138,6 +145,15 @@ public class StudentViewUIController {
      */
     public void removeUpvoteQuestion(int questionId) {
         StudentViewLogic.removeUpvoteQuestion(roomID, questionId, questionContainer, questionList);
+    }
+
+    /**
+     * Change the sorting mode.
+     * @param event the event
+     */
+    public void switchSortingMode(ActionEvent event) {
+        SharedLogic.switchSortingMode();
+        retrieveQuestions();
     }
 
     /**
@@ -243,9 +259,13 @@ public class StudentViewUIController {
      * Handle button slower.
      */
     public void goSlower() {
+
         colorSlow.setVisible(true);
+
         PauseTransition transition = new PauseTransition(Duration.seconds(3));
-        transition.setOnFinished(event -> colorSlow.setVisible(false));
+        transition.setOnFinished(event -> {
+            colorSlow.setVisible(false);
+        });
         ServerCommunication.setSpeed(roomID, 1);
 
         transition.play();
@@ -255,9 +275,13 @@ public class StudentViewUIController {
      * Handle button faster.
      */
     public void goFaster() {
+
         colorFast.setVisible(true);
+
         PauseTransition transition = new PauseTransition(Duration.seconds(3));
-        transition.setOnFinished(event -> colorFast.setVisible(false));
+        transition.setOnFinished(event -> {
+            colorFast.setVisible(false);
+        });
         ServerCommunication.setSpeed(roomID, -1);
 
         transition.play();

@@ -50,14 +50,9 @@
         <Region HBox.hgrow="ALWAYS"/>
         <VBox>
             <Region VBox.vgrow="ALWAYS"/>
-            <Button onAction="#handleButtonMode" text="Mode"
-                    styleClass="buttonMode" GridPane.columnIndex="0" GridPane.rowIndex="1">
-                <graphic>
-                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@sun (1).png"/>
-                    </ImageView>
-                </graphic>
-            </Button>
+            <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                <Button fx:id="modeButton" mnemonicParsing="false" onAction="#handleButtonMode" styleClass="mode-button"/>
+            </HBox>
             <Region VBox.vgrow="ALWAYS"/>
         </VBox>
     </HBox>

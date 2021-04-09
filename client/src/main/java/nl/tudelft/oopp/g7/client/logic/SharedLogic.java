@@ -13,6 +13,7 @@ import javafx.scene.text.Text;
 import nl.tudelft.oopp.g7.client.communication.ModeratorServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.common.Question;
+import nl.tudelft.oopp.g7.common.SortingOrder;
 import nl.tudelft.oopp.g7.common.UserInfo;
 import nl.tudelft.oopp.g7.common.UserRole;
 
@@ -184,5 +185,17 @@ public class SharedLogic {
         userRoleInfo.setText(userRoleText);
 
         userInfoNodes.add(userInfoContainer);
+    }
+
+    /**
+     * Switch the sorting mode.
+     * @param event The event
+     */
+    public static void switchSortingMode() {
+        if (LocalData.getSortingOrder() == SortingOrder.NEW) {
+            LocalData.setSortingOrder(SortingOrder.UPVOTES);
+        } else {
+            LocalData.setSortingOrder(SortingOrder.NEW);
+        }
     }
 }

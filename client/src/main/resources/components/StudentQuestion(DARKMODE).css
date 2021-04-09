@@ -36,13 +36,18 @@
     -fx-fill: white;
 }
 
-#delete {
+.delete {
     -fx-background-color: transparent;
-    -fx-border-color: transparent;
 }
 
-#delete:active {
+.delete:active {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-fill: purple;
 }
+
+.deleteSVG {
+    -fx-fill: #FFFFFF;
+    -fx-stroke: #FFFFFF;
+}
+

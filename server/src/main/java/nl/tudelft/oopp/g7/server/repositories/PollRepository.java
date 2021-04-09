@@ -48,6 +48,7 @@ public class PollRepository {
     private static final String QUERY_DELETE_POLL_RESULT_FOR_USER = "DELETE FROM pollResults WHERE pollID=? AND roomID=? and userID=?";
     private static final String QUERY_INSERT_POLL_RESULT_FOR_USER = "INSERT INTO pollResults (pollID, roomID, userID, optionID) VALUES (?, ?, ?, ?);";
     private static final String QUERY_END_POLL = "UPDATE polls SET isOver = TRUE, publicResults = ? WHERE roomID=? and id=?;";
+    private static final String QUERY_REOPEN_POLL = "UPDATE polls SET isOver = FALSE WHERE roomID=? and id=?;";
     private static final String QUERY_GET_POLL_WITH_ID = "SELECT * FROM polls WHERE roomID=? AND id=?";
     private static final String QUERY_GET_POLL_MOST_RECENT = "SELECT * FROM polls WHERE roomID=? ORDER BY createdAt DESC LIMIT 1;";
     private static final String QUERY_GET_POLL_OPTIONS = "SELECT * FROM pollOptions WHERE roomID=? AND pollID=?";
@@ -107,12 +108,20 @@ public class PollRepository {
      * @param roomId The id of the room that the poll belongs to.
      * @param pollId The id of the poll.
      */
-    public void endPoll(String roomId, int pollId, boolean publishResults) {
+    public int endPoll(String roomId, int pollId, boolean publishResults) {
         logger.debug("Closing poll in room with id: {}, and with poll id: {}", roomId, pollId);
-        jdbcTemplate.update(QUERY_END_POLL, (ps) -> {
+        return jdbcTemplate.update(QUERY_END_POLL, (ps) -> {
             ps.setBoolean(1, publishResults);
             ps.setString(2, roomId);
             ps.setInt(3, pollId);
+        });
+    }
+
+    public int reopenPoll(String roomId, int pollId) {
+        logger.debug("Closing poll in room with id: {}, and with poll id: {}", roomId, pollId);
+        return jdbcTemplate.update(QUERY_REOPEN_POLL, (ps) -> {
+            ps.setString(1, roomId);
+            ps.setInt(2, pollId);
         });
     }
 
