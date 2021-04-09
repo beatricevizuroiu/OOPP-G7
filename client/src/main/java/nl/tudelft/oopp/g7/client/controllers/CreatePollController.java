@@ -242,9 +242,9 @@ public class CreatePollController {
 
         // if Help is clicked, change to Help scene
         if (LocalData.isLecturer()) {
-            EntryRoomDisplay.setCurrentScene("/HelpFileLecturer.fxml");
+            EntryRoomDisplay.setCurrentScene("/HelpFileLecturer(DARKMODE).fxml");
         } else {
-            EntryRoomDisplay.setCurrentScene("/HelpFileTA.fxml");
+            EntryRoomDisplay.setCurrentScene("/HelpFileTA(DARKMODE).fxml");
         }
     }
 }

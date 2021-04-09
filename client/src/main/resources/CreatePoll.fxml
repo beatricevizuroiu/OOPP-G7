@@ -30,7 +30,7 @@
 
     <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
         <HBox spacing="20">
-            <TextArea fx:id="questionArea" styleClass="buttons" promptText="Poll Question" maxHeight="24" HBox.hgrow="ALWAYS" />
+            <TextArea fx:id="questionArea" styleClass="buttons" promptText="Poll Question" maxHeight="24" HBox.hgrow="ALWAYS"/>
         </HBox>
         <HBox VBox.vgrow="ALWAYS">
             <VBox HBox.hgrow="ALWAYS">

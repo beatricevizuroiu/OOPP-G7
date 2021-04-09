@@ -30,12 +30,12 @@
 
     <VBox GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="pollCreateView">
         <HBox spacing="20">
-            <TextArea fx:id="questionArea" styleClass="buttons" promptText="Poll Question" maxHeight="24" HBox.hgrow="ALWAYS" />
+            <TextArea fx:id="questionArea" styleClass="buttons-area" promptText="Poll Question" maxHeight="24" HBox.hgrow="ALWAYS" />
         </HBox>
         <HBox VBox.vgrow="ALWAYS">
             <VBox HBox.hgrow="ALWAYS">
                 <HBox>
-                    <TextArea fx:id="optionArea" styleClass="buttons" promptText="Poll Option" maxHeight="24"/>
+                    <TextArea fx:id="optionArea" styleClass="buttons-area" promptText="Poll Option" maxHeight="24"/>
                     <Button styleClass="buttons" text="+" onAction="#addOption"/>
                 </HBox>
                 <VBox VBox.vgrow="ALWAYS" stylesheets="components/PollWindow(DARKMODE).css" spacing="10">
