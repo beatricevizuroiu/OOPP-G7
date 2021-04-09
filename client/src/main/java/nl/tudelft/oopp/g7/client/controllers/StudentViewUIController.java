@@ -92,54 +92,14 @@ public class StudentViewUIController {
     }
 
     /**
-     * Send question. TODO: DO THE LOGIC THING
+     * Send question.
      */
     public void sendQuestion() {
-        HttpResponse<String> response = StudentServerCommunication.askQuestion(roomID, new QuestionText(answerBox.getText()));
-        if (response.statusCode() == 429) {
-            Optional<String> header = response.headers().firstValue("X-Ratelimit-Expires");
-            if (header.isPresent()) {
-                int timeLeft = Integer.parseInt(header.get());
-
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-
-                // body of pop-up with what the user entered
-                alert.setContentText("You are asking questions too fast!\n"
-                        + "Time remaining until you can ask a new question: "
-                        + timeLeft
-                        + " second(s)");
-
-                // set types of buttons for the pop-up
-                ButtonType okButton = new ButtonType("OK");
-
-                alert.getButtonTypes().setAll(okButton);
-
-                // wait for the alert to appear
-                alert.showAndWait();
-                return;
-            }
-            System.err.println("A rate limit status was returned but the rate limit header does not exist!");
-        }
-
-        if (response.statusCode() == 401) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-
-            // body of pop-up with what the user entered
-            alert.setContentText("You are not allowed to ask a Question!\n"
-                    + "The Room might be closed or you are currently banned.");
-
-            // set types of buttons for the pop-up
-            ButtonType okButton = new ButtonType ("OK");
-
-            alert.getButtonTypes().setAll(okButton);
-
-            // wait for the alert to appear
-            alert.showAndWait();
-            return;
-        }
-        answerBox.setText("");
+        StudentViewLogic.sendQuestion(roomID, answerBox);
         retrieveQuestions();
+
     }
+
 
     /**
      * Upvote questions.
