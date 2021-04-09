@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class ModeratorServerCommunication {
     private static Gson gson = new GsonBuilder().setDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz").create();
-    private static final String uriBody = "http://localhost:8080/api/v1/room/";
+    private static final String uriBody = LocalData.getServerUrl() + "/api/v1/room/";
 
     /**
      * Retrieve all questions from the server and sort them based on upvotes.

@@ -3,6 +3,7 @@ package nl.tudelft.oopp.g7.client.communication;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.common.*;
 
 import java.lang.reflect.Type;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 // Class for generalizing methods.
 public class ServerCommunication {
     private static Gson gson = new GsonBuilder().setDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz").create();
-    private static final String uriBody = "http://localhost:8080/api/v1/room/";
+    private static final String uriBody = LocalData.getServerUrl() + "/api/v1/room/";
 
     /**
      * Retrieve a question specified by ID.

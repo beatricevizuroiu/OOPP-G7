@@ -52,11 +52,10 @@ public class MockServerConfigurations {
     }
 
     /**
-     * Create expectation without body.
-     *
-     * @param path       the path
-     * @param method     the method
-     * @param statusCode the status code
+     * Create an expected server response.
+     * @param path Request path.
+     * @param method The method for the request.
+     * @param statusCode The expected status code.
      */
     public void createExpectationWithoutBody(String path, String method, int statusCode) {
         new MockServerClient("localhost", 8080)
