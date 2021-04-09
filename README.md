@@ -6,16 +6,16 @@ Server:
 
 
 ## Description of project
-RaisedHand is tool for lecturers to recieve questions from their students during (online) lecturers. Next to that we also offer some extra features that allow the lecturer to get some more organized feedback from his/her students.
+RaisedHand is a tool for lecturers to receive questions from their students during (online) lectures. In addition, we offer some extra features that allow the lecturers to get more organized feedback from their students.
 
 ### Features
-- Recieve questions from your students.
+- Receive questions from your students.
 - Send polls to your students.
-- Be informed by your students whether you are going to fast, to slow, or just at the right speed through the material.
-- Ban students from sending questions, answering polls, and informing you about your speed by banning them.
+- Let the students attending the lecture inform you on whether you are going too fast or too slow through out the course material. 
+- Do not allow students to send questions, answer polls or inform you about your speed by banning them.
 - Delete questions from students.
 - Edit questions.
-- Assign trusted users permission to moderate the questions to help keep the room clean.
+- Assign trusted users permission to moderate the activity to help keep the room clean.
 
 
 ## Group members
@@ -75,7 +75,7 @@ java -jar client.jar
 Follow the below instructions to run the server program.
 
 #### Windows
-The server is currently only supported on Linux and Mac OS so windows users will have to install a WSL distro. Additionally they also want to install docker in some way. Whether that is through the windows installer or via WSL itself.
+The server is currently only supported on Linux and Mac OS so Windows users will have to install a WSL distro. Additionally they also want to install docker in some way. Whether that is through the Windows installer or via WSL itself.
 
 #### Linux & Mac OS
 Make sure docker and docker-compose are installed prior to following any of these steps.
@@ -115,8 +115,8 @@ git clone git@gitlab.ewi.tudelft.nl:cse1105/2020-2021/team-repositories/oopp-gro
 
 Now you are free to import the project into your favourite IDE and to start coding.
 
-### Contribution guidlines
+### Contribution guidelines
 - Before contributing please read our [CODE\_OF\_CONDUCT](CODE_OF_CONDUCT.md).
-- When writing commit messages try to make it clear to unkowning readers what is being changed in the commit.
+- When writing commit messages be as clear as possible on what changed in that respective commit.
 - Never commit directly to master or development.
 
