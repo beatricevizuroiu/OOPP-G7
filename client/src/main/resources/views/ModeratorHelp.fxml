@@ -103,7 +103,7 @@
 
     <!--    Main Buttons    -->
     <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="0">
-        <Button fx:id="modeButton" mnemonicParsing="false" onAction="#handleButtonModeTA" styleClass="mode-button"/>
+        <Button onAction="#changeMode" styleClass="mode-button"/>
 
         <Region minWidth="15"/>
 
