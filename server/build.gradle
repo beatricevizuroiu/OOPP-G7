@@ -44,8 +44,3 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-asciidoctor {
-	inputs.dir snippetsDir
-	dependsOn test
-}
-

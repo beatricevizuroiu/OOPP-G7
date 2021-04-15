@@ -2,14 +2,16 @@ package nl.tudelft.oopp.g7.client.logic;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
-import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.PollInfo;
 import nl.tudelft.oopp.g7.common.PollOption;
 import nl.tudelft.oopp.g7.common.Question;
@@ -91,7 +93,7 @@ public class StudentViewLogic {
             return;
         }
         try {
-            String pollWindowComponentName = EntryRoomDisplay.isDarkMode() ? "/components/PollWindow(DARKMODE).fxml" : "/components/PollWindow.fxml";
+            String pollWindowComponentName = false ? "/components/PollWindow(DARKMODE).fxml" : "/components/PollWindow.fxml";
             HBox pollWindow = FXMLLoader.load(StudentViewLogic.class.getResource(pollWindowComponentName));
 
             Text pollLabel = (Text) pollWindow.lookup("#pollLabelText");
@@ -115,7 +117,7 @@ public class StudentViewLogic {
             int columns = (int) Math.max(1, pollWindowContainer.getWidth() / 350);
             int rows = (int) Math.ceil(poll.getOptions().length * 1.0F / columns);
 
-            String componentName = EntryRoomDisplay.isDarkMode() ? "/components/PollOption(DARKMODE).fxml" : "/components/PollOption.fxml";
+            String componentName = false ? "/components/PollOption(DARKMODE).fxml" : "/components/PollOption.fxml";
 
             Text pollQuestionText = (Text) pollWindow.lookup("#PollQuestion");
             pollQuestionText.setText(poll.getQuestion());
@@ -190,7 +192,7 @@ public class StudentViewLogic {
 
         questionNodes.clear();
 
-        String componentName = EntryRoomDisplay.isDarkMode() ? "/components/StudentQuestion(DARKMODE).fxml" : "/components/StudentQuestion.fxml";
+        String componentName = false ? "/components/StudentQuestion(DARKMODE).fxml" : "/components/StudentQuestion.fxml";
 
         try {
             for (Question question : questions) {

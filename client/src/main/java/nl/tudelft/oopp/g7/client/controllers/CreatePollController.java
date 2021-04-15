@@ -2,17 +2,15 @@ package nl.tudelft.oopp.g7.client.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
+import nl.tudelft.oopp.g7.client.MainApp;
 import nl.tudelft.oopp.g7.client.logic.CreatePollLogic;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.SharedLogic;
-import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.OptionsPosition;
 
 import java.util.ArrayList;
@@ -68,11 +66,8 @@ public class CreatePollController {
      * Go to the previous window.
      */
     public void back() {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
-        String targetFile = LocalData.isLecturer() ? "/LecturerViewUI.fxml" : "/TAViewUI.fxml";
-        EntryRoomDisplay.setCurrentScene(targetFile);
+        String targetFile = LocalData.isLecturer() ? "/views/LecturerViewUI.fxml" : "/views/TAViewUI.fxml";
+        MainApp.setCurrentScene(targetFile);
     }
 
     /**
@@ -81,7 +76,6 @@ public class CreatePollController {
      */
     public void addOption(ActionEvent actionEvent) {
         CreatePollLogic.addOption(pollOptions, optionArea, optionContainer);
-
     }
 
     /**
@@ -166,55 +160,21 @@ public class CreatePollController {
      * @param event the event.
      */
     public void goBackButtonLight(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
         // if goBack is clicked, change Scene to LecturerViewUI or TAViewUI
         if (LocalData.isLecturer()) {
-            EntryRoomDisplay.setCurrentScene("/LecturerViewUI.fxml");
+            MainApp.setCurrentScene("/views/LecturerViewUI.fxml");
         } else {
-            EntryRoomDisplay.setCurrentScene("/TAViewUI.fxml");
+            MainApp.setCurrentScene("/views/TAViewUI.fxml");
         }
     }
 
-    /**
-     * Handle button action for going back to lecturer view (dark).
-     * @param event the event.
-     */
-    public void goBackButtonDark(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
-        // if goBack is clicked, change Scene to LecturerViewUI or TAViewUI
-        if (LocalData.isLecturer()) {
-            EntryRoomDisplay.setCurrentScene("/LecturerViewUI(DARKMODE).fxml");
-        } else {
-            EntryRoomDisplay.setCurrentScene("/TAViewUI(DARKMODE).fxml");
-        }
-    }
 
     /**
      * Handle button action for button Mode from Light to Dark.
      * @param event the event.
      */
     public void handleButtonMode(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
-        // if Mode is clicked, change Scene to Join Room
-        EntryRoomDisplay.setCurrentScene("/CreatePoll(DARKMODE).fxml");
-    }
-
-    /**
-     * Handle button action for button Mode from Dark to Light.
-     * @param event the event.
-     */
-    public void handleButtonMode2(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
-        // if Mode is clicked, change Scene to Join Room
-        EntryRoomDisplay.setCurrentScene("/CreatePoll.fxml");
+        LocalData.switchColorScheme();
     }
 
     /**
@@ -222,30 +182,11 @@ public class CreatePollController {
      * @param event the event.
      */
     public void handleHelpButtonLight(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
         // if Help is clicked, change to Help scene
         if (LocalData.isLecturer()) {
-            EntryRoomDisplay.setCurrentScene("/HelpFileLecturer.fxml");
+            MainApp.setCurrentScene("/views/HelpFileLecturer.fxml");
         } else {
-            EntryRoomDisplay.setCurrentScene("/HelpFileTA.fxml");
-        }
-    }
-
-    /**
-     * Handle button action for Help Button Dark Mode.
-     * @param event the event.
-     */
-    public void handleHelpButtonDark(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
-        // if Help is clicked, change to Help scene
-        if (LocalData.isLecturer()) {
-            EntryRoomDisplay.setCurrentScene("/HelpFileLecturer(DARKMODE).fxml");
-        } else {
-            EntryRoomDisplay.setCurrentScene("/HelpFileTA(DARKMODE).fxml");
+            MainApp.setCurrentScene("/views/HelpFileTA.fxml");
         }
     }
 }

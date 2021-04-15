@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane minHeight="500" minWidth="750" stylesheets="@UIstyle.css" xmlns="http://javafx.com/javafx/11.0.1"
+<GridPane minHeight="500" minWidth="750" stylesheets="@../UIstyle.css" xmlns="http://javafx.com/javafx/11.0.1"
           xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.HelpFileController">
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" minWidth="128.0"/>
@@ -60,7 +60,7 @@
                 <Label text="  Mode Button - change Mode from Light to Dark and vice versa." textFill="BLACK">
                     <graphic>
                         <ImageView fitHeight="20.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@sun (1).png"/>
+                            <Image url="@../sun (1).png"/>
                         </ImageView>
                     </graphic>
                     <font>

@@ -7,22 +7,8 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<!--<svg width="41" height="37" viewBox="0 0 41 37" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-<!--<g clip-path="url(#clip0)">-->
-<!--    <path d="M37.7493 2.93016C37.7385 2.92067 37.7278 2.91119 37.7169 2.9019C33.7891 -0.616122 27.5287 -0.979133 23.1378 2.05961C22.6983 2.36288 22.3442 2.63865 22.0235 2.92731C22.0142 2.93566 22.0052 2.944 21.9961 2.95254L14.9689 9.29499C14.3533 9.8505 14.3533 10.7512 14.9691 11.3065C15.5848 11.8622 16.5829 11.862 17.1981 11.3063L24.2514 4.94018C24.2588 4.93355 24.2659 4.92691 24.2733 4.92027C24.4883 4.72871 24.7367 4.53715 25.054 4.31829C28.2082 2.13567 32.7063 2.40309 35.5179 4.94056C35.5272 4.94891 35.5366 4.95725 35.5461 4.96541C38.6254 7.76973 38.6168 12.3133 35.52 15.109L28.4671 21.4746C27.8515 22.0301 27.8515 22.9308 28.4673 23.4862C28.7752 23.7638 29.1785 23.9027 29.5818 23.9027C29.9851 23.9027 30.3886 23.7638 30.6965 23.486L37.7497 17.1204C42.0837 13.2075 42.0837 6.84172 37.7493 2.93016Z" fill="#FFF1F1"/>-->
-<!--    <path d="M23.7969 25.6871L16.7478 32.0487C16.7339 32.0614 16.7201 32.0745 16.7066 32.0876C15.9273 32.7795 15.0129 33.3107 13.986 33.668C11.0448 34.6956 7.70463 34.0606 5.47835 32.0514C2.37464 29.2474 2.37464 24.6849 5.47835 21.8819L12.5309 15.52C12.8263 15.2531 12.9926 14.8912 12.9926 14.5138V14.5113C12.9926 13.7256 12.2871 13.09 11.4163 13.09C10.9676 13.09 10.5627 13.2598 10.2756 13.5316L3.24871 19.8704C-1.08279 23.7827 -1.08321 30.1491 3.24829 34.0623C5.3699 35.9774 8.21407 36.9981 11.1108 36.9981C12.4588 36.9979 13.8185 36.7768 15.1216 36.3218C16.5763 35.816 17.8722 35.0567 18.973 34.0656C18.989 34.0513 19.0046 34.0366 19.0199 34.0216L26.0262 27.6988C26.6417 27.1431 26.6417 26.2426 26.026 25.6871C25.4108 25.1318 24.4127 25.1318 23.7969 25.6871Z" fill="#FFF1F1"/>-->
-<!--    <path d="M12.4312 25.7764C12.7391 26.0543 13.1424 26.1931 13.5459 26.1931C13.9493 26.1931 14.3528 26.0543 14.6604 25.7766L28.5658 13.2284C29.1816 12.6729 29.1816 11.7722 28.566 11.2169C27.9504 10.6612 26.9523 10.6614 26.337 11.2167L12.4317 23.7649C11.8157 24.3202 11.8157 25.2209 12.4312 25.7764Z" fill="#FFF1F1"/>-->
-<!--</g>-->
-<!--<defs>-->
-<!--    <clipPath id="clip0">-->
-<!--        <rect width="41" height="37" fill="white"/>-->
-<!--    </clipPath>-->
-<!--</defs>-->
-<!--</svg>-->
-
-<GridPane minHeight="500" minWidth="750" stylesheets="@UIstyle.css" xmlns="http://javafx.com/javafx/11.0.1"
-          xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="nl.tudelft.oopp.g7.client.controllers.LecturerViewController">
+<GridPane minHeight="500" minWidth="750" stylesheets="@../UIstyle.css" xmlns="http://javafx.com/javafx/11.0.1"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.g7.client.controllers.TAViewController">
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" minWidth="128.0"/>
         <ColumnConstraints hgrow="SOMETIMES"/>
@@ -41,52 +27,18 @@
         <Region VBox.vgrow="ALWAYS" />
     </VBox>
 
-    <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2">
-        <VBox spacing="10" GridPane.halignment="CENTER">
-            <Region VBox.vgrow="SOMETIMES" minHeight="10"/>
-            <HBox>
-                <Region HBox.hgrow="SOMETIMES"/>
-                <Label text="TOO FAST" textFill="WHITE" styleClass="indicator-label"/>
-                <Region HBox.hgrow="SOMETIMES"/>
-            </HBox>
-            <HBox>
-                <Region HBox.hgrow="SOMETIMES"/>
-                <Circle fx:id="circle1" fill="WHITE" radius="22.0" stroke="BLACK" strokeType="INSIDE"/>
-                <Region HBox.hgrow="SOMETIMES"/>
-            </HBox>
-            <HBox>
-                <Region HBox.hgrow="SOMETIMES"/>
-                <Circle fx:id="circle2" fill="WHITE" radius="22.0" stroke="BLACK" strokeType="INSIDE"/>
-                <Region HBox.hgrow="SOMETIMES"/>
-            </HBox>
-            <HBox>
-                <Region HBox.hgrow="SOMETIMES"/>
-                <Circle fx:id="circle3" fill="WHITE" radius="22.0" stroke="BLACK" strokeType="INSIDE"/>
-                <Region HBox.hgrow="SOMETIMES"/>
-            </HBox>
-            <HBox>
-                <Region HBox.hgrow="SOMETIMES"/>
-                <Circle fx:id="circle4" fill="WHITE" radius="22.0" stroke="BLACK" strokeType="INSIDE"/>
-                <Region HBox.hgrow="SOMETIMES"/>
-            </HBox>
-            <HBox>
-                <Region HBox.hgrow="SOMETIMES"/>
-                <Label text="TOO SLOW" textFill="WHITE" styleClass="indicator-label" alignment="CENTER"/>
-                <Region HBox.hgrow="SOMETIMES"/>
-            </HBox>
-            <Region VBox.vgrow="SOMETIMES" minHeight="10"/>
-            <Region VBox.vgrow="NEVER" minHeight="90"/>
-        </VBox>
-    </SplitPane>
+    <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2"/>
 
-    <ScrollPane fx:id="questionList" fitToHeight="true" fitToWidth="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+    <ScrollPane fx:id="questionList" fitToHeight="true" fitToWidth="true" GridPane.columnIndex="1"
+                GridPane.columnSpan="3" GridPane.rowIndex="1">
         <padding>
             <Insets>
-                <right>10</right>
-                <left>10</left>
+                <top>5</top>
+                <right>20</right>
+                <bottom>5</bottom>
+                <left>20</left>
             </Insets>
         </padding>
-
         <VBox spacing="20" styleClass="background">
             <VBox fx:id="pollWindow">
                 <padding>
@@ -132,7 +84,7 @@
 
         <Region minWidth="15"/>
 
-        <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionList" styleClass="answered-question-button" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="0" />
+        <Button fx:id="answeredQuestions" mnemonicParsing="false" onAction="#answeredQuestionList" styleClass="answered-question-button"/>
 
         <Region minWidth="15"/>
 
@@ -158,13 +110,11 @@
             </graphic>
         </Button>
 
-
         <Button fx:id="export" mnemonicParsing="false" onAction="#exportQuestions" styleClass="upvoteBtn">
             <graphic>
                 <SVGPath content="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" styleClass="link-button"/>
             </graphic>
         </Button>
-
 
         <Button onAction="#switchView" styleClass="upvoteBtn">
             <graphic>
@@ -179,6 +129,7 @@
                         styleClass="link-button"/>
             </graphic>
         </Button>
+
     </HBox>
 
 </GridPane>

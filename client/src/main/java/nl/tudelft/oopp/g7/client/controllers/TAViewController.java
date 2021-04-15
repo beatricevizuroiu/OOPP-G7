@@ -3,17 +3,15 @@ package nl.tudelft.oopp.g7.client.controllers;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
+import nl.tudelft.oopp.g7.client.MainApp;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.ModeratorViewLogic;
 import nl.tudelft.oopp.g7.client.logic.SharedLogic;
-import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -87,23 +85,7 @@ public class TAViewController {
      * @param event the event
      */
     public void handleButtonMode(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
-        // if Mode is clicked, change Scene to Join Room
-        EntryRoomDisplay.setCurrentScene("/TAViewUI(DARKMODE).fxml");
-    }
-
-    /**
-     * Handle button action for button Mode from Dark to Light.
-     * @param event the event
-     */
-    public void handleButtonMode2(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
-        // if Mode is clicked, change Scene to Join Room
-        EntryRoomDisplay.setCurrentScene("/TAViewUI.fxml");
+        LocalData.switchColorScheme();
     }
 
     /**
@@ -111,11 +93,8 @@ public class TAViewController {
      * @param event the event
      */
     public void handleHelpButtonLight(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
         // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/HelpFileTA.fxml");
+        MainApp.setCurrentScene("/views/HelpFileTA.fxml");
     }
 
     /**
@@ -123,85 +102,54 @@ public class TAViewController {
      * @param event the event
      */
     public void handleHelpButtonDark(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
         // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/HelpFileTA(DARKMODE).fxml");
+        MainApp.setCurrentScene("/HelpFileTA(DARKMODE).fxml");
     }
 
     /**
      * Handle button action for Answered Questions Button light Mode.
      */
     public void answeredQuestionList() {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
         // if Answered questions is clicked, change to Answered Questions (lightmode) scene
-        EntryRoomDisplay.setCurrentScene("/AnsweredQuestionsModerator.fxml");
+        MainApp.setCurrentScene("/views/AnsweredQuestionsModerator.fxml");
     }
 
     /**
      * Handle button action for Answered Questions Button Dark Mode.
      */
     public void answeredQuestionListDark() {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
         // if Answered questions is clicked, change to Answered Questions (darkmode) scene
-        EntryRoomDisplay.setCurrentScene("/AnsweredQuestionsModerator(DARKMODE).fxml");
+        MainApp.setCurrentScene("/AnsweredQuestionsModerator(DARKMODE).fxml");
     }
 
     /**
      * Handle button action for List Users Button light Mode.
      */
     public void listofUsers() {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
         // if list of Users is clicked, change to List of Users scene
-        EntryRoomDisplay.setCurrentScene("/ListUsersModerator.fxml");
+        MainApp.setCurrentScene("/views/ListUsersModerator.fxml");
     }
 
     /**
      * Handle button action for List Users Button dark Mode.
      */
     public void listofUsersDark() {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
         // if list of Users is clicked, change to List of Users scene
-        EntryRoomDisplay.setCurrentScene("/ListUsersModerator(DARKMODE).fxml");
-    }
-
-    /**
-     * Handle button action for answering a question.
-     */
-    public void answerQuestion() {
-        /*HttpResponse<String> response = ModeratorServerCommunication.answerQuestion(roomID, new QuestionText(answerBox.getText()));
-        answerBox.setText("");
-        retrieveQuestions();*/
+        MainApp.setCurrentScene("/ListUsersModerator(DARKMODE).fxml");
     }
 
     /**
      * Handle button action for creating a poll.
      */
     public void createPoll() {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
-        EntryRoomDisplay.setCurrentScene("/CreatePoll.fxml");
+        MainApp.setCurrentScene("/views/CreatePoll.fxml");
     }
-
 
     /**
      * Handle button action for creating a poll.
      */
     public void createPoll2() {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
-        EntryRoomDisplay.setCurrentScene("/CreatePoll(DARKMODE).fxml");
+        MainApp.setCurrentScene("/CreatePoll(DARKMODE).fxml");
     }
 
     /**
@@ -212,10 +160,10 @@ public class TAViewController {
     }
 
     public void switchView(ActionEvent actionEvent) {
-        EntryRoomDisplay.setCurrentScene("/LecturerViewUI.fxml");
+        MainApp.setCurrentScene("/views/LecturerViewUI.fxml");
     }
 
     public void switchView2(ActionEvent actionEvent) {
-        EntryRoomDisplay.setCurrentScene("/LecturerViewUI(DARKMODE).fxml");
+        MainApp.setCurrentScene("/LecturerViewUI(DARKMODE).fxml");
     }
 }

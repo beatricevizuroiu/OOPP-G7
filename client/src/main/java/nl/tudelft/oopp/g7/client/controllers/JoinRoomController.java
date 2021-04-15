@@ -2,15 +2,10 @@ package nl.tudelft.oopp.g7.client.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import nl.tudelft.oopp.g7.client.communication.RoomServerCommunication;
+import nl.tudelft.oopp.g7.client.MainApp;
 import nl.tudelft.oopp.g7.client.logic.JoinRoomLogic;
-import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
-import nl.tudelft.oopp.g7.common.RoomJoinInfo;
-import nl.tudelft.oopp.g7.common.UserRole;
+import nl.tudelft.oopp.g7.client.logic.LocalData;
 
 public class JoinRoomController {
     @FXML
@@ -21,120 +16,25 @@ public class JoinRoomController {
     TextField roomPassword;
 
     /**
-     * Handle button action for button Mode from Light.
+     * Handle mode button.
      * @param event the event
      */
-    public void handleButtonMode(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
-        // if Mode is clicked, change Scene to Join Room
-        EntryRoomDisplay.setCurrentScene("/joinRoom(DARKMODE).fxml");
-    }
-
-    /**
-     * Handle button action for button Mode from Dark.
-     * @param event the event
-     */
-    public void handleButtonMode2(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
-        // if Mode is clicked, change Scene to Join Room
-        EntryRoomDisplay.setCurrentScene("/joinRoom.fxml");
+    public void modeButton(ActionEvent event) {
+        LocalData.switchColorScheme();
     }
 
     /**
      * Handles clicking the button Join from Light.
      */
     public void buttonClicked() {
-        // if the user presses OK, the go to Student View
-        if (JoinRoomLogic.joinRoomConfirmation(nickname, roomId)) {
-
-            RoomJoinInfo roomJoinInfo = RoomServerCommunication.joinRoom(roomId.getText(), roomPassword.getText(), nickname.getText());
-
-            if (roomJoinInfo == null) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Could not join room.");
-                alert.setHeaderText("Could not join room.");
-                alert.setContentText("It was not possible to join the room specified. The room might not exist, not have opened, or your password may be incorrect.");
-
-                alert.showAndWait();
-                return;
-            }
-
-            // Store all the entered information
-            JoinRoomLogic.joinRoomStoreLocalData(nickname, roomId, roomJoinInfo);
-
-            Scene scene = EntryRoomDisplay.getCurrentScene();
-            Stage stage = EntryRoomDisplay.getCurrentStage();
-
-            // Send password to the server to determine whether the user is a Student or a Moderator and send the user to the right UI
-            if (roomJoinInfo.getRole() == UserRole.STUDENT) {
-                EntryRoomDisplay.setCurrentScene("/StudentViewUI.fxml");
-            } else {
-                EntryRoomDisplay.setCurrentScene("/TAViewUI.fxml");
-            }
-        }
+        JoinRoomLogic.joinRoom(nickname.getText(), roomPassword.getText(), roomId.getText());
     }
 
     /**
-     * Handles clicking the button Join from Light.
-     */
-    public void buttonClickedDark() {
-
-        // if the user presses OK, the go to Student View
-        if (JoinRoomLogic.joinRoomConfirmation(nickname, roomId)) {
-
-            RoomJoinInfo roomJoinInfo = RoomServerCommunication.joinRoom(roomId.getText(), roomPassword.getText(), nickname.getText());
-
-            if (roomJoinInfo == null) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Could not join room.");
-                alert.setHeaderText("Could not join room.");
-                alert.setContentText("It was not possible to join the room specified. The room might not exist, not have opened, or your password may be incorrect.");
-
-                alert.showAndWait();
-                return;
-            }
-
-            // Store all the entered information
-            JoinRoomLogic.joinRoomStoreLocalData(nickname, roomId, roomJoinInfo);
-
-
-            Scene scene = EntryRoomDisplay.getCurrentScene();
-            Stage stage = EntryRoomDisplay.getCurrentStage();
-
-            // Send password to the server to determine whether the user is a Student or a Moderator and send the user to the right UI
-            if (roomJoinInfo.getRole() == UserRole.STUDENT) {
-                EntryRoomDisplay.setCurrentScene("/StudentViewUI(DARKMODE).fxml");
-            } else {
-                EntryRoomDisplay.setCurrentScene("/TAViewUI(DARKMODE).fxml");
-            }
-        }
-    }
-
-    /**
-     * Handle button action for going back to Entry page from Light.
+     * Handle back button.
      * @param event the event
      */
-    public void handleBackButton(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
-        // if goBack is clicked, change Scene to LecturerViewUI
-        EntryRoomDisplay.setCurrentScene("/entryPage.fxml");
-    }
-
-    /**
-     * Handle button action for going back to Entry page from Dark.
-     * @param event the event
-     */
-    public void handleBackButtonDark(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
-        // if goBack is clicked, change Scene to LecturerViewUI
-        EntryRoomDisplay.setCurrentScene("/entryPage(DARKMODE).fxml");
+    public void backButton(ActionEvent event) {
+        MainApp.setCurrentScene("/views/entryPage.fxml");
     }
 }

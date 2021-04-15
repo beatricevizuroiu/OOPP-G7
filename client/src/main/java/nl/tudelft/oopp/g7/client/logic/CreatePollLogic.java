@@ -8,8 +8,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import nl.tudelft.oopp.g7.client.MainApp;
 import nl.tudelft.oopp.g7.client.communication.ModeratorServerCommunication;
-import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 
 import java.io.IOException;
 import java.util.List;
@@ -61,7 +61,7 @@ public class CreatePollLogic {
 
         ModeratorServerCommunication.createPoll(LocalData.getRoomID(), question, pollOptions.toArray(new String[0]), publicResults.get());
 
-        EntryRoomDisplay.setCurrentScene(EntryRoomDisplay.isDarkMode() ? "/TAViewUI(DARKMODE).fxml" : "/TAViewUI.fxml");
+        MainApp.setCurrentScene(false ? "/TAViewUI(DARKMODE).fxml" : "/views/TAViewUI.fxml");
     }
 
     /**
@@ -136,7 +136,7 @@ public class CreatePollLogic {
             for (String option : pollOptions) {
                 String optionText = option.substring(0, Math.min(option.length(), 20));
 
-                String componentName = EntryRoomDisplay.isDarkMode() ? "/components/PollOptionExample(DARKMODE).fxml" : "/components/PollOptionExample.fxml";
+                String componentName = false ? "/components/PollOptionExample(DARKMODE).fxml" : "/components/PollOptionExample.fxml";
                 HBox optionNode = FXMLLoader.load(CreatePollLogic.class.getResource(componentName));
 
                 Text pollOptionText = (Text) optionNode.lookup("#PollOptionLabel");

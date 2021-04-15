@@ -9,7 +9,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.shape.SVGPath?>
 <GridPane minHeight="500" minWidth="750"
-          stylesheets="@UIstyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+          stylesheets="@../UIstyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="nl.tudelft.oopp.g7.client.controllers.CreatePollController">
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" minWidth="128.0"/>
@@ -38,7 +38,7 @@
                     <TextArea fx:id="optionArea" styleClass="buttons" promptText="Poll Option" maxHeight="24"/>
                     <Button styleClass="buttons" text="+" onAction="#addOption"/>
                 </HBox>
-                <VBox VBox.vgrow="ALWAYS" stylesheets="components/PollWindow.css" spacing="10">
+                <VBox VBox.vgrow="ALWAYS" stylesheets="../components/PollWindow.css" spacing="10">
                     <padding>
                         <Insets>
                             <top>10</top>

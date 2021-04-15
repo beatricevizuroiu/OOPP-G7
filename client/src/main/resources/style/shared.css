@@ -1,21 +1,21 @@
 .backgroundTitlePanel {
-    -fx-background-color: #360A41;
+    -fx-background-color: -clr-primary;
 }
 
 .buttonEntry {
-    -fx-background-color: #360A41;
+    -fx-background-color: -clr-primary-dark;
     -fx-font-weight: bold;
     -fx-font-size: 27px;
-    -fx-text-fill: white;
+    -fx-text-fill: -clr-text-dark-background;
 }
 
-.backButton{
+.backButton {
     -fx-background-color: transparent;
 }
 
 .backButtonSVG {
-    -fx-fill: #FFFFFF;
-    -fx-stroke: #FFFFFF;
+    -fx-fill: -clr-text-dark-background;
+    -fx-stroke: -clr-text-dark-background;
 }
 
 .mode-button {
@@ -27,64 +27,97 @@
 .applicationName {
     -fx-font-weight: bold;
     -fx-font-size: 36px;
-    -fx-fill: white;
+    -fx-fill: -clr-header-text;
 }
 
 .formTitle {
     -fx-font-size: 35;
     -fx-font-weight: bold;
-    -fx-fill: white;
+    -fx-fill: -clr-text;
 }
 
 .background {
-    -fx-background-color: black;
+    -fx-background-color: -clr-background;
 }
 
 .buttons {
-    -fx-background-color: #360A41;
+    -fx-background-color: -clr-primary;
     -fx-font-weight: bold;
     -fx-font-size: 17;
-    -fx-text-fill: white;
+    -fx-text-fill: -clr-text;
 }
 
 .inputBox {
-    -fx-background-color: #151515;
+    -fx-background-color: -clr-text-box-background;
+    -fx-border-color: -clr-text-box-border;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+
     -fx-font-size: 17;
-    -fx-text-fill: white;
+    -fx-text-fill: -clr-text;
 }
 
 .date-picker > .text-field,
 .date-picker:focused > .text-field{
-    -fx-background-color: #151515;
+    -fx-background-color: -clr-text-box-background;
     -fx-font-size: 17;
-    -fx-text-fill: white;
+    -fx-text-fill: -clr-text;
 }
 
 .date-picker > .arrow-button {
-    -fx-background-color: #360A41;
+    -fx-background-color: -clr-primary;
+}
+
+.date-picker > .arrow-button > .arrow {
+    -fx-background-color: -clr-text;
+}
+
+.date-picker-popup {
+    -fx-background-color: -clr-background
+}
+
+.date-picker-popup > .month-year-pane {
+    -fx-background-color: -clr-background
 }
 
 .date-picker-popup > .calendar-grid {
-    -fx-background-color: black;
+    -fx-background-color: -clr-background
 }
 
 .date-picker-popup > * > .day-name-cell {
-    -fx-text-fill: white;
+    -fx-text-fill: -clr-text;
+}
+
+.date-picker-popup > * > .spinner > .label {
+    -fx-text-fill: -clr-text;
 }
 
 .date-picker-popup > * > .spinner > .button > .right-arrow,
 .date-picker-popup > * > .spinner > .button > .left-arrow {
-    -fx-background-color: white;
+    -fx-background-color: -clr-text;
+}
+
+.date-picker-popup > * > .spinner > .button:hover,
+.date-picker-popup > * > .spinner > .button:selected,
+.date-picker-popup > * > .spinner > .button:focused,
+.date-picker-popup > * > .spinner > .button:armed {
+    -fx-background-color: transparent;
+}
+
+.date-picker-popup > * > .day-cell {
+    -fx-background-color: -clr-text-box-background;
+    -fx-border-color: -clr-text-box-border;
+    -fx-text-fill: -clr-text;
 }
 
 .scheduleCheckbox {
-    -fx-text-fill: white;
+    -fx-text-fill: -clr-text;
 }
 
 .scheduleCheckbox > .box {
-    -fx-background-color: #151515;
+    -fx-background-color: -clr-text-box-background;
 }
 
 .scheduleCheckbox:selected > .box > .mark {
-    -fx-background-color: #360A41;
+    -fx-background-color: -clr-primary;
 }

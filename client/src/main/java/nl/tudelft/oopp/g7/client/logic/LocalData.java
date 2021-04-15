@@ -2,7 +2,7 @@ package nl.tudelft.oopp.g7.client.logic;
 
 import lombok.Getter;
 import lombok.Setter;
-import nl.tudelft.oopp.g7.common.Question;
+import nl.tudelft.oopp.g7.client.MainApp;
 import nl.tudelft.oopp.g7.common.SortingOrder;
 import nl.tudelft.oopp.g7.common.UserInfo;
 
@@ -30,6 +30,37 @@ public class LocalData {
     private static SortingOrder sortingOrder = SortingOrder.NEW;
     @Setter @Getter
     private static String serverUrl = "http://localhost:8080";
+    @Getter
+    private static ColorScheme colorScheme = ColorScheme.LIGHT;
     public static HashMap<String, UserInfo> userMap = new HashMap<>();
     public static Set<Integer> upvotedQuestions = new HashSet<>();
+
+    public static void switchColorScheme() {
+        switch (colorScheme) {
+            case DARK -> colorScheme = ColorScheme.LIGHT;
+            case LIGHT -> colorScheme = ColorScheme.DARK;
+        }
+
+        System.out.printf("Changed color scheme to: %s%n", colorScheme);
+
+        MainApp.updateStyleSheets();
+    }
+
+    public static void setColorScheme(ColorScheme colorScheme) {
+        LocalData.colorScheme = colorScheme;
+
+        MainApp.updateStyleSheets();
+    }
+
+    public enum ColorScheme {
+        LIGHT("/style/lightTheme.css"),
+        DARK("/style/darkTheme.css");
+
+        @Getter
+        private final String stylesheet;
+
+        ColorScheme(String stylesheet) {
+            this.stylesheet = stylesheet;
+        }
+    }
 }

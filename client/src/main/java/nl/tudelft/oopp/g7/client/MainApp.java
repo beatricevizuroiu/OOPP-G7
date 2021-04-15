@@ -1,35 +1,41 @@
-package nl.tudelft.oopp.g7.client.views;
+package nl.tudelft.oopp.g7.client;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import lombok.Getter;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 
 import java.io.IOException;
+import java.util.List;
 
-public class EntryRoomDisplay extends Application {
-
+public class MainApp extends Application {
     private static Stage currentStage;
     private static Scene currentScene;
-    @Getter
-    private static boolean isDarkMode;
-
-    @Override
-    public void start(Stage primaryStage) throws IOException {
-        currentStage = primaryStage;
-
-        setCurrentScene("/entryPage.fxml");
-    }
 
     /**
-     * Get current scene scene.
-     * @return the scene
+     * Entry point.
+     * @param args Program arguments.
      */
-    public static Scene getCurrentScene() {
-        return currentScene;
+    public static void main(String[] args) {
+        launch();
+    }
+
+    @Override
+    public void start(Stage primaryStage) {
+        currentStage = primaryStage;
+
+        setCurrentScene("/views/entryPage.fxml");
+    }
+
+    public static void updateStyleSheets() {
+        List<String> stylesheets = currentScene.getStylesheets();
+
+        stylesheets.clear();
+
+        stylesheets.add(MainApp.class.getResource("/fonts/fonts.css").toString());
+        stylesheets.add(MainApp.class.getResource(LocalData.getColorScheme().getStylesheet()).toString());
     }
 
     /**
@@ -38,12 +44,12 @@ public class EntryRoomDisplay extends Application {
      */
     public static void setCurrentScene(String newSceneName) {
         try {
-            Parent parent = FXMLLoader.load(EntryRoomDisplay.class.getResource(newSceneName));
+            Parent parent = FXMLLoader.load(MainApp.class.getResource(newSceneName));
             currentScene = new Scene(parent);
 
             currentStage.setScene(currentScene);
 
-            currentScene.getStylesheets().add(EntryRoomDisplay.class.getResource("/fonts/fonts.css").toString());
+            updateStyleSheets();
 
             if (LocalData.getRoomName() != null && !"".equals(LocalData.getRoomName())) {
                 currentStage.setTitle("RaisedHand: " + LocalData.getRoomName());
@@ -53,22 +59,8 @@ public class EntryRoomDisplay extends Application {
 
             currentStage.show();
 
-            isDarkMode = newSceneName.contains("DARKMODE");
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Get current stage stage.
-     * @return the stage
-     */
-    public static Stage getCurrentStage() {
-        return currentStage;
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

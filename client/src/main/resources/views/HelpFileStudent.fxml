@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane minHeight="500" minWidth="750" stylesheets="@UIstyle.css" xmlns="http://javafx.com/javafx/11.0.1"
+<GridPane minHeight="500" minWidth="750" stylesheets="@../UIstyle.css" xmlns="http://javafx.com/javafx/11.0.1"
           xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="nl.tudelft.oopp.g7.client.controllers.HelpFileController">
     <columnConstraints>
@@ -58,17 +58,17 @@
                         <Font size="15.0"/>
                     </font>
                 </Text>
-                <Label text="  Mode Button - change Mode from Light to Dark and vice versa." textFill="BLACK">
+                <Label text="Mode Button - change Mode from Light to Dark and vice versa." textFill="BLACK">
                     <graphic>
                         <ImageView fitHeight="20.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@sun (1).png"/>
+                            <Image url="@../sun (1).png"/>
                         </ImageView>
                     </graphic>
                     <font>
                         <Font size="15.0"/>
                     </font>
                 </Label>
-                <Label text="   List of Users button  - lists all participants of the lecture" textFill="BLACK">
+                <Label text="List of Users button  - lists all participants of the lecture" textFill="BLACK">
                     <graphic>
                         <SVGPath
                                 content="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
@@ -78,7 +78,7 @@
                         <Font size="15.0"/>
                     </font>
                 </Label>
-                <Label text="  Answered questions button  - lists all questions that have been answered during the lecture"
+                <Label text="Answered questions button  - lists all questions that have been answered during the lecture"
                        textFill="BLACK">
                     <graphic>
                         <SVGPath
@@ -89,27 +89,18 @@
                         <Font size="15.0"/>
                     </font>
                 </Label>
-                <Label text="  Create poll button  - create a poll (insert options and question)" textFill="BLACK">
-                    <graphic>
-                        <SVGPath
-                                content="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"
-                                fill="BLACK"/>
-                    </graphic>
-                    <font>
-                        <Font size="15.0"/>
-                    </font>
-                </Label>
+
             </children>
         </VBox>
     </ScrollPane>
 
     <!--    Main Buttons    -->
     <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="0">
-        <Button fx:id="modeButton" mnemonicParsing="false" onAction="#handleButtonModeTA" styleClass="mode-button"/>
+        <Button fx:id="modeButton" mnemonicParsing="false" onAction="#handleButtonModeStudent" styleClass="mode-button"/>
 
         <Region minWidth="15"/>
 
-        <Button fx:id="goBack" mnemonicParsing="false" onAction="#handleBackButtonTA" styleClass="upvoteBtn">
+        <Button fx:id="goBack" mnemonicParsing="false" onAction="#handleBackButtonStudent" styleClass="upvoteBtn">
             <graphic>
                 <SVGPath content="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" styleClass="link-button"/>
             </graphic>

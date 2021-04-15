@@ -4,27 +4,18 @@ import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.Button;
-import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.util.Duration;
+import nl.tudelft.oopp.g7.client.MainApp;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
-import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.SharedLogic;
 import nl.tudelft.oopp.g7.client.logic.StudentViewLogic;
-import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
-import nl.tudelft.oopp.g7.common.QuestionText;
 
-import java.net.http.HttpResponse;
-import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -100,25 +91,6 @@ public class StudentViewUIController {
 
     }
 
-
-    /**
-     * Upvote questions.
-     *
-     * @param questionId the id of the question that is being upvoted
-     */
-    public void upvoteQuestion(int questionId) {
-        StudentViewLogic.upvoteQuestion(roomID, questionId, questionContainer, questionList);
-    }
-
-    /**
-     * Remove Upvote of questions.
-     *
-     * @param questionId the id of the question that is being down-voted
-     */
-    public void removeUpvoteQuestion(int questionId) {
-        StudentViewLogic.removeUpvoteQuestion(roomID, questionId, questionContainer, questionList);
-    }
-
     /**
      * Change the sorting mode.
      * @param event the event
@@ -133,23 +105,7 @@ public class StudentViewUIController {
      * @param event the event
      */
     public void handleButtonMode(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
-        // if Mode is clicked, change Scene to Join Room
-        EntryRoomDisplay.setCurrentScene("/StudentViewUI(DARKMODE).fxml");
-    }
-
-    /**
-     * Handle button action for button Mode from Dark to Light.
-     * @param event the event
-     */
-    public void handleButtonMode2(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
-        // if Mode is clicked, change Scene to Join Room
-        EntryRoomDisplay.setCurrentScene("/StudentViewUI.fxml");
+        LocalData.switchColorScheme();
     }
 
     /**
@@ -157,11 +113,8 @@ public class StudentViewUIController {
      * @param event the event
      */
     public void handleHelpButtonLight(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
         // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/HelpFileStudent.fxml");
+        MainApp.setCurrentScene("/views/HelpFileStudent.fxml");
     }
 
     /**
@@ -169,69 +122,46 @@ public class StudentViewUIController {
      * @param event the event
      */
     public void handleHelpButtonDark(ActionEvent event) {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
         // if Help is clicked, change to Help scene
-        EntryRoomDisplay.setCurrentScene("/HelpFileStudent(DARKMODE).fxml");
+        MainApp.setCurrentScene("/HelpFileStudent(DARKMODE).fxml");
     }
 
     /**
      * Handle button action for Answered Questions Button light Mode.
      */
     public void answeredQuestionList() {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
         // if Answered questions is clicked, change to Answered Questions (lightmode) scene
-        EntryRoomDisplay.setCurrentScene("/AnsweredQuestionsStudent.fxml");
+        MainApp.setCurrentScene("/views/AnsweredQuestionsStudent.fxml");
     }
 
     /**
      * Handle button action for Answered Questions Button Dark Mode.
      */
     public void answeredQuestionListDark() {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
         // if Answered questions is clicked, change to Answered Questions (darkmode) scene
-        EntryRoomDisplay.setCurrentScene("/AnsweredQuestionsStudent(DARKMODE).fxml");
+        MainApp.setCurrentScene("/AnsweredQuestionsStudent(DARKMODE).fxml");
     }
 
     /**
      * Handle button action for List Users Button light Mode.
      */
     public void listofUsers() {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
         // if list of Users is clicked, change to List of Users scene
-        EntryRoomDisplay.setCurrentScene("/ListUsersStudent.fxml");
+        MainApp.setCurrentScene("/views/ListUsersStudent.fxml");
     }
 
     /**
      * Handle button action for List Users Button dark Mode.
      */
     public void listofUsersDark() {
-        Scene scene = EntryRoomDisplay.getCurrentScene();
-        Stage stage = EntryRoomDisplay.getCurrentStage();
-
         // if list of Users is clicked, change to List of Users scene
-        EntryRoomDisplay.setCurrentScene("/ListUsersStudent(DARKMODE).fxml");
-    }
-
-    /**
-     * Handle button action for deleting a question.
-     */
-    public void deleteQuestion() {
-//        StudentViewLogic.deleteQuestion(roomID, questionId, questionContainer, questionList);
+        MainApp.setCurrentScene("/ListUsersStudent(DARKMODE).fxml");
     }
 
     /**
      * Handle button slower.
      */
     public void goSlower() {
-
         colorSlow.setVisible(true);
 
         PauseTransition transition = new PauseTransition(Duration.seconds(3));
@@ -247,7 +177,6 @@ public class StudentViewUIController {
      * Handle button faster.
      */
     public void goFaster() {
-
         colorFast.setVisible(true);
 
         PauseTransition transition = new PauseTransition(Duration.seconds(3));

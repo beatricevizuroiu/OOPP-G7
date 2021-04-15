@@ -7,9 +7,9 @@
 <?import javafx.scene.text.*?>
 
 <?import javafx.geometry.Insets?>
-<GridPane minHeight="500" minWidth="750" stylesheets="@UIstyle.css" xmlns="http://javafx.com/javafx/11.0.1"
+<GridPane minHeight="500" minWidth="750" stylesheets="@../UIstyle.css" xmlns="http://javafx.com/javafx/11.0.1"
           xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="nl.tudelft.oopp.g7.client.controllers.AnsweredQuestionsModeratorController">
+          fx:controller="nl.tudelft.oopp.g7.client.controllers.AnsweredQuestionsStudentController">
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" minWidth="128.0"/>
         <ColumnConstraints hgrow="SOMETIMES"/>
@@ -27,7 +27,6 @@
         <Text fx:id="courseName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"/>
         <Region VBox.vgrow="ALWAYS" />
     </VBox>
-
     <SplitPane styleClass="side-panel" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2"/>
 
     <ScrollPane fx:id="answeredQuestionList"
@@ -56,7 +55,6 @@
 
 
     <!--    Main Buttons    -->
-
     <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButtonLight" styleClass="help-button"
             textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2"/>
 
@@ -71,5 +69,6 @@
             </graphic>
         </Button>
     </HBox>
+
 
 </GridPane>

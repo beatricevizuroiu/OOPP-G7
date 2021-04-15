@@ -14,7 +14,6 @@ import nl.tudelft.oopp.g7.client.communication.ModeratorServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.RoomServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.ServerCommunication;
 import nl.tudelft.oopp.g7.client.communication.StudentServerCommunication;
-import nl.tudelft.oopp.g7.client.views.EntryRoomDisplay;
 import nl.tudelft.oopp.g7.common.*;
 
 import java.io.FileWriter;
@@ -43,7 +42,7 @@ public class ModeratorViewLogic {
             return;
         }
         try {
-            String pollWindowComponentName = EntryRoomDisplay.isDarkMode() ? "/components/PollWindow(DARKMODE).fxml" : "/components/PollWindow.fxml";
+            String pollWindowComponentName = false ? "/components/PollWindow(DARKMODE).fxml" : "/components/PollWindow.fxml";
             HBox pollWindow = FXMLLoader.load(StudentViewLogic.class.getResource(pollWindowComponentName));
             Button closeButton = (Button) pollWindow.lookup("#deleteButton");
 
@@ -80,7 +79,7 @@ public class ModeratorViewLogic {
             int columns = (int) Math.max(1, pollWindowContainer.getWidth() / 350);
             int rows = (int) Math.ceil(poll.getOptions().length * 1.0F / columns);
 
-            String componentName = EntryRoomDisplay.isDarkMode() ? "/components/PollOption(DARKMODE).fxml" : "/components/PollOption.fxml";
+            String componentName = false ? "/components/PollOption(DARKMODE).fxml" : "/components/PollOption.fxml";
 
             Text pollQuestionText = (Text) pollWindow.lookup("#PollQuestion");
             pollQuestionText.setText(poll.getQuestion());
@@ -162,7 +161,7 @@ public class ModeratorViewLogic {
 
         questionNodes.clear();
 
-        String componentName = EntryRoomDisplay.isDarkMode() ? "/components/LecturerQuestion(DARKMODE).fxml" : "/components/LecturerQuestion.fxml";
+        String componentName = false ? "/components/LecturerQuestion(DARKMODE).fxml" : "/components/LecturerQuestion.fxml";
 
         try {
             for (Question question : questions) {

@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 
 <?import javafx.geometry.Insets?>
-<GridPane prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@Entry.css"
+<GridPane prefHeight="600.0" prefWidth="800.0" styleClass="background"
           xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="nl.tudelft.oopp.g7.client.controllers.EntryPageController">
 
@@ -51,7 +51,7 @@
         <VBox>
             <Region VBox.vgrow="ALWAYS"/>
             <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="0">
-                <Button fx:id="modeButton" mnemonicParsing="false" onAction="#handleButtonMode" styleClass="mode-button"/>
+                <Button onAction="#handleButtonMode" styleClass="mode-button"/>
             </HBox>
             <Region VBox.vgrow="ALWAYS"/>
         </VBox>
