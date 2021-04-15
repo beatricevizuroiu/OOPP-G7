@@ -50,28 +50,20 @@ public class AnsweredQuestionsStudentController {
 
     /**
      * Handle button action for going back to lecturer view (light).
-     * @param event the event
      */
-    public void goBackButtonLight(ActionEvent event) {
-        // if goBack is clicked, change Scene to StudentViewUI
-        MainApp.setCurrentScene("/views/StudentViewUI.fxml");
+    public void goBack() {
+        Views.goBack();
     }
 
     /**
      * Handle button action for button Mode from Light to Dark.
-     * @param event the event
      */
-    public void handleButtonMode(ActionEvent event) {
+    public void changeMode() {
         LocalData.switchColorScheme();
     }
 
-    /**
-     * Handle button action for Help Button Light Mode.
-     * @param event the event
-     */
-    public void handleHelpButtonLight(ActionEvent event) {
-        // if Help is clicked, change to Help scene
-        MainApp.setCurrentScene("/views/HelpFileStudent.fxml");
+    public void goToHelpPage() {
+        Views.navigateTo(Views.HELP);
     }
 
 }

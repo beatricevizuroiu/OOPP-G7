@@ -15,68 +15,33 @@ public class LecturerViewLogic {
         double speedInRoom = ServerCommunication.getSpeed(roomID);
         double peopleInRoom = ServerCommunication.retrieveAllUsers(roomID).size();
 
-        speedInRoom = speedInRoom / peopleInRoom * 100 / 1.0F;
+        speedInRoom = speedInRoom / peopleInRoom * 100;
 
 
-        // lecturer is going normal
-        if (speedInRoom == 0) {
-            circle1.setFill(Color.valueOf("#ffffff"));
-            circle2.setFill(Color.valueOf("#ffffff"));
-            circle3.setFill(Color.valueOf("#ffffff"));
-            circle4.setFill(Color.valueOf("#ffffff"));
-        }
+        circle1.setFill(Color.valueOf("#ffffff"));
+        circle2.setFill(Color.valueOf("#ffffff"));
+        circle3.setFill(Color.valueOf("#ffffff"));
+        circle4.setFill(Color.valueOf("#ffffff"));
 
         // lecturer is too slow
         if (speedInRoom <= -75) {
-            circle1.setFill(Color.valueOf("#ffffff"));
-            circle2.setFill(Color.valueOf("#ffffff"));
             circle3.setFill(Color.valueOf("#8D1BAA"));
             circle4.setFill(Color.valueOf("#8D1BAA"));
-            PauseTransition transition = new PauseTransition(Duration.seconds(30));
-            transition.setOnFinished(event -> {
-                        circle3.setFill(Color.valueOf("#ffffff"));
-                        circle4.setFill(Color.valueOf("#ffffff"));
-                    }
-            );
         }
 
 
         if (speedInRoom > -75 && speedInRoom < -25) {
-            circle1.setFill(Color.valueOf("#ffffff"));
-            circle2.setFill(Color.valueOf("#ffffff"));
             circle3.setFill(Color.valueOf("#8D1BAA"));
-            circle4.setFill(Color.valueOf("#ffffff"));
-            PauseTransition transition = new PauseTransition(Duration.seconds(30));
-            transition.setOnFinished(event -> {
-                        circle3.setFill(Color.valueOf("#ffffff"));
-                    }
-            );
         }
 
         if (speedInRoom >= 25 && speedInRoom < 75) {
-            circle1.setFill(Color.valueOf("#ffffff"));
             circle2.setFill(Color.valueOf("#8D1BAA"));
-            circle3.setFill(Color.valueOf("#ffffff"));
-            circle4.setFill(Color.valueOf("#ffffff"));
-            PauseTransition transition = new PauseTransition(Duration.seconds(30));
-            transition.setOnFinished(event -> {
-                        circle2.setFill(Color.valueOf("#ffffff"));
-                    }
-            );
         }
 
         // lecturer is too fast
         if (speedInRoom >= 75) {
             circle1.setFill(Color.valueOf("#8D1BAA"));
             circle2.setFill(Color.valueOf("#8D1BAA"));
-            circle3.setFill(Color.valueOf("#ffffff"));
-            circle4.setFill(Color.valueOf("#ffffff"));
-            PauseTransition transition = new PauseTransition(Duration.seconds(30));
-            transition.setOnFinished(event -> {
-                        circle1.setFill(Color.valueOf("#ffffff"));
-                        circle2.setFill(Color.valueOf("#ffffff"));
-                    }
-            );
         }
     }
 }

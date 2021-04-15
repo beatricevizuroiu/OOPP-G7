@@ -1,13 +1,11 @@
 package nl.tudelft.oopp.g7.client.controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import nl.tudelft.oopp.g7.client.MainApp;
+import nl.tudelft.oopp.g7.client.Views;
 import nl.tudelft.oopp.g7.client.logic.CreatePollLogic;
 import nl.tudelft.oopp.g7.client.logic.LocalData;
 import nl.tudelft.oopp.g7.client.logic.SharedLogic;
@@ -66,23 +64,20 @@ public class CreatePollController {
      * Go to the previous window.
      */
     public void back() {
-        String targetFile = LocalData.isLecturer() ? "/views/LecturerViewUI.fxml" : "/views/TAViewUI.fxml";
-        MainApp.setCurrentScene(targetFile);
+        Views.goBack();
     }
 
     /**
      * Add an option to the current Poll.
-     * @param actionEvent Unused.
      */
-    public void addOption(ActionEvent actionEvent) {
+    public void addOption() {
         CreatePollLogic.addOption(pollOptions, optionArea, optionContainer);
     }
 
     /**
      * Use the preset as Poll options for the current Poll.
-     * @param mouseEvent Unused.
      */
-    public void presetABC(MouseEvent mouseEvent) {
+    public void presetABC() {
         pollOptions.clear();
         pollOptions.add("A");
         pollOptions.add("B");
@@ -92,9 +87,8 @@ public class CreatePollController {
 
     /**
      * Use the preset as Poll options for the current Poll.
-     * @param mouseEvent Unused.
      */
-    public void presetABCD(MouseEvent mouseEvent) {
+    public void presetABCD() {
         pollOptions.clear();
         pollOptions.add("A");
         pollOptions.add("B");
@@ -105,9 +99,8 @@ public class CreatePollController {
 
     /**
      * Use the preset as Poll options for the current Poll.
-     * @param mouseEvent Unused.
      */
-    public void presetABCDE(MouseEvent mouseEvent) {
+    public void presetABCDE() {
         pollOptions.clear();
         pollOptions.add("A");
         pollOptions.add("B");
@@ -119,9 +112,8 @@ public class CreatePollController {
 
     /**
      * Use the preset as Poll options for the current Poll.
-     * @param mouseEvent Unused.
      */
-    public void presetABCDEF(MouseEvent mouseEvent) {
+    public void presetABCDEF() {
         pollOptions.clear();
         pollOptions.add("A");
         pollOptions.add("B");
@@ -134,9 +126,8 @@ public class CreatePollController {
 
     /**
      * Use the preset as Poll options for the current Poll.
-     * @param mouseEvent Unused.
      */
-    public void presetYesNo(MouseEvent mouseEvent) {
+    public void presetYesNo() {
         pollOptions.clear();
         pollOptions.add("Yes");
         pollOptions.add("No");
@@ -145,48 +136,23 @@ public class CreatePollController {
 
     /**
      * Use the preset as Poll options for the current Poll.
-     * @param mouseEvent Unused.
      */
-    public void presetTrueFalse(MouseEvent mouseEvent) {
+    public void presetTrueFalse() {
         pollOptions.clear();
         pollOptions.add("True");
         pollOptions.add("False");
         CreatePollLogic.reDrawOptionList(optionContainer, pollOptions, optionArea);
     }
 
-
-    /**
-     * Handle button action for going back to lecturer view (light).
-     * @param event the event.
-     */
-    public void goBackButtonLight(ActionEvent event) {
-        // if goBack is clicked, change Scene to LecturerViewUI or TAViewUI
-        if (LocalData.isLecturer()) {
-            MainApp.setCurrentScene("/views/LecturerViewUI.fxml");
-        } else {
-            MainApp.setCurrentScene("/views/TAViewUI.fxml");
-        }
+    public void goBack() {
+        Views.goBack();
     }
 
-
-    /**
-     * Handle button action for button Mode from Light to Dark.
-     * @param event the event.
-     */
-    public void handleButtonMode(ActionEvent event) {
+    public void changeMode() {
         LocalData.switchColorScheme();
     }
 
-    /**
-     * Handle button action for Help Button Light Mode.
-     * @param event the event.
-     */
-    public void handleHelpButtonLight(ActionEvent event) {
-        // if Help is clicked, change to Help scene
-        if (LocalData.isLecturer()) {
-            MainApp.setCurrentScene("/views/HelpFileLecturer.fxml");
-        } else {
-            MainApp.setCurrentScene("/views/HelpFileTA.fxml");
-        }
+    public void goToHelpPage() {
+        Views.navigateTo(Views.HELP);
     }
 }

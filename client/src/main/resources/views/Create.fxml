@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.shape.SVGPath?>
-<GridPane prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@Entry(DARKMODE).css"
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<GridPane prefHeight="600.0" prefWidth="800.0" styleClass="background"
           xmlns="http://javafx.com/javafx/11.0.1"
           xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="nl.tudelft.oopp.g7.client.controllers.CreateRoomController">
@@ -34,27 +31,28 @@
         </HBox>
 
         <TextField id="roomName" fx:id="roomName" alignment="CENTER" prefHeight="60.0"
-                   prefWidth="300.0" promptText="Course name" styleClass="inputBox" />
+                   prefWidth="300.0" promptText="Course name" styleClass="inputBox"/>
 
         <TextField id="moderatorPassword" fx:id="moderatorPassword" alignment="CENTER"
-                   prefHeight="60.0" prefWidth="300.0" promptText="Moderator password" styleClass="inputBox" />
+                   prefHeight="60.0" prefWidth="300.0" promptText="Moderator password"
+                   styleClass="inputBox"/>
 
         <TextField id="studentPassword" fx:id="studentPassword" alignment="CENTER"
-                   prefHeight="60.0" prefWidth="300.0" promptText="Student password" styleClass="inputBox" />
+                   prefHeight="60.0" prefWidth="300.0" promptText="Student password" styleClass="inputBox"/>
 
         <TextField id="lecturerName" fx:id="lecturerName" alignment="CENTER"
-                   prefHeight="60.0" prefWidth="300.0" promptText="Lecturer name" styleClass="inputBox" />
+                   prefHeight="60.0" prefWidth="300.0" promptText="Lecturer name" styleClass="inputBox"/>
 
-        <HBox spacing="10">
-            <DatePicker fx:id="startDate" styleClass="inputBox" />
-            <TextField fx:id="startTime" styleClass="inputBox" />
-        </HBox>
+      <HBox spacing="10">
+         <DatePicker fx:id="startDate" styleClass="inputBox" />
+         <TextField fx:id="startTime" styleClass="inputBox" />
+      </HBox>
 
-        <CheckBox fx:id="scheduleCheckbox" text="Scheduled?" styleClass="scheduleCheckbox" />
+      <CheckBox fx:id="scheduleCheckbox" text="Scheduled?" styleClass="scheduleCheckbox" />
 
-        <Button onAction="#buttonClicked2"
-                prefHeight="60.0" prefWidth="300.0" styleClass="buttons" text="Create"/>
-    </VBox>
+      <Button onAction="#createRoom"
+              prefHeight="60.0" prefWidth="300.0" styleClass="buttons" text="Create" />
+   </VBox>
 
     <HBox styleClass="backgroundTitlePanel"
           GridPane.columnIndex="0" GridPane.columnSpan="5" GridPane.rowIndex="0">
@@ -73,15 +71,11 @@
         <VBox>
             <Region VBox.vgrow="ALWAYS"/>
             <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="0">
-                <Button fx:id="modeButton" mnemonicParsing="false" onAction="#handleButtonMode2" styleClass="mode-button"/>
+                <Button onAction="#changeMode" styleClass="mode-button"/>
 
                 <Region minWidth="15"/>
 
-                <Button fx:id="goBack" mnemonicParsing="false" onAction="#handleBackButtonDark" styleClass="backButton">
-                    <graphic>
-                        <SVGPath content="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" styleClass="backButtonSVG"/>
-                    </graphic>
-                </Button>
+                <Button onAction="#goBack" styleClass="back-button"/>
             </HBox>
             <Region VBox.vgrow="ALWAYS"/>
         </VBox>

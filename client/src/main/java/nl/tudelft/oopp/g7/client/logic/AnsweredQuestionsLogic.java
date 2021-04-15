@@ -60,8 +60,8 @@ public class AnsweredQuestionsLogic {
 
                 questionNodes.add(questionNode);
             }
-        } catch (IOException ignored) {
-            System.err.println("A problem occurred");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         // Return the user to their original position in the scroll list

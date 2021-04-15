@@ -3,8 +3,8 @@ package nl.tudelft.oopp.g7.client.logic;
 import lombok.Getter;
 import lombok.Setter;
 import nl.tudelft.oopp.g7.client.MainApp;
-import nl.tudelft.oopp.g7.common.SortingOrder;
-import nl.tudelft.oopp.g7.common.UserInfo;
+import nl.tudelft.oopp.g7.client.Views;
+import nl.tudelft.oopp.g7.common.*;
 
 import java.util.HashMap;
 import java.util.*;
@@ -25,11 +25,11 @@ public class LocalData {
     @Setter @Getter
     private static String roomName = "";
     @Setter @Getter
-    private static boolean isLecturer = false;
-    @Setter @Getter
     private static SortingOrder sortingOrder = SortingOrder.NEW;
     @Setter @Getter
     private static String serverUrl = "http://localhost:8080";
+    @Setter @Getter
+    private static UserRole role;
     @Getter
     private static ColorScheme colorScheme = ColorScheme.LIGHT;
     public static HashMap<String, UserInfo> userMap = new HashMap<>();
@@ -46,10 +46,29 @@ public class LocalData {
         MainApp.updateStyleSheets();
     }
 
-    public static void setColorScheme(ColorScheme colorScheme) {
-        LocalData.colorScheme = colorScheme;
+    public static void storeAll(RoomJoinInfo roomJoinInfo) {
+        nickname = roomJoinInfo.getNickname();
+        roomID = roomJoinInfo.getRoomId();
+        userID = roomJoinInfo.getUserId();
+        token = roomJoinInfo.getAuthorization();
+        roomName = roomJoinInfo.getRoomName();
+        role = roomJoinInfo.getRole();
+    }
 
-        MainApp.updateStyleSheets();
+    public static void storeAll(Room room) {
+        roomID = room.getId();
+        studentPassword = room.getStudentPassword();
+        moderatorPassword = room.getModeratorPassword();
+        roomName = room.getName();
+    }
+
+    public static void switchRole() {
+        switch (role) {
+            case LECTURER -> role = UserRole.MODERATOR;
+            case MODERATOR -> role = UserRole.LECTURER;
+        }
+
+        Views.reloadCurrentView();
     }
 
     public enum ColorScheme {

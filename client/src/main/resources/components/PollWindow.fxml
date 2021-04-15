@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
 <HBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      stylesheets="@PollWindow.css"
-      id="poll">
+      id="poll" styleClass="poll">
 
     <HBox styleClass="pollRightBorder" />
 
@@ -25,16 +22,10 @@
         <HBox id="pollText">
             <HBox id="pollTextBox" styleClass="pollTextBox">
                 <Text id="pollLabelText" text="POLL" styleClass="pollText">
-                    <font>
-                        <Font name="System" />
-                    </font>
                 </Text>
             </HBox>
             <HBox styleClass="pollQuestionBox">
-                <Text text="Poll question?" id="PollQuestion">
-                    <font>
-                        <Font name="System" />
-                    </font>
+                <Text text="Poll question?" id="PollQuestion" styleClass="poll-question">
                 </Text>
             </HBox>
             <HBox HBox.hgrow="ALWAYS"/>

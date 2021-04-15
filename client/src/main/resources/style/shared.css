@@ -24,7 +24,7 @@
     -fx-shape:"M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0 c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2 c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1 C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06 c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41 l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41 c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36 c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"
 }
 
-.applicationName {
+.applicationName, .course-name {
     -fx-font-weight: bold;
     -fx-font-size: 36px;
     -fx-fill: -clr-header-text;
@@ -53,6 +53,13 @@
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
 
+    -fx-font-size: 17;
+    -fx-text-fill: -clr-text;
+}
+
+.question-box,
+.question-box .content {
+    -fx-background-color: -clr-text-box-background;
     -fx-font-size: 17;
     -fx-text-fill: -clr-text;
 }
@@ -116,8 +123,257 @@
 
 .scheduleCheckbox > .box {
     -fx-background-color: -clr-text-box-background;
+    -fx-border-color: -clr-text-box-border;
 }
 
 .scheduleCheckbox:selected > .box > .mark {
     -fx-background-color: -clr-primary;
+}
+
+.post-button {
+    -fx-min-height: 48;
+    -fx-min-width: 48;
+    -fx-background-color: -clr-primary-light;
+    -fx-shape: "M2.01 21L23 12 2.01 3 2 10l15 2-15 2z";
+}
+
+.upvoteBtnSVG {
+    -fx-fill: -clr-text;
+    -fx-stroke: -clr-text;
+    -fx-shape: "M 1, 31 H 31 L 16.25,1 Z";
+}
+
+.side-panel {
+    -fx-background-color: -clr-side-panel;
+}
+
+.help-button {
+    -fx-fill: -clr-header-text;
+    -fx-shape: "M36.7994 13C28.9767 13 23.9098 16.1937 19.9319 21.8893C19.2102 22.9225 19.4327 24.3391 20.4393 25.0996L24.6671 28.2938C25.6838 29.0619 27.1302 28.8823 27.9261 27.8888C30.3811 24.8242 32.2021 23.0598 36.0368 23.0598C39.0519 23.0598 42.7812 24.9933 42.7812 27.9065C42.7812 30.1089 40.9567 31.2399 37.9796 32.903C34.5079 34.8425 29.9138 37.2562 29.9138 43.2941V44.25C29.9138 45.5444 30.9669 46.5938 32.266 46.5938H39.3686C40.6676 46.5938 41.7207 45.5444 41.7207 44.25V43.6862C41.7207 39.5007 53.9978 39.3264 53.9978 28C53.9979 19.4703 45.1183 13 36.7994 13ZM35.8173 49.4706C32.0739 49.4706 29.0283 52.5053 29.0283 56.2354C29.0283 59.9653 32.0739 63 35.8173 63C39.5608 63 42.6063 59.9653 42.6063 56.2353C42.6063 52.5052 39.5608 49.4706 35.8173 49.4706Z";
+}
+
+.sort-button {
+    -fx-pref-width: 24;
+    -fx-pref-height: 24;
+    -fx-background-color: -clr-header-text;
+    -fx-shape: "M2 17h2v.5H3v1h1v.5H2v1h3v-4H2v1zm1-9h1V4H2v1h1v3zm-1 3h1.8L2 13.1v.9h3v-1H3.2L5 10.9V10H2v1zm5-6v2h14V5H7zm0 14h14v-2H7v2zm0-6h14v-2H7v2z"
+}
+
+.answered-question-button {
+    -fx-pref-width: 24;
+    -fx-pref-height: 24;
+    -fx-background-color: -clr-header-text;
+    -fx-shape: "M22,5.18L10.59,16.6l-4.24-4.24l1.41-1.41l2.83,2.83l10-10L22,5.18z M19.79,10.22C19.92,10.79,20,11.39,20,12 c0,4.42-3.58,8-8,8s-8-3.58-8-8c0-4.42,3.58-8,8-8c1.58,0,3.04,0.46,4.28,1.25l1.44-1.44C16.1,2.67,14.13,2,12,2C6.48,2,2,6.48,2,12 c0,5.52,4.48,10,10,10s10-4.48,10-10c0-1.19-0.22-2.33-0.6-3.39L19.79,10.22z";
+}
+
+.user-list-button {
+    -fx-pref-width: 24;
+    -fx-pref-height: 24;
+    -fx-background-color: -clr-header-text;
+    -fx-shape: "M18 21a1 1 0 0 0 1-1 7 7 0 0 0-14 0 1 1 0 0 0 1 1z";
+}
+
+.export-questions-button {
+    -fx-fill: -clr-header-text;
+    -fx-stroke: -clr-header-text;
+}
+
+.link-button {
+    -fx-fill: -clr-header-text;
+    -fx-stroke: -clr-header-text;
+}
+
+.speed-indicator-label {
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+}
+
+#answerBox {
+    -fx-background-color: -clr-text-box-background;
+    -fx-border-color: -clr-text-box-border;
+}
+
+.options-area {
+    -fx-background-color: -clr-background;
+    -fx-text-fill: -clr-text;
+}
+
+.question {
+    -fx-background-color: -clr-text-box-background;
+
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.2, 0, 0);
+}
+
+.upvote-count {
+    -fx-fill: -clr-text;
+}
+
+.question-answer {
+    -fx-fill: -clr-text;
+}
+
+.upvoteArea {
+    -fx-border-color: -clr-border;
+    -fx-border-width: 0 1 0 0;
+}
+
+.upvoteBtnSVG {
+    -fx-fill: -clr-border;
+    -fx-stroke: -clr-border;
+}
+
+.upvote-button.active .upvoteBtnSVG {
+    -fx-fill: -clr-primary;
+    -fx-stroke: -clr-primary;
+}
+
+.questionAsks {
+    -fx-font-style: italic;
+    -fx-font-size: 16px;
+    -fx-fill: -clr-text-darker;
+}
+
+.questionText {
+    -fx-font-size: 19px;
+    -fx-fill: -clr-text;
+}
+
+.delete {
+    -fx-background-color: transparent;
+}
+
+.deleteSVG {
+    -fx-fill: -clr-text;
+    -fx-stroke: -clr-text;
+}
+
+.upvote-button {
+    -fx-background-color: transparent;
+}
+
+.pollOption {
+    -fx-border-width: 2px;
+    -fx-border-color: -clr-border;
+    -fx-border-radius: 3px;
+    -fx-border-style: solid;
+    -fx-fill: -clr-border;
+}
+
+.pollOption.selected {
+    -fx-border-color: -clr-primary;
+}
+
+.pollOption.selected .pollOptionLabel {
+    -fx-stroke: -clr-border;
+    -fx-fill: -clr-border;
+}
+
+.pollPreset {
+    -fx-border-color: -clr-text-box-background;
+    -fx-border-radius: 3px;
+    -fx-padding: 5px;
+}
+
+.poll-question {
+    -fx-font-size: 21px;
+    -fx-stroke: -clr-border;
+    -fx-fill: -clr-border;
+}
+
+.pollQuestionBox {
+    -fx-padding: 1px 6px 3px 6px;
+}
+
+.pollText {
+    -fx-font-size: 21px;
+    -fx-stroke: -clr-border;
+    -fx-fill: -clr-border;
+}
+
+.pollTextBox {
+    -fx-background-color: -clr-primary;
+
+    -fx-background-radius: 3px;
+    -fx-padding: 1px 6px 3px 6px;
+}
+
+.pollRightBorder {
+    -fx-background-color: -clr-primary;
+    -fx-min-width: 7px;
+    -fx-pref-width: 7px;
+    -fx-max-width: 7px;
+}
+
+.pollOptionLabel {
+    -fx-font-size: 21px;
+    -fx-stroke: -clr-border;
+    -fx-fill: -clr-border;
+}
+
+.pollOptionCount {
+    -fx-font-size: 21px;
+    -fx-stroke: -clr-border;
+    -fx-fill: -clr-border;
+}
+
+.poll {
+    -fx-background-color: -clr-text-box-background;
+
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+
+    -fx-border-color: -clr-primary;
+    -fx-border-width: 3 3 3 3;
+}
+
+/*
+    Better looking scrollbars
+ */
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track,
+.scroll-bar:horizontal .track-background,
+.scroll-bar:vertical .track-background {
+    -fx-background-color: -clr-scrollbar-background;
+    -fx-border-color: -clr-scrollbar-background;
+    -fx-background-radius: 0.0;
+    -fx-border-radius: 2.0em;
+}
+
+.scroll-bar:horizontal .increment-button ,
+.scroll-bar:horizontal .decrement-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0.0em;
+    -fx-padding: 0.0 0.0 10.0 0.0;
+
+}
+
+.scroll-bar:vertical .increment-button ,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0.0em;
+    -fx-padding: 0.0 10.0 0.0 0.0;
+
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow{
+    -fx-shape: " ";
+    -fx-padding: 0.15em 0.0;
+}
+
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow{
+    -fx-shape: " ";
+    -fx-padding: 0.0 0.15em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: -clr-scrollbar-thumb;
+    -fx-background-insets: 2.0, 0.0, 0.0;
+    -fx-background-radius: 2.0em;
 }

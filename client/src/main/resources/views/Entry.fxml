@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-
 <?import javafx.geometry.Insets?>
-<GridPane prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@Entry(DARKMODE).css"
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<GridPane prefHeight="600.0" prefWidth="800.0" styleClass="background"
           xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="nl.tudelft.oopp.g7.client.controllers.EntryPageController">
+          fx:controller="nl.tudelft.oopp.g7.client.controllers.EntryController">
 
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES"/>
@@ -26,12 +25,12 @@
 
     <Button minWidth="250" maxWidth="250" styleClass="buttonEntry"
             minHeight="128" maxHeight="128" text="Create Room"
-            onAction="#handleButtonActionDark"
+            onAction="#createRoom"
             GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
     <Button minWidth="250" maxWidth="250" styleClass="buttonEntry"
             minHeight="128" maxHeight="128" text="Join Room"
-            onAction="#handleButtonAction2Dark"
+            onAction="#joinRoom"
             GridPane.columnIndex="3" GridPane.rowIndex="2"/>
 
     <HBox styleClass="backgroundTitlePanel"
@@ -51,7 +50,7 @@
         <VBox>
             <Region VBox.vgrow="ALWAYS"/>
             <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="0">
-                <Button fx:id="modeButton" mnemonicParsing="false" onAction="#handleButtonMode2" styleClass="mode-button"/>
+                <Button onAction="#changeMode" styleClass="mode-button"/>
             </HBox>
             <Region VBox.vgrow="ALWAYS"/>
         </VBox>

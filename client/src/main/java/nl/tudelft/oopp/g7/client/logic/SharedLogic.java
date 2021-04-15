@@ -59,6 +59,9 @@ public class SharedLogic {
 
         Button upvoteBtn = (Button) questionNode.lookup("#QuestionUpvoteBtn");
 
+        if (LocalData.upvotedQuestions.contains(question.getId()))
+            upvoteBtn.getStyleClass().add("active");
+
         if (upvoteBtn != null) {
             upvoteBtn.setOnAction((event) -> {
                 // if the user already upvoted the question, delete the upvote when the button is clicked else simply upvote it

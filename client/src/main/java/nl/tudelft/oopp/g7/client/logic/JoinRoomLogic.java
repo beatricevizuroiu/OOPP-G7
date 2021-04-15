@@ -1,11 +1,10 @@
 package nl.tudelft.oopp.g7.client.logic;
 
 import javafx.scene.control.Alert;
-import nl.tudelft.oopp.g7.client.MainApp;
+import nl.tudelft.oopp.g7.client.Views;
 import nl.tudelft.oopp.g7.client.communication.RoomServerCommunication;
 import nl.tudelft.oopp.g7.client.util.Util;
 import nl.tudelft.oopp.g7.common.RoomJoinInfo;
-import nl.tudelft.oopp.g7.common.UserRole;
 
 public class JoinRoomLogic {
 
@@ -17,30 +16,24 @@ public class JoinRoomLogic {
      */
     public static void joinRoom(String nickname, String password, String roomId) {
         // if the user presses OK, the go to Student View
-        if (JoinRoomLogic.joinRoomConfirmation(nickname, roomId)) {
+        if (!JoinRoomLogic.joinRoomConfirmation(nickname, roomId))
+            return;
 
-            RoomJoinInfo roomJoinInfo = RoomServerCommunication.joinRoom(roomId, password, nickname);
+        RoomJoinInfo roomJoinInfo = RoomServerCommunication.joinRoom(roomId, password, nickname);
 
-            if (roomJoinInfo == null) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Could not join room.");
-                alert.setHeaderText("Could not join room.");
-                alert.setContentText("It was not possible to join the room specified. The room might not exist, not have opened, or your password may be incorrect.");
+        if (roomJoinInfo == null) {
+            Util.createAlert(Alert.AlertType.ERROR, "Could not join room.", null,
+                    "It was not possible to join the room specified. The room might not exist," +
+                            "not have opened,or your password may be incorrect.")
+                    .showAndWait();
 
-                alert.showAndWait();
-                return;
-            }
-
-            // Store all the entered information
-            JoinRoomLogic.joinRoomStoreLocalData(roomJoinInfo);
-
-            // Send password to the server to determine whether the user is a Student or a Moderator and send the user to the right UI
-            if (roomJoinInfo.getRole() == UserRole.STUDENT) {
-                MainApp.setCurrentScene("/views/StudentViewUI.fxml");
-            } else {
-                MainApp.setCurrentScene("/views/TAViewUI.fxml");
-            }
+            return;
         }
+
+        // Store all the entered information
+        LocalData.storeAll(roomJoinInfo);
+
+        Views.navigateTo(Views.HOME);
     }
 
     /**
@@ -55,16 +48,5 @@ public class JoinRoomLogic {
             alertMessage = "You are joining room: %s. %nAs: %s".formatted(roomId, nickname);
 
         return Util.getConfirmation("Join Room", null, alertMessage);
-    }
-
-    /**
-     * Stores the room/user information into a local static class.
-     * @param roomJoinInfo The info of the room we just joined.
-     */
-    public static void joinRoomStoreLocalData(RoomJoinInfo roomJoinInfo) {
-        LocalData.setNickname(roomJoinInfo.getNickname());
-        LocalData.setRoomID(roomJoinInfo.getRoomId());
-        LocalData.setToken(roomJoinInfo.getAuthorization());
-        LocalData.setUserID(roomJoinInfo.getUserId());
     }
 }

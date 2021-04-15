@@ -2,11 +2,17 @@
 
 * {
     -clr-background: white;
+    -clr-primary-light: #8D1BAA;
     -clr-primary: #8D1BAA;
     -clr-primary-dark: #360A41;
+    -clr-side-panel: #15041A;
     -clr-text: black;
+    -clr-text-darker: #222222;
     -clr-text-dark-background: white;
     -clr-header-text: white;
     -clr-text-box-background: white;
     -clr-text-box-border: lightblue;
+    -clr-border: #161616;
+    -clr-scrollbar-background: white;
+    -clr-scrollbar-thumb: #aaaaaa;
 }

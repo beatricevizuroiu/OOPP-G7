@@ -4,7 +4,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import nl.tudelft.oopp.g7.client.Views;
+import nl.tudelft.oopp.g7.client.communication.RoomServerCommunication;
+import nl.tudelft.oopp.g7.client.util.Util;
+import nl.tudelft.oopp.g7.common.NewRoom;
 import nl.tudelft.oopp.g7.common.Room;
+import nl.tudelft.oopp.g7.common.RoomJoinInfo;
 import nl.tudelft.oopp.g7.common.SortingOrder;
 
 import java.time.LocalDate;
@@ -17,47 +22,11 @@ public class CreateRoomLogic {
      * @param roomName     TextField in which room's name is written
      * @return a boolean confirming whether the user pressed OK or cancel
      */
-    public static boolean createRoomConfirmation(TextField lecturerName, TextField roomName) {
-        // show confirmation type pop-up with what you entered as text
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-
-        // title of pop-up
-        alert.setTitle("Create Room");
-        alert.setHeaderText(null);
-
-        // body of pop-up with what the user entered
-        alert.setContentText(String.format(
-                "You are creating the room for the Course: %s\n"
-                        + "This course is held by the lecturer: %s.",
-                roomName.getText(), lecturerName.getText()));
-
-        alert.getDialogPane().setPrefHeight(150);
-
-        // set types of buttons for the pop-up
-        ButtonType okButton = new ButtonType("OK");
-        ButtonType cancelButton = new ButtonType("Cancel");
-
-        alert.getButtonTypes().setAll(okButton, cancelButton);
-
-        // wait for the alert to appear
-        alert.showAndWait();
-
-        // return whether the user pressed OK or not
-        return alert.getResult() == okButton;
-    }
-
-    /**
-     * Stores the room/user information into a local static class.
-     * @param lecturerName TextField in which lecturer's name is written
-     * @param room         object containing information about the newly created room
-     */
-    public static void createRoomStoreLocalData(TextField lecturerName, Room room) {
-        LocalData.setNickname(lecturerName.getText());
-        LocalData.setRoomID(room.getId());
-        LocalData.setStudentPassword(room.getStudentPassword());
-        LocalData.setModeratorPassword(room.getModeratorPassword());
-        LocalData.setSortingOrder(SortingOrder.UPVOTES);
-        LocalData.setLecturer(true);
+    public static boolean createRoomConfirmation(String lecturerName, String roomName) {
+        return Util.getConfirmation("Create Room", null, """
+                You are creating the room for the Course: %s
+                This course is held by the lecturer: %s.""".formatted(
+                roomName, lecturerName));
     }
 
     /**
@@ -66,14 +35,13 @@ public class CreateRoomLogic {
      * @param startTime Time the Room should open at.
      * @return The {@link Date} the Room should open at.
      */
-    public static Date getTimeAndDateFromUI(DatePicker startDate, TextField startTime) {
-        LocalDate date = startDate.getValue();
-        Date time = parseStringToTime(startTime.getText());
+    public static Date getTimeAndDateFromUI(LocalDate startDate, String startTime) {
+        Date time = parseStringToTime(startTime);
 
-        if (date == null || time == null)
+        if (startDate == null || time == null)
             return null;
 
-        return new Date(date.getYear() - 1900, date.getMonth().ordinal(), date.getDayOfMonth(), time.getHours(), time.getMinutes(), 0);
+        return new Date(startDate.getYear() - 1900, startDate.getMonth().ordinal(), startDate.getDayOfMonth(), time.getHours(), time.getMinutes(), 0);
     }
 
     private static Date parseStringToTime(String timeString) {
@@ -101,5 +69,52 @@ public class CreateRoomLogic {
             return null;
         }
 
+    }
+
+    public static void createRoom(String lecturerName, String roomName, String studentPassword, String moderatorPassword, boolean isScheduled, LocalDate startDate, String startTime) {
+        // if the user presses OK, the go to Lecturer View
+        if (CreateRoomLogic.createRoomConfirmation(lecturerName, roomName)) {
+
+            Date startDateTime = CreateRoomLogic.getTimeAndDateFromUI(startDate, startTime);
+
+            if (isScheduled && startDateTime == null) {
+                Util.createAlert(Alert.AlertType.ERROR, "Invalid date/time", null, "The date and or time you have entered are invalid.")
+                        .showAndWait();
+                return;
+            }
+
+            if (startDateTime == null)
+                startDateTime = new Date();
+
+            // Put all information for a new room in a NewRoom object and send it to the server to have it create the room
+            NewRoom newRoom = new NewRoom(roomName, studentPassword, moderatorPassword, startDateTime);
+            Room room = RoomServerCommunication.createRoom(newRoom);
+            if (room == null) {
+                Util.createAlert(Alert.AlertType.ERROR, "Could not create room.", null, "Could not create room.")
+                        .showAndWait();
+                return;
+            }
+
+            // Store all relevant room information for future reference
+            LocalData.storeAll(room);
+
+            if (isScheduled) {
+                ModeratorViewLogic.displayLinkAndPasswords();
+                return;
+            }
+
+            RoomJoinInfo roomJoinInfo = RoomServerCommunication.joinRoom(room.getId(), room.getModeratorPassword(), lecturerName);
+
+            if (roomJoinInfo == null) {
+                Util.createAlert(Alert.AlertType.ERROR, "Could not join room.", null, "Could not join room.")
+                        .showAndWait();
+                return;
+            }
+
+            LocalData.storeAll(roomJoinInfo);
+
+            Views.navigateTo(Views.HOME);
+
+        }
     }
 }

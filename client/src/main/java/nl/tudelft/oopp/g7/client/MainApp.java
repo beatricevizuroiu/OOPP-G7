@@ -26,7 +26,7 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         currentStage = primaryStage;
 
-        setCurrentScene("/views/entryPage.fxml");
+        Views.navigateTo(Views.ENTRY);
     }
 
     public static void updateStyleSheets() {
@@ -35,7 +35,7 @@ public class MainApp extends Application {
         stylesheets.clear();
 
         stylesheets.add(MainApp.class.getResource("/fonts/fonts.css").toString());
-        stylesheets.add(MainApp.class.getResource(LocalData.getColorScheme().getStylesheet()).toString());
+        stylesheets.add(MainApp.class.getResource(LocalData.getColorScheme().getStylesheet()).toExternalForm());
     }
 
     /**

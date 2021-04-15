@@ -18,7 +18,7 @@
                 </Insets>
         </padding>
         <VBox styleClass="upvoteArea">
-                <Button id="QuestionUpvoteBtn" styleClass="upvoteBtn">
+                <Button id="QuestionUpvoteBtn" styleClass="back-button">
                         <graphic>
                                 <SVGPath content="M 1, 31 H 31 L 16.25,1 Z" styleClass="upvoteBtnSVG" />
                         </graphic>

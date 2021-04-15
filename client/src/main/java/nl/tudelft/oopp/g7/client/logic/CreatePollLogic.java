@@ -9,7 +9,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import nl.tudelft.oopp.g7.client.MainApp;
+import nl.tudelft.oopp.g7.client.Views;
 import nl.tudelft.oopp.g7.client.communication.ModeratorServerCommunication;
+import nl.tudelft.oopp.g7.client.util.Util;
 
 import java.io.IOException;
 import java.util.List;
@@ -50,18 +52,14 @@ public class CreatePollLogic {
     public static void sendPoll(List<String> pollOptions, TextArea questionArea, AtomicBoolean publicResults) {
         String question = questionArea.getText();
         if ("".equals(question)) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Enter question");
-            alert.setHeaderText("Enter question");
-            alert.setContentText("Please enter a question to create a poll.");
-
-            alert.showAndWait();
+            Util.createAlert(Alert.AlertType.ERROR, "Enter question", null, "Please enter a question to create a poll.")
+                    .showAndWait();
             return;
         }
 
         ModeratorServerCommunication.createPoll(LocalData.getRoomID(), question, pollOptions.toArray(new String[0]), publicResults.get());
 
-        MainApp.setCurrentScene(false ? "/TAViewUI(DARKMODE).fxml" : "/views/TAViewUI.fxml");
+        Views.goBack();
     }
 
     /**
@@ -136,8 +134,7 @@ public class CreatePollLogic {
             for (String option : pollOptions) {
                 String optionText = option.substring(0, Math.min(option.length(), 20));
 
-                String componentName = false ? "/components/PollOptionExample(DARKMODE).fxml" : "/components/PollOptionExample.fxml";
-                HBox optionNode = FXMLLoader.load(CreatePollLogic.class.getResource(componentName));
+                HBox optionNode = FXMLLoader.load(CreatePollLogic.class.getResource("/components/PollOptionExample.fxml"));
 
                 Text pollOptionText = (Text) optionNode.lookup("#PollOptionLabel");
                 pollOptionText.setText(optionText);
